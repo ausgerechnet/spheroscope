@@ -1,0 +1,20 @@
+* SPHEROSCOPE
+- spheroscope is a corpus viewer and analyzer
+- runs extended CQP queries
+- backend: processes queries and performs additional analyses
+- frontend: visualizes results
+- interactive parameter settings by user
+- includes MMDA
+
+* input
+- CWB-indexed corpus
+- meta data tables
+
+* flask server
+
+* database
+** TODO storage of users' corpus analyses
+
+* now
+input: corpus query
+output: concordances
