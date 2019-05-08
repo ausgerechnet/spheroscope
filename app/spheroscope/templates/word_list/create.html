@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}New Word List{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <label for="title">Title</label>
+    <input name="title" id="title" value="{{ request.form['title'] }}" required>
+    <label for="lemmata">Lemmata</label>
+    <textarea name="lemmata" id="lemmata">{{ request.form['lemmata'] }}</textarea>
+    <input type="submit" value="Save">
+  </form>
+{% endblock %}
