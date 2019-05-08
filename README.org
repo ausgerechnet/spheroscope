@@ -9,12 +9,20 @@
 * input
 - CWB-indexed corpus
 - meta data tables
+- word embeddings (magnitude, gensim)
 
 * flask server
+start the app like so:
+#+BEGIN_SRC conf
+export FLASK_APP=spheroscope
+export FLASK_ENV=development
+flask run
+#+END_SRC
 
 * database
-** TODO storage of users' corpus analyses
 
-* now
+* word lists
+
+* CQP interface
 input: corpus query
 output: concordances
