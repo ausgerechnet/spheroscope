@@ -1,0 +1,1 @@
+from spheroscope.cqp import CWBEngine
