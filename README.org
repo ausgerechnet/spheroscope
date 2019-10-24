@@ -4,25 +4,34 @@
 - backend: processes queries and performs additional analyses
 - frontend: visualizes results
 - interactive parameter settings by user
-- includes MMDA
 
 * input
 - CWB-indexed corpus
 - meta data tables
 - word embeddings (magnitude, gensim)
 
+* venv
+- uses pipenv
+#+BEGIN_SRC conf
+cd spheroscope
+pipenv install --dev
+pipenv shell
+#+END_SRC
+
 * flask server
 start the app like so:
 #+BEGIN_SRC conf
+cd spheroscope/app
 export FLASK_APP=spheroscope
 export FLASK_ENV=development
+flask init-db
 flask run
 #+END_SRC
 
-* database
+* spheroscope/db.py
 
-* word lists
+* spheroscope/word_lists.py
 
-* CQP interface
+* spheroscope/cqp.py
 input: corpus query
 output: concordances
