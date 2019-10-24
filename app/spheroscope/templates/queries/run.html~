@@ -1,0 +1,15 @@
+{% block header %}
+<h1>{% block title %}{% endblock %}</h1>
+{% if g.user %}
+<a class="action" href="{{ url_for('queries.update) }}">edit</a>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+{% for conc in concordances %}
+<article class="post">
+  conc
+</article>
+{% endfor %}
+{% endblock %}
+

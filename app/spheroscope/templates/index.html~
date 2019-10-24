@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<!-- <h1>{% block title %}overview{% endblock %}</h1> -->
+{% endblock %}
+
+{% block content %}
+<ul>
+  <li><a class="action" href="{{ url_for('word_list.index') }}">word lists</a>
+  <li><a class="action" href="{{ url_for('queries.index') }}">queries</a>
+</ul>
+{% endblock %}

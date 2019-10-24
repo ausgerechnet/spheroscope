@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block header %}
-<h1>{% block title %}Most similar lemmata for word list "{{ word_list['title'] }}"{% endblock %}</h1>
+<h1>{% block title %}Word List "{{ word_list['title'] }}"{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
@@ -12,10 +12,12 @@
       <div class="about">by {{ word_list['username'] }} on {{ word_list['created'].strftime('%Y-%m-%d') }}</div>
     </div>
     {% if g.user['id'] == word_list['author_id'] %}
-    <a class="action" href="{{ url_for('word_list.update', id=word_list['id']) }}">Edit</a>
+    <a class="action" href="{{ url_for('word_lists.update', id=word_list['id']) }}">Edit</a>
     {% endif %}
   </header>
   <p class="body">{{ word_list['lemmata'] }}</p>
+  <hr>
+  <div class="about">{{ 'similar lemmata:' }}</div>
   <p class="body">{{ similar_ones }}</p>
 </article>
 <hr>
