@@ -13,19 +13,13 @@
 * venv
 - uses pipenv
 #+BEGIN_SRC conf
-cd spheroscope
-pipenv install --dev
-pipenv shell
+./env-setup.sh
 #+END_SRC
 
 * flask server
 start the app like so:
 #+BEGIN_SRC conf
-cd spheroscope/app
-export FLASK_APP=spheroscope
-export FLASK_ENV=development
-flask init-db
-flask run
+./start-sterver.sh
 #+END_SRC
 
 * spheroscope/db.py
