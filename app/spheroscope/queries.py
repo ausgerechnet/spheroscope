@@ -5,15 +5,11 @@ from werkzeug.exceptions import abort
 
 from spheroscope.auth import login_required
 from spheroscope.db import get_db
-from cutils.cwb.anchors import CWBEngine
+from spheroscope.cwb_utils import anchor_query
+import json
+
 
 bp = Blueprint('queries', __name__, url_prefix='/queries')
-
-
-CORPUS = {
-    'name': 'BREXIT_V20190522',
-    'registry_path': '/usr/local/cwb-3.4.16/share/cwb/registry/'
-}
 
 
 @bp.route('/')
@@ -111,9 +107,11 @@ def update(id):
 @bp.route('/<int:id>/run', methods=('GET', 'POST'))
 @login_required
 def run(id):
-    query = get_query(id)
-    engine = CWBEngine(CORPUS)
-    conc = engine.get_concordances(query['query'], cut_off=50)
-    concordances = [c.to_json() for c in conc.values()]
-    return render_template('queries/run.html',
-                           query=query, concordances=concordances)
+
+    # query = get_query(id)
+    path_test = "/home/ausgerechnet/projects/spheroscope/app/instance/queries/example.json"
+    with open(path_test, "rt") as f:
+        query = json.load(f)
+    conc = anchor_query(query['query'], query['anchors'], query['regions'])
+    return json.dumps(conc)
+    # return render_template('queries/run.html', query=query, concordances=conc)

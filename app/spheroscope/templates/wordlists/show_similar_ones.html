@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>{% block title %}Word List "{{ wordlist['title'] }}"{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<article class="post">
+  <header>
+    <div>
+      <h1>{{ wordlist['title'] }}</h1>
+      <div class="about">by {{ wordlist['username'] }} on {{ wordlist['created'].strftime('%Y-%m-%d') }}</div>
+    </div>
+    {% if g.user['id'] == wordlist['author_id'] %}
+    <a class="action" href="{{ url_for('wordlists.update', id=wordlist['id']) }}">Edit</a>
+    {% endif %}
+  </header>
+  <p class="body">{{ wordlist['words'] }}</p>
+  <hr>
+  <div class="about">{{ 'similar words:' }}</div>
+  <p class="body">{{ similar_ones }}</p>
+</article>
+<hr>
+{% endblock %}

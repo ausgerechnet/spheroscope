@@ -40,8 +40,8 @@ def create_app(test_config=None):
     from . import index
     app.register_blueprint(index.bp)
 
-    from . import word_lists
-    app.register_blueprint(word_lists.bp)
+    from . import wordlists
+    app.register_blueprint(wordlists.bp)
     app.add_url_rule('/', endpoint='index')
 
     from . import queries

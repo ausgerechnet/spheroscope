@@ -23,6 +23,7 @@ numpy = "*"
 pandas = "*"
 gensim = "*"
 cwb-python = "*"
+stop_words = "*"
 
 [dev-packages]
 pytest = "==4.1.1"
