@@ -1,5 +1,5 @@
 DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS word_lists;
+DROP TABLE IF EXISTS wordlists;
 DROP TABLE IF EXISTS queries;
 
 CREATE TABLE users (
@@ -8,12 +8,12 @@ CREATE TABLE users (
   password TEXT NOT NULL
 );
 
-CREATE TABLE word_lists (
+CREATE TABLE wordlists (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   author_id INTEGER NOT NULL,
   created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   title TEXT NOT NULL,
-  lemmata TEXT NOT NULL,
+  words TEXT NOT NULL,
   FOREIGN KEY (author_id) REFERENCES users (id)
 );
 
@@ -23,5 +23,8 @@ CREATE TABLE queries (
   created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   title TEXT NOT NULL,
   query TEXT NOT NULL,
+  anchors TEXT,
+  regions TEXT,
+  pattern INTEGER,
   FOREIGN KEY (author_id) REFERENCES users (id)
 );

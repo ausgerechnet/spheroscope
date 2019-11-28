@@ -1,6 +1,6 @@
 * SPHEROSCOPE
 - spheroscope is a corpus viewer and analyzer
-- runs extended CQP queries
+- runs CQP queries (with anchor points)
 - backend: processes queries and performs additional analyses
 - frontend: visualizes results
 - interactive parameter settings by user
@@ -28,10 +28,11 @@ flask init-db
 flask run
 #+END_SRC
 
-* spheroscope/db.py
+* modules
+** spheroscope/db.py
 
-* spheroscope/word_lists.py
+** spheroscope/word_lists.py
 
-* spheroscope/cqp.py
+** spheroscope/queries.py
 input: corpus query
 output: concordances

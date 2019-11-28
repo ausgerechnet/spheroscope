@@ -7,7 +7,7 @@ from werkzeug.exceptions import abort
 from spheroscope.auth import login_required
 from spheroscope.db import get_db
 
-bp = Blueprint('word_lists', __name__, url_prefix='/word-lists')
+bp = Blueprint('wordlists', __name__, url_prefix='/word-lists')
 
 # EMBEDDINGS = KeyedVectors.load("/home/ausgerechnet/corpora/wectors/gensim/enTwitterWord2Vec")
 
@@ -23,12 +23,12 @@ def get_similar_tokens(tokens, number=20):
 @login_required
 def index():
     db = get_db()
-    word_lists = db.execute(
-        'SELECT wl.id, title, lemmata, created, author_id, username'
-        ' FROM word_lists wl JOIN users u ON wl.author_id = u.id'
+    wordlists = db.execute(
+        'SELECT wl.id, title, words, created, author_id, username'
+        ' FROM wordlists wl JOIN users u ON wl.author_id = u.id'
         ' ORDER BY created DESC'
     ).fetchall()
-    return render_template('word_lists/index.html', word_lists=word_lists)
+    return render_template('wordlists/index.html', wordlists=wordlists)
 
 
 @bp.route('/create', methods=('GET', 'POST'))
@@ -36,7 +36,7 @@ def index():
 def create():
     if request.method == 'POST':
         title = request.form['title']
-        lemmata = request.form['lemmata']
+        words = request.form['words']
         error = None
 
         if not title:
@@ -47,40 +47,40 @@ def create():
         else:
             db = get_db()
             db.execute(
-                'INSERT INTO word_lists (title, lemmata, author_id)'
+                'INSERT INTO wordlists (title, words, author_id)'
                 ' VALUES (?, ?, ?)',
-                (title, lemmata, g.user['id'])
+                (title, words, g.user['id'])
             )
             db.commit()
-            return redirect(url_for('word_lists.index'))
+            return redirect(url_for('wordlists.index'))
 
-    return render_template('word_lists/create.html')
+    return render_template('wordlists/create.html')
 
 
-def get_word_list(id, check_author=True):
-    word_list = get_db().execute(
-        'SELECT wl.id, title, lemmata, created, author_id, username'
-        ' FROM word_lists wl JOIN users u ON wl.author_id = u.id'
+def get_wordlist(id, check_author=True):
+    wordlist = get_db().execute(
+        'SELECT wl.id, title, words, created, author_id, username'
+        ' FROM wordlists wl JOIN users u ON wl.author_id = u.id'
         ' WHERE wl.id = ?',
         (id,)
     ).fetchone()
 
-    if word_list is None:
+    if wordlist is None:
         abort(404, "word list id {0} doesn't exist.".format(id))
 
-    if check_author and word_list['author_id'] != g.user['id']:
+    if check_author and wordlist['author_id'] != g.user['id']:
         abort(403)
 
-    return word_list
+    return wordlist
 
 
 @bp.route('/<int:id>/update', methods=('GET', 'POST'))
 @login_required
 def update(id):
-    word_list = get_word_list(id)
+    wordlist = get_wordlist(id)
     if request.method == 'POST':
         title = request.form['title']
-        lemmata = request.form['lemmata']
+        words = request.form['words']
         error = None
 
         if not title:
@@ -91,31 +91,31 @@ def update(id):
         else:
             db = get_db()
             db.execute(
-                'UPDATE word_lists SET title = ?, lemmata = ?'
+                'UPDATE wordlists SET title = ?, words = ?'
                 ' WHERE id = ?',
-                (title, lemmata, id)
+                (title, words, id)
             )
             db.commit()
-            return redirect(url_for('word_lists.index'))
+            return redirect(url_for('wordlists.index'))
 
-    return render_template('word_lists/update.html', word_list=word_list)
+    return render_template('wordlists/update.html', wordlist=wordlist)
 
 
 @bp.route('/<int:id>/delete', methods=('POST',))
 @login_required
 def delete(id):
-    get_word_list(id)
+    get_wordlist(id)
     db = get_db()
-    db.execute('DELETE FROM word_lists WHERE id = ?', (id,))
+    db.execute('DELETE FROM wordlists WHERE id = ?', (id,))
     db.commit()
-    return redirect(url_for('word_lists.index'))
+    return redirect(url_for('wordlists.index'))
 
 
 @bp.route('/<int:id>/show_similar_ones', methods=('GET', 'POST'))
 @login_required
 def show_similar_ones(id):
-    word_list = get_word_list(id)
-    lemmata = word_list['lemmata'].split("\n")
-    similar_ones = get_similar_tokens(lemmata)
-    return render_template('word_lists/show_similar_ones.html',
-                           word_list=word_list, similar_ones=similar_ones)
+    wordlist = get_wordlist(id)
+    words = wordlist['words'].split("\n")
+    similar_ones = get_similar_tokens(words)
+    return render_template('wordlists/show_similar_ones.html',
+                           wordlist=wordlist, similar_ones=similar_ones)
