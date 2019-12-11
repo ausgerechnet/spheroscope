@@ -5,7 +5,7 @@ from werkzeug.exceptions import abort
 
 from spheroscope.auth import login_required
 from spheroscope.db import get_db
-from ccc.anchors import anchor_query
+import gzip
 import json
 
 
@@ -17,7 +17,7 @@ bp = Blueprint('queries', __name__, url_prefix='/queries')
 def index():
     db = get_db()
     queries = db.execute(
-        'SELECT qu.id, title, query, created, author_id, username, anchors, region, pattern'
+        'SELECT qu.id, title, query, created, author_id, username, anchors, regions, pattern'
         ' FROM queries qu JOIN users u ON qu.author_id = u.id'
         ' ORDER BY created DESC'
     ).fetchall()
@@ -52,7 +52,7 @@ def create():
 
 def get_query(id, check_author=True):
     query = get_db().execute(
-        'SELECT qu.id, title, query, created, author_id, username'
+        'SELECT qu.id, title, query, created, author_id, username, anchors, regions, pattern'
         ' FROM queries qu JOIN users u ON qu.author_id = u.id'
         ' WHERE qu.id = ?',
         (id,)
@@ -63,6 +63,10 @@ def get_query(id, check_author=True):
 
     if check_author and query['author_id'] != g.user['id']:
         abort(403)
+
+    query = dict(query)
+    query['anchors'] = json.loads(query['anchors'])
+    query['regions'] = json.loads(query['regions'])
 
     return query
 
@@ -104,14 +108,30 @@ def update(id):
     return render_template('queries/update.html', query=query)
 
 
+@bp.route('/<int:id>/show_result', methods=('GET', 'POST'))
+@login_required
+def show_result(id):
+
+    query = get_query(id)
+    path_result = "instance/results/" + query['title'] + ".query.json.gz"
+    with gzip.open(path_result, "rt") as f:
+        result = json.loads(f.read())
+    print(result.keys())
+    return render_template('queries/show_result.html', query=query, result=result)
+
+
 @bp.route('/<int:id>/run', methods=('GET', 'POST'))
 @login_required
 def run(id):
-
-    # query = get_query(id)
-    path_test = "/home/ausgerechnet/projects/spheroscope/app/instance/queries/example.json"
-    with open(path_test, "rt") as f:
-        query = json.load(f)
-    conc = anchor_query(query['query'], query['anchors'], query['regions'])
-    return json.dumps(conc)
-    # return render_template('queries/run.html', query=query, concordances=conc)
+    from ccc.anchors import anchor_query
+    from ccc.cwb import CWBEngine
+    ENGINE = CWBEngine(
+        {'name': 'BREXIT_V20190522',
+         'lib_path': "/home/ausgerechnet/projects/spheroscope/app/instance/lib/"},
+        "/home/ausgerechnet/corpora/cwb/registry"
+    )
+    query = get_query(id)
+    conc = anchor_query(ENGINE,
+                        query['query'], query['anchors'], query['regions'],
+                        'tweet')
+    return render_template('queries/run.html', query=query, concordances=conc)
