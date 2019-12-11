@@ -5,7 +5,7 @@ from werkzeug.exceptions import abort
 
 from spheroscope.auth import login_required
 from spheroscope.db import get_db
-from spheroscope.cwb_utils import anchor_query
+from ccc.anchors import anchor_query
 import json
 
 
