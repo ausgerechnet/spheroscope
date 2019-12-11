@@ -1,22 +1,25 @@
-# from gensim.models.keyedvectors import KeyedVectors
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, url_for
 )
 from werkzeug.exceptions import abort
 
+from pymagnitude import Magnitude
+from pandas import DataFrame
+
 from spheroscope.auth import login_required
 from spheroscope.db import get_db
+from ccc.cwb import CWBEngine
+
 
 bp = Blueprint('wordlists', __name__, url_prefix='/word-lists')
 
-# EMBEDDINGS = KeyedVectors.load("/home/ausgerechnet/corpora/wectors/gensim/enTwitterWord2Vec")
 
-
-def get_similar_tokens(tokens, number=20):
-    # similar = EMBEDDINGS.most_similar(positive=tokens, topn=number)
-    similar = [('test',), ('test',)]
-    similar = "\n".join([s[0] for s in similar])
-    return similar
+path_embeddings = "/home/ausgerechnet/corpora/wectors/magnitude/deTwitterWord2Vec.magnitude"
+EMBEDDINGS = Magnitude(path_embeddings)
+ENGINE = CWBEngine(
+    {'name': 'BREXIT_V20190522'},
+    "/home/ausgerechnet/corpora/cwb/registry"
+)
 
 
 @bp.route('/')
@@ -114,8 +117,31 @@ def delete(id):
 @bp.route('/<int:id>/show_similar_ones', methods=('GET', 'POST'))
 @login_required
 def show_similar_ones(id):
+
+    # get lemmas
     wordlist = get_wordlist(id)
     words = wordlist['words'].split("\n")
-    similar_ones = get_similar_tokens(words)
-    return render_template('wordlists/show_similar_ones.html',
-                           wordlist=wordlist, similar_ones=similar_ones)
+
+    # get frequencies
+    freq_original = ENGINE.get_marginals(words, p_att="lemma", regex=True)
+    freq_original.columns = ["frequency"]
+
+    # get similar ones
+    number = 200
+    similar = EMBEDDINGS.most_similar(positive=words, topn=number)
+    similar_ones = [s[0] for s in similar]
+
+    # get frequencies
+    freq_similar = ENGINE.get_marginals(similar_ones, p_att="lemma")
+    freq_similar.columns = ["frequency"]
+    freq_similar['similarity'] = [s[1] for s in similar]
+    freq_similar = freq_similar.loc[freq_similar.frequency > 1]
+    freq_similar.sort_values(by="frequency", inplace=True, ascending=False)
+
+    # render result
+    return render_template(
+        'wordlists/show_similar_ones.html',
+        wordlist=wordlist,
+        original=freq_original.to_html(escape=False),
+        similar=freq_similar.to_html(escape=False)
+    )

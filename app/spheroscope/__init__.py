@@ -2,8 +2,6 @@ import os
 
 from flask import Flask
 
-EMBEDDINGS = "/home/ausgerechnet/corpora/wectors/magnitude/enTwitterWord2Vec.magnitude"
-
 
 def create_app(test_config=None):
     # create and configure the app
