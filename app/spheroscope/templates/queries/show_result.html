@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>{% block title %}"{{ query['title'] }}"
+  (pattern "{{ query['pattern']}}") {% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<article class="post">
+  "{{ query['query'] }}"
+  <hr>
+  <b>Number of matches:</b> "{{ result['nr_matches'] }}"<br>
+  <b>Anchors:</b> "{{ result['anchors'] }}"<br>
+  <b>Regions:</b> "{{ result['regions'] }}"<br>
+  <hr>
+  <b>Anchor words:</b> "{{ result['anchor_words'] }}"<br>
+
+</article>
+{% endblock %}

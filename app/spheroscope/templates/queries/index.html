@@ -16,12 +16,16 @@
       <div class="about">by {{ query['username'] }} on {{ query['created'].strftime('%Y-%m-%d') }}</div>
     </div>
     {% if g.user['id'] == query['author_id'] %}
-    <a class="action" href="{{ url_for('queries.update',
-			    id=query['id']) }}">edit</a>
+    <a class="action" href="{{ 
+			    url_for('queries.update', id=query['id']) 
+			    }}">edit</a>
     <a class="action" href="{{
-        url_for('queries.run', id=query['id'])
-        }}">run query</a>
-        {% endif %}
+			    url_for('queries.run', id=query['id'])
+			    }}">run query</a>
+    <a class="action" href="{{
+			    url_for('queries.show_result', id=query['id'])
+			    }}">show result</a>
+    {% endif %}
   </header>
   <p class="body">{{ query['query'] }}</p>
 </article>
