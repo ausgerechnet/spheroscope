@@ -4,7 +4,6 @@ from flask import (
 from werkzeug.exceptions import abort
 
 from pymagnitude import Magnitude
-from pandas import DataFrame
 
 from spheroscope.auth import login_required
 from spheroscope.db import get_db
