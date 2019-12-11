@@ -17,7 +17,7 @@ bp = Blueprint('queries', __name__, url_prefix='/queries')
 def index():
     db = get_db()
     queries = db.execute(
-        'SELECT qu.id, title, query, created, author_id, username'
+        'SELECT qu.id, title, query, created, author_id, username, anchors, region, pattern'
         ' FROM queries qu JOIN users u ON qu.author_id = u.id'
         ' ORDER BY created DESC'
     ).fetchall()
