@@ -1,6 +1,6 @@
 venv/
 
-app/instance/
+app/instance/spheroscope.sqlite
 
 *.pyc
 __pycache__/
