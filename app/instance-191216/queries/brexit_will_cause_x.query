@@ -1,0 +1,45 @@
+{
+    "query": "<np>@0:[::](\".?bre+xit\"%c | [pos_simple=\"Z|#\"])@1:[]*</np> \"will|would\" [lemma = $verbs_cause | lemma = \"be|make\"] [word!=\"\\.|http.+\"]{,3} @2:[::][lemma = $nouns_gen_negative | lemma =$nouns_cog_negative] (<pp>[]*</pp> | <vp>[]*</vp> | <np>[word!=\"\\.\"]*</np> | [pos_simple = \"Z|@|#\"])*@3:[::]",
+    "pattern": 2,
+    "name": "brexit_will_cause_x",
+    "anchors": [
+        [
+            0,
+            0,
+            null,
+            null
+        ],
+        [
+            1,
+            0,
+            null,
+            null
+        ],
+        [
+            2,
+            0,
+            null,
+            null
+        ],
+        [
+            3,
+            -1,
+            null,
+            null
+        ]
+    ],
+    "regions": [
+        [
+            0,
+            1,
+            null,
+            null
+        ],
+        [
+            2,
+            3,
+            null,
+            null
+        ]
+    ]
+}

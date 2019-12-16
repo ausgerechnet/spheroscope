@@ -1,0 +1,45 @@
+{
+    "query": "<np>[]* @0:[pos_simple=\"N\"] @1:[]*</np> [lemma =\"be\"]? (<advp>[]*[lemma=$adv_usually][]*</advp>)? <vp>[lemma=\"indicate|imply|suggest|point\"] []*</vp> \"that\"? <np>@2:[::][]*</np> (/region[advp]|/region[pp]| /region[np]| /region[vp])*@3:[::]",
+    "pattern": 12,
+    "name": "pattern_12_np_suggests_y",
+    "anchors": [
+        [
+            0,
+            0,
+            null,
+            null
+        ],
+        [
+            1,
+            0,
+            null,
+            null
+        ],
+        [
+            2,
+            0,
+            null,
+            null
+        ],
+        [
+            3,
+            -1,
+            null,
+            null
+        ]
+    ],
+    "regions": [
+        [
+            0,
+            1,
+            null,
+            null
+        ],
+        [
+            2,
+            3,
+            null,
+            null
+        ]
+    ]
+}

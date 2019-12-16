@@ -1,0 +1,32 @@
+{
+    "query": "/nobody[] <vp>[]*@0:[lemma = $verbs_cog_positive] []* @1:[]</vp> <np>@2:[::][]* [lemma = $adj_cog_negative]* [lemma = $nouns_person_negative][]* @3:[]</np>",
+    "pattern": -1,
+    "name": "nobody_x_a_y",
+    "anchors": [
+        [
+            0,
+            0,
+            null,
+            null
+        ],
+        [
+            1,
+            0,
+            null,
+            null
+        ],
+        [
+            2,
+            0,
+            null,
+            null
+        ],
+        [
+            3,
+            0,
+            null,
+            null
+        ]
+    ],
+    "regions": []
+}

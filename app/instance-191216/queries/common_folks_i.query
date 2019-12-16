@@ -1,0 +1,51 @@
+{
+    "query": "<np>[pos_ner!=\"WRB\"]* @0:[pos_simple=\"N|Z|#|@\" | pos_ner=\"PPER\"] []*</np> [lemma=\"be\"] \"just\"? @1:[::]<np>[]* \"common|regular|normal|average|ordinary\" [lemma =$nouns_person_common] []*</np>@2:[::] @3:[::](<np>[]*</np> | <pp>[]*</pp> | <vp>[]*</vp> (/region[prt])? | /region[advp])+@4:[::]",
+    "pattern": 24,
+    "name": "common_folks_i",
+    "anchors": [
+        [
+            0,
+            0,
+            null,
+            null
+        ],
+        [
+            1,
+            0,
+            null,
+            null
+        ],
+        [
+            2,
+            -1,
+            null,
+            null
+        ],
+        [
+            3,
+            0,
+            null,
+            null
+        ],
+        [
+            4,
+            -1,
+            null,
+            null
+        ]
+    ],
+    "regions": [
+        [
+            1,
+            2,
+            null,
+            null
+        ],
+        [
+            3,
+            4,
+            null,
+            null
+        ]
+    ]
+}

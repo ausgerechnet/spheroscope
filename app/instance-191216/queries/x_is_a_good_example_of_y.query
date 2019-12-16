@@ -1,0 +1,69 @@
+{
+    "query": "<np>@0:[::][]* @1:[]</np> [lemma =\"be\"] <np>[]* [lemma = \"example|instance\"]</np> [word = \"for|of\"] <np>@2:[::][]* @3:[]</np> @4[::](<vp>[]*</vp> /ap[]?| /that_wh_clause[]? | <pp>[]*</pp> |<np>[]*</np>)+@5[::]",
+    "pattern": -1,
+    "name": "x_is_a_good_example_of_y",
+    "anchors": [
+        [
+            0,
+            0,
+            null,
+            null
+        ],
+        [
+            1,
+            0,
+            null,
+            null
+        ],
+        [
+            2,
+            0,
+            null,
+            null
+        ],
+        [
+            3,
+            0,
+            null,
+            null
+        ],
+        [
+            4,
+            0,
+            null,
+            null
+        ],
+        [
+            5,
+            -1,
+            null,
+            null
+        ]
+    ],
+    "regions": [
+        [
+            0,
+            1,
+            null,
+            null
+        ],
+        [
+            2,
+            3,
+            null,
+            null
+        ],
+        [
+            2,
+            5,
+            null,
+            null
+        ],
+        [
+            4,
+            5,
+            null,
+            null
+        ]
+    ]
+}

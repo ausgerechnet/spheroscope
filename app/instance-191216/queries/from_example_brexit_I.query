@@ -1,0 +1,45 @@
+{
+    "query": "<np>@0:[::][]*[lemma=\"case|issue|institution|something|stuff|system|thing\" | lemma = $nouns_person_common | lemma = $nouns_person_negative | lemma = $nouns_person_profession | lemma = $nouns_person_origin | lemma = $nouns_person_support] []*</np> (\"such\" \"as\"|\"like\") ([word=\".*brexit.*\"%c] | <np>[]*</np>)+@1:[::] <vp>[]* [lemma=\"be\"] []*</vp> @2:[::](<np>[word != \"\\.|http.+|\\@\"]*</np> | <vp>[]*</vp> | <pp>[]*</pp> | /ap[] | [pos_simple=\"R\"])+ [pos_simple=\"#\"]?@3:[::]",
+    "pattern": 25,
+    "name": "from_example_brexit_I",
+    "anchors": [
+        [
+            0,
+            0,
+            null,
+            null
+        ],
+        [
+            1,
+            -1,
+            null,
+            null
+        ],
+        [
+            2,
+            0,
+            null,
+            null
+        ],
+        [
+            3,
+            -1,
+            null,
+            null
+        ]
+    ],
+    "regions": [
+        [
+            0,
+            1,
+            null,
+            null
+        ],
+        [
+            2,
+            3,
+            null,
+            null
+        ]
+    ]
+}

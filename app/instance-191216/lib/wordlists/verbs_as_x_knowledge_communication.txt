@@ -1,0 +1,11 @@
+ask
+ensure
+extend
+find
+know
+tell
+think
+realize
+recognize
+say
+understand
