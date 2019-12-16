@@ -1,7 +1,7 @@
 # spheroscope #
 spheroscope is a corpus viewer and analyzer. The backend is based on
 the Concordance and Collocation Computer
-([CCC]([https://gitlab.cs.fau.de/pheinrich/ccc])), which runs anchored
+([CCC](https://gitlab.cs.fau.de/pheinrich/ccc)), which runs anchored
 CQPqueries.
 
 ## requirements ##
