@@ -1,0 +1,5 @@
+bad
+dark
+high
+poor
+ugly

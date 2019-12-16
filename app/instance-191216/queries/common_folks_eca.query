@@ -1,0 +1,51 @@
+{
+    "query": "<np>[pos_simple=\"D\"]? @0:\"common|regular|normal|average|ordinary\" @1:[lemma=$nouns_person_common | lemma = $nouns_person_support | lemma = $nouns_person_origin | lemma = $nouns_person_profession]  </np> (<pp>[]*</pp>)? [pos_simple=\"I|P\"]? (/ap[])* <vp>@2:[::][word != \"will\"]*</vp>@3:[::] (<vp>[]*</vp> | <pp>[]*</pp> | <np>[]*</np> | /ap[] | [pos_simple=\"D|I|R|#\" & word!=\"\\.|\\!\"])+ @4:[::]",
+    "pattern": -1,
+    "name": "common_folks_eca",
+    "anchors": [
+        [
+            0,
+            0,
+            null,
+            null
+        ],
+        [
+            1,
+            0,
+            null,
+            null
+        ],
+        [
+            2,
+            0,
+            null,
+            null
+        ],
+        [
+            3,
+            -1,
+            null,
+            null
+        ],
+        [
+            4,
+            -1,
+            null,
+            null
+        ]
+    ],
+    "regions": [
+        [
+            2,
+            3,
+            null,
+            null
+        ],
+        [
+            2,
+            4,
+            null,
+            null
+        ]
+    ]
+}

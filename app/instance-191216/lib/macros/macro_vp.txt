@@ -1,0 +1,21 @@
+MACRO to_inf(0)
+(
+[pos_simple = "V"]? [word = "to"] [pos_simple = "V"]
+)
+;
+
+MACRO that_wh_clause(0)
+(
+[word = "how|that|when|where|who"] (/np[] [pos_simple ="V"]){1,2}
+)
+;
+
+MACRO vp(0)
+(
+/to_inf[] /np[]?
+|
+([pos_simple = "V"]+ /np[]?)+
+|
+/that_wh_clause[]
+)
+; 

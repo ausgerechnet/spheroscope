@@ -1,0 +1,75 @@
+{
+    "query": "<np>@0[]* @1:[]</np> <vp>@2:[]* @3:[]</vp> (/be_ap[] | [pos_simple = \"R\"] | <np>[]*</np> | <vp>[]*</vp> | <pp>[]*</pp> | <advp> []* </advp>)+ @4:[::] \",\" \"as\"? <np> @5:[]* [lemma= $person_any | pos_simple = \"Z\"]+ @6:[]* </np> <vp>[lemma = $verbs_communication] [pos_simple=\"#\"]*",
+    "pattern": 0,
+    "name": "x_is_y_z_says",
+    "anchors": [
+        [
+            0,
+            0,
+            null,
+            null
+        ],
+        [
+            1,
+            0,
+            null,
+            null
+        ],
+        [
+            2,
+            0,
+            null,
+            null
+        ],
+        [
+            3,
+            0,
+            null,
+            null
+        ],
+        [
+            4,
+            -1,
+            null,
+            null
+        ],
+        [
+            5,
+            0,
+            null,
+            null
+        ],
+        [
+            6,
+            -1,
+            null,
+            null
+        ]
+    ],
+    "regions": [
+        [
+            0,
+            1,
+            null,
+            null
+        ],
+        [
+            2,
+            3,
+            null,
+            null
+        ],
+        [
+            2,
+            4,
+            null,
+            null
+        ],
+        [
+            5,
+            6,
+            null,
+            null
+        ]
+    ]
+}

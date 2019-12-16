@@ -1,0 +1,45 @@
+{
+    "query": "<np>[]* @0[lemma = $nouns_experts | lemma = $nouns_person_profession | pos_simple = \"Z\"]+ @1:[]*</np> (/region[advp])? <vp> []* [lemma = $verbs_communication] []*</vp> \"for\" @2:[::] /region[np] (<vp>\"to\" @2:[]*</vp>)+ (<np>[word != \"http.+|@\"]* </np> | /region[pp] | /region[vp])+ @3:[::]",
+    "pattern": 3,
+    "name": "x_calls_for_y_to_z",
+    "anchors": [
+        [
+            0,
+            0,
+            null,
+            null
+        ],
+        [
+            1,
+            0,
+            null,
+            null
+        ],
+        [
+            2,
+            0,
+            null,
+            null
+        ],
+        [
+            3,
+            -1,
+            null,
+            null
+        ]
+    ],
+    "regions": [
+        [
+            0,
+            1,
+            null,
+            null
+        ],
+        [
+            2,
+            3,
+            null,
+            null
+        ]
+    ]
+}

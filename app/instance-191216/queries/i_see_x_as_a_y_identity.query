@@ -1,0 +1,81 @@
+{
+    "query": "<np>[word != \"\\.\"]* @0[pos_simple = \"J|N|Z|P\"] []* </np> @1:[::] [word = \"call|identify|qualify|see|view\"] @2:[::](<np>[]*</np>)+ @3:[::] \"as\" @4:[::] <np>\"a\" []*</np> @5:[::]  @6:[::](<np>[]*</np> | <vp>[]*</vp> | <pp>[]*</pp> )* @7:[::] [pos_simple = \"#\"]?",
+    "pattern": 24,
+    "name": "i_see_x_as_a_y_identity",
+    "anchors": [
+        [
+            0,
+            0,
+            null,
+            null
+        ],
+        [
+            1,
+            -1,
+            null,
+            null
+        ],
+        [
+            2,
+            0,
+            null,
+            null
+        ],
+        [
+            3,
+            -1,
+            null,
+            null
+        ],
+        [
+            4,
+            0,
+            null,
+            null
+        ],
+        [
+            5,
+            -1,
+            null,
+            null
+        ],
+        [
+            6,
+            0,
+            null,
+            null
+        ],
+        [
+            7,
+            -1,
+            null,
+            null
+        ]
+    ],
+    "regions": [
+        [
+            0,
+            1,
+            null,
+            null
+        ],
+        [
+            2,
+            3,
+            null,
+            null
+        ],
+        [
+            4,
+            5,
+            null,
+            null
+        ],
+        [
+            6,
+            7,
+            null,
+            null
+        ]
+    ]
+}

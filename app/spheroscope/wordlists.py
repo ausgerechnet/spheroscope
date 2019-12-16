@@ -1,5 +1,5 @@
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, url_for
+    Blueprint, flash, g, redirect, render_template, request, url_for, current_app
 )
 from werkzeug.exceptions import abort
 
@@ -11,14 +11,6 @@ from ccc.cwb import CWBEngine
 
 
 bp = Blueprint('wordlists', __name__, url_prefix='/word-lists')
-
-
-path_embeddings = "/home/ausgerechnet/corpora/wectors/magnitude/deTwitterWord2Vec.magnitude"
-EMBEDDINGS = Magnitude(path_embeddings)
-ENGINE = CWBEngine(
-    {'name': 'BREXIT_V20190522'},
-    "/home/ausgerechnet/corpora/cwb/registry"
-)
 
 
 @bp.route('/')
@@ -117,6 +109,15 @@ def delete(id):
 @login_required
 def show_similar_ones(id):
 
+    embeddings = Magnitude(current_app.config['EMBEDDINGS'])
+    ENGINE = CWBEngine(
+        {
+            'name': current_app.config['CORPUS_NAME'],
+            'lib_path': current_app.config['LIB_PATH']
+        },
+        current_app.config['REGISTRY_PATH']
+    )
+
     # get lemmas
     wordlist = get_wordlist(id)
     words = wordlist['words'].split("\n")
@@ -127,7 +128,7 @@ def show_similar_ones(id):
 
     # get similar ones
     number = 200
-    similar = EMBEDDINGS.most_similar(positive=words, topn=number)
+    similar = embeddings.most_similar(positive=words, topn=number)
     similar_ones = [s[0] for s in similar]
 
     # get frequencies

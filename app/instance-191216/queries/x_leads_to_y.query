@@ -1,0 +1,45 @@
+{
+    "query": "<np>@0:[::][pos_simple!=\"P\"] @1:[]*</np> [lemma = $verbs_cause] [pos_simple=\"R\"]? <np>@2:[::][]*</np> (<np>[]*</np> | <vp>[]*</vp> | <pp>[]*</pp>)+@3:[::]",
+    "pattern": 1,
+    "name": "x_leads_to_y",
+    "anchors": [
+        [
+            0,
+            0,
+            null,
+            null
+        ],
+        [
+            1,
+            0,
+            null,
+            null
+        ],
+        [
+            2,
+            0,
+            null,
+            null
+        ],
+        [
+            3,
+            -1,
+            null,
+            null
+        ]
+    ],
+    "regions": [
+        [
+            0,
+            1,
+            null,
+            null
+        ],
+        [
+            2,
+            3,
+            null,
+            null
+        ]
+    ]
+}

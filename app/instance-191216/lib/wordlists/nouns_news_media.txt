@@ -1,0 +1,16 @@
+article
+campaign
+facebook
+feed
+internet
+interview
+media
+news
+newsfeed
+politics
+poll
+report
+timeline
+twitter
+rhetoric
+strategy
