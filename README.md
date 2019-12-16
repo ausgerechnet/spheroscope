@@ -15,7 +15,11 @@ We use `pipenv`. install necessary modules via
 ```
 
 For running CQP queries (the default on the master branch), you will
-have to install the CCC module separately.
+have to download and install the CCC module separately via
+
+```
+pipenv install ~/path/to/CCC/
+```
 
 ## flask server ##
 start the app like so:
