@@ -24,6 +24,7 @@ pandas = "*"
 cwb-python = "*"
 stop-words = "*"
 exrex = "*"
+ccc = {path = "/home/ausgerechnet/tools/CCC"}
 
 [dev-packages]
 pytest = "==4.1.1"
