@@ -1,0 +1,33 @@
+{
+    "query": "\"how\" [lemma=\"dare\"] @0:[pos_simple=\"P\"] @1:[::](/region[advp])* <vp>[]* [lemma = $verbs_cog_positive | lemma = $verbs_gen_positive] []*</vp> ([pos_simple=\"A\"] | /region[advp] | /region[np] | /region[pp] | /region[vp])+ @2:[::]",
+    "pattern": 4,
+    "name": "how_dare_you_prop_strawman",
+    "anchors": [
+        [
+            0,
+            0,
+            null,
+            null
+        ],
+        [
+            1,
+            0,
+            null,
+            null
+        ],
+        [
+            2,
+            -1,
+            null,
+            null
+        ]
+    ],
+    "regions": [
+        [
+            1,
+            2,
+            null,
+            null
+        ]
+    ]
+}

@@ -1,0 +1,10 @@
+MACRO person_any(0)
+define $nouns_person_common <"nouns_person_common.txt";
+define $nouns_person_negative <"nouns_person_negative.txt";
+define $nouns_person_profession <"nouns_person_profession.txt";
+define $wordlist_entities <"wordlist_entities.txt";
+define $person_any = $nouns_person_common;
+define $person_any += $nouns_person_negative;
+define $person_any += $nouns_person_profession;
+;
+

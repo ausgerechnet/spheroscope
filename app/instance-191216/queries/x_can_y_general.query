@@ -1,0 +1,45 @@
+{
+    "query": "[word!=\"if\"] <np>@0:[::][word!=\"@.+\"]*</np> (/be_ap[] | <np>[]*</np> | <pp>[]*</pp> | <vp>[]*</vp>)*@1:[] \"can|could|may|might\" [pos_simple=\"R\" & word != \"not\"]* @2:[::](/be_ap[] | <np>[]*</np> | <pp>[]*</pp> | <vp>[]*</vp>)+ @3:[::]",
+    "pattern": 11,
+    "name": "x_can_y_general",
+    "anchors": [
+        [
+            0,
+            0,
+            null,
+            null
+        ],
+        [
+            1,
+            0,
+            null,
+            null
+        ],
+        [
+            2,
+            0,
+            null,
+            null
+        ],
+        [
+            3,
+            -1,
+            null,
+            null
+        ]
+    ],
+    "regions": [
+        [
+            0,
+            1,
+            null,
+            null
+        ],
+        [
+            2,
+            3,
+            null,
+            null
+        ]
+    ]
+}

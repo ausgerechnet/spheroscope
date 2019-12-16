@@ -1,0 +1,63 @@
+{
+    "query": "\"if\" (<np>@0:[::][]*</np>)+ @1:[::] <vp>@2:[]*</vp> (/region[vp] | <np>[word != \"http.+|\\..+\"]*</np> | /region[advp] | /region[pp] | /region[adjp] | /be_ap[])* @3:[::] [word =\",\"]? \"so\" \"can\" <np>@4:[::][]*</np>@5:[::]",
+    "pattern": 11,
+    "name": "if_x_can_y_y_can_z_rhetfromopposition",
+    "anchors": [
+        [
+            0,
+            0,
+            null,
+            null
+        ],
+        [
+            1,
+            -1,
+            null,
+            null
+        ],
+        [
+            2,
+            0,
+            null,
+            null
+        ],
+        [
+            3,
+            -1,
+            null,
+            null
+        ],
+        [
+            4,
+            0,
+            null,
+            null
+        ],
+        [
+            5,
+            -1,
+            null,
+            null
+        ]
+    ],
+    "regions": [
+        [
+            0,
+            1,
+            null,
+            null
+        ],
+        [
+            2,
+            3,
+            null,
+            null
+        ],
+        [
+            4,
+            5,
+            null,
+            null
+        ]
+    ]
+}

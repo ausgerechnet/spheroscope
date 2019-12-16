@@ -1,4 +1,6 @@
 import sqlite3
+import json
+from glob import glob
 
 import click
 from flask import current_app, g
@@ -38,14 +40,62 @@ def init_db():
     db.commit()
 
 
+def import_brexit():
+
+    db = get_db()
+
+    query_files = glob("instance-191216/queries/*.query")
+    insert = (
+        "INSERT INTO queries "
+        "(author_id, title, query, anchors, regions, pattern) "
+        "VALUES (?, ?, ?, ?, ?, ?);"
+    )
+    for p in query_files:
+        with open(p, "rt") as f:
+            query = json.loads(f.read())
+        db.execute(insert, (1,
+                            query['name'],
+                            query['query'],
+                            json.dumps(query['anchors']),
+                            json.dumps(query['regions']),
+                            query['pattern']))
+    db.commit()
+    print("imported queries")
+
+    wordlists = glob("instance-191216/lib/wordlists/*.txt")
+    insert = (
+        "INSERT INTO wordlists "
+        "(title, words, author_id) "
+        "VALUES (?, ?, ?);"
+    )
+
+    for p in wordlists:
+        title = p.split("/")[-1].split(".")[0]
+        words = set()
+        with open(p, "rt") as f:
+            for line in f:
+                words.add(line.rstrip())
+        db.execute(insert, (title, "\n".join(words), 1))
+    db.commit()
+
+    print("imported wordlists")
+
+
 @click.command('init-db')
 @with_appcontext
 def init_db_command():
     """Clear the existing data and create new tables."""
     init_db()
-    click.echo('Initialized the database.')
+    click.echo('initialized database')
+
+
+@click.command('import-brexit')
+@with_appcontext
+def import_brexit_command():
+    import_brexit()
 
 
 def init_app(app):
     app.teardown_appcontext(close_db)
     app.cli.add_command(init_db_command)
+    app.cli.add_command(import_brexit_command)

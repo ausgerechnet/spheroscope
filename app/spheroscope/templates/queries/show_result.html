@@ -1,19 +1,35 @@
 {% extends 'base.html' %}
 
 {% block header %}
-<h1>{% block title %}"{{ query['title'] }}"
-  (pattern "{{ query['pattern']}}") {% endblock %}</h1>
-{% endblock %}
+<h1>{% block title %}"{{ result['name'] }}" (pattern {{
+  result['pattern']}}, {{ result['nr_matches'] }} matches) {% endblock
+  %}</h1> {% endblock %}
 
 {% block content %}
 <article class="post">
   "{{ query['query'] }}"
   <hr>
-  <b>Number of matches:</b> "{{ result['nr_matches'] }}"<br>
-  <b>Anchors:</b> "{{ result['anchors'] }}"<br>
-  <b>Regions:</b> "{{ result['regions'] }}"<br>
+  <b>Anchors:</b> {{ result['anchors'] | safe }} <br>
+  <b>Regions:</b> {{ result['regions'] | safe }} <br>
   <hr>
-  <b>Anchor words:</b> "{{ result['anchor_words'] }}"<br>
+  <h2>Matches:</h2><br>
+  {% for match in result['matches'] %}
+  <b>{{match['position']}}:</b> "{{match['full'] | safe}}"
+  <br>
+  {% endfor %}
+  <hr>
+  <b>Anchor words:</b>
+  {% for anchor in result['anchor_words'] %}
+  {{ result['anchor_words'][anchor] | safe }}
+  <br>
+  {% endfor %}
+  <hr>
+  <b>Region words:</b>
+  {% for region in result['region_words'] %}
+  {{ result['region_words'][region] | safe }}
+  <br>
+  {% endfor %}
+  <hr>
 
 </article>
 {% endblock %}

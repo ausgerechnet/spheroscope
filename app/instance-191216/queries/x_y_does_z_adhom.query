@@ -1,0 +1,63 @@
+{
+    "query": "<np> []* @2:[::][lemma = $adj_cog_negative]+ []* @3:[::] @0:[lemma = $person_any|pos_simple = \"Z\"]+ @1:[]*</np> <vp>@4:[]* \".+ing\" []*</vp> (/region[np] | /region[pp] | /region[vp])+ @5:[::]",
+    "pattern": -1,
+    "name": "x_y_does_z_adhom",
+    "anchors": [
+        [
+            2,
+            0,
+            null,
+            null
+        ],
+        [
+            3,
+            -1,
+            null,
+            null
+        ],
+        [
+            0,
+            0,
+            null,
+            null
+        ],
+        [
+            1,
+            0,
+            null,
+            null
+        ],
+        [
+            4,
+            0,
+            null,
+            null
+        ],
+        [
+            5,
+            -1,
+            null,
+            null
+        ]
+    ],
+    "regions": [
+        [
+            0,
+            1,
+            null,
+            null
+        ],
+        [
+            2,
+            3,
+            null,
+            null
+        ],
+        [
+            4,
+            5,
+            null,
+            null
+        ]
+    ]
+}

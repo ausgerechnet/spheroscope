@@ -1,0 +1,45 @@
+{
+    "query": "@0:[pos_ner = \"USR|NNP\" | word = \"@.+\"]+ @1:[::]\",\"? \"you\" \"do\"? /region[advp]? \"know|realise|understand\" \"that\"? @2:[::](/region[np])+ /region[vp] (/region[advp] | /region[np] | /region[pp] | /region[vp])+ \",\"? (\"right\" | \"don't\" \"you\") @3:[::]",
+    "pattern": 0,
+    "name": "you_do_know_x_strawman",
+    "anchors": [
+        [
+            0,
+            0,
+            null,
+            null
+        ],
+        [
+            1,
+            -1,
+            null,
+            null
+        ],
+        [
+            2,
+            0,
+            null,
+            null
+        ],
+        [
+            3,
+            -1,
+            null,
+            null
+        ]
+    ],
+    "regions": [
+        [
+            0,
+            1,
+            null,
+            null
+        ],
+        [
+            2,
+            3,
+            null,
+            null
+        ]
+    ]
+}

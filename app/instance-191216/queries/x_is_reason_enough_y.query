@@ -1,0 +1,45 @@
+{
+    "query": "@2:[::](<np>[]*</np> (<vp>[]*</vp> | <pp>[]*</pp> | /be_ap[])*)+ @3:[] (<vp>[]*</vp>)? [lemma = \"be\"] \"reason\" \"enough\" <vp>@0:[::][]*</vp> (<np>[]*</np> | <vp>[]*</vp> | <pp>[]*</pp> | /be_ap[])*@1:[::]",
+    "pattern": 4,
+    "name": "x_is_reason_enough_y",
+    "anchors": [
+        [
+            2,
+            0,
+            null,
+            null
+        ],
+        [
+            3,
+            0,
+            null,
+            null
+        ],
+        [
+            0,
+            0,
+            null,
+            null
+        ],
+        [
+            1,
+            -1,
+            null,
+            null
+        ]
+    ],
+    "regions": [
+        [
+            0,
+            1,
+            null,
+            null
+        ],
+        [
+            2,
+            3,
+            null,
+            null
+        ]
+    ]
+}

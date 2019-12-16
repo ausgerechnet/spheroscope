@@ -1,0 +1,63 @@
+{
+    "query": "<np> []* @0[lemma = $nouns_person_common | lemma = $nouns_person_profession]+ @1:[::] []*</np>  \"like\" \"I|me|myself\" @2:[::]<vp>[]*</vp> @3:[::] @4[::](<np>[]*</np> | <vp>[]*</vp> | <pp>[]*</pp> | [pos_simple=\"R\"] | /ap[])*@5:[::]",
+    "pattern": 25,
+    "name": "x_like_me_y_postoknow",
+    "anchors": [
+        [
+            0,
+            0,
+            null,
+            null
+        ],
+        [
+            1,
+            -1,
+            null,
+            null
+        ],
+        [
+            2,
+            0,
+            null,
+            null
+        ],
+        [
+            3,
+            -1,
+            null,
+            null
+        ],
+        [
+            4,
+            0,
+            null,
+            null
+        ],
+        [
+            5,
+            -1,
+            null,
+            null
+        ]
+    ],
+    "regions": [
+        [
+            0,
+            1,
+            null,
+            null
+        ],
+        [
+            2,
+            3,
+            null,
+            null
+        ],
+        [
+            4,
+            5,
+            null,
+            null
+        ]
+    ]
+}

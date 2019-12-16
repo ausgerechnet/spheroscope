@@ -1,0 +1,45 @@
+{
+    "query": "<np>@0:[pos_simple=\"L|N|P|Z|#\"] []*</np> @1:[::] []* \"as\" \"all|the|any\" \"next|old|other\" @2:[::](/ap[])* ([lemma=$nouns_person_common] | /region[ner])+ @3:[::]",
+    "pattern": 25,
+    "name": "common_folks_iii",
+    "anchors": [
+        [
+            0,
+            0,
+            null,
+            null
+        ],
+        [
+            1,
+            -1,
+            null,
+            null
+        ],
+        [
+            2,
+            0,
+            null,
+            null
+        ],
+        [
+            3,
+            -1,
+            null,
+            null
+        ]
+    ],
+    "regions": [
+        [
+            0,
+            1,
+            null,
+            null
+        ],
+        [
+            2,
+            3,
+            null,
+            null
+        ]
+    ]
+}
