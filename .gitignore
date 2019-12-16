@@ -1,9 +1,9 @@
 venv/
 
+app/instance/
+
 *.pyc
 __pycache__/
-
-instance/
 
 .pytest_cache/
 .coverage
@@ -15,3 +15,5 @@ build/
 
 # emacs backup files
 *~
+
+Pipfile.lock

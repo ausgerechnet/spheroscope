@@ -1,0 +1,39 @@
+{
+    "query": "(<np>@0:[::][]*</np> | <vp>[]*</vp> | [pos_simple=\"R\" & lemma !=\"not\"])+ @1:[::] ([lemma=\"be\"] | /be_ap[]) (/region[advp])? <np> \"a|the\" (/ap[])+ []* \"chance|factor|force|opportunity|path|step|way\" []* </np> \"in|to|towards\" @2:[::](/region[np] | /region[pp] | /region[vp] | /region[advp])+@3:[::]",
+    "pattern": 3,
+    "name": "practical_inference",
+    "anchors": [
+        [
+            0,
+            0,
+            null,
+            null
+        ],
+        [
+            1,
+            0,
+            null,
+            null
+        ],
+        [
+            2,
+            0,
+            null,
+            null
+        ],
+        [
+            3,
+            0,
+            null,
+            null
+        ]
+    ],
+    "regions": [
+        [
+            0,
+            1,
+            null,
+            null
+        ]
+    ]
+}

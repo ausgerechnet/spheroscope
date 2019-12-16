@@ -1,0 +1,45 @@
+{
+    "query": "<np>@2:[::][]*</np> (<vp>[]*</vp>)+ (<np>[]*</np> | <vp>[]*</vp> |<pp>[]*</pp> | [pos_simple = \"I|R\"])+ @3:[::]\",\" <np> @0:[::][]* [lemma =$nouns_experts | pos_simple=\"Z\"] []* </np> (<np>[]*</np>)*@1:[::] <vp> []* [lemma =$verbs_communication & word != \".+ing\"] []*</vp>",
+    "pattern": 0,
+    "name": "x_will_y_say_experts",
+    "anchors": [
+        [
+            2,
+            0,
+            null,
+            null
+        ],
+        [
+            3,
+            -1,
+            null,
+            null
+        ],
+        [
+            0,
+            0,
+            null,
+            null
+        ],
+        [
+            1,
+            -1,
+            null,
+            null
+        ]
+    ],
+    "regions": [
+        [
+            0,
+            1,
+            null,
+            null
+        ],
+        [
+            2,
+            3,
+            null,
+            null
+        ]
+    ]
+}

@@ -1,0 +1,57 @@
+{
+    "query": "<np>[pos_simple=\"D\"]? @0:\"common|regular|normal|average|ordinary\" [lemma=$nouns_person_common]  </np> [pos_simple=\"I\"]? (/ap[])*@1:[::] (<vp>@2:[::][word != \"to|will\"]*</vp>@3:[::] | /be_ap[]) @4:[::](<vp>[]*</vp> | <pp>[]*</pp> | <np>[word != \"http.+|\\.\"]*</np> | /ap[] | [pos_simple=\"D|I|R|#\" & word!=\"\\.|\\!\"])+ @5:[::]",
+    "pattern": -1,
+    "name": "common_folks_ii",
+    "anchors": [
+        [
+            0,
+            0,
+            null,
+            null
+        ],
+        [
+            1,
+            -1,
+            null,
+            null
+        ],
+        [
+            2,
+            0,
+            null,
+            null
+        ],
+        [
+            3,
+            -1,
+            null,
+            null
+        ],
+        [
+            4,
+            0,
+            null,
+            null
+        ],
+        [
+            5,
+            -1,
+            null,
+            null
+        ]
+    ],
+    "regions": [
+        [
+            2,
+            3,
+            null,
+            null
+        ],
+        [
+            4,
+            5,
+            null,
+            null
+        ]
+    ]
+}

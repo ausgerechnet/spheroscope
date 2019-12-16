@@ -1,0 +1,8 @@
+blow
+climb
+expand
+explode
+increase
+move
+multiply
+rise

@@ -1,0 +1,33 @@
+{
+    "query": "\"different(ly)?|contrast|unlike\" [pos_ner=\"IN|TO\"]? <np>[]* @0[pos_ner = \"NN|NNP|NNS|PRP|USR\"] []* </np> \",\"? [lemma=\"i|i'm|we|we're\"] @1:[::]/region[vp] (/region[advp] | /region[np] | /region[pp] | /region[vp])+ @2:[::]",
+    "pattern": 17,
+    "name": "unlike_you_strawman",
+    "anchors": [
+        [
+            0,
+            0,
+            null,
+            null
+        ],
+        [
+            1,
+            0,
+            null,
+            null
+        ],
+        [
+            2,
+            0,
+            null,
+            null
+        ]
+    ],
+    "regions": [
+        [
+            1,
+            2,
+            null,
+            null
+        ]
+    ]
+}

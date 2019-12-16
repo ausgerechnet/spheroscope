@@ -1,0 +1,17 @@
+MACRO no_np(0)
+(
+[word = "no"] /np[]
+)
+;
+
+MACRO nobody(0)
+(
+/no_np[]
+|
+[lemma = "nobody"]
+|
+[lemma = "no"] [lemma = "one"]
+|
+[word = "no-?one"]
+)
+;

@@ -1,0 +1,45 @@
+{
+    "query": "(<np>@0:[::][]*</np>) @1:[::] <vp>[]* [lemma = $verbs_destruction]</vp> [word = \"into|our\"]? <np>@2:[::][]* [lemma = \"Europe|Britain|UK|country|us\" | lemma = $nouns_finance | lemma = $nouns_person_common | pos_simple=\"Z\"]</np>@3:[::]",
+    "pattern": 6,
+    "name": "x_destroy_our_y",
+    "anchors": [
+        [
+            0,
+            0,
+            null,
+            null
+        ],
+        [
+            1,
+            -1,
+            null,
+            null
+        ],
+        [
+            2,
+            0,
+            null,
+            null
+        ],
+        [
+            3,
+            -1,
+            null,
+            null
+        ]
+    ],
+    "regions": [
+        [
+            0,
+            1,
+            null,
+            null
+        ],
+        [
+            2,
+            3,
+            null,
+            null
+        ]
+    ]
+}
