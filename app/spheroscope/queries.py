@@ -5,9 +5,11 @@ from werkzeug.exceptions import abort
 
 from spheroscope.auth import login_required
 from spheroscope.db import get_db
+
 import pandas as pd
 import gzip
 import json
+import subprocess
 import os
 from collections import Counter
 
@@ -68,6 +70,8 @@ def get_query(id, check_author=True):
         abort(403)
 
     query = dict(query)
+    query.pop('created')
+    query['name'] = query.pop('title')
     query['anchors'] = json.loads(query['anchors'])
     query['regions'] = json.loads(query['regions'])
 
@@ -111,41 +115,56 @@ def update(id):
     return render_template('queries/update.html', query=query)
 
 
-def format_result(result):
+def format_query_result(query):
+
+    # init result
+    result = dict()
+    result['query'] = query['query']
+    result['pattern'] = query['pattern']
+    result['name'] = query['name']
+
+    # get matches
+    if 'matches' in query['result'].keys():
+        result['matches'] = query['result']['matches']
+    else:
+        result['matches'] = None
 
     # format anchors
-    anchors = pd.DataFrame(result['anchors'])
-    anchors.columns = ['number', 'correction', 'function', 'clear name']
+    anchors = pd.DataFrame(query['anchors'])
+    anchors.columns = ['number', 'correction', 'hole', 'clear name']
     result['anchors'] = anchors.to_html(escape=False, index=False)
 
     # format regions
-    regions = pd.DataFrame(result['regions'])
-    regions.columns = ['start', 'end', 'function', 'clear name']
+    regions = pd.DataFrame(query['regions'])
+    regions.columns = ['start', 'end', 'hole', 'clear name']
     result['regions'] = regions.to_html(escape=False, index=False)
 
-    # count anchor words
+    # format anchor words
     counts = dict()
-    for key in result['anchor_words'].keys():
+    for key in query['result']['anchor_words'].keys():
         df = pd.DataFrame.from_dict(
-            Counter(result['anchor_words'][key]), orient='index'
+            Counter(query['result']['anchor_words'][key]), orient='index'
         ).sort_values(by=0, ascending=False)
         df.columns = ['freq']
         df.index.name = key
         counts[key] = df.to_html(escape=False, index_names=True, bold_rows=False)
     result['anchor_words'] = counts
 
-    # count regions_words
+    # format regions_words
     counts = dict()
-    for key in result['regions_words'].keys():
-        words = [" ".join(r) for r in result['regions_words'][key]]
+    for key in query['result']['regions_words'].keys():
+        words = [" ".join(r) for r in query['result']['regions_words'][key]]
         df = pd.DataFrame.from_dict(
             Counter(words), orient='index'
         ).sort_values(by=0, ascending=False)
         df.columns = ['freq']
         df.index.name = key
-        counts[key] = df.to_html(escape=False, index_names=True, bold_rows=False)
+        counts[key] = df.to_html(escape=False,
+                                 index_names=True,
+                                 bold_rows=False)
     result['region_words'] = counts
 
+    # return
     return result
 
 
@@ -153,19 +172,33 @@ def format_result(result):
 @login_required
 def show_result(id):
 
-    # get query and path of result
+    # get query
     query = get_query(id)
-    path_result = "instance-191216/results/" + query['title'] + ".query.json.gz"
+    # select result file (current / stable)
+    path_result = "instance/results/" + query['name'] + ".query.json.gz"
+    if not os.path.exists(path_result):
+        path_result = "instance-stable/results/" + query['name'] + ".query.json.gz"
 
-    # get result
+    # load results
     with gzip.open(path_result, "rt") as f:
-        result = json.loads(f.read())
+        query = json.loads(f.read())
 
-    # format and return result
-    result = format_result(result)
+    # format result
+    result = format_query_result(query)
+
+    # render result
     return render_template('queries/show_result.html',
-                           query=query,
                            result=result)
+
+    # # run fill-form
+    # path_patterns = "instance-stable/patterns.csv"
+    # fillform_result = subprocess.run("fillform-static table {} {}".format(
+    #     path_patterns, path_result
+    # ), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    # return render_template('queries/show_result.html',
+    #                        result=result,
+    #                        table=fillform_result.stdout.decode("utf-8"),
+    #                        errors=fillform_result.stderr.decode("utf-8"))
 
 
 @bp.route('/<int:id>/run', methods=('GET', 'POST'))
@@ -178,28 +211,53 @@ def run(id):
         os.makedirs("instance/results/")
     except OSError:
         pass
-    path_result = "instance/results/" + query['title'] + ".query.json.gz"
+    path_result = "instance/results/" + query['name'] + ".query.json.gz"
 
-    # extract and dump result
+    # create result
     from ccc.cwb import CWBEngine
     from ccc.anchors import anchor_query
-    ENGINE = CWBEngine(
-        {
+    corpus_settings = {
             'name': current_app.config['CORPUS_NAME'],
             'lib_path': current_app.config['LIB_PATH']
-        },
+        }
+    engine = CWBEngine(
+        corpus_settings,
         current_app.config['REGISTRY_PATH']
     )
-    result = anchor_query(ENGINE,
-                          query['query'], query['anchors'], query['regions'],
-                          'tweet')
-    query['result'] = result
+    subcorpus = (
+        "DEDUP=/region[tweet,a] :: (a.tweet_duplicate_status!='1') within tweet;"
+        "DEDUP;"
+    )
+    engine.cqp.Exec(subcorpus)
+    concordance_settings = {
+        'order': 'first',
+        'cut_off': None,
+        'p_query': 'lemma',
+        's_break': 'tweet',
+        'match_strategy': 'longest'
+    }
+    query['result'] = anchor_query(engine,
+                                   query['query'], query['anchors'], query['regions'],
+                                   concordance_settings['s_break'], concordance_settings['match_strategy'])
+    query['concordance_settings'] = concordance_settings
 
+    # dump result
     with gzip.open(path_result, 'wt') as f_out:
         json.dump(query, f_out, indent=4)
 
-    # format and return result
-    result = format_result(query)
+    # format result
+    result = format_query_result(query)
+
+    # render result
     return render_template('queries/show_result.html',
-                           query=query,
                            result=result)
+
+    # # run fill-form
+    # path_patterns = "instance-stable/patterns.csv"
+    # fillform_result = subprocess.run("fillform-static table {} {}".format(
+    #     path_patterns, path_result
+    # ), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    # return render_template('queries/show_result.html',
+    #                        result=result,
+    #                        table=fillform_result.stdout.decode("utf-8"),
+    #                        errors=fillform_result.stderr.decode("utf-8"))
