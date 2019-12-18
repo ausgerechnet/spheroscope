@@ -44,7 +44,7 @@ def import_brexit():
 
     db = get_db()
 
-    query_files = glob("instance-191216/queries/*.query")
+    query_files = glob("instance-stable/queries/*.query")
     insert = (
         "INSERT INTO queries "
         "(author_id, title, query, anchors, regions, pattern) "
@@ -62,7 +62,7 @@ def import_brexit():
     db.commit()
     print("imported queries")
 
-    wordlists = glob("instance-191216/lib/wordlists/*.txt")
+    wordlists = glob("instance-stable/lib/wordlists/*.txt")
     insert = (
         "INSERT INTO wordlists "
         "(title, words, author_id) "
