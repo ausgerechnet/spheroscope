@@ -1,6 +1,6 @@
 {
-    "query": "(<np>@0:[]* @1:[]</np>)+ /negation_with_optional_verb[] [pos_simple=\"R\"]? [lemma = $adj_moral_positive] \"enough\"? <vp>@2:[]* @3:[]</vp> (<np>[]*</np> | <pp>[]*</pp>)*@4:[::]",
-    "pattern": -1,
+    "query": "<np>@0:[::][]* @1:[]</np> /negation_with_optional_verb[] (/region[advp])? [lemma = $adj_moral_positive] \"enough\" <vp>@2:[::][]* \"to\" @3:[]*</vp> (<np>[]*</np> | <pp>[]*</pp>)*@4:[::]",
+    "pattern": 21,
     "name": "x_not_y_enough",
     "anchors": [
         [
@@ -38,7 +38,7 @@
         [
             0,
             1,
-            null,
+            "0",
             null
         ],
         [
