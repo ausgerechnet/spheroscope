@@ -1,5 +1,5 @@
 {
-    "query": "\"apparently|hopefully|maybe|perhaps|probably|presumably|realistically|seemingly|supposedly|surely\" @0:[::] <np>[word!=\"\\.\"]*</np> /region[vp] (<np>[word != \"\\.+|http.+|t\\.co|@.+\"]*</np>| /region[vp] | /region[adjp] | /region[adjp] | /region[pp] | /region[conjp])+@1:[::]",
+    "query": "[lemma = $adv_possibly] @0:[::] <np>[word!=\"\\.\"]*</np> /region[vp] (<np>[word != \"\\.+|http.+|t\\.co|@.+\"]*</np>| /region[vp] | /region[adjp] | /region[adjp] | /region[pp] | /region[conjp])+@1:[::]",
     "pattern": 5,
     "name": "pattern_5_possibly_x",
     "anchors": [
@@ -20,7 +20,7 @@
         [
             0,
             1,
-            null,
+            "0",
             null
         ]
     ]
