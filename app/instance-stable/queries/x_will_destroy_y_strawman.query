@@ -1,5 +1,5 @@
 {
-    "query": "<np>@0:[::][]* @1:[]</np> <vp>[]* [lemma = $verbs_destruction] []*</vp> <np>@2:[::][]* [lemma = $strawman_nouns] @3:[]*</np> \"if\" @4:[::](<np>[]*</np>)? (/region[vp] |[word = \".?brexit\"%c] | /region[np] | /region[advp] |/region[pp] | /region[adjp])+@5:[::]",
+    "query": "<np>@0:[::][]* @1:[]</np> <vp>[word!=\"won't|not\"]* [lemma = $verbs_destruction] []*</vp> <np>@2:[::][]* [lemma = $strawman_nouns] @3:[]*</np> \"if\" @4:[::](<np>[]*</np>)? (/region[vp] |[word = \".?brexit\"%c] | /region[np] | /region[advp] |/region[pp] | /region[adjp])+@5:[::]",
     "pattern": 2,
     "name": "x_will_destroy_y_strawman",
     "anchors": [
