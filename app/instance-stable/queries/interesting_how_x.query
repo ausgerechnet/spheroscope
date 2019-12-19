@@ -1,5 +1,5 @@
 {
-    "query": "<adjp>[]* [lemma = $adj_hyperbole_candidates] []*</adjp> \"how|that\" <np>[]* @0:[::][pos_simple=\"@|N|Z\"]+@1:[::] []*</np> @2:[::]/region[vp] @3:[](/region[adjp] | /region[advp] | /region[np] | /region[pp] |/region[vp])+ @4:[::]",
+    "query": "<adjp>[]* [lemma = $adj_hyperbole_candidates] []*</adjp> \"how|that\" <np>[]* @0:[::][pos_simple=\"@|Z\" | lemma = $nouns_person_support | lemma=$nouns_person_negative | lemma = $nouns_person_profession]+ @1:[::][]*</np> @2:[::]/region[vp] @3:[](/region[adjp] | /region[advp] | /region[np] | /region[pp] |/region[vp])+ @4:[::]",
     "pattern": 17,
     "name": "interesting_how_x",
     "anchors": [
@@ -11,7 +11,7 @@
         ],
         [
             1,
-            0,
+            -1,
             null,
             null
         ],
@@ -38,7 +38,7 @@
         [
             0,
             1,
-            null,
+            "0",
             null
         ],
         [
