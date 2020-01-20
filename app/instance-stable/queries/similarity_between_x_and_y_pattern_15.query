@@ -1,0 +1,45 @@
+{
+    "query": "<vp>@0:[]* [pos_ner="VBG"] []*</vp> /region[np] (/region[vp] | /region[np] | /region[pp])* @1[::] [lemma ="be"] "exactly|just|much|very" [lemma = $adj_similarity] "to|with"? @2:[] /region[vp]+ /region[np] (/region[vp] | /region[np] | /region[pp])@3[::]",
+    "pattern": 15,
+    "name": "similarity_between_x_and_y_pattern_15",
+    "anchors": [
+        [
+            0,
+            0,
+            null,
+            null
+        ],
+        [
+            1,
+            -1,
+            null,
+            null
+        ],
+        [
+            2,
+            0,
+            null,
+            null
+        ],
+        [
+            3,
+            -1,
+            null,
+            null
+        ]
+    ],
+    "regions": [
+        [
+            0,
+            1,
+            "0",
+            null
+        ],
+        [
+            2,
+            3,
+            "1",
+            null
+        ]
+    ]
+}
