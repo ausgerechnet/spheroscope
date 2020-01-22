@@ -1,6 +1,6 @@
 {
     "query": "<np>[]* @0:[lemma = $person_any|lemma=\"i\"|pos_simple=\"Z\"] @1:[]*</np> [word=\"am|is|are\"] (/region[advp])? [lemma=$adj_belief] \"that\"? <np>@2:[::][]*</np> /region[vp] (/region[advp]|/region[pp]| <np>[pos_simple=\"[DNZJPO]\"] [word!=\"htt.+|\\.\"]*</np>| /region[vp] | /region[adjp])+ @3:[::]",
-    "pattern": -1,
+    "pattern": 10,
     "name": "pattern_10_x_be_sure",
     "anchors": [
         [
