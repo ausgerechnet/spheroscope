@@ -1,6 +1,6 @@
 {
     "query": "@0:[lemma = $adj_cog_negative]* <np>[]* @1:[lemma = $nouns_cog_negative & lemma != \"bunch\" & lemma !=\"view\" | lemma = $nouns_gen_negative] []*</np> [word = \"of\"] @2:\"brexit\"? (@3:[lemma = $nouns_person_negative | lemma = $nouns_experts])+ <vp>@4:[]*</vp> @5[::](<np>[]*</np>| <vp>[]*</vp> | <pp>[]*</pp>)+@6:[::]",
-    "pattern": 20,
+    "pattern": -1,
     "name": "x_lies_of_y",
     "anchors": [
         [
