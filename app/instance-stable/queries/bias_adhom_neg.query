@@ -1,5 +1,5 @@
 {
-    "query": "(<np>@0[:pos_simple != \"\\.\":] []* </np> | [pos_simple=\"P|Z|#\"])+ @1:[::] [lemma = \"be\"] [pos_simple = \"R\"]* \"biased\" \"against\" @2:[::](<np>[pos_simple!=\"\\.\"]* [pos_simple!=\"\\.\"]</np>)+ @3:[::]",
+    "query": "(<np>[pos_ner=\"DT|JJ\"]? @0:[pos_simple=\"P|Z|#\" & word != \"your|their\" | lemma = $wordlist_entities | lemma = $nouns_person_negative | lemma = $nouns_person_support | lemma = $nouns_person_common] []*</np>)+ @1:[::] [lemma = \"be\"] [pos_simple = \"R\"]* \"biased\" \"against\" @2:[::](<np>[word!=\"\\.\"]*</np>)+ @3:[::]",
     "pattern": 17,
     "name": "bias_adhom_neg",
     "anchors": [
@@ -32,7 +32,7 @@
         [
             0,
             1,
-            null,
+            "0",
             null
         ],
         [

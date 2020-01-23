@@ -1,6 +1,6 @@
 {
     "query": "(<np>@0:[::][]* @1:[]</np>)+ /negation_with_optional_verb[] [pos_simple=\"R\"]? @2:[lemma = $adj_moral_positive] \"enough\"? <vp>@3:[::][]* @4:[]</vp> (<np>[]*</np> | <pp>[]*</pp>)*@5:[::]",
-    "pattern": -1,
+    "pattern": 18,
     "name": "x_not_y_enough_properties",
     "anchors": [
         [
@@ -44,7 +44,7 @@
         [
             0,
             1,
-            null,
+            "0",
             null
         ],
         [

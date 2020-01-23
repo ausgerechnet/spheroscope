@@ -41,7 +41,8 @@ doctor
 driver
 economist
 editor
-employe[er]
+employee
+employer
 engineer
 entrepreneur
 farmer
@@ -67,7 +68,6 @@ musician
 novelist
 nurse
 officer
-[a-z]+(o[gmt]|u)ist
 owner
 painter
 pensioner
@@ -96,4 +96,4 @@ trucker
 vicar
 waiter
 waitress
-.*worker
+worker
