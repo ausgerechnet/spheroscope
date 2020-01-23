@@ -3,6 +3,7 @@ import json
 from glob import glob
 
 import click
+from json import JSONDecodeError
 from flask import current_app, g
 from flask.cli import with_appcontext
 from werkzeug.security import generate_password_hash
@@ -51,15 +52,19 @@ def import_brexit():
         "VALUES (?, ?, ?, ?, ?, ?);"
     )
     for p in query_files:
-        with open(p, "rt") as f:
-            query = json.loads(f.read())
-        db.execute(insert, (1,
-                            query['name'],
-                            query['query'],
-                            json.dumps(query['anchors']),
-                            json.dumps(query['regions']),
-                            query['pattern']))
-    db.commit()
+        try:
+            with open(p, "rt") as f:
+                query = json.loads(f.read())
+        except JSONDecodeError:
+            print("WARNING: not a valid query file: %s" % p)
+        else:
+            db.execute(insert, (1,
+                                query['name'],
+                                query['query'],
+                                json.dumps(query['anchors']),
+                                json.dumps(query['regions']),
+                                query['pattern']))
+            db.commit()
     print("imported queries")
 
     wordlists = glob("instance-stable/lib/wordlists/*.txt")
