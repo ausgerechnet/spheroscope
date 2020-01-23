@@ -1,12 +1,12 @@
 {
-    "query": "\"different(ly)?|contrast|unlike\" [pos_ner=\"IN|TO\"]? <np>[]* @0[pos_ner = \"NN|NNP|NNS|PRP|USR\"] []* </np> \",\"? [lemma=\"i|i'm|we|we're\"] @1:[::]/region[vp] (/region[advp] | /region[np] | /region[pp] | /region[vp])+ @2:[::]",
+    "query": "[lemma=$adj_adv_difference] [pos_ner=\"IN|TO\"]? (/region[advp] | /region[adjp])? <np>[]* @0[pos_ner = \"NN|NNP|NNS|PRP|USR\"] []* </np> \",\"? [lemma=\"i|i'm|we|we're\"] (/region[advp] | /region[adjp])? @1:[::]/region[vp] (/region[advp] | /region[np] | /region[pp] | /region[vp])+ @2:[::]",
     "pattern": 17,
     "name": "unlike_you_strawman",
     "anchors": [
         [
             0,
             0,
-            null,
+            "0",
             null
         ],
         [
