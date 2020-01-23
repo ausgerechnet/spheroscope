@@ -1,6 +1,6 @@
 venv/
 
-app/instance/
+app/instance/*
 
 *.pyc
 __pycache__/
