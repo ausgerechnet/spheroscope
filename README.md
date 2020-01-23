@@ -7,7 +7,7 @@ CQPqueries.
 ## requirements ##
 You will need a CWB indexed corpus and word embeddings. Configure the
 app via the [config file](spheroscope.cfg), which has to be put into
-the [instance](app/instance) folder,
+the [app](app/) folder.
 
 ## set-up ##
 We use `pipenv`. install necessary modules via
@@ -19,7 +19,7 @@ For running CQP queries (the default on the master branch), you will
 have to download and install the CCC module separately via
 
 ```
-pipenv install ~/path/to/CCC/
+pipenv install /path/to/CCC/
 ```
 
 ## flask server ##
@@ -30,6 +30,3 @@ start the app like so:
 ```
 
 ## current modules ##
-app/spheroscope/db.py
-app/spheroscope/word_lists.py
-app/spheroscope/queries.py
