@@ -1,4 +1,5 @@
 id,template,explanation
+-2,\newcommand{\mcauses}{\Box\kern-.5em{\implies}} \newcommand{\gimplies}{\overset{g}{\implies}},the preamble
 0,L_{{?0 : entity}}({?1 : formula}),entity 0 claiming that 1 is true; any kind of quotation basically
 1,({?0 : formula}) \mcauses ({?1 : formula});{?0};{?1},0 is the reason why 1 is true; note that 0 and 1 could be formulas talking about the past
 2,({?0 : formula}) \mcauses ({?1 : formula}),0 would cause 1 to be true; this also covers speculations about how things could have been if past events would have gone differently
