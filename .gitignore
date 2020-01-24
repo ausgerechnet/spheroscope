@@ -1,6 +1,7 @@
 venv/
 
-app/instance/
+app/instance/*
+app/spheroscope.cfg
 
 *.pyc
 __pycache__/

@@ -8,25 +8,22 @@
 {% endblock %}
 
 {% block content %}
-{% for wordlist in wordlists %}
-<article class="post">
-  <header>
-    <div>
-      <h1>{{ wordlist['title'] }}</h1>
-      <div class="about">by {{ wordlist['username'] }} on {{ wordlist['created'].strftime('%Y-%m-%d') }}</div>
-    </div>
+<ul>
+  {% for wordlist in wordlists %}
+  <li>
+    {{ wordlist['title'] }} <i>(by {{ wordlist['username'] }} on {{
+	wordlist['created'].strftime('%Y-%m-%d') }})</i>
     {% if g.user['id'] == wordlist['author_id'] %}
-    <a class="action" href="{{ url_for('wordlists.update',
-			    id=wordlist['id']) }}">edit</a>
-    <a class="action" href="{{
-        url_for('wordlists.show_similar_ones', id=wordlist['id'])
-        }}">get similar items</a>
-        {% endif %}
-  </header>
-  <p class="body">{{ wordlist['words'] }}</p>
-</article>
-{% if not loop.last %}
-<hr>
-{% endif %}
-{% endfor %}
+    <span style="float:right;">
+      <a class="action" href="{{ url_for('wordlists.update',
+			      id=wordlist['id']) }}">edit</a>&nbsp;
+      <a class="action" href="{{
+			      url_for('wordlists.show_similar_ones', id=wordlist['id'])
+			      }}">similar</a>
+    </span>
+    {% endif %}
+  </li>
+  {% endfor %}
+</ul>
+
 {% endblock %}
