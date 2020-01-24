@@ -3,7 +3,8 @@ advocate
 ally
 anarchist
 atheist
-.?[bB]rexitee?r
+brexiteer
+brexiter
 campaigner
 candidate
 catholic
@@ -13,11 +14,10 @@ citizen
 diehard
 fan
 feminist
-[gG]ooner
-[gG]reen
-[a-z]+ist
+gooner
+green
 jew
-labou?r
+labour
 leftie
 leaver
 mayor
@@ -25,7 +25,6 @@ member
 mep
 muslim
 neutral
-[a-z]+phile
 pm
 president
 obsessive

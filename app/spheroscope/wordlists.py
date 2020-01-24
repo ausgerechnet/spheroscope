@@ -10,7 +10,7 @@ from spheroscope.db import get_db
 from ccc.cwb import CWBEngine
 
 
-bp = Blueprint('wordlists', __name__, url_prefix='/word-lists')
+bp = Blueprint('wordlists', __name__, url_prefix='/wordlists')
 
 
 @bp.route('/')
@@ -20,7 +20,7 @@ def index():
     wordlists = db.execute(
         'SELECT wl.id, title, words, created, author_id, username'
         ' FROM wordlists wl JOIN users u ON wl.author_id = u.id'
-        ' ORDER BY created DESC'
+        ' ORDER BY title ASC'
     ).fetchall()
     return render_template('wordlists/index.html', wordlists=wordlists)
 
@@ -121,6 +121,7 @@ def show_similar_ones(id):
     # get lemmas
     wordlist = get_wordlist(id)
     words = wordlist['words'].split("\n")
+    words = [word.rstrip() for word in words]
 
     # get frequencies
     freq_original = ENGINE.get_marginals(words, p_att="lemma", regex=True)

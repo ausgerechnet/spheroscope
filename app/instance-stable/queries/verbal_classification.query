@@ -1,5 +1,5 @@
 {
-    "query": "\"like\"? \"all|every\" \"other\"? <np>@0:[::][]* [lemma = $nouns_person_profession | lemma = $nouns_person_negative | lemma = $nouns_person_common | lemma=$entities]+ @1:[]*</np> \",\"? (<np>@2:[]*</np>)? <vp>@3:[]*</vp> (<np>[]*</np> | <pp>[]*</pp> | /ap[]*)+ @4:[::]",
+    "query": "\"like\"? \"all|every\" \"other\"? <np>@0:[::][]* [lemma = $nouns_person_profession | lemma = $nouns_person_negative | lemma = $nouns_person_common | lemma=$wordlist_entities]+ @1:[]*</np> \",\"? (<np>@2:[]*</np>)? <vp>@3:[]*</vp> (<np>[]*</np> | <pp>[]*</pp> | /ap[]*)+ @4:[::]",
     "pattern": 25,
     "name": "verbal_classification",
     "anchors": [
@@ -18,7 +18,7 @@
         [
             2,
             0,
-            null,
+            "0",
             null
         ],
         [
@@ -38,13 +38,13 @@
         [
             0,
             1,
-            null,
+            "1",
             null
         ],
         [
             3,
             4,
-            null,
+            "2",
             null
         ]
     ]
