@@ -9,10 +9,9 @@ from spheroscope.db import get_db
 import pandas as pd
 import gzip
 import json
-import subprocess
 import os
 from collections import Counter
-
+import subprocess
 
 bp = Blueprint('queries', __name__, url_prefix='/queries')
 
@@ -71,7 +70,6 @@ def get_query(id, check_author=True):
 
     query = dict(query)
     query.pop('created')
-    query['name'] = query.pop('title')
     query['anchors'] = json.loads(query['anchors'])
     query['regions'] = json.loads(query['regions'])
 
@@ -115,35 +113,45 @@ def update(id):
     return render_template('queries/update.html', query=query)
 
 
-def format_query_result(query):
+def format_query_result(query_result):
 
     # init result
     result = dict()
-    result['query'] = query['query']
-    result['pattern'] = query['pattern']
-    result['name'] = query['name']
+    result['query'] = query_result['query']
+    result['pattern'] = query_result['pattern']
+
+    # make consistent
+    if 'name' in query_result.keys():
+        result['title'] = query_result['name']
+    else:
+        result['title'] = query_result['title']
 
     # get matches
-    if 'matches' in query['result'].keys():
-        result['matches'] = query['result']['matches']
+    if 'matches' in query_result['result'].keys():
+        result['matches'] = query_result['result']['matches']
+        result['nr_matches'] = len(result['matches'])
     else:
-        result['matches'] = None
+        result['matches'] = list()
+        result['nr_matches'] = 0
 
     # format anchors
-    anchors = pd.DataFrame(query['anchors'])
+    anchors = pd.DataFrame(query_result['anchors'])
     anchors.columns = ['number', 'correction', 'hole', 'clear name']
     result['anchors'] = anchors.to_html(escape=False, index=False)
 
     # format regions
-    regions = pd.DataFrame(query['regions'])
-    regions.columns = ['start', 'end', 'hole', 'clear name']
-    result['regions'] = regions.to_html(escape=False, index=False)
+    regions = pd.DataFrame(query_result['regions'])
+    if not regions.empty:
+        regions.columns = ['start', 'end', 'hole', 'clear name']
+        result['regions'] = regions.to_html(escape=False, index=False)
+    else:
+        result['regions'] = None
 
     # format anchor words
     counts = dict()
-    for key in query['result']['anchor_words'].keys():
+    for key in query_result['result']['anchor_words'].keys():
         df = pd.DataFrame.from_dict(
-            Counter(query['result']['anchor_words'][key]), orient='index'
+            Counter(query_result['result']['anchor_words'][key]), orient='index'
         ).sort_values(by=0, ascending=False)
         df.columns = ['freq']
         df.index.name = key
@@ -152,8 +160,8 @@ def format_query_result(query):
 
     # format regions_words
     counts = dict()
-    for key in query['result']['regions_words'].keys():
-        words = [" ".join(r) for r in query['result']['regions_words'][key]]
+    for key in query_result['result']['regions_words'].keys():
+        words = [" ".join(r) for r in query_result['result']['regions_words'][key]]
         df = pd.DataFrame.from_dict(
             Counter(words), orient='index'
         ).sort_values(by=0, ascending=False)
@@ -175,30 +183,35 @@ def show_result(id):
     # get query
     query = get_query(id)
     # select result file (current / stable)
-    path_result = "instance/results/" + query['name'] + ".query.json.gz"
+    path_result = "instance/results/" + query['title'] + ".query.json.gz"
     if not os.path.exists(path_result):
-        path_result = "instance-stable/results/" + query['name'] + ".query.json.gz"
+        path_result = "instance-stable/results/" + query['title'] + ".query.json.gz"
 
     # load results
     with gzip.open(path_result, "rt") as f:
-        query = json.loads(f.read())
+        result = json.loads(f.read())
 
     # format result
-    result = format_query_result(query)
+    result = format_query_result(result)
 
-    # render result
-    return render_template('queries/show_result.html',
-                           result=result)
+    if "FILLFORM" in current_app.config.keys():
+        path_patterns = "instance-stable/patterns.csv"
+        fillform_result = subprocess.run("{} table {} {}".format(
+            current_app.config['FILLFORM'], path_patterns, path_result
+        ), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        errors = fillform_result.stderr.decode("utf-8")
+        if len(errors) > 0:
+            print("WARNING: %s says: %s" % (current_app.config['FILLFORM'], errors))
+        return render_template('queries/show_result.html',
+                               result=result,
+                               table=fillform_result.stdout.decode("utf-8"))
 
-    # # run fill-form
-    # path_patterns = "instance-stable/patterns.csv"
-    # fillform_result = subprocess.run("fillform-static table {} {}".format(
-    #     path_patterns, path_result
-    # ), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    # return render_template('queries/show_result.html',
-    #                        result=result,
-    #                        table=fillform_result.stdout.decode("utf-8"),
-    #                        errors=fillform_result.stderr.decode("utf-8"))
+
+    else:
+        return render_template('queries/show_result.html',
+                               result=result,
+                               table=None,
+                               errors=None)
 
 
 @bp.route('/<int:id>/run', methods=('GET', 'POST'))
@@ -211,9 +224,9 @@ def run(id):
         os.makedirs("instance/results/")
     except OSError:
         pass
-    path_result = "instance/results/" + query['name'] + ".query.json.gz"
+    path_result = "instance/results/" + query['title'] + ".query.json.gz"
 
-    # create result
+    # init CWBEngine
     from ccc.cwb import CWBEngine
     from ccc.anchors import anchor_query
     corpus_settings = {
@@ -224,11 +237,18 @@ def run(id):
         corpus_settings,
         current_app.config['REGISTRY_PATH']
     )
+
+    # run person_any once
+    print(engine.cqp.Exec("/person_any[];"))
+
+    # restrict to subcorpus
     subcorpus = (
         "DEDUP=/region[tweet,a] :: (a.tweet_duplicate_status!='1') within tweet;"
         "DEDUP;"
     )
     engine.cqp.Exec(subcorpus)
+
+    # set concordance settings
     concordance_settings = {
         'order': 'first',
         'cut_off': None,
@@ -236,9 +256,14 @@ def run(id):
         's_break': 'tweet',
         'match_strategy': 'longest'
     }
+
+    # create result
     query['result'] = anchor_query(engine,
-                                   query['query'], query['anchors'], query['regions'],
-                                   concordance_settings['s_break'], concordance_settings['match_strategy'])
+                                   query['query'],
+                                   query['anchors'],
+                                   query['regions'],
+                                   concordance_settings['s_break'],
+                                   concordance_settings['match_strategy'])
     query['concordance_settings'] = concordance_settings
 
     # dump result
