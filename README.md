@@ -7,7 +7,7 @@ CQPqueries.
 ## requirements ##
 You will need a CWB indexed corpus and word embeddings. Configure the
 app via the [config file](app/spheroscope_example.cfg), which has to
-be put into the [app](app/) folder.
+be put as "spheroscope.cfg" into the [app](app/) folder.
 
 ## set-up ##
 We use `pipenv`. install necessary modules via
