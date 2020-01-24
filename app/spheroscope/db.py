@@ -43,15 +43,19 @@ def init_db():
 
 def import_brexit():
 
+    paths_queries = glob("instance-stable/queries/*.query")
+    paths_wordlists = glob("instance-stable/lib/wordlists/*.txt")
+
+    # get db
     db = get_db()
 
-    query_files = glob("instance-stable/queries/*.query")
+    # queries
     insert = (
         "INSERT INTO queries "
         "(author_id, title, query, anchors, regions, pattern) "
         "VALUES (?, ?, ?, ?, ?, ?);"
     )
-    for p in query_files:
+    for p in paths_queries:
         try:
             with open(p, "rt") as f:
                 query = json.loads(f.read())
@@ -67,14 +71,13 @@ def import_brexit():
             db.commit()
     print("imported queries")
 
-    wordlists = glob("instance-stable/lib/wordlists/*.txt")
+    # wordlists
     insert = (
         "INSERT INTO wordlists "
         "(title, words, author_id) "
         "VALUES (?, ?, ?);"
     )
-
-    for p in wordlists:
+    for p in paths_wordlists:
         title = p.split("/")[-1].split(".")[0]
         words = set()
         with open(p, "rt") as f:
@@ -82,7 +85,6 @@ def import_brexit():
                 words.add(line.rstrip())
         db.execute(insert, (title, "\n".join(words), 1))
     db.commit()
-
     print("imported wordlists")
 
 
