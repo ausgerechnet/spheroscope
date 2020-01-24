@@ -22,7 +22,6 @@ def index():
         ' FROM wordlists wl JOIN users u ON wl.author_id = u.id'
         ' ORDER BY title ASC'
     ).fetchall()
-    print(wordlists)
     return render_template('wordlists/index.html', wordlists=wordlists)
 
 
