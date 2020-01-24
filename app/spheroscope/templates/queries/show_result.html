@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block header %}
-<h1>{% block title %}"{{ result['name'] }}" (pattern {{
+<h1>{% block title %}"{{ result['title'] }}" (pattern {{
   result['pattern']}}, {{ result['nr_matches'] }} matches) {% endblock
   %}</h1> {% endblock %}
 
@@ -12,6 +12,11 @@
   <b>Anchors:</b> {{ result['anchors'] | safe }} <br>
   <b>Regions:</b> {{ result['regions'] | safe }} <br>
   <hr>
+  {% if table %}
+  <h2>Table:</h2>
+  {{table | safe}}
+  <hr>
+  {% endif %}
   <h2>Matches:</h2><br>
   {% for match in result['matches'] %}
   <b>{{match['position']}}:</b> "{{match['full'] | safe}}"
