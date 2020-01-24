@@ -121,6 +121,7 @@ def show_similar_ones(id):
     # get lemmas
     wordlist = get_wordlist(id)
     words = wordlist['words'].split("\n")
+    words = [word.rstrip() for word in words]
 
     # get frequencies
     freq_original = ENGINE.get_marginals(words, p_att="lemma", regex=True)
