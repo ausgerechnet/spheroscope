@@ -20,8 +20,9 @@ def index():
     wordlists = db.execute(
         'SELECT wl.id, title, words, created, author_id, username'
         ' FROM wordlists wl JOIN users u ON wl.author_id = u.id'
-        ' ORDER BY created DESC'
+        ' ORDER BY title ASC'
     ).fetchall()
+    print(wordlists)
     return render_template('wordlists/index.html', wordlists=wordlists)
 
 
