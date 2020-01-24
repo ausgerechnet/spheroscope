@@ -11,7 +11,7 @@ import gzip
 import json
 import os
 from collections import Counter
-
+import subprocess
 
 bp = Blueprint('queries', __name__, url_prefix='/queries')
 
@@ -129,8 +129,10 @@ def format_query_result(query_result):
     # get matches
     if 'matches' in query_result['result'].keys():
         result['matches'] = query_result['result']['matches']
+        result['nr_matches'] = len(result['matches'])
     else:
         result['matches'] = list()
+        result['nr_matches'] = 0
 
     # format anchors
     anchors = pd.DataFrame(query_result['anchors'])
@@ -192,19 +194,24 @@ def show_result(id):
     # format result
     result = format_query_result(result)
 
-    # render result
-    return render_template('queries/show_result.html',
-                           result=result)
+    if "FILLFORM" in current_app.config.keys():
+        path_patterns = "instance-stable/patterns.csv"
+        fillform_result = subprocess.run("{} table {} {}".format(
+            current_app.config['FILLFORM'], path_patterns, path_result
+        ), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        errors = fillform_result.stderr.decode("utf-8")
+        if len(errors) > 0:
+            print("WARNING: %s says: %s" % (current_app.config['FILLFORM'], errors))
+        return render_template('queries/show_result.html',
+                               result=result,
+                               table=fillform_result.stdout.decode("utf-8"))
 
-    # # run fill-form
-    # path_patterns = "instance-stable/patterns.csv"
-    # fillform_result = subprocess.run("fillform-static table {} {}".format(
-    #     path_patterns, path_result
-    # ), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    # return render_template('queries/show_result.html',
-    #                        result=result,
-    #                        table=fillform_result.stdout.decode("utf-8"),
-    #                        errors=fillform_result.stderr.decode("utf-8"))
+
+    else:
+        return render_template('queries/show_result.html',
+                               result=result,
+                               table=None,
+                               errors=None)
 
 
 @bp.route('/<int:id>/run', methods=('GET', 'POST'))
