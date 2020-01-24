@@ -1,5 +1,5 @@
 {
-    "query": "<np>[word != \"\\.\"]* @0[pos_simple = \"J|N|Z|P\"] []* </np> @1:[::] [word = \"call|identify|qualify|see|view\"] @2:[::](<np>[]*</np>)+ @3:[::] \"as\" @4:[::] <np>\"a\" []*</np> @5:[::]  @6:[::](<np>[]*</np> | <vp>[]*</vp> | <pp>[]*</pp> )* @7:[::] [pos_simple = \"#\"]?",
+    "query": "<np>[word != \"\\.\"]* @0[pos_simple = \"J|N|Z|P\"] []* </np> @1:[::] [lemma = $verbs_classification] @2:[::](<np>[]*</np>)+ @3:[::] \"as\" @4:[::] <np>[pos_ner=\"DT\"]? [pos_simple=\"N\"] []*</np> @5:[::]  @6:[::](<np>[]*</np> | <vp>[]*</vp> | <pp>[]*</pp> )* @7:[::] [pos_simple = \"#\"]?",
     "pattern": 24,
     "name": "i_see_x_as_a_y_identity",
     "anchors": [
@@ -62,13 +62,13 @@
         [
             2,
             3,
-            null,
+            "0",
             null
         ],
         [
             4,
             5,
-            null,
+            "1",
             null
         ],
         [
