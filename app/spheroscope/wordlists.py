@@ -10,7 +10,7 @@ from spheroscope.db import get_db
 from ccc.cwb import CWBEngine
 
 
-bp = Blueprint('wordlists', __name__, url_prefix='/word-lists')
+bp = Blueprint('wordlists', __name__, url_prefix='/wordlists')
 
 
 @bp.route('/')
