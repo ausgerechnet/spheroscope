@@ -4,11 +4,6 @@ the Concordance and Collocation Computer
 ([CCC](https://gitlab.cs.fau.de/pheinrich/ccc)), which runs anchored
 CQPqueries.
 
-## requirements ##
-You will need a CWB indexed corpus and word embeddings. Configure the
-app via the [config file](app/spheroscope_example.cfg), which has to
-be put as "spheroscope.cfg" into the [app](app/) folder.
-
 ## set-up ##
 We use `pipenv`. install necessary modules via
 ```
@@ -22,7 +17,16 @@ have to download and install the CCC module separately via
 pipenv install /path/to/CCC/
 ```
 
-## flask server ##
+## configuration ##
+You will need a CWB indexed corpus and word embeddings. Configure the
+app via "spheroscope.cfg" in the [app](app/) folder. You can find an
+[example config file](app/spheroscope_example.cfg) in the
+repository. Your config should at least contain the lines
+`REGISTRY_PATH` and `CORPUS_NAME`. You can use the `LIB_PATH` of the
+[stable version](app/instance-stable/lib/). Additional fields are
+`EMBEDDINGS` and `FILLFORM`.
+
+## usage ##
 start the app like so:
 
 ```
