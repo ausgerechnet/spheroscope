@@ -219,7 +219,7 @@ def run(id):
         pass
     path_result = "instance/results/" + query['title'] + ".query.json.gz"
 
-    # create result
+    # init CWBEngine
     from ccc.cwb import CWBEngine
     from ccc.anchors import anchor_query
     corpus_settings = {
@@ -230,11 +230,18 @@ def run(id):
         corpus_settings,
         current_app.config['REGISTRY_PATH']
     )
+
+    # run person_any once
+    print(engine.cqp.Exec("/person_any[];"))
+
+    # restrict to subcorpus
     subcorpus = (
         "DEDUP=/region[tweet,a] :: (a.tweet_duplicate_status!='1') within tweet;"
         "DEDUP;"
     )
     engine.cqp.Exec(subcorpus)
+
+    # set concordance settings
     concordance_settings = {
         'order': 'first',
         'cut_off': None,
@@ -242,9 +249,14 @@ def run(id):
         's_break': 'tweet',
         'match_strategy': 'longest'
     }
+
+    # create result
     query['result'] = anchor_query(engine,
-                                   query['query'], query['anchors'], query['regions'],
-                                   concordance_settings['s_break'], concordance_settings['match_strategy'])
+                                   query['query'],
+                                   query['anchors'],
+                                   query['regions'],
+                                   concordance_settings['s_break'],
+                                   concordance_settings['match_strategy'])
     query['concordance_settings'] = concordance_settings
 
     # dump result
