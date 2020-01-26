@@ -110,13 +110,17 @@ def delete(id):
 def show_similar_ones(id):
 
     embeddings = Magnitude(current_app.config['EMBEDDINGS'])
-    ENGINE = CWBEngine(
-        {
-            'name': current_app.config['CORPUS_NAME'],
-            'lib_path': current_app.config['LIB_PATH']
-        },
-        current_app.config['REGISTRY_PATH']
+    engine = CWBEngine(
+        corpus_name=current_app.config['CORPUS_NAME'],
+        lib_path=current_app.config['LIB_PATH'],
+        registry_path=current_app.config['REGISTRY_PATH']
     )
+    # restrict to subcorpus
+    subcorpus = (
+        "DEDUP=/region[tweet,a] :: (a.tweet_duplicate_status!='1') within tweet;"
+        "DEDUP;"
+    )
+    engine.cqp.Exec(subcorpus)
 
     # get lemmas
     wordlist = get_wordlist(id)
@@ -124,7 +128,7 @@ def show_similar_ones(id):
     words = [word.rstrip() for word in words]
 
     # get frequencies
-    freq_original = ENGINE.get_marginals(words, p_att="lemma", regex=True)
+    freq_original = engine.get_marginals(words, p_att="lemma", regex=True)
     freq_original.columns = ["frequency"]
 
     # get similar ones
@@ -133,7 +137,7 @@ def show_similar_ones(id):
     similar_ones = [s[0] for s in similar]
 
     # get frequencies
-    freq_similar = ENGINE.get_marginals(similar_ones, p_att="lemma")
+    freq_similar = engine.get_marginals(similar_ones, p_att="lemma")
     freq_similar.columns = ["frequency"]
     freq_similar['similarity'] = [s[1] for s in similar]
     freq_similar = freq_similar.loc[freq_similar.frequency > 1]
