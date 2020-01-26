@@ -120,19 +120,11 @@ def format_query_result(query_result):
     result['query'] = query_result['query']
     result['pattern'] = query_result['pattern']
 
-    # make consistent
+    # TODO make consistent
     if 'name' in query_result.keys():
         result['title'] = query_result['name']
     else:
         result['title'] = query_result['title']
-
-    # get matches
-    if 'matches' in query_result['result'].keys():
-        result['matches'] = query_result['result']['matches']
-        result['nr_matches'] = len(result['matches'])
-    else:
-        result['matches'] = list()
-        result['nr_matches'] = 0
 
     # format anchors
     anchors = pd.DataFrame(query_result['anchors'])
@@ -147,30 +139,54 @@ def format_query_result(query_result):
     else:
         result['regions'] = None
 
-    # format anchor words
+    # get matches
+    if 'matches' in query_result['result'].keys():
+        result['matches'] = list()
+        for key in query_result['result']['matches'].keys():
+
+            # get holes
+            holes = query_result['result']['matches'][key].pop('holes')
+
+            # get rid of the offset
+            query_result['result']['matches'][key].pop('offset')
+
+            # format anchor column
+            df = pd.DataFrame(query_result['result']['matches'][key], dtype=str)
+            df.fillna(-1, inplace=True)
+            df['anchor'] = df['anchor'].apply(pd.to_numeric, downcast='integer')
+            df = df.replace(-1, "")
+
+            # format match column
+            df['match'] = df['match'].replace("False", "")
+            df['match'] = df['match'].replace("True", "match")
+
+            seq = " ".join(
+                query_result['result']['matches'][key]['word'].values()
+            )
+            line = {
+                'full': seq,
+                'position': key,
+                'holes': holes,
+                'df': df.to_html(
+                    escape=False, index_names='cpos', bold_rows=False
+                )
+            }
+            result['matches'].append(line)
+        result['nr_matches'] = query_result['result']['nr_matches']
+    else:
+        result['matches'] = list()
+        result['nr_matches'] = 0
+
+    # frequency count of holes
     counts = dict()
-    for key in query_result['result']['anchor_words'].keys():
+    for key in query_result['result']['holes'].keys():
         df = pd.DataFrame.from_dict(
-            Counter(query_result['result']['anchor_words'][key]), orient='index'
+            Counter(query_result['result']['holes'][key]), orient='index'
         ).sort_values(by=0, ascending=False)
         df.columns = ['freq']
         df.index.name = key
         counts[key] = df.to_html(escape=False, index_names=True, bold_rows=False)
-    result['anchor_words'] = counts
-
-    # format regions_words
-    counts = dict()
-    for key in query_result['result']['regions_words'].keys():
-        words = [" ".join(r) for r in query_result['result']['regions_words'][key]]
-        df = pd.DataFrame.from_dict(
-            Counter(words), orient='index'
-        ).sort_values(by=0, ascending=False)
-        df.columns = ['freq']
-        df.index.name = key
-        counts[key] = df.to_html(escape=False,
-                                 index_names=True,
-                                 bold_rows=False)
-    result['region_words'] = counts
+    result['holes'] = counts
 
     # return
     return result
@@ -206,7 +222,6 @@ def show_result(id):
                                result=result,
                                table=fillform_result.stdout.decode("utf-8"))
 
-
     else:
         return render_template('queries/show_result.html',
                                result=result,
@@ -229,33 +244,32 @@ def run(id):
     # init CWBEngine
     from ccc.cwb import CWBEngine
     from ccc.anchors import anchor_query
-    corpus_settings = {
-            'name': current_app.config['CORPUS_NAME'],
-            'lib_path': current_app.config['LIB_PATH']
-        }
     engine = CWBEngine(
-        corpus_settings,
-        current_app.config['REGISTRY_PATH']
+        corpus_name=current_app.config['CORPUS_NAME'],
+        lib_path=current_app.config['LIB_PATH'],
+        registry_path=current_app.config['REGISTRY_PATH']
     )
 
     # run person_any once
     print(engine.cqp.Exec("/person_any[];"))
 
     # restrict to subcorpus
-    subcorpus = (
-        "DEDUP=/region[tweet,a] :: (a.tweet_duplicate_status!='1') within tweet;"
-        "DEDUP;"
-    )
-    engine.cqp.Exec(subcorpus)
+    # subcorpus = (
+    #     "DEDUP=/region[tweet,a] :: (a.tweet_duplicate_status!='1') within tweet;"
+    #     "DEDUP;"
+    # )
+    # engine.cqp.Exec(subcorpus)
 
     # set concordance settings
     concordance_settings = {
         'order': 'first',
         'cut_off': None,
-        'p_query': 'lemma',
+        'p_show': ['lemma'],
         's_break': 'tweet',
         'match_strategy': 'longest'
     }
+
+    query['concordance_settings'] = concordance_settings
 
     # create result
     query['result'] = anchor_query(engine,
@@ -263,8 +277,8 @@ def run(id):
                                    query['anchors'],
                                    query['regions'],
                                    concordance_settings['s_break'],
+                                   concordance_settings['p_show'],
                                    concordance_settings['match_strategy'])
-    query['concordance_settings'] = concordance_settings
 
     # dump result
     with gzip.open(path_result, 'wt') as f_out:
@@ -276,13 +290,3 @@ def run(id):
     # render result
     return render_template('queries/show_result.html',
                            result=result)
-
-    # # run fill-form
-    # path_patterns = "instance-stable/patterns.csv"
-    # fillform_result = subprocess.run("fillform-static table {} {}".format(
-    #     path_patterns, path_result
-    # ), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    # return render_template('queries/show_result.html',
-    #                        result=result,
-    #                        table=fillform_result.stdout.decode("utf-8"),
-    #                        errors=fillform_result.stderr.decode("utf-8"))
