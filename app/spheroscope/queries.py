@@ -1,11 +1,14 @@
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, url_for, current_app
 )
+from flask.cli import with_appcontext
 from werkzeug.exceptions import abort
+import click
 
 from spheroscope.auth import login_required
 from spheroscope.db import get_db
 
+from glob import glob
 import gzip
 import json
 import os
@@ -186,6 +189,7 @@ def run(id):
     concordance_settings = {
         'order': 'first',
         'cut_off': None,
+        'context': 100,
         'p_show': ['lemma'],
         's_break': 'tweet',
         'match_strategy': 'longest'
@@ -214,3 +218,54 @@ def run(id):
     # render result
     return render_template('queries/show_result.html',
                            result=result)
+
+
+@click.command('run-all-queries')
+@with_appcontext
+def run_all_queries_command():
+    run_all_queries()
+
+
+def run_all_queries():
+
+    # init CWBEngine
+    from ccc.cwb import CWBEngine
+    from ccc.argmin import process_argmin_file
+    engine = CWBEngine(
+        corpus_name=current_app.config['CORPUS_NAME'],
+        lib_path=current_app.config['LIB_PATH'],
+        registry_path=current_app.config['REGISTRY_PATH'],
+        cache_path=current_app.config['CACHE_PATH']
+    )
+
+    # run person_any once
+    print(engine.cqp.Exec("/person_any[];"))
+
+    # restrict to subcorpus
+    subcorpus = (
+        "DEDUP=/region[tweet,a] :: (a.tweet_duplicate_status!='1') within tweet;"
+        "DEDUP;"
+    )
+    engine.cqp.Exec(subcorpus)
+
+    # set concordance settings
+    concordance_settings = {
+        'order': 'first',
+        'cut_off': None,
+        'context': 100,
+        'p_show': ['lemma'],
+        's_break': 'tweet',
+        'match_strategy': 'longest'
+    }
+
+    paths_queries = glob("instance-stable/queries/*.query")
+    for p in paths_queries:
+        print(p)
+        p_out = p.replace("queries", "results") + ".json.gz"
+        result = process_argmin_file(engine, p, concordance_settings)
+        with gzip.open(p_out, 'wt') as f_out:
+            json.dump(result, f_out, indent=4)
+
+
+def add_run_queries(app):
+    app.cli.add_command(run_all_queries_command)
