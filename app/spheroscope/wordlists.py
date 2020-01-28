@@ -2,15 +2,30 @@ from flask import (
     Blueprint, flash, g, redirect, render_template, request, url_for, current_app
 )
 from werkzeug.exceptions import abort
-
 from pymagnitude import Magnitude
 
 from spheroscope.auth import login_required
 from spheroscope.db import get_db
-from ccc.cwb import CWBEngine
 
 
 bp = Blueprint('wordlists', __name__, url_prefix='/wordlists')
+
+
+def get_wordlist(id, check_author=True):
+    wordlist = get_db().execute(
+        'SELECT wl.id, title, words, created, author_id, username'
+        ' FROM wordlists wl JOIN users u ON wl.author_id = u.id'
+        ' WHERE wl.id = ?',
+        (id,)
+    ).fetchone()
+
+    if wordlist is None:
+        abort(404, "word list id {0} doesn't exist.".format(id))
+
+    if check_author and wordlist['author_id'] != g.user['id']:
+        abort(403)
+
+    return wordlist
 
 
 @bp.route('/')
@@ -51,23 +66,6 @@ def create():
     return render_template('wordlists/create.html')
 
 
-def get_wordlist(id, check_author=True):
-    wordlist = get_db().execute(
-        'SELECT wl.id, title, words, created, author_id, username'
-        ' FROM wordlists wl JOIN users u ON wl.author_id = u.id'
-        ' WHERE wl.id = ?',
-        (id,)
-    ).fetchone()
-
-    if wordlist is None:
-        abort(404, "word list id {0} doesn't exist.".format(id))
-
-    if check_author and wordlist['author_id'] != g.user['id']:
-        abort(403)
-
-    return wordlist
-
-
 @bp.route('/<int:id>/update', methods=('GET', 'POST'))
 @login_required
 def update(id):
@@ -105,22 +103,12 @@ def delete(id):
     return redirect(url_for('wordlists.index'))
 
 
-@bp.route('/<int:id>/show_similar_ones', methods=('GET', 'POST'))
+@bp.route('/<int:id>/frequencies', methods=('GET', 'POST'))
 @login_required
-def show_similar_ones(id):
+def show_frequencies(id):
 
-    embeddings = Magnitude(current_app.config['EMBEDDINGS'])
-    engine = CWBEngine(
-        corpus_name=current_app.config['CORPUS_NAME'],
-        lib_path=current_app.config['LIB_PATH'],
-        registry_path=current_app.config['REGISTRY_PATH']
-    )
-    # restrict to subcorpus
-    subcorpus = (
-        "DEDUP=/region[tweet,a] :: (a.tweet_duplicate_status!='1') within tweet;"
-        "DEDUP;"
-    )
-    engine.cqp.Exec(subcorpus)
+    p_att = "lemma"
+    engine = current_app.config['ENGINE']
 
     # get lemmas
     wordlist = get_wordlist(id)
@@ -128,16 +116,40 @@ def show_similar_ones(id):
     words = [word.rstrip() for word in words]
 
     # get frequencies
-    freq_original = engine.get_marginals(words, p_att="lemma", regex=True)
+    freq_original = engine.item_freq(words, p_att=p_att)
+    freq_original.columns = ["frequency"]
+
+    return render_template(
+        'wordlists/show_frequencies.html',
+        wordlist=wordlist,
+        original=freq_original.to_html(escape=False)
+    )
+
+
+@bp.route('/<int:id>/similar', methods=('GET', 'POST'))
+@login_required
+def show_similar_ones(id):
+
+    p_att = "lemma"
+    engine = current_app.config['ENGINE']
+
+    # get lemmas
+    wordlist = get_wordlist(id)
+    words = wordlist['words'].split("\n")
+    words = [word.rstrip() for word in words]
+
+    # get frequencies
+    freq_original = engine.item_freq(words, p_att=p_att)
     freq_original.columns = ["frequency"]
 
     # get similar ones
     number = 200
+    embeddings = Magnitude(current_app.config['EMBEDDINGS'])
     similar = embeddings.most_similar(positive=words, topn=number)
     similar_ones = [s[0] for s in similar]
 
     # get frequencies
-    freq_similar = engine.get_marginals(similar_ones, p_att="lemma")
+    freq_similar = engine.item_freq(similar_ones, p_att=p_att)
     freq_similar.columns = ["frequency"]
     freq_similar['similarity'] = [s[1] for s in similar]
     freq_similar = freq_similar.loc[freq_similar.frequency > 1]
@@ -147,6 +159,6 @@ def show_similar_ones(id):
     return render_template(
         'wordlists/show_similar_ones.html',
         wordlist=wordlist,
-        original=freq_original.to_html(escape=False),
-        similar=freq_similar.to_html(escape=False)
+        similar=freq_similar.to_html(escape=False),
+        original=freq_original.to_html(escape=False)
     )
