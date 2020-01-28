@@ -26,7 +26,7 @@ def index():
     queries = db.execute(
         'SELECT qu.id, title, query, created, author_id, username, anchors, regions, pattern'
         ' FROM queries qu JOIN users u ON qu.author_id = u.id'
-        ' ORDER BY created DESC'
+        ' ORDER BY pattern ASC'
     ).fetchall()
     return render_template('queries/index.html', queries=queries)
 
