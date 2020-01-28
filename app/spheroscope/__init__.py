@@ -42,4 +42,7 @@ def create_app(test_config=None):
     app.register_blueprint(queries.bp)
     app.add_url_rule('/', endpoint='index')
 
+    from . import engine
+    app.config['ENGINE'] = engine.init_engine(app.config)
+
     return app
