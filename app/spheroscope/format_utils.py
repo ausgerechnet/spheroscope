@@ -1,6 +1,8 @@
 import pandas as pd
 from collections import Counter
 
+# TODO: wordlists: specify p_att
+
 
 def format_query_result(query_result):
 

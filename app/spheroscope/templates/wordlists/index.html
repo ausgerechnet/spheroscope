@@ -15,11 +15,14 @@
 	wordlist['created'].strftime('%Y-%m-%d') }})</i>
     {% if g.user['id'] == wordlist['author_id'] %}
     <span style="float:right;">
-      <a class="action" href="{{ url_for('wordlists.update',
-			      id=wordlist['id']) }}">edit</a>&nbsp;
+      <a class="action" href="{{
+			      url_for('wordlists.show_frequencies', id=wordlist['id'])
+			      }}">table</a> - 
       <a class="action" href="{{
 			      url_for('wordlists.show_similar_ones', id=wordlist['id'])
-			      }}">similar</a>
+			      }}">similar</a> - 
+      <a class="action" href="{{ url_for('wordlists.update',
+			      id=wordlist['id']) }}">edit</a>&nbsp;
     </span>
     {% endif %}
   </li>
