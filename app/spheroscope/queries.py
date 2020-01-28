@@ -176,7 +176,7 @@ def run(id):
     )
 
     # run person_any once
-    print(engine.cqp.Exec("/person_any[];"))
+    engine.cqp.Exec("/person_any[];")
 
     # restrict to subcorpus
     subcorpus = (
@@ -239,7 +239,7 @@ def run_all_queries():
     )
 
     # run person_any once
-    print(engine.cqp.Exec("/person_any[];"))
+    engine.cqp.Exec("/person_any[];")
 
     # restrict to subcorpus
     subcorpus = (
