@@ -1,11 +1,13 @@
 advocate
 choose
+elect
 endorse
 favor
 favour
 opt
 prefer
 prioritise
+prioritize
 privilege
 pursue
 support
