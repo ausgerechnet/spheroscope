@@ -1,6 +1,6 @@
 {
-    "query": "[lemma = \"as|being\"] <np>@0:[::][]* [lemma = $person_any] []*</np> @1:[::] \",\"? [lemma = \"i\"] <vp>[]* @2[pos_simple=\"V\"] []*</vp> @3:[::](/region[vp] | /region[np] | /be_ap[] | /region[pp] | /region[advp] | /region[adjp] | [word != \"\\.\"]*)+ @4:[::]",
-    "pattern": 24,
+    "query": "[lemma = \"as|being\"] <np>@0:[::][]* [lemma = $person_any] []*</np> @1:[::] \",\"? @5:[lemma = \"i\"] <vp>[]* @2[pos_simple=\"V\"] []*</vp> @3:[::](/region[vp] | /region[np] | /be_ap[] | /region[pp] | /region[advp] | /region[adjp])+ @4:[::]",
+    "pattern": 25,
     "name": "as_a_x_i_y_postoknow",
     "anchors": [
         [
@@ -32,19 +32,25 @@
             -1,
             null,
             null
+        ],
+        [
+            5,
+            0,
+            "0",
+            null
         ]
     ],
     "regions": [
         [
             0,
             1,
-            null,
+            "1",
             null
         ],
         [
             3,
             4,
-            null,
+            "2",
             null
         ]
     ]
