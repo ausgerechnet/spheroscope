@@ -1,8 +1,14 @@
+advocate
 choose
+endorse
 favor
 favour
 opt
 prefer
+prioritise
 privilege
+pursue
 support
 value
+vote
+want
