@@ -1,5 +1,5 @@
 {
-    "query": "@0:[::][lemma = $nouns_experts | lemma = $nouns_person_profession | pos_simple = \"Z\"]+ @1:[::] [lemma = \"ask|call|push\"] \"for\" <np>@2:[]* @3:[]</np> (<np>[]*</np>  | /ap[] | <pp>[]*</pp> | [pos_simple=\"Z\"])* @4:[::]",
+    "query": "@0:[::][lemma = $nouns_experts | lemma = $nouns_profession_people | pos_simple = \"Z\"]+ @1:[::] [lemma = \"ask|call|push\"] \"for\" <np>@2:[]* @3:[]</np> (<np>[]*</np>  | /ap[] | <pp>[]*</pp> | [pos_simple=\"Z\"])* @4:[::]",
     "pattern": 3,
     "name": "x_calls_for_y",
     "anchors": [
@@ -38,7 +38,7 @@
         [
             0,
             1,
-            null,
+            "0",
             null
         ],
         [
@@ -50,7 +50,7 @@
         [
             2,
             4,
-            null,
+            "1",
             null
         ]
     ]
