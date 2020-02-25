@@ -1,5 +1,5 @@
 {
-    "query": "<np>@0:[::][]* @1:[]</np> <vp>[]* [lemma = $verbs_destruction] []* </vp> \"if\" <np>@2:[::][]* @3:[]</np> <vp>@4:[::][]* @5:[]</vp> (<np>[]*</np> | <vp>[]*</vp> | <pp>[]*</pp>)* @6:[::]",
+    "query": "<np>@0:[::][]* @1:[]</np> <vp>[]* [lemma = $verbs_destruction] @7:[]* </vp> \"if\" <np>@2:[::][]* @3:[]</np> <vp>@4:[::][]* @5:[]</vp> (<np>[]*</np> | <vp>[]*</vp> | <pp>[]*</pp>)* @6:[::]",
     "pattern": 2,
     "name": "x_will_y_if_brexit",
     "anchors": [
@@ -68,7 +68,7 @@
         [
             2,
             6,
-            null,
+            "0",
             null
         ],
         [
@@ -81,6 +81,12 @@
             4,
             6,
             null,
+            null
+        ],
+        [
+            0,
+            7,
+            "1",
             null
         ]
     ]
