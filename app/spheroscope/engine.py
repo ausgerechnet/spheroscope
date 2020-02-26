@@ -13,10 +13,12 @@ def init_engine(config, subcorpus=True):
 
     # restrict to subcorpus
     if subcorpus:
-        engine.activate_subcorpus(
+        engine.subcorpus_from_query(
             "/region[tweet,a] :: (a.tweet_duplicate_status!='1') within tweet;",
             "DEDUP"
         )
-        print("switched to subcorpus 'DEDUP'")
+
+    # run person_any once
+    engine.cqp.Exec("/person_any[];")
 
     return engine
