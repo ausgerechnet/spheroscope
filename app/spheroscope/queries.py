@@ -13,6 +13,7 @@ import gzip
 import json
 import os
 import subprocess
+from ccc.argmin import argmin_query, process_argmin_file
 
 from .format_utils import format_query_result
 
@@ -165,25 +166,7 @@ def run(id):
         pass
     path_result = "instance/results/" + query['title'] + ".query.json.gz"
 
-    # init CWBEngine
-    from ccc.cwb import CWBEngine
-    from ccc.argmin import anchor_query
-    engine = CWBEngine(
-        corpus_name=current_app.config['CORPUS_NAME'],
-        lib_path=current_app.config['LIB_PATH'],
-        registry_path=current_app.config['REGISTRY_PATH'],
-        cache_path=current_app.config['CACHE_PATH']
-    )
-
-    # run person_any once
-    engine.cqp.Exec("/person_any[];")
-
-    # restrict to subcorpus
-    subcorpus = (
-        "DEDUP=/region[tweet,a] :: (a.tweet_duplicate_status!='1') within tweet;"
-        "DEDUP;"
-    )
-    engine.cqp.Exec(subcorpus)
+    engine = current_app.config['ENGINE']
 
     # set concordance settings
     concordance_settings = {
@@ -198,12 +181,13 @@ def run(id):
     query['concordance_settings'] = concordance_settings
 
     # create result
-    query['result'] = anchor_query(
+    query['result'] = argmin_query(
         engine,
-        query_str=query['query'],
+        query=query['query'],
         anchors=query['anchors'],
         regions=query['regions'],
         s_break=concordance_settings['s_break'],
+        context=concordance_settings['context'],
         p_show=concordance_settings['p_show'],
         match_strategy=concordance_settings['match_strategy']
     )
@@ -228,25 +212,7 @@ def run_all_queries_command():
 
 def run_all_queries():
 
-    # init CWBEngine
-    from ccc.cwb import CWBEngine
-    from ccc.argmin import process_argmin_file
-    engine = CWBEngine(
-        corpus_name=current_app.config['CORPUS_NAME'],
-        lib_path=current_app.config['LIB_PATH'],
-        registry_path=current_app.config['REGISTRY_PATH'],
-        cache_path=current_app.config['CACHE_PATH']
-    )
-
-    # run person_any once
-    engine.cqp.Exec("/person_any[];")
-
-    # restrict to subcorpus
-    subcorpus = (
-        "DEDUP=/region[tweet,a] :: (a.tweet_duplicate_status!='1') within tweet;"
-        "DEDUP;"
-    )
-    engine.cqp.Exec(subcorpus)
+    engine = current_app.config['ENGINE']
 
     # set concordance settings
     concordance_settings = {
