@@ -105,7 +105,6 @@ journalist
 journo
 landlord
 lawyer
-leader
 lecturer
 legislator
 librarian
@@ -114,7 +113,6 @@ litigator
 manager
 manufacturer
 mathematician
-member
 midwife
 millionaire
 musician
