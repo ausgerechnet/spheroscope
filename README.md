@@ -1,21 +1,18 @@
 # spheroscope #
 spheroscope is a corpus viewer and analyzer. The backend is based on
 the Concordance and Collocation Computer
-([CCC](https://gitlab.cs.fau.de/pheinrich/ccc)), which runs anchored
+([CCC](https://github.com/ausgerechnet/cwb-ccc)), which runs anchored
 CQPqueries.
 
 ## set-up ##
-We use `pipenv`. install necessary modules via
-```
-./env-setup.sh
-```
+We use `pipenv`. Install necessary modules via
 
-For running CQP queries (the default on the master branch), you will
-have to download and install the CCC module separately via
+	pipenv install --dev
 
-```
-pipenv install /path/to/CCC/
-```
+and switch to an interactive shell:
+
+	pipenv shell
+
 
 ## configuration ##
 You will need a CWB indexed corpus and word embeddings. Configure the
@@ -29,9 +26,6 @@ repository. Your config should at least contain the lines
 ## usage ##
 start the app like so:
 
-```
-./start-sterver.sh
-```
+	./start-sterver.sh
 
 and navigate to [http://127.0.0.1:5000/](http://127.0.0.1:5000/).
-```
