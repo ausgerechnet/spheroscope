@@ -1,7 +1,7 @@
 {
-    "query": "(<np>[pos_ner=\"DT|JJ\"]? @0:[pos_simple=\"P|Z|#\" & word != \"your|their\" | lemma = $wordlist_entities | lemma = $nouns_person_negative | lemma = $nouns_person_support | lemma = $nouns_common_people] []*</np>)+ @1:[::] [lemma = \"be\"] [pos_simple = \"R\"]* \"biased\" \"against\" @2:[::](<np>[word!=\"\\.\"]*</np>)+ @3:[::]",
-    "pattern": 17,
-    "name": "bias_adhom_neg",
+    "query": "<np>@0:[::][]*@1:[]</np> (/region[advp])* <vp>[]*[lemma=$verbs_prefer][]*</vp> <np>@2:[::][]*@3:[]</np> \"over|(more|rather) than\" <np>@4:[::][]*@5:[]</np>",
+    "pattern": 16,
+    "name": "x_rather_y_than_z_16",
     "anchors": [
         [
             0,
@@ -11,7 +11,7 @@
         ],
         [
             1,
-            -1,
+            0,
             null,
             null
         ],
@@ -26,19 +26,37 @@
             0,
             null,
             null
-        ]
+        ],
+	[
+	    4,
+	    0,
+	    null,
+	    null
+	],
+	[
+	    5,
+            0,
+            null,
+            null
+	]
     ],
     "regions": [
         [
             0,
             1,
-            "0",
+            "1",
+            null
+        ],
+	[
+            2,
+            3,
+            "2",
             null
         ],
         [
-            2,
-            3,
-            null,
+            4,
+            5,
+            "0",
             null
         ]
     ]
