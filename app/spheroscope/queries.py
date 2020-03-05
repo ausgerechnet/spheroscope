@@ -13,9 +13,7 @@ import gzip
 import json
 import os
 import subprocess
-from ccc.argmin import argmin_query, process_argmin_file
-
-from .format_utils import format_query_result
+from collections import Counter
 
 bp = Blueprint('queries', __name__, url_prefix='/queries')
 

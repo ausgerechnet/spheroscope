@@ -1,5 +1,5 @@
 {
-    "query": "(<np>[pos_ner=\"DT\"]? @0:[pos_simple=\"@|P|N|Z|#\"] []*</np> (/region[np])*@1:[::] [lemma = \"be\"] [pos_simple = \"R\"]* \"biased\" \"towards\" @2:[::](<np>[pos_simple!=\"\\.\"]*</np>)+ @3:[::] ",
+    "query": "<np>[pos_ner=\"DT\"]? @0:[pos_simple=\"@|P|N|Z|#\"] []*</np> (/region[np])*@1:[::] [lemma = \"be\"] [pos_simple = \"R\"]* \"biased\" \"towards\" @2:[::](<np>[pos_simple!=\"\\.\"]*</np>)+ @3:[::] ",
     "pattern": 17,
     "name": "bias_adhom_pos",
     "anchors": [
@@ -29,6 +29,13 @@
         ]
     ],
     "regions": [
+        [
+            0,
+            1,
+            "0",
+            null
+        ],
+
         [
             2,
             3,

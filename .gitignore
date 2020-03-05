@@ -1,5 +1,7 @@
 venv/
 
+*.magnitude
+
 app/instance/*
 app/spheroscope.cfg
 
