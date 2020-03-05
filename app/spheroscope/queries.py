@@ -1,12 +1,14 @@
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, url_for, current_app
 )
+from flask.cli import with_appcontext
 from werkzeug.exceptions import abort
+import click
 
 from spheroscope.auth import login_required
 from spheroscope.db import get_db
 
-import pandas as pd
+from glob import glob
 import gzip
 import json
 import os
@@ -23,7 +25,7 @@ def index():
     queries = db.execute(
         'SELECT qu.id, title, query, created, author_id, username, anchors, regions, pattern'
         ' FROM queries qu JOIN users u ON qu.author_id = u.id'
-        ' ORDER BY created DESC'
+        ' ORDER BY pattern ASC'
     ).fetchall()
     return render_template('queries/index.html', queries=queries)
 
@@ -113,69 +115,6 @@ def update(id):
     return render_template('queries/update.html', query=query)
 
 
-def format_query_result(query_result):
-
-    # init result
-    result = dict()
-    result['query'] = query_result['query']
-    result['pattern'] = query_result['pattern']
-
-    # make consistent
-    if 'name' in query_result.keys():
-        result['title'] = query_result['name']
-    else:
-        result['title'] = query_result['title']
-
-    # get matches
-    if 'matches' in query_result['result'].keys():
-        result['matches'] = query_result['result']['matches']
-        result['nr_matches'] = len(result['matches'])
-    else:
-        result['matches'] = list()
-        result['nr_matches'] = 0
-
-    # format anchors
-    anchors = pd.DataFrame(query_result['anchors'])
-    anchors.columns = ['number', 'correction', 'hole', 'clear name']
-    result['anchors'] = anchors.to_html(escape=False, index=False)
-
-    # format regions
-    regions = pd.DataFrame(query_result['regions'])
-    if not regions.empty:
-        regions.columns = ['start', 'end', 'hole', 'clear name']
-        result['regions'] = regions.to_html(escape=False, index=False)
-    else:
-        result['regions'] = None
-
-    # format anchor words
-    counts = dict()
-    for key in query_result['result']['anchor_words'].keys():
-        df = pd.DataFrame.from_dict(
-            Counter(query_result['result']['anchor_words'][key]), orient='index'
-        ).sort_values(by=0, ascending=False)
-        df.columns = ['freq']
-        df.index.name = key
-        counts[key] = df.to_html(escape=False, index_names=True, bold_rows=False)
-    result['anchor_words'] = counts
-
-    # format regions_words
-    counts = dict()
-    for key in query_result['result']['regions_words'].keys():
-        words = [" ".join(r) for r in query_result['result']['regions_words'][key]]
-        df = pd.DataFrame.from_dict(
-            Counter(words), orient='index'
-        ).sort_values(by=0, ascending=False)
-        df.columns = ['freq']
-        df.index.name = key
-        counts[key] = df.to_html(escape=False,
-                                 index_names=True,
-                                 bold_rows=False)
-    result['region_words'] = counts
-
-    # return
-    return result
-
-
 @bp.route('/<int:id>/show_result', methods=('GET', 'POST'))
 @login_required
 def show_result(id):
@@ -225,45 +164,31 @@ def run(id):
         pass
     path_result = "instance/results/" + query['title'] + ".query.json.gz"
 
-    # init CWBEngine
-    from ccc.cwb import CWBEngine
-    from ccc.anchors import anchor_query
-    corpus_settings = {
-            'name': current_app.config['CORPUS_NAME'],
-            'lib_path': current_app.config['LIB_PATH']
-        }
-    engine = CWBEngine(
-        corpus_settings,
-        current_app.config['REGISTRY_PATH']
-    )
-
-    # run person_any once
-    print(engine.cqp.Exec("/person_any[];"))
-
-    # restrict to subcorpus
-    subcorpus = (
-        "DEDUP=/region[tweet,a] :: (a.tweet_duplicate_status!='1') within tweet;"
-        "DEDUP;"
-    )
-    engine.cqp.Exec(subcorpus)
+    engine = current_app.config['ENGINE']
 
     # set concordance settings
     concordance_settings = {
         'order': 'first',
         'cut_off': None,
-        'p_query': 'lemma',
+        'context': 100,
+        'p_show': ['lemma'],
         's_break': 'tweet',
         'match_strategy': 'longest'
     }
 
-    # create result
-    query['result'] = anchor_query(engine,
-                                   query['query'],
-                                   query['anchors'],
-                                   query['regions'],
-                                   concordance_settings['s_break'],
-                                   concordance_settings['match_strategy'])
     query['concordance_settings'] = concordance_settings
+
+    # create result
+    query['result'] = argmin_query(
+        engine,
+        query=query['query'],
+        anchors=query['anchors'],
+        regions=query['regions'],
+        s_break=concordance_settings['s_break'],
+        context=concordance_settings['context'],
+        p_show=concordance_settings['p_show'],
+        match_strategy=concordance_settings['match_strategy']
+    )
 
     # dump result
     with gzip.open(path_result, 'wt') as f_out:
@@ -276,12 +201,35 @@ def run(id):
     return render_template('queries/show_result.html',
                            result=result)
 
-    # # run fill-form
-    # path_patterns = "instance-stable/patterns.csv"
-    # fillform_result = subprocess.run("fillform-static table {} {}".format(
-    #     path_patterns, path_result
-    # ), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    # return render_template('queries/show_result.html',
-    #                        result=result,
-    #                        table=fillform_result.stdout.decode("utf-8"),
-    #                        errors=fillform_result.stderr.decode("utf-8"))
+
+@click.command('run-all-queries')
+@with_appcontext
+def run_all_queries_command():
+    run_all_queries()
+
+
+def run_all_queries():
+
+    engine = current_app.config['ENGINE']
+
+    # set concordance settings
+    concordance_settings = {
+        'order': 'first',
+        'cut_off': None,
+        'context': 100,
+        'p_show': ['lemma'],
+        's_break': 'tweet',
+        'match_strategy': 'longest'
+    }
+
+    paths_queries = glob("instance-stable/queries/*.query")
+    for p in paths_queries:
+        print(p)
+        p_out = p.replace("queries", "results") + ".json.gz"
+        result = process_argmin_file(engine, p, concordance_settings)
+        with gzip.open(p_out, 'wt') as f_out:
+            json.dump(result, f_out, indent=4)
+
+
+def add_run_queries(app):
+    app.cli.add_command(run_all_queries_command)

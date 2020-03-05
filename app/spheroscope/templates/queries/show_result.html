@@ -13,25 +13,22 @@
   <b>Regions:</b> {{ result['regions'] | safe }} <br>
   <hr>
   {% if table %}
-  <h2>Table:</h2>
+  <h2>Logical Representation:</h2>
   {{table | safe}}
   <hr>
   {% endif %}
   <h2>Matches:</h2><br>
   {% for match in result['matches'] %}
-  <b>{{match['position']}}:</b> "{{match['full'] | safe}}"
+  <b>{{match['position']}}:</b> " {{match['full']}} " <br>
+  {{match['holes']}}
+  <br>
+  {{match['df'] | safe}}
   <br>
   {% endfor %}
   <hr>
-  <b>Anchor words:</b>
-  {% for anchor in result['anchor_words'] %}
-  {{ result['anchor_words'][anchor] | safe }}
-  <br>
-  {% endfor %}
-  <hr>
-  <b>Region words:</b>
-  {% for region in result['region_words'] %}
-  {{ result['region_words'][region] | safe }}
+  <h2>Frequency table of holes:</h2>
+  {% for hole in result['holes'] %}
+  {{ result['holes'][hole] | safe }}
   <br>
   {% endfor %}
   <hr>
