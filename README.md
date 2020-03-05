@@ -1,17 +1,15 @@
 # spheroscope #
 spheroscope is a corpus viewer and analyzer. The backend is based on
 the Concordance and Collocation Computer
-([ccc](https://pypi.org/project/cwb-ccc/)), which runs anchored CQP
-queries.
-
+([CCC](https://github.com/ausgerechnet/cwb-ccc)), which runs anchored
+CQPqueries.
 
 ## set-up ##
-We use `pipenv`. install necessary modules via
+We use `pipenv`. Install necessary modules via
 
-	pipenv install
+	pipenv install --dev
 
-
-Then switch to the virtual environment via
+and switch to an interactive shell:
 
 	pipenv shell
 
