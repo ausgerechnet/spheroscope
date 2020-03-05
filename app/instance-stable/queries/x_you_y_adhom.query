@@ -1,5 +1,5 @@
 {
-    "query": "(<vp>[]*</vp>) (<np>[]*</np> | <pp>[]*</pp> | <vp>[]*</vp>)+ [word = \"you\"] (<np>[pos_simple !=\"D\"]*</np>)* <np> [pos_simple !=\"D\"]* @2:[lemma = $adj_cog_negative]* [pos_simple !=\"D\"]*@3:[::] @0:[lemma =$nouns_person_negative | lemma = $nouns_person_common | lemma = $nouns_person_origin | lemma = $nouns_person_profession | lemma = $nouns_person_support | pos_simple = \"Z\"]+ []*</np>@1:[::] (<np>[]*</np> | <pp>[]*</pp> | <vp>[]*</vp>)*",
+    "query": "(<vp>[]*</vp>) (<np>[]*</np> | <pp>[]*</pp> | <vp>[]*</vp>)+ [word = \"you\"] (<np>[pos_simple !=\"D\"]*</np>)* <np> [pos_simple !=\"D\"]* @2:[lemma = $adj_cog_negative]* [pos_simple !=\"D\"]*@3:[::] @0:[lemma =$nouns_person_negative | lemma = $nouns_common_people | lemma = $nouns_person_origin | lemma = $nouns_profession_people | lemma = $nouns_person_support | pos_simple = \"Z\"]+ []*</np>@1:[::] (<np>[]*</np> | <pp>[]*</pp> | <vp>[]*</vp>)*",
     "pattern": -1,
     "name": "x_you_y_adhom",
     "anchors": [
