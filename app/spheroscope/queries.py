@@ -10,8 +10,8 @@ import pandas as pd
 import gzip
 import json
 import os
-from collections import Counter
 import subprocess
+from collections import Counter
 
 bp = Blueprint('queries', __name__, url_prefix='/queries')
 
@@ -205,7 +205,6 @@ def show_result(id):
         return render_template('queries/show_result.html',
                                result=result,
                                table=fillform_result.stdout.decode("utf-8"))
-
 
     else:
         return render_template('queries/show_result.html',
