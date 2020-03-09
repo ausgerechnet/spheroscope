@@ -1,8 +1,6 @@
 import pandas as pd
 from collections import Counter
 
-# TODO: wordlists: specify p_att
-
 
 def format_query_result(query_result):
 
@@ -11,12 +9,6 @@ def format_query_result(query_result):
     result['query'] = query_result['query']
     result['pattern'] = query_result['pattern']
     result['nr_matches'] = query_result['result']['nr_matches']
-
-    # TODO make consistent
-    if 'name' in query_result.keys():
-        result['title'] = query_result['name']
-    else:
-        result['title'] = query_result['title']
 
     # format anchors
     anchors = pd.DataFrame(query_result['anchors'])
@@ -47,10 +39,6 @@ def format_query_result(query_result):
         df.fillna(-1, inplace=True)
         df['anchor'] = df['anchor'].apply(pd.to_numeric, downcast='integer')
         df = df.replace(-1, "")
-
-        # format match column
-        df['match'] = df['match'].replace("False", "")
-        df['match'] = df['match'].replace("True", "match")
 
         match['df'] = df.to_html(
             escape=False, index_names='cpos', bold_rows=False
