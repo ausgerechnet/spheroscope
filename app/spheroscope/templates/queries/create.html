@@ -6,10 +6,12 @@
 
 {% block content %}
   <form method="post">
-    <label for="title">Title</label>
-    <input name="title" id="title" value="{{ request.form['title'] }}" required>
-    <label for="query">Query</label>
-    <textarea name="query" id="query">{{ request.form[query] }}</textarea>
+    <label for="name">name</label>
+    <input name="name" id="name" value="{{ request.form['name'] }}" required>
+    <label for="pattern">pattern</label>
+    <input name="pattern" id="pattern" value="{{ request.form['pattern'] }}">
+    <label for="query">query</label>
+    <textarea name="query" id="query">{{ request.form['query'] }}</textarea>
     <input type="submit" value="Save">
   </form>
 {% endblock %}

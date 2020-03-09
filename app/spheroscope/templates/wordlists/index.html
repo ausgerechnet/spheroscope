@@ -11,22 +11,24 @@
 <ul>
   {% for wordlist in wordlists %}
   <li>
-    {{ wordlist['title'] }} <i>(by {{ wordlist['username'] }} on {{
-	wordlist['created'].strftime('%Y-%m-%d') }})</i>
+    {{ wordlist['name'] }}
+    <!-- <i>(by {{ wordlist['username'] }} -->
+    <!--   on {{ wordlist['created'].strftime('%Y-%m-%d') }}) -->
+    <!-- </i> -->
+
     {% if g.user['id'] == wordlist['author_id'] %}
     <span style="float:right;">
+      <a class="action" href="{{ url_for('wordlists.update',
+			      id=wordlist['id']) }}">edit</a> – 
       <a class="action" href="{{
 			      url_for('wordlists.show_frequencies', id=wordlist['id'])
-			      }}">table</a> - 
+			      }}">table</a> – 
       <a class="action" href="{{
 			      url_for('wordlists.show_similar_ones', id=wordlist['id'])
-			      }}">similar</a> - 
-      <a class="action" href="{{ url_for('wordlists.update',
-			      id=wordlist['id']) }}">edit</a>&nbsp;
+			      }}">similar</a>
     </span>
     {% endif %}
   </li>
   {% endfor %}
 </ul>
-
 {% endblock %}

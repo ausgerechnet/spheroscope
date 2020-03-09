@@ -1,6 +1,6 @@
-import os
-
 from flask import Flask
+
+import os
 
 
 def create_app(test_config=None):
@@ -32,17 +32,20 @@ def create_app(test_config=None):
 
     from . import index
     app.register_blueprint(index.bp)
+    app.add_url_rule('/', endpoint='index')
 
     from . import wordlists
     app.register_blueprint(wordlists.bp)
-    app.add_url_rule('/', endpoint='index')
 
     from . import queries
-    queries.add_run_queries(app)
     app.register_blueprint(queries.bp)
-    app.add_url_rule('/', endpoint='index')
+    queries.add_run_queries(app)
 
-    from . import engine
-    app.config['ENGINE'] = engine.init_engine(app.config)
+    from . import patterns
+    app.register_blueprint(patterns.bp)
+
+    from . import corpora
+    app.register_blueprint(corpora.bp)
+    app.config['ENGINE'] = corpora.init_corpus(app.config)
 
     return app

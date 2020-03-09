@@ -1,15 +1,17 @@
-import sqlite3
-import json
-from glob import glob
-
-import click
-from json import JSONDecodeError
 from flask import current_app, g
 from flask.cli import with_appcontext
 from werkzeug.security import generate_password_hash
+import click
+
+from glob import glob
+import sqlite3
+# logging
+import logging
+logger = logging.getLogger(__name__)
 
 
 def get_db():
+
     if 'db' not in g:
         g.db = sqlite3.connect(
             current_app.config['DATABASE'],
@@ -21,71 +23,43 @@ def get_db():
 
 
 def close_db(e=None):
-    db = g.pop('db', None)
 
+    db = g.pop('db', None)
     if db is not None:
         db.close()
 
 
 def init_db():
+
+    logger.info('initializing database')
     db = get_db()
 
+    # read schema
     with current_app.open_resource('schema.sql') as f:
         db.executescript(f.read().decode('utf8'))
 
-    # init with admin user
+    # init admin
     db.execute(
         'INSERT INTO users (username, password) VALUES (?, ?)',
         ("admin", generate_password_hash("0000"))
     )
+
+    # commit
     db.commit()
 
 
 def import_brexit():
 
-    paths_queries = glob("instance-stable/queries/*.query")
-    paths_wordlists = glob("instance-stable/lib/wordlists/*.txt")
-
-    # get db
-    db = get_db()
-
     # queries
-    insert = (
-        "INSERT INTO queries "
-        "(author_id, title, query, anchors, regions, pattern) "
-        "VALUES (?, ?, ?, ?, ?, ?);"
-    )
-    for p in paths_queries:
-        try:
-            with open(p, "rt") as f:
-                query = json.loads(f.read())
-        except JSONDecodeError:
-            print("WARNING: not a valid query file: %s" % p)
-        else:
-            db.execute(insert, (1,
-                                query['name'],
-                                query['query'],
-                                json.dumps(query['anchors']),
-                                json.dumps(query['regions']),
-                                query['pattern']))
-            db.commit()
-    print("imported queries")
+    from .queries import queries_paths2db
+    paths_queries = glob("instance-stable/queries/*.query")
+    queries_paths2db(paths_queries)
 
     # wordlists
-    insert = (
-        "INSERT INTO wordlists "
-        "(title, words, author_id) "
-        "VALUES (?, ?, ?);"
-    )
-    for p in paths_wordlists:
-        title = p.split("/")[-1].split(".")[0]
-        words = set()
-        with open(p, "rt") as f:
-            for line in f:
-                words.add(line.rstrip())
-        db.execute(insert, (title, "\n".join(words), 1))
-    db.commit()
-    print("imported wordlists")
+    from .wordlists import wordlists_paths2db
+    lib_path = current_app.config['LIB_PATH']
+    wordlists_paths2db(lib_path)
+    logger.info("imported wordlists")
 
 
 @click.command('init-db')

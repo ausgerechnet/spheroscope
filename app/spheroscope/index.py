@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template
 
-from spheroscope.auth import login_required
+from .auth import login_required
 
 bp = Blueprint('index', __name__)
 
