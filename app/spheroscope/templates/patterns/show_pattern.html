@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>{% block title %}{{ pattern['nr_queries'] }} queries for pattern
+  {{ pattern['id'] }}{% endblock %}</h1><br>
+{% endblock %}
+
+{% block content %}
+explanation: {{pattern['explanation'] }}<br>
+template: {{ pattern['template'] }}
+
+
+{% for query in pattern['queries'] %}
+<article class="post">
+  <header>
+    <div>
+      <h1>{{ query['name'] }}</h1>
+      <div class="about">by {{ query['username'] }} on {{ query['created'].strftime('%Y-%m-%d') }}</div>
+    </div>
+    {% if g.user['id'] == query['author_id'] %}
+    <a class="action" href="{{ 
+			    url_for('queries.update', id=query['id']) 
+			    }}">edit</a>
+    <a class="action" href="{{
+			    url_for('queries.run', id=query['id'])
+			    }}">run query</a>
+    <a class="action" href="{{
+			    url_for('queries.show_result', id=query['id'])
+			    }}">show result</a>
+    {% endif %}
+  </header>
+  <p class="body">{{ query['query'] }}</p>
+</article>
+{% if not loop.last %}
+<hr>
+{% endif %}
+{% endfor %}
+{% endblock %}
+

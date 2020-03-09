@@ -24,5 +24,5 @@ Flask-Caching = "==1.4.0"
 pymagnitude = "==0.1.120"
 numpy = "*"
 pandas = "*"
-cwb-ccc = ">=0.9.6"
+cwb-ccc = {path = "./../cwb-ccc"}
 stop-words = "*"

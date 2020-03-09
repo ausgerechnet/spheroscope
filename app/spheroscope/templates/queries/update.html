@@ -1,16 +1,23 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}Edit "{{ query['title'] }}"{% endblock %}</h1>
+  <h1>{% block title %}Edit "{{ query['name'] }}"{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
   <form method="post">
-    <label for="title">Title</label>
-    <input name="title" id="title"
-      value="{{ request.form['title'] or query['title'] }}" required>
-    <label for="query">Query</label>
-    <textarea name="query" id="query">{{ request.form[query] or query['query'] }}</textarea>
+    <label for="name">name</label>
+    <input name="name" id="name" value="{{ request.form['name'] or
+					  query['name'] }}" required>
+    <label for="pattern">pattern</label>
+    <input name="pattern" id="pattern" value="{{ request.form['pattern']
+					      or query['pattern'] }}">
+    <label for="query">query</label>
+    <textarea name="query" id="query">{{ request.form['query'] or query['query'] }}</textarea>
+    <label for="anchors">anchors</label>
+    <textarea name="anchors" id="anchors">{{ request.form['anchors'] or query['anchors'] }}</textarea>
+    <label for="regions">regions</label>
+    <textarea name="regions" id="regions">{{ request.form['regions'] or query['regions'] }}</textarea>
     <input type="submit" value="Save">
   </form>
   <hr>
