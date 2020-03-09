@@ -1,19 +1,26 @@
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, url_for, current_app
+    Blueprint, g, redirect, render_template, request, url_for, current_app
 )
 from werkzeug.exceptions import abort
-from pymagnitude import Magnitude
 
-from spheroscope.auth import login_required
-from spheroscope.db import get_db
+import os
+from pymagnitude import Magnitude
+from glob import glob
+
+from .auth import login_required
+from .db import get_db
+# logging
+import logging
+logger = logging.getLogger(__name__)
 
 
 bp = Blueprint('wordlists', __name__, url_prefix='/wordlists')
 
 
-def get_wordlist(id, check_author=True):
+def get_wordlist_from_db(id=None, check_author=True):
+
     wordlist = get_db().execute(
-        'SELECT wl.id, title, words, created, author_id, username'
+        'SELECT wl.id, name, words, p_att, created, author_id, username'
         ' FROM wordlists wl JOIN users u ON wl.author_id = u.id'
         ' WHERE wl.id = ?',
         (id,)
@@ -28,15 +35,81 @@ def get_wordlist(id, check_author=True):
     return wordlist
 
 
+def get_wordlists_from_db():
+
+    wordlists = get_db().execute(
+        'SELECT wl.id, name, words, created, author_id, username'
+        ' FROM wordlists wl JOIN users u ON wl.author_id = u.id'
+        ' ORDER BY name ASC'
+    ).fetchall()
+
+    wordlists = [dict(w) for w in wordlists]
+
+    return wordlists
+
+
+def get_wordlist_from_path(path):
+
+    name = path.split("/")[-1].split(".")[0]
+    if name.startswith("tag"):
+        p_att = "pos_ark"
+    else:
+        p_att = "lemma"
+    words = set()
+    with open(path, "rt") as f:
+        for line in f:
+            words.add(line.rstrip())
+    return {
+        'name': name,
+        'p_att': p_att,
+        'words': "\n".join(words),
+        # missing: id created author_id username
+    }
+
+
+def write_wordlist(wordlist, write_db=True, write_file=True):
+
+    if write_db:
+        logger.info("writing wordlist %s to database" % wordlist['name'])
+        db = get_db()
+        db.execute(
+            'INSERT INTO wordlists (name, words, p_att, author_id)'
+            ' VALUES (?, ?, ?, ?)',
+            (wordlist['name'], wordlist['words'],
+             wordlist['p_att'], 1)
+        )
+        db.commit()
+
+    if write_file:
+        lib_path = current_app.config['LIB_PATH']
+        path = os.path.join(lib_path, "wordlists", wordlist['name'] + ".txt")
+        logger.info("writing wordlist %s to %s" % (wordlist['name'], path))
+        with open(path, "wt") as f:
+            f.write(wordlist['words'])
+
+
+def delete_from_db(id):
+    get_wordlist_from_db(id)
+    db = get_db()
+    db.execute('DELETE FROM wordlists WHERE id = ?', (id,))
+    db.commit()
+
+
+def wordlists_paths2db(lib_path):
+
+    paths = glob(os.path.join(lib_path, 'wordlists', '*'))
+    wordlists = dict()
+    for p in paths:
+        wlist = get_wordlist_from_path(p)
+        write_wordlist(wlist, write_file=False)
+        wordlists[wlist['name']] = wlist
+    return wordlists
+
+
 @bp.route('/')
 @login_required
 def index():
-    db = get_db()
-    wordlists = db.execute(
-        'SELECT wl.id, title, words, created, author_id, username'
-        ' FROM wordlists wl JOIN users u ON wl.author_id = u.id'
-        ' ORDER BY title ASC'
-    ).fetchall()
+    wordlists = get_wordlists_from_db()
     return render_template('wordlists/index.html', wordlists=wordlists)
 
 
@@ -44,23 +117,18 @@ def index():
 @login_required
 def create():
     if request.method == 'POST':
-        title = request.form['title']
-        words = request.form['words']
-        error = None
 
-        if not title:
-            error = 'title is required.'
+        wordlist = {
+            'name': request.form['name'],
+            'words': request.form['words'],
+            'p_att': request.form['p_att']
+        }
 
-        if error is not None:
-            flash(error)
+        if not wordlist['name']:
+            logger.error('name is required.')
+
         else:
-            db = get_db()
-            db.execute(
-                'INSERT INTO wordlists (title, words, author_id)'
-                ' VALUES (?, ?, ?)',
-                (title, words, g.user['id'])
-            )
-            db.commit()
+            write_wordlist(wordlist)
             return redirect(url_for('wordlists.index'))
 
     return render_template('wordlists/create.html')
@@ -69,25 +137,20 @@ def create():
 @bp.route('/<int:id>/update', methods=('GET', 'POST'))
 @login_required
 def update(id):
-    wordlist = get_wordlist(id)
+    wordlist = get_wordlist_from_db(id)
     if request.method == 'POST':
-        title = request.form['title']
-        words = request.form['words']
-        error = None
+        wordlist = {
+            'name': request.form['name'],
+            'words': request.form['words'],
+            'p_att': request.form['p_att']
+        }
 
-        if not title:
-            error = 'title is required.'
+        if not wordlist['name']:
+            logger.error('name is required.')
 
-        if error is not None:
-            flash(error)
         else:
-            db = get_db()
-            db.execute(
-                'UPDATE wordlists SET title = ?, words = ?'
-                ' WHERE id = ?',
-                (title, words, id)
-            )
-            db.commit()
+            delete_from_db(id)
+            write_wordlist(wordlist)
             return redirect(url_for('wordlists.index'))
 
     return render_template('wordlists/update.html', wordlist=wordlist)
@@ -96,27 +159,23 @@ def update(id):
 @bp.route('/<int:id>/delete', methods=('POST',))
 @login_required
 def delete(id):
-    get_wordlist(id)
-    db = get_db()
-    db.execute('DELETE FROM wordlists WHERE id = ?', (id,))
-    db.commit()
+    delete_from_db(id)
     return redirect(url_for('wordlists.index'))
 
 
-@bp.route('/<int:id>/frequencies', methods=('GET', 'POST'))
+@bp.route('/<int:id>/frequencies', methods=['GET'])
 @login_required
 def show_frequencies(id):
 
-    p_att = "lemma"
     engine = current_app.config['ENGINE']
 
     # get lemmas
-    wordlist = get_wordlist(id)
+    wordlist = get_wordlist_from_db(id)
     words = wordlist['words'].split("\n")
     words = [word.rstrip() for word in words]
 
     # get frequencies
-    freq_original = engine.item_freq(words, p_att=p_att)
+    freq_original = engine.marginals(words, p_att=wordlist['p_att'])
     freq_original.columns = ["frequency"]
 
     return render_template(
@@ -126,21 +185,16 @@ def show_frequencies(id):
     )
 
 
-@bp.route('/<int:id>/similar', methods=('GET', 'POST'))
+@bp.route('/<int:id>/similar', methods=['GET'])
 @login_required
 def show_similar_ones(id):
 
-    p_att = "lemma"
     engine = current_app.config['ENGINE']
 
     # get lemmas
-    wordlist = get_wordlist(id)
+    wordlist = get_wordlist_from_db(id)
     words = wordlist['words'].split("\n")
     words = [word.rstrip() for word in words]
-
-    # get frequencies
-    freq_original = engine.item_freq(words, p_att=p_att)
-    freq_original.columns = ["frequency"]
 
     # get similar ones
     number = 200
@@ -149,7 +203,7 @@ def show_similar_ones(id):
     similar_ones = [s[0] for s in similar]
 
     # get frequencies
-    freq_similar = engine.item_freq(similar_ones, p_att=p_att)
+    freq_similar = engine.marginals(similar_ones, p_att=wordlist['p_att'])
     freq_similar.columns = ["frequency"]
     freq_similar['similarity'] = [s[1] for s in similar]
     freq_similar = freq_similar.loc[freq_similar.frequency > 1]
@@ -159,6 +213,5 @@ def show_similar_ones(id):
     return render_template(
         'wordlists/show_similar_ones.html',
         wordlist=wordlist,
-        similar=freq_similar.to_html(escape=False),
-        original=freq_original.to_html(escape=False)
+        similar=freq_similar.to_html(escape=False)
     )

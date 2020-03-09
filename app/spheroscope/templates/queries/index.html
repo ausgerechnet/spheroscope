@@ -8,30 +8,32 @@
 {% endblock %}
 
 {% block content %}
-{% for query in queries %}
-<article class="post">
-  <header>
-    <div>
-      <h1>{{ query['title'] }} (pattern {{ query['pattern'] }})</h1>
-      <div class="about">by {{ query['username'] }} on {{ query['created'].strftime('%Y-%m-%d') }}</div>
-    </div>
+<ul>
+  {% for query in queries %}
+  <li>
+    {{ query['name'] }}
+    (<a class="action" href="{{
+			     url_for('patterns.show_pattern',
+			     id=query['pattern'])
+			     }}">pattern {{ query['pattern'] }}</a>)
+    <!-- <i>(by {{ query['username'] }} -->
+    <!--   on {{ query['created'].strftime('%Y-%m-%d') }}) -->
+    <!-- </i> -->
+    
     {% if g.user['id'] == query['author_id'] %}
-    <a class="action" href="{{ 
-			    url_for('queries.update', id=query['id']) 
-			    }}">edit</a>
-    <a class="action" href="{{
-			    url_for('queries.run', id=query['id'])
-			    }}">run query</a>
-    <a class="action" href="{{
-			    url_for('queries.show_result', id=query['id'])
-			    }}">show result</a>
-    {% endif %}
-  </header>
-  <p class="body">{{ query['query'] }}</p>
-</article>
-{% if not loop.last %}
-<hr>
-{% endif %}
-{% endfor %}
+    <span style="float:right;">
+      <a class="action" href="{{ 
+			      url_for('queries.update', id=query['id']) 
+			      }}">edit</a> – 
+      <a class="action" href="{{
+			      url_for('queries.run', id=query['id'])
+			      }}">run</a> – 
+      <a class="action" href="{{
+			      url_for('queries.show_result', id=query['id'])
+			      }}">result</a>
+    </span>
+   {% endif %}
+  </li>
+  {% endfor %}
+</ul>
 {% endblock %}
-
