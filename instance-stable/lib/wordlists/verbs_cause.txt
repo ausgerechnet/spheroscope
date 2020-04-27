@@ -5,6 +5,7 @@ enable
 equate
 facilitate
 generate
+help
 imply
 incite
 induce
@@ -16,9 +17,11 @@ make
 mean
 mitigate
 precipitate
+protect
 result
 signal
 signify
 start
 spell
+support
 trigger
