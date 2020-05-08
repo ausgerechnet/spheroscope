@@ -11,9 +11,9 @@
 <ul>
   {% for wordlist in wordlists %}
   <li>
-    {{ wordlist['name'] }}
+    {{ wordlist['name'] }} ({{ wordlist['length'] }})
     <!-- <i>(by {{ wordlist['username'] }} -->
-    <!--   on {{ wordlist['created'].strftime('%Y-%m-%d') }}) -->
+    <!--   on {{ wordlist['modified'].strftime('%Y-%m-%d') }}) -->
     <!-- </i> -->
 
     {% if g.user['id'] == wordlist['author_id'] %}

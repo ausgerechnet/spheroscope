@@ -1,9 +1,11 @@
-from flask import Blueprint, render_template
-
 from collections import defaultdict
 from pandas import read_csv
 import logging
 
+# flask
+from flask import Blueprint, render_template
+
+# this app
 from .auth import login_required
 from .queries import get_queries_from_db
 

@@ -17,7 +17,7 @@
 			     id=query['pattern'])
 			     }}">pattern {{ query['pattern'] }}</a>)
     <!-- <i>(by {{ query['username'] }} -->
-    <!--   on {{ query['created'].strftime('%Y-%m-%d') }}) -->
+    <!--   on {{ query['modified'].strftime('%Y-%m-%d') }}) -->
     <!-- </i> -->
     
     {% if g.user['id'] == query['author_id'] %}

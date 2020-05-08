@@ -1,26 +1,26 @@
+import os
+from glob import glob
+from pymagnitude import Magnitude
+
+# flask
 from flask import (
     Blueprint, g, redirect, render_template, request, url_for, current_app
 )
 from werkzeug.exceptions import abort
 
-import os
-from pymagnitude import Magnitude
-from glob import glob
-
+# this app
 from .auth import login_required
 from .db import get_db
-# logging
-import logging
-logger = logging.getLogger(__name__)
+from .corpora import init_corpus
 
 
 bp = Blueprint('wordlists', __name__, url_prefix='/wordlists')
 
 
-def get_wordlist_from_db(id=None, check_author=True):
+def get_wordlist_from_db(id, check_author=True):
 
     wordlist = get_db().execute(
-        'SELECT wl.id, name, words, p_att, created, author_id, username'
+        'SELECT wl.id, name, words, p_att, modified, author_id, username'
         ' FROM wordlists wl JOIN users u ON wl.author_id = u.id'
         ' WHERE wl.id = ?',
         (id,)
@@ -38,14 +38,18 @@ def get_wordlist_from_db(id=None, check_author=True):
 def get_wordlists_from_db():
 
     wordlists = get_db().execute(
-        'SELECT wl.id, name, words, created, author_id, username'
+        'SELECT wl.id, name, words, modified, author_id, username'
         ' FROM wordlists wl JOIN users u ON wl.author_id = u.id'
         ' ORDER BY name ASC'
     ).fetchall()
 
-    wordlists = [dict(w) for w in wordlists]
+    wordlists_new = list()
+    for wl in wordlists:
+        wl_new = dict(wl)
+        wl_new['length'] = len(wl_new['words'])
+        wordlists_new.append(wl_new)
 
-    return wordlists
+    return wordlists_new
 
 
 def get_wordlist_from_path(path):
@@ -63,14 +67,16 @@ def get_wordlist_from_path(path):
         'name': name,
         'p_att': p_att,
         'words': "\n".join(words),
-        # missing: id created author_id username
+        # missing: id author_id modified
     }
 
 
 def write_wordlist(wordlist, write_db=True, write_file=True):
 
     if write_db:
-        logger.info("writing wordlist %s to database" % wordlist['name'])
+        current_app.logger.info(
+            "writing wordlist %s to database" % wordlist['name']
+        )
         db = get_db()
         db.execute(
             'INSERT INTO wordlists (name, words, p_att, author_id)'
@@ -83,7 +89,9 @@ def write_wordlist(wordlist, write_db=True, write_file=True):
     if write_file:
         lib_path = current_app.config['LIB_PATH']
         path = os.path.join(lib_path, "wordlists", wordlist['name'] + ".txt")
-        logger.info("writing wordlist %s to %s" % (wordlist['name'], path))
+        current_app.logger.info(
+            "writing wordlist %s to %s" % (wordlist['name'], path)
+        )
         with open(path, "wt") as f:
             f.write(wordlist['words'])
 
@@ -95,7 +103,7 @@ def delete_from_db(id):
     db.commit()
 
 
-def wordlists_paths2db(lib_path):
+def wordlists_lib2db(lib_path):
 
     paths = glob(os.path.join(lib_path, 'wordlists', '*'))
     wordlists = dict()
@@ -125,7 +133,7 @@ def create():
         }
 
         if not wordlist['name']:
-            logger.error('name is required.')
+            current_app.logger.error('name is required.')
 
         else:
             write_wordlist(wordlist)
@@ -146,7 +154,7 @@ def update(id):
         }
 
         if not wordlist['name']:
-            logger.error('name is required.')
+            current_app.logger.error('name is required.')
 
         else:
             delete_from_db(id)
@@ -167,7 +175,7 @@ def delete(id):
 @login_required
 def show_frequencies(id):
 
-    engine = current_app.config['ENGINE']
+    corpus = init_corpus(current_app.config)
 
     # get lemmas
     wordlist = get_wordlist_from_db(id)
@@ -175,7 +183,7 @@ def show_frequencies(id):
     words = [word.rstrip() for word in words]
 
     # get frequencies
-    freq_original = engine.marginals(words, p_att=wordlist['p_att'])
+    freq_original = corpus.marginals(words, p_att=wordlist['p_att'])
     freq_original.columns = ["frequency"]
 
     return render_template(
@@ -187,9 +195,9 @@ def show_frequencies(id):
 
 @bp.route('/<int:id>/similar', methods=['GET'])
 @login_required
-def show_similar_ones(id):
+def show_similar_ones(id, number=200):
 
-    engine = current_app.config['ENGINE']
+    corpus = init_corpus(current_app.config)
 
     # get lemmas
     wordlist = get_wordlist_from_db(id)
@@ -197,13 +205,18 @@ def show_similar_ones(id):
     words = [word.rstrip() for word in words]
 
     # get similar ones
-    number = 200
+    current_app.logger.info(
+        'getting %d similar items for %d items' % (number, len(words))
+    )
     embeddings = Magnitude(current_app.config['EMBEDDINGS'])
     similar = embeddings.most_similar(positive=words, topn=number)
     similar_ones = [s[0] for s in similar]
 
     # get frequencies
-    freq_similar = engine.marginals(similar_ones, p_att=wordlist['p_att'])
+    current_app.logger.info(
+        'getting frequency info for %d items' % (len(similar_ones))
+    )
+    freq_similar = corpus.marginals(similar_ones, p_att=wordlist['p_att'])
     freq_similar.columns = ["frequency"]
     freq_similar['similarity'] = [s[1] for s in similar]
     freq_similar = freq_similar.loc[freq_similar.frequency > 1]
