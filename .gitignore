@@ -2,8 +2,7 @@ venv/
 
 *.magnitude
 
-app/instance/*
-app/spheroscope.cfg
+instance/*
 
 *.pyc
 __pycache__/
