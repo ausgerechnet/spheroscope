@@ -1,9 +1,10 @@
-from flask import Flask
-
 import os
+# flask
+from flask import Flask
 
 
 def create_app(test_config=None):
+
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
@@ -13,7 +14,7 @@ def create_app(test_config=None):
 
     if test_config is None:
         # load the instance config, if it exists, when not testing
-        app.config.from_pyfile('../spheroscope.cfg', silent=True)
+        app.config.from_pyfile('spheroscope.cfg', silent=True)
     else:
         # load the test config if passed in
         app.config.from_mapping(test_config)
@@ -23,6 +24,11 @@ def create_app(test_config=None):
         os.makedirs(app.instance_path)
     except OSError:
         pass
+
+    # just for testing
+    @app.route('/hello')
+    def hello():
+        return 'Hello, World!'
 
     from . import db
     db.init_app(app)
@@ -37,15 +43,11 @@ def create_app(test_config=None):
     from . import wordlists
     app.register_blueprint(wordlists.bp)
 
-    from . import queries
-    app.register_blueprint(queries.bp)
-    queries.add_run_queries(app)
-
     from . import patterns
     app.register_blueprint(patterns.bp)
 
-    from . import corpora
-    app.register_blueprint(corpora.bp)
-    app.config['ENGINE'] = corpora.init_corpus(app.config)
+    from . import queries
+    app.register_blueprint(queries.bp)
+    queries.add_run_queries(app)
 
     return app

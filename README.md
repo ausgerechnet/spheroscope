@@ -7,27 +7,42 @@ CQPqueries.
 ## set-up ##
 We use `pipenv`. Install necessary modules via
 
-	pipenv install --dev
-
-and switch to an interactive shell:
+	pipenv install
+	
+and swith to an interactive shell:
 
 	pipenv shell
 
 
 ## configuration ##
-You will need a CWB indexed corpus and word embeddings. Configure the
-app via "spheroscope.cfg" in the [app](app/) folder. You can find an
-[example config file](app/spheroscope_example.cfg) in the
-repository. Your config should at least contain the lines
-`REGISTRY_PATH`, `CORPUS_NAME`, and `CACHE_PATH`. 
+You will need a CWB indexed corpus and word embeddings for most of
+what this app offers. Configure the app via "spheroscope.cfg" in the
+[instance](instance/) folder. You can find an [example config
+file](spheroscope_example.cfg) in the repository.
 
 You can use the `LIB_PATH` of the [stable
-version](app/instance-stable/lib/). Additional fields are `EMBEDDINGS`
-(which should point to a magnitude file) and `FILLFORM` (download the
-latest version [here](https://gitlab.com/mgttlinger/fillform/-/jobs)).
+instance](instance-stable/lib/).
+
+`EMBEDDINGS` should point to a magnitude file.
+
+Download the latest version of `FILLFORM`
+[here](https://gitlab.com/mgttlinger/fillform/-/jobs)). Don't provide
+this key if you do not want to use fillform.
+
+Results will be written to and read from `RESULTS_PATH`. You can use
+use one of the results of the [stable
+instance](instance-stable/query-results/).
+
+For the queries to run, you will have to provide a `CORPUS_NAME`, the
+structural attribute where the meta identifier is stored in `S_META`
+("tweet_id") and the structural attribute where to break your queries
+("tweet").
+
+The `CACHE_PATH` will be used to store temporary query results from
+cwb-ccc.
 
 ## usage ##
-start the app like so:
+Start the app like so:
 
 	./start-sterver.sh
 
