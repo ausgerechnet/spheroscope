@@ -9,6 +9,7 @@ def format_query_result(query_result):
     result['query'] = query_result['query']
     result['pattern'] = query_result['pattern']
     result['nr_matches'] = query_result['result']['nr_matches']
+    result['name'] = query_result['name']
 
     # format anchors
     anchors = pd.DataFrame(query_result['anchors'])

@@ -1,7 +1,7 @@
 {
-    "query": "(\"according\" \"to\" | \"as\" [lemma = $verbs_communication] \"by\") <np> @0:[::][word != \"(http.|www|t\\.co).+\"]* [lemma =$nouns_experts | pos_simple=\"Z\"] [word != \"(http.|www|t\\.co).+\"]* </np>@1:[::] \",\"? <np>@2:[::][word != \"(http.|www|t\\.co).+\"]*</np> (<vp>[]*</vp>)+ (<np>[word != \"(http.|www|t\\.co).+\"]*</np> | <vp>[]*</vp> |<pp>[]*</pp> | [pos_simple = \"I|R\"])+ @3:[::]",
-    "pattern": 0,
     "name": "according_to_experts_x",
+    "query": "(\"according\" \"to\" | \"as\" [lemma = $verbs_communication] \"by\") <np> @0:[::][word != \"(http.|www|t\\.co).+\"]* [lemma =$nouns_experts | pos_simple=\"Z\"] [word != \"(http.|www|t\\.co).+\"]* </np>@1:[::] \",\"? <np>@2:[::][word != \"(http.|www|t\\.co).+\"]*</np> (<vp>[]*</vp>)+ (<np>[word != \"(http.|www|t\\.co).+\"]*</np> | <vp>[]*</vp> |<pp>[]*</pp> | [pos_simple = \"I|R\"])+ @3:[::]",
+    "pattern": "0",
     "anchors": [
         [
             0,

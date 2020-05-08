@@ -15,7 +15,7 @@ template: {{ pattern['template'] }}
   <header>
     <div>
       <h1>{{ query['name'] }}</h1>
-      <div class="about">by {{ query['username'] }} on {{ query['created'].strftime('%Y-%m-%d') }}</div>
+      <div class="about">by {{ query['username'] }} on {{ query['modified'].strftime('%Y-%m-%d') }}</div>
     </div>
     {% if g.user['id'] == query['author_id'] %}
     <a class="action" href="{{ 
