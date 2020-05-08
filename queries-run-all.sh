@@ -4,4 +4,4 @@ export FLASK_APP=spheroscope
 export FLASK_ENV=development
 flask init-db
 flask import-lib
-flask run
+flask run-all-queries

@@ -1,12 +1,13 @@
+import sqlite3
+import logging
+
+# flask
 from flask import current_app, g
 from flask.cli import with_appcontext
 from werkzeug.security import generate_password_hash
 import click
 
-from glob import glob
-import sqlite3
-# logging
-import logging
+
 logger = logging.getLogger(__name__)
 
 
@@ -48,20 +49,6 @@ def init_db():
     db.commit()
 
 
-def import_brexit():
-
-    # queries
-    from .queries import queries_paths2db
-    paths_queries = glob("instance-stable/queries/*.query")
-    queries_paths2db(paths_queries)
-
-    # wordlists
-    from .wordlists import wordlists_paths2db
-    lib_path = current_app.config['LIB_PATH']
-    wordlists_paths2db(lib_path)
-    logger.info("imported wordlists")
-
-
 @click.command('init-db')
 @with_appcontext
 def init_db_command():
@@ -70,13 +57,32 @@ def init_db_command():
     click.echo('initialized database')
 
 
-@click.command('import-brexit')
+def import_lib():
+
+    lib_path = current_app.config['LIB_PATH']
+
+    # wordlists
+    from .wordlists import wordlists_lib2db
+    wordlists_lib2db(lib_path)
+
+    # macros
+    # from .wordlists import wordlists_lib2db
+    # wordlists_lib2db(lib_path)
+    # logger.info("imported wordlists")
+
+    # queries
+    from .queries import queries_lib2db
+    queries_lib2db(lib_path)
+
+
+@click.command('import-lib')
 @with_appcontext
-def import_brexit_command():
-    import_brexit()
+def import_lib_command():
+    import_lib()
+    click.echo('imported lib')
 
 
 def init_app(app):
     app.teardown_appcontext(close_db)
     app.cli.add_command(init_db_command)
-    app.cli.add_command(import_brexit_command)
+    app.cli.add_command(import_lib_command)
