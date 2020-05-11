@@ -303,6 +303,7 @@ def run_all_queries():
                 s_break=current_app.config['S_BREAK'], match_strategy='longest'
             )
         except:
+            current_app.logger.error('unexpected error in path "%s"' % p)
             result = {'error': str(sys.exc_info()[0])}
         with gzip.open(path_result, 'wt') as f_out:
             json.dump(result, f_out, indent=4)
