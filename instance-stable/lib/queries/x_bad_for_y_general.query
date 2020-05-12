@@ -1,7 +1,7 @@
 {
-    "query": "<np>@0:[::][]* @1:[]</np> <vp>[lemma = \"be\"] [lemma = $verbs_destruction & word = \".+ing\"] []* </vp> <np>@2:[::][]*@3:[]</np> (<np>[]*</np> | <vp>[]*</vp> | <pp>[]*</pp> | /be_ap[])*@4:[::]",
-    "pattern": 7,
     "name": "x_bad_for_y_general",
+    "query": "<np>@0:[::][]+</np>@1:[::] <vp>[lemma = \"be\"] [lemma = $verbs_destruction & word = \".+ing\"] []* </vp> <np>@2:[::][]+</np>@3:[::] (<np>[]*</np> | <vp>[]*</vp> | <pp>[]*</pp> | /be_ap[])*",
+    "pattern": "7",
     "anchors": [
         [
             0,
@@ -11,7 +11,7 @@
         ],
         [
             1,
-            0,
+            -1,
             null,
             null
         ],
@@ -23,12 +23,6 @@
         ],
         [
             3,
-            0,
-            null,
-            null
-        ],
-        [
-            4,
             -1,
             null,
             null
@@ -45,12 +39,6 @@
             2,
             3,
             "0",
-            null
-        ],
-        [
-            2,
-            4,
-            null,
             null
         ]
     ]
