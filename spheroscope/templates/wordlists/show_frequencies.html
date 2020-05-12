@@ -1,10 +1,16 @@
 {% extends 'base.html' %}
 
 {% block header %}
-<h1>{% block title %}Word List "{{ wordlist['name'] }}"{% endblock %}</h1>
-{% if g.user['id'] == wordlist['author_id'] %}
-<a class="action" href="{{ url_for('wordlists.show_similar_ones', id=wordlist['id']) }}">similar</a>
-<a class="action" href="{{ url_for('wordlists.update', id=wordlist['id']) }}">edit</a>
+<h1>
+  {% block title %}Word List "{{ wordlist['name'] }}"{% endblock %}
+</h1>
+{% if g.user['id'] %}
+<a class="action" href="{{ 
+			url_for('wordlists.show_similar_ones', id=wordlist['id'])
+			}}">similar</a>
+<a class="action" href="{{
+			url_for('wordlists.update', id=wordlist['id'])
+			}}">edit</a>
 {% endif %}
 {% endblock %}
 
@@ -12,7 +18,9 @@
 <article class="post">
   <br>
   showing frequency in whole corpus (layer: {{ wordlist['p_att'] }})
-  <p class="body">{{ original | safe }}</p>
+  <p class="body">
+    {{ original | safe }}
+  </p>
 </article>
 <hr>
 {% endblock %}

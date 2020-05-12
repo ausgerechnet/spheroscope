@@ -17,7 +17,7 @@ from .corpora import init_corpus
 bp = Blueprint('wordlists', __name__, url_prefix='/wordlists')
 
 
-def get_wordlist_from_db(id, check_author=True):
+def get_wordlist_from_db(id, check_author=False):
 
     wordlist = get_db().execute(
         'SELECT wl.id, name, words, p_att, modified, author_id, username'
