@@ -1,21 +1,28 @@
 {% extends 'base.html' %}
 
 {% block header %}
-<h1>{% block title %}Word List "{{ wordlist['name'] }}"{% endblock %}</h1>
-{% if g.user['id'] == wordlist['author_id'] %}
-<a class="action" href="{{ url_for('wordlists.show_frequencies', id=wordlist['id']) }}">marginals</a>
-<a class="action" href="{{ url_for('wordlists.update', id=wordlist['id']) }}">edit</a>
+<h1>
+  {% block title %}Word List "{{ wordlist['name'] }}"{% endblock %}
+</h1>
+{% if g.user['id'] %}
+<a class="action" href="{{
+			url_for('wordlists.show_frequencies', id=wordlist['id'])
+			}}">marginals</a>
+<a class="action" href="{{ 
+			url_for('wordlists.update', id=wordlist['id'])
+			}}">edit</a>
 {% endif %}
 {% endblock %}
 
 {% block content %}
 <article class="post">
   <br>
-  showing up to 200 of the most similar items sorted by frequency count in
-  whole corpus
+  showing up to 200 of the most similar items sorted by frequency count in whole corpus
   <br>
   (no hapaxes, layer: {{ wordlist['p_att'] }})
-  <p class="body">{{ similar | safe }}</p>
+  <p class="body">
+    {{ similar | safe }}
+  </p>
 </article>
 <hr>
 {% endblock %}
