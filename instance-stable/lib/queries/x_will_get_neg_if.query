@@ -1,5 +1,5 @@
 {
-    "query": "<np>@0:[]* @1:[]</np> \"will\" [lemma = \"be|become|get|turn\"] [lemma = $adj_gen_negative] \"if\" <np>@2:[]* @3:[]</np> <vp>[]*</vp> (<np>[]*</np> | <vp>[]*</vp> | <pp>[]*</pp>)*@4:[::]",
+    "query": "<np>@0:[::][]* @1:[]</np> \"will\" [lemma = \"be|become|get|turn\"] [lemma = $adj_gen_negative] \"if\" <np>@2:[::][]+ </np> <vp>[]*</vp> (<np>[]*</np> | <vp>[]*</vp> | <pp>[]*</pp>)*@3:[::]",
     "pattern": 6,
     "name": "x_will_get_neg_if",
     "anchors": [
@@ -23,12 +23,6 @@
         ],
         [
             3,
-            0,
-            null,
-            null
-        ],
-        [
-            4,
             -1,
             null,
             null
@@ -44,12 +38,6 @@
         [
             2,
             3,
-            null,
-            null
-        ],
-        [
-            2,
-            4,
             "1",
             null
         ]

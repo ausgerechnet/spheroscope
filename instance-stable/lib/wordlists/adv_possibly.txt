@@ -1,4 +1,3 @@
-afaik
 apparently
 arguably
 certainly
@@ -6,14 +5,17 @@ hopefully
 iirc
 justifiably
 likely
-maybe
 ostensibly
-perhaps
 potentially
 predictably
-probably
 presumably
+probably
 realistically
 seemingly
 supposedly
+
+
 surely
+afaik
+perhaps
+maybe
