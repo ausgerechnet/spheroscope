@@ -23,7 +23,7 @@ from .corpora import init_corpus
 bp = Blueprint('queries', __name__, url_prefix='/queries')
 
 
-def get_query_from_db(id, check_author=True):
+def get_query_from_db(id, check_author=False):
 
     query = get_db().execute(
         'SELECT qu.id, name, query, modified, author_id,'
