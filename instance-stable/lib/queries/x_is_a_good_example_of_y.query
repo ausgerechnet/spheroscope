@@ -1,7 +1,7 @@
 {
-    "query": "<np>@0:[::][]* @1:[]</np> [lemma =\"be\"] <np>[]* [lemma = $nouns_examples]</np> [word = \"for|of\"] <np>@2:[::][]* @3:[]</np> @4[::](<vp>[]*</vp> /ap[]?| /that_wh_clause[]? | <pp>[]*</pp> |<np>[]*</np>)+@5[::]",
-    "pattern": 15,
     "name": "x_is_a_good_example_of_y",
+    "query": "<np>@0:[::][]* @1:[pos_simple=\"@|N|Z\"]</np> [lemma =\"be\"] <np>[]* [lemma = $nouns_examples & lemma!=\"issue\"]</np> [word = \"for|of\"] <np>@2:[::][]+</np> (<vp>[]*</vp> /ap[]?| /that_wh_clause[]? | <pp>[]*</pp> |<np>[]*</np>)+@3[::]",
+    "pattern": "15",
     "anchors": [
         [
             0,
@@ -23,18 +23,6 @@
         ],
         [
             3,
-            0,
-            null,
-            null
-        ],
-        [
-            4,
-            0,
-            null,
-            null
-        ],
-        [
-            5,
             -1,
             null,
             null
@@ -50,19 +38,7 @@
         [
             2,
             3,
-            null,
-            null
-        ],
-        [
-            2,
-            5,
             "1",
-            null
-        ],
-        [
-            4,
-            5,
-            null,
             null
         ]
     ]
