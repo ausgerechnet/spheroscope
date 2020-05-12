@@ -1,9 +1,9 @@
-category
 case
+category
 example
-issue
 institution
+issue
+system
 something
 stuff
-system
 type
