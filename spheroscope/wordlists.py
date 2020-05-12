@@ -46,7 +46,7 @@ def get_wordlists_from_db():
     wordlists_new = list()
     for wl in wordlists:
         wl_new = dict(wl)
-        wl_new['length'] = len(wl_new['words'])
+        wl_new['length'] = len(wl_new['words'].split("\n"))
         wordlists_new.append(wl_new)
 
     return wordlists_new
