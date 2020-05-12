@@ -1,7 +1,7 @@
 {
-    "query": "[lemma = $adv_possibly] @0:[::] <np>[word!=\"\\.\"]*</np> /region[vp] (<np>[word != \"\\.+|http.+|t\\.co|@.+\"]*</np>| /region[vp] | /region[adjp] | /region[adjp] | /region[pp] | /region[conjp])+@1:[::]",
-    "pattern": 5,
     "name": "pattern_5_possibly_x",
+    "query": "[lemma = $adv_possibly] <np>@0:[::][word!=\"\\.\"]+</np> /region[vp] (<np>[word != \"\\.+|http.+|t\\.co|@.+\"]*</np>| /region[vp] | /region[adjp] | /region[adjp] | /region[pp] | /region[conjp])+@1:[::]",
+    "pattern": "5",
     "anchors": [
         [
             0,
