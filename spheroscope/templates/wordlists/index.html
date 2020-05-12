@@ -1,9 +1,13 @@
 {% extends 'base.html' %}
 
 {% block header %}
-<h1>{% block title %}Word Lists{% endblock %}</h1>
+<h1>
+  {% block title %}Word Lists{% endblock %}
+</h1>
 {% if g.user %}
-<a class="action" href="{{ url_for('wordlists.create') }}">new</a>
+<a class="action" href="{{ url_for('wordlists.create') }}">
+  new
+</a>
 {% endif %}
 {% endblock %}
 
@@ -15,11 +19,11 @@
     <!-- <i>(by {{ wordlist['username'] }} -->
     <!--   on {{ wordlist['modified'].strftime('%Y-%m-%d') }}) -->
     <!-- </i> -->
-
-    {% if g.user['id'] == wordlist['author_id'] %}
+    {% if g.user['id'] %}
     <span style="float:right;">
-      <a class="action" href="{{ url_for('wordlists.update',
-			      id=wordlist['id']) }}">edit</a> – 
+      <a class="action" href="{{ 
+			      url_for('wordlists.update', id=wordlist['id']) 
+			      }}">edit</a> – 
       <a class="action" href="{{
 			      url_for('wordlists.show_frequencies', id=wordlist['id'])
 			      }}">table</a> – 
