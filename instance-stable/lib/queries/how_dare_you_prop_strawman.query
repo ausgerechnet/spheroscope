@@ -1,5 +1,5 @@
 {
-    "query": "\"how\" ([lemma=\"dare\"] <np>[]*@0:[pos_simple=\"P|N|Z\"][]*</np> | [lemma=\"do|can\"] <np>[]*@0:[pos_simple=\"P|N|Z\"][]*</np> [lemma=\"dare\"]) @1:[::](/region[advp])* <vp>[]* [lemma = $verbs_cog_positive | lemma = $verbs_gen_positive | lemma="say|imagine|mention|criticise|question|think|challenge|report|hope|suggest"] []*</vp> ([pos_simple=\"A\"] | /region[advp] | /region[np] | /region[pp] | /region[vp])+ @2:[::]",
+    "query": "\"how\" ([lemma=\"dare\"] <np>[]*@0:[pos_simple=\"P|N|Z\"][]*</np> | [lemma=\"do|can\"] <np>[]*@0:[pos_simple=\"P|N|Z\"][]*</np> [lemma=\"dare\"]) @1:[::](/region[advp])* <vp>[]* [lemma = $verbs_cog_positive | lemma = $verbs_gen_positive | lemma=\"say|imagine|mention|criticise|question|think|challenge|report|hope|suggest\"] []*</vp> ([pos_simple=\"A\"] | /region[advp] | /region[np] | /region[pp] | /region[vp])+ @2:[::]",
     "pattern": 4,
     "name": "how_dare_you_prop_strawman",
     "anchors": [
