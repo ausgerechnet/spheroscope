@@ -5,6 +5,7 @@ know
 realise
 realize
 recall
+recognise
 recognize
 remember
 understand
