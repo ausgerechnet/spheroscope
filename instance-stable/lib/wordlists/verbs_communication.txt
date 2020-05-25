@@ -48,7 +48,6 @@ respond
 say
 signal
 suggest
-support
 tell
 testify
 warn
