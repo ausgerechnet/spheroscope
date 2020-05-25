@@ -1,4 +1,5 @@
 acknowledge
+admit
 advise
 affirm
 agree
@@ -7,6 +8,7 @@ announce
 answer
 argue
 assert
+assure
 call
 characterise
 characterize
@@ -14,7 +16,10 @@ claim
 clarify
 command
 comment
+conclude
 confirm
+criticise
+criticize
 declare
 demand
 deny
@@ -27,18 +32,23 @@ explain
 guarantee
 imply
 inform
+insist
 instruct
 maintain
 note
 notify
 observe
 order
+posit
 post
 predict
 present
+proclaim
 propose
 reaffirm
 rebut
+recognise
+refer
 refute
 remark
 remind
@@ -50,5 +60,6 @@ signal
 suggest
 tell
 testify
+uphold
 warn
 write
