@@ -1,6 +1,6 @@
 {
     "name": "as_a_x_i_y_knowledge",
-    "query": "[lemma = \"as|being\"] <np>@0:[::][]* @6:[lemma = $nouns_common_people | lemma = $nouns_person_origin | lemma = $nouns_profession_people | lemma = $nouns_person_support] []*</np> @1:[::] \",\"? @5:[pos_simple = \"P|N|Z|@\"] <vp>[lemma!=\"don't|dont|.*not|would|want|do|wouldn't|won't|to\"]* @2[lemma=$verbs_know] []*</vp> @3:[::](/region[vp] | /region[np] | /be_ap[] | /region[pp] | /region[advp] | /region[adjp])+ @4:[::]",
+    "query": "[lemma = \"as|being\"] <np>@0:[::][]* @6:[lemma = $nouns_common_people | lemma = $nouns_person_origin | lemma = $nouns_profession_people | lemma = $nouns_person_support] []*</np> @1:[::] \",\"? @5:[::](/name_any[] | [pos_ark = \"O|N|^|Z\"])<vp>[lemma!=\"don't|dont|.*not|would|want|do|wouldn't|won't|to\"]* @2[lemma=$verbs_know] []*</vp> @3:[::](/region[vp] | /region[np] | /be_ap[] | /region[pp] | /region[advp] | /region[adjp])+ @4:[::]",
     "pattern": "25",
     "anchors": [
         [
