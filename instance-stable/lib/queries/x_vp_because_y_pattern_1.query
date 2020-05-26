@@ -1,0 +1,9 @@
+{
+"name": = "x_vp_because_y_pattern_1",
+"query": = "(<np>@0:[::][]* ([pos_ark=\"N\"] | /name_any[]) []*</np> (<pp>[]*</pp> | <vp>[]*</vp> | /be_ap[])*) @1:[::] [lemma = \"be\"] [lemma = $adj_adv_reason] [pos_ark = \"P\"] <np>@2:[::][]*</np> <vp>[]*</vp> (<np>[]*</np> | <pp>[]*</pp> | <vp>[]*</vp> | /be_ap[])* @3:[::]",
+"pattern": "1",
+"anchors": [
+],
+"regions": [
+]
+}
