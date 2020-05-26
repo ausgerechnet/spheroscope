@@ -1,7 +1,7 @@
 {
-    "query": "<vp>@0:[]* [pos_ner=\"VBG\"] []*</vp> /region[np] (/region[vp] | /region[np] | /region[pp])* @1[::] [lemma =\"be\"] (\"exactly|just|much|very\")? [lemma = $adj_similarity] \"to|with\"? @2:[] /region[vp]+ /region[np] (/region[vp] | /region[np] | /region[pp])@3[::]",
-    "pattern": 15,
     "name": "similarity_between_x_and_y_pattern_15",
+    "query": "@0:[::](<vp>[]* [pos_ner=\"VBG\" | word=\".+ing\"] []*</vp> | [pos_ner=\"VBG\" | word=\".+ing\"]) (/region[np] | /region[ner] | /region[event]) (/region[vp] | /region[np] | /region[pp])* @1[::] [lemma =\"be\"] [lemma = $adv_high_degree]? [lemma = $adj_similarity] \"as|like|to|with\"? @2:[] /region[vp]+ /region[np] (/region[vp] | /region[np] | /region[pp])@3[::]",
+    "pattern": "15",
     "anchors": [
         [
             0,
