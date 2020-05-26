@@ -1,7 +1,7 @@
 {
-    "query": "(<np>@0:[::][]* [pos_simple=\"N|Z\"] []*</np> (<pp>[]*</pp> | <vp>[]*</vp> | /be_ap[])*) @1:[::] [lemma = \"be\"] <np>[]*</np> \"why\" <np>@2:[::][]*</np> <vp>[]*</vp> (<np>[]*</np> | <pp>[]*</pp> | <vp>[]*</vp> | /be_ap[])* @3:[::]",
-    "pattern": 1,
-    "name": "x_is_why_y",
+    "name": "pattern_1_entity_causes_y",
+    "query": "@0:[::] (/region[np])? /name_any[] @1:[::] (<vp>[lemma = $verbs_cause & lemma !=\"imply|lead|make\" & word!=\".+ing\"] []*</vp> |  [lemma=\"lead\"] \"to\") [pos_ark=\"R\" | pos_ner = \"TO\"]* <np>@2:[::][]+</np> (<np>[]*</np> | <vp>[]*</vp> | <pp>[]*</pp>)+@3:[::]",
+    "pattern": "1",
     "anchors": [
         [
             0,
@@ -32,13 +32,13 @@
         [
             0,
             1,
-            "0",
+            0,
             null
         ],
         [
             2,
             3,
-            "1",
+            1,
             null
         ]
     ]
