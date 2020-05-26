@@ -1,5 +1,9 @@
+linked
+related
+interchangeable
+identical
+similar
 comparable
 like
-linked
 parallel
-similar
+similiar
