@@ -1,6 +1,6 @@
 {
-    "name": "x_will_cause_y_pattern_2",
-    "query": "@0:[::]<np>[]* [pos_ner = \"N.*\" | pos_ark = \"N|^\"]+</np> @1:[::] [\"will|would\"] [pos_ner = \"R\"]? [lemma = $verbs_cause] [pos_ark=\"O\"]? @2:[lemma = $nouns_gen_negative | lemma =$nouns_cog_negative] (/region[pp] | /region[vp] | /region[np])*@3:[::]",
+    "name": "y_will_be_xed_if_z_pattern_2",
+    "query": "@0:[::]<np>[]* [pos_ner = \"N.*\" | pos_ark = \"N|^\"]+</np>  \"will|would\" [pos_ner = \"R\"]? [lemma=\"be\"] [pos_ner = \"VBN\"] @1:[::] \"by|if|through\" @2:[::]<np>[]* [pos_ner = \"N.*\" | pos_ark = \"N|^\"]+ (/region[pp] | /region[vp] | /region[np])*@3:[::]",
     "pattern": "2",
     "anchors": [
         [
@@ -32,13 +32,13 @@
         [
             0,
             1,
-            "0",
+            1,
             null
         ],
         [
             2,
             3,
-            "1",
+            0,
             null
         ]
     ]
