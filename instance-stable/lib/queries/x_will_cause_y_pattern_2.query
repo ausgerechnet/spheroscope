@@ -1,6 +1,6 @@
 {
-    "name": "brexit_will_cause_x",
-    "query": "<np>@0:[::](\".?bre+xit\"%c | [pos_simple=\"Z|#\"])@1:[]*</np> \"will|would\" [lemma = $verbs_cause | lemma = \"make\"] [pos_simple=\"P\"]? @2:[lemma = $nouns_gen_negative | lemma =$nouns_cog_negative] (<pp>[]*</pp> | <vp>[]*</vp> | <np>[word!=\"\\.\"]*</np> | [pos_simple = \"Z|@|#\"])*@3:[::]",
+    "name": "x_will_cause_y_pattern_2",
+    "query": "@0:[::]<np>[]+*</np> @1:[::] /verbs_modal_uncertainty[] [lemma = $verbs_cause] [pos_ark=\"O\"]? @2:[lemma = $nouns_gen_negative | lemma =$nouns_cog_negative] (/region[pp] | /region[vp] | /region[np])*@3:[::]",
     "pattern": "2",
     "anchors": [
         [
@@ -11,7 +11,7 @@
         ],
         [
             1,
-            0,
+            -1,
             null,
             null
         ],
