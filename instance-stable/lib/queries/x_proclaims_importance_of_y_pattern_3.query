@@ -1,0 +1,45 @@
+{
+    "name": "x_proclaims_importance_of_y_pattern_3",
+    "query": "@0[::] (/name_any[] | <np>[]* [lemma = $nouns_person_common | lemma = $nouns_person_origin | lemma = $nouns_person_support | lemma = $nouns_person_profession]*</np>) @1[::] (/region[advp])? <vp>[lemma = $verbs_comm_normative | lemma = $verbs_know] []*</vp> (/region[advp])? <np>[]* [lemma = $nouns_importance] []*</np> [pos_ark = \"P\"] @2[::] (/region[np] | /region[vp] | /region[pp] | /region[advp])+ @3[::]",
+    "pattern": "3",
+    "anchors": [
+        [
+            0,
+            0,
+            null,
+            null
+        ],
+        [
+            1,
+            -1,
+            null,
+            null
+        ],
+        [
+            2,
+            0,
+            null,
+            null
+        ],
+        [
+            3,
+            -1,
+            null,
+            null
+        ]
+    ],
+    "regions": [
+        [
+            0,
+            1,
+            0,
+            null
+        ],
+        [
+            2,
+            3,
+            1,
+            null
+        ]
+    ]
+}
