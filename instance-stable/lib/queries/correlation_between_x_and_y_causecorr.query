@@ -1,7 +1,7 @@
 {
-    "query": "<np> []* /ap[]* [lemma = $nouns_similarity] []*</np> \"between\" @0:[::](<np>[pos_simple=\"D|A\"]* ([pos_simple=\"Z|P\" | lemma = $nouns_common_people | lemma = $nouns_person_origin | lemma = $nouns_person_support | lemma = $nouns_person_negative | lemma = $nouns_profession_people] | /region[ner])+ []*</np>)+@1:[::] \"and\" @2:[::](<np>[pos_simple=\"D|A\"]* ([pos_simple=\"Z|P\" | lemma = $nouns_common_people | lemma = $nouns_person_origin | lemma = $nouns_person_support | lemma = $nouns_person_negative | lemma = $nouns_profession_people] | /region[ner])+ []*</np>) (/region[np] | <vp>[lemma!=\"be\"]</vp> | /region[pp] | /be_ap[])* @3:[::]",
-    "pattern": 15,
     "name": "correlation_between_x_and_y_causecorr",
+    "query": "<np> []* [lemma = $nouns_similarity & pos_ner = \"N.*\"| lemma = $adj_similarity & pos_ark = \"A\"] []*</np> [pos_ark = \"P\"] @0:[::](<np>[pos_ark=\"D|A\"]* (/name_any[] | [lemma = $nouns_common_people | lemma = $nouns_person_origin | lemma = $nouns_person_support | lemma = $nouns_person_negative | lemma = $nouns_profession_people])+ []*</np>)+@1:[::] (\"and\" | /region[conjp]) @2:[::](<np>[pos_ark=\"D|A\"]* (/name_any[] | [lemma = $nouns_common_people | lemma = $nouns_person_origin | lemma = $nouns_person_support | lemma = $nouns_person_negative | lemma = $nouns_profession_people])+ []*</np>) (/region[np] | <vp>[lemma!=\"be\"]</vp> | /region[adjp] | /region[pp] | /be_ap[])* @3:[::]",
+    "pattern": "15",
     "anchors": [
         [
             0,
