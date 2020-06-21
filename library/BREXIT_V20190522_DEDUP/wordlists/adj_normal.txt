@@ -1,0 +1,14 @@
+general
+common
+avg
+typical
+basic
+regular
+standard
+ordinary
+mediocre
+average
+commonplace
+mundane
+conventional
+normal
