@@ -57,28 +57,25 @@ def init_db_command():
     click.echo('initialized database')
 
 
-def import_lib():
-
-    lib_path = current_app.config['LIB_PATH']
+def import_library():
 
     # wordlists
-    from .wordlists import wordlists_lib2db
-    wordlists_lib2db(lib_path)
+    from . import wordlists
+    wordlists.lib2db()
 
-    # macros
-    # from .wordlists import wordlists_lib2db
-    # wordlists_lib2db(lib_path)
-    # logger.info("imported wordlists")
+    # # macros
+    # from . import macros
+    # macros.lib2db(lib_path)
 
-    # queries
-    from .queries import queries_lib2db
-    queries_lib2db(lib_path)
+    # # queries and patterns
+    # from . import queries
+    # queries.lib2db(lib_path)
 
 
 @click.command('import-lib')
 @with_appcontext
 def import_lib_command():
-    import_lib()
+    import_library()
     click.echo('imported lib')
 
 

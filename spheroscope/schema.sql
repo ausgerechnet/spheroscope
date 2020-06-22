@@ -10,43 +10,46 @@ CREATE TABLE users (
   password TEXT NOT NULL
 );
 
-CREATE TABLE wordlists (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  author_id INTEGER NOT NULL,
-  name TEXT NOT NULL,
-  modified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  words TEXT NOT NULL,
-  p_att TEXT NOT NULL,
-  FOREIGN KEY (author_id) REFERENCES users (id)
-);
-
 CREATE TABLE queries (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   author_id INTEGER NOT NULL,
-  name TEXT NOT NULL,
   modified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  query TEXT NOT NULL,
-  anchors TEXT,
-  regions TEXT,
-  pattern INTEGER,
+  corpus TEXT,			--file-directory
+  name TEXT NOT NULL,		--file-name
+  query TEXT NOT NULL,		--file
+  anchors TEXT,			--file
+  regions TEXT,			--file
+  pattern INTEGER,		--file
+  FOREIGN KEY (author_id) REFERENCES users (id)
+);
+
+CREATE TABLE wordlists (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  author_id INTEGER NOT NULL,
+  modified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  corpus TEXT,			--file-directory
+  name TEXT NOT NULL,		--file-name
+  words TEXT NOT NULL,		--file
+  p_att TEXT NOT NULL,		--file-name
   FOREIGN KEY (author_id) REFERENCES users (id)
 );
 
 CREATE TABLE macros (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   author_id INTEGER NOT NULL,
-  name TEXT NOT NULL,
   modified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  macro TEXT NOT NULL,
+  corpus TEXT,			--file-directory
+  name TEXT NOT NULL,		--file-name
+  macro TEXT NOT NULL,		--file
   FOREIGN KEY (author_id) REFERENCES users (id)
 );
 
 CREATE TABLE patterns (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   author_id INTEGER NOT NULL,
-  name TEXT,
   modified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  template TEXT NOT NULL,
-  explanation TEXT,
+  name TEXT,			--file
+  template TEXT NOT NULL,	--file
+  explanation TEXT,		--file
   FOREIGN KEY (author_id) REFERENCES users (id)
 );
