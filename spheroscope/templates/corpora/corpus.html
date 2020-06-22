@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}{{ name }}{% endblock %}</h1>
+{% endblock %}
+{% block content %}
+  <form method="post">
+    <h3>resources</h3> (set in "{{ resources['lib_path'] }}")
+    <ul>
+      <li>CWB ID: {{resources['cwb_id']}}</li>
+      <li>library: {{resources['lib_path']}}</li>
+      <li>embeddings: {{resources['embeddings']}}</li>
+    </ul>
+    
+    <h3>query parameters</h3>
+    <ul>
+      <li>CQP matching strategy:
+	<select class="form-control" id="match_strategy" name="match_strategy">
+	  {% for s in "shortest","standard","longest"%}
+	  <option value="{{ s }}"{% if s==query['match_strategy'] %} selected{% endif %}>
+	    {{ s }}
+	  </option>
+	  {% endfor %}
+	</select>
+      </li>
+      <li>
+	where to confine queries ("within" statement):
+	<select class="form-control" id="s_query" name="s_query">
+	  {% for s_att in s_atts_none %}
+	  <option value="{{ s_att }}"{% if s_att==query['s_query'] %} selected{% endif %}>
+	    {{ s_att }}
+	  </option>
+	  {% endfor %}
+	  
+	</select>
+      </li>
+      <li>
+	where to break context:
+	<select class="form-control" id="s_context" name="s_context">
+	  {% for s_att in s_atts_none %}
+	  <option value="{{ s_att }}"{% if s_att==query['s_context'] %} selected{% endif %}>
+	    {{ s_att }}
+	  </option>
+	  {% endfor %}
+	</select>
+      </li>
+    </ul>
+    <h3>display parameters</h3>
+    <ul>
+      <li>
+	actual text:
+	<select class="form-control" id="p_text" name="p_text">
+	  {% for p_att in p_atts %}
+	  <option value="{{ p_att }}"{% if p_att==display['p_text'] %} selected{% endif %}>
+	    {{ p_att }}
+	  </option>
+	  {% endfor %}
+	</select>
+      </li>
+      <li>
+	slots:
+	<select class="form-control" id="p_slots" name="p_slots">
+	  {% for p_att in p_atts %}
+	  <option value="{{ p_att }}"{% if p_att==display['p_slots'] %} selected{% endif %}>
+	    {{ p_att }}
+	  </option>
+	  {% endfor %}
+	</select>
+      </li>
+      <li>
+	p-attributes to show in extended concordancing:<br/>
+	<select class="form-control" id="p_show" name="p_show" multiple>
+	  {% for p_att in p_atts %}
+	  <option value="{{ p_att }}" {% if p_att in display['p_show'] %} selected{% endif %}>
+	    {{ p_att }}
+	  </option>
+	  {% endfor %}
+	</select>
+      </li>
+      <li>
+	s-attributes to retrieve:<br/>
+	<select class="form-control" id="s_show" name="s_show" multiple>
+	  {% for s_att in s_atts_anno %}
+	  <option value="{{ s_att }}"{% if s_att in display['s_show'] %} selected{% endif %}>
+	    {{ s_att }}
+	  </option>
+	  {% endfor %}
+	</select>
+      </li>
+    </ul>
+    <input type="submit" value="Save">
+  </form>
+{% endblock %}

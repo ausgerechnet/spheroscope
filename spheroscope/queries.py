@@ -142,9 +142,11 @@ def create():
             'query': request.form['query'],
             'pattern': request.form['pattern'],
             'anchors': json.loads(request.form['anchors'].replace(
-                "None", "null").replace("\'", "\"")),
+                "None", "null"
+            ).replace("\'", "\"")),
             'regions': json.loads(request.form['regions'].replace(
-                "None", "null").replace("\'", "\""))
+                "None", "null"
+            ).replace("\'", "\""))
         }
 
         if not query['name']:
@@ -167,9 +169,11 @@ def update(id):
             'query': request.form['query'],
             'pattern': request.form['pattern'],
             'anchors': json.loads(request.form['anchors'].replace(
-                "None", "null").replace("\'", "\"")),
+                "None", "null"
+            ).replace("\'", "\"")),
             'regions': json.loads(request.form['regions'].replace(
-                "None", "null").replace("\'", "\""))
+                "None", "null"
+            ).replace("\'", "\""))
         }
 
         if not query['name']:
@@ -238,6 +242,11 @@ def run(id, show=True):
 
     # get
     query = get_query_from_db(id)
+    query['context'] = None
+    query['s_context'] = 'tweet'
+    query['corrections'] = dict()
+    query['regions'] = []
+    query['modified'] = str(query['modified'])
 
     # path for results
     dir_result = current_app.config['RESULTS_PATH']
@@ -246,31 +255,23 @@ def run(id, show=True):
     path_result = os.path.join(dir_result, query['name'] + ".query.json.gz")
 
     # create result
-    corpus = init_corpus(current_app.config)
     current_app.logger.info("querying corpus")
-    try:
-        result, info = corpus.query(query['query'],
-                                    s_break=current_app.config['S_BREAK'],
-                                    context=None,
-                                    match_strategy='longest',
-                                    info=True)
-    except TypeError:
-        abort(
-            404,
-            "query id %d does not have any results in corpus %s\n%s" % (
-                id,
-                current_app.config['CORPUS_NAME'],
-                query['query']
-            )
-            )
-    query['info'] = info
-    concordance = corpus.concordance(result)
-    query['result'] = concordance.show_argmin(
-        query['anchors'],
-        query['regions'],
-        p_show=['lemma']
-    )
-    query['modified'] = str(query['modified'])
+    corpus = init_corpus(current_app.config)
+    result = corpus.query(query=query['query'],
+                          context=query['context'],
+                          s_context=query['s_context'],
+                          corrections=query['corrections'],
+                          match_strategy='longest')
+    concordance = corpus.concordance(result, max_matches=0)
+    lines = concordance.lines(p_show=['word', 'lemma'],
+                              s_show=['tweet_id'],
+                              p_text='word',
+                              p_slots='lemma',
+                              regions=query['regions'],
+                              cut_off=None,
+                              form='extended').to_json()
+
+    query['result'] = lines
 
     # dump result
     current_app.logger.info("dumping result to %s" % path_result)

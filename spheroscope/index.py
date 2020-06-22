@@ -7,5 +7,5 @@ bp = Blueprint('index', __name__)
 
 @bp.route('/', methods=('GET', 'POST'))
 @login_required
-def create():
+def index():
     return render_template('index.html')
