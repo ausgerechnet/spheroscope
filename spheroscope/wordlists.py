@@ -207,7 +207,7 @@ def create():
             'name': request.form['name'],
             'words': request.form['words'],
             'p_att': request.form['p_att'],
-            'corpus': current_app.config['CORPUS']['cwb_id']
+            'corpus': current_app.config['CORPUS']['resources']['cwb_id']
         }
 
         if not wordlist['name']:
