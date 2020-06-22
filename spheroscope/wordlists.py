@@ -94,10 +94,14 @@ def write_wordlist(wordlist, write_db=True, write_file=True):
 
     if write_file:
         # determine path
-        dir_out = os.path.join('library', wordlist['corpus'], "wordlists")
+        dir_out = os.path.join(
+            current_app.instance_path, wordlist['corpus'], 'wordlists'
+        )
         if not os.path.isdir(dir_out):
             os.makedirs(dir_out)
-        path = os.path.join(dir_out, wordlist['name'] + ".txt")
+        path = os.path.join(
+            dir_out, wordlist['name'] + ".txt"
+        )
         # write
         current_app.logger.info(
             "writing wordlist %s to %s" % (wordlist['name'], path)
@@ -120,8 +124,12 @@ def delete(id, delete_db=True, delete_file=True):
 
     if delete_file:
         # determine path
-        dir_out = os.path.join('library', wordlist['corpus'])
-        path = os.path.join(dir_out, "wordlists", wordlist['name'] + ".txt")
+        dir_out = os.path.join(
+            current_app.instance_path, wordlist['corpus'], 'wordlists'
+        )
+        path = os.path.join(
+            dir_out, "wordlists", wordlist['name'] + ".txt"
+        )
         # delete
         current_app.logger.warning(
             "removing wordlist file %s:" % (path)
@@ -134,8 +142,6 @@ def delete(id, delete_db=True, delete_file=True):
 def lib2db():
 
     import os
-    print(os.getcwd())
-    print(os.path.join('library', '*', 'wordlists', '*'))
     paths = glob(os.path.join('library', '*', 'wordlists', '*'))
     # current_app.logger.debug(paths)
     for p in paths:
@@ -151,7 +157,7 @@ def get_frequencies(words, p_att):
         'getting frequency info for %d items' % (len(words))
     )
     corpus = init_corpus(current_app.config)
-    freq = corpus.marginals(words, p_att=p_att)
+    freq = corpus.counts.marginals(words, p_att=p_att)
 
     return freq
 
@@ -162,7 +168,7 @@ def get_similar_ones(words, p_att, number):
     current_app.logger.info(
         'getting %d similar items for %d items' % (number, len(words))
     )
-    embeddings = Magnitude(current_app.config['EMBEDDINGS'])
+    embeddings = Magnitude(current_app.config['CORPUS']['resources']['embeddings'])
     similar = embeddings.most_similar(positive=words, topn=number)
     similar_ones = [s[0] for s in similar]
 
@@ -171,7 +177,7 @@ def get_similar_ones(words, p_att, number):
         'getting frequency info for %d items' % (len(words))
     )
     corpus = init_corpus(current_app.config)
-    freq_similar = corpus.marginals(similar_ones, p_att=p_att)
+    freq_similar = corpus.counts.marginals(similar_ones, p_att=p_att)
     freq_similar.columns = ["frequency"]
 
     # attach similarity score
@@ -201,7 +207,7 @@ def create():
             'name': request.form['name'],
             'words': request.form['words'],
             'p_att': request.form['p_att'],
-            'corpus': current_app.config['corpus']
+            'corpus': current_app.config['CORPUS']['cwb_id']
         }
 
         if not wordlist['name']:
@@ -225,16 +231,15 @@ def delete_cmd(id):
 @login_required
 def update(id):
     # TODO: give same id
-    wordlist = read_wordlist_from_db(id)
 
+    wordlist = read_wordlist_from_db(id)
     if request.method == 'POST':
         wordlist = {
             'name': request.form['name'],
             'words': request.form['words'],
             'p_att': request.form['p_att'],
-            'corpus': current_app.config['CORPUS1']
+            'corpus': current_app.config['CORPUS']['resources']['cwb_id']
         }
-        print(wordlist)
 
         if not wordlist['name']:
             current_app.logger.error('name is required.')

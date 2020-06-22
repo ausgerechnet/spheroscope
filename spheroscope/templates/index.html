@@ -6,11 +6,21 @@
 
 {% block content %}
 <ul>
-  <li><a class="action" href="{{ url_for('wordlists.index') }}">word
-      lists</a>
-  <li><a class="action" href="{{ url_for('queries.index')
-			      }}">queries</a>
-  <li><a class="action" href="{{ url_for('patterns.index')
-			      }}">patterns</a>
+  <li>
+    <a class="action" href="{{ url_for('corpora.choose') }}">
+      corpora
+    </a>
+  <li>
+    <a class="action" href="{{ url_for('wordlists.index') }}">
+      word lists
+    </a>
+  <li>
+    <a class="action" href="{{ url_for('queries.index') }}">
+      queries
+    </a>
+  <li>
+    <a class="action" href="{{ url_for('patterns.index') }}">
+      patterns
+    </a>
 </ul>
 {% endblock %}
