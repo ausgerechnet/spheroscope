@@ -8,12 +8,16 @@
 
 {% block content %}
   <form method="post">
+
     <label for="name">name</label>
     <input name="name" id="name" value="{{ request.form['name'] }}" required>
+    
     <label for="title">p-attribute</label>
     <input name="p_att" id="patt" value="{{ request.form['p_att'] }}">    
+
     <label for="words">words</label>_
     <textarea name="words" id="words">{{ request.form['words'] }}</textarea>
+
     <input type="submit" value="Save">
   </form>
 {% endblock %}

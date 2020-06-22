@@ -1,4 +1,5 @@
 import os
+from configparser import ConfigParser
 from flask import Flask
 
 
@@ -11,24 +12,31 @@ def create_app(test_config=None):
         DATABASE=os.path.join(app.instance_path, 'spheroscope.sqlite'),
     )
 
+    try:
+        # ensure the instance folder exists
+        if not os.path.isdir(app.instance_path):
+            os.makedirs(app.instance_path)
+    except OSError:
+        pass
+
+    # load corpus defaults
+    cfg_path = os.path.join(app.instance_path, 'corpus_defaults.cfg')
+    corpus_config = ConfigParser()
+    if os.path.isfile(cfg_path):
+        corpus_config.read(cfg_path)
+    else:
+        # load and save default corpus config
+        cfg_default = os.path.join('library', 'corpus_defaults.cfg')
+        corpus_config.read(cfg_default)
+        with open(cfg_path, "wt") as f:
+            corpus_config.write(f)
+    app.config['CORPUS_DEFAULTS'] = corpus_config
+
     # read configuration if not testing
     if test_config is None:
         app.config.from_pyfile('../spheroscope.cfg')
-
-        # TODO: move corpus choice to interface
-        corpus_config = os.path.join('..', 'library',
-                                     app.config['CORPUS'],
-                                     app.config['CORPUS'] + '.cfg')
-        app.config.from_pyfile(corpus_config)
-
     else:
         app.config.from_mapping(test_config)
-
-    # ensure the instance folder exists
-    try:
-        os.makedirs(app.instance_path)
-    except OSError:
-        pass
 
     # say hello
     @app.route('/hello')
@@ -47,6 +55,10 @@ def create_app(test_config=None):
     from . import index
     app.register_blueprint(index.bp)
     app.add_url_rule('/', endpoint='index')
+
+    # corpora
+    from . import corpora
+    app.register_blueprint(corpora.bp)
 
     # wordlists
     from . import wordlists
