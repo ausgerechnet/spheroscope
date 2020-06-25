@@ -15,12 +15,19 @@
       word lists
     </a>
   <li>
+    <a class="action" href="{{ url_for('macros.index') }}">
+      macros
+    </a>
+  <li>
     <a class="action" href="{{ url_for('queries.index') }}">
       queries
     </a>
-  <li>
-    <a class="action" href="{{ url_for('patterns.index') }}">
-      patterns
-    </a>
 </ul>
 {% endblock %}
+
+{#
+<!-- <li> -->
+<!--   <a class="action" href="{{ url_for('patterns.index') }}"> -->
+<!--     patterns -->
+<!--   </a> -->
+#}

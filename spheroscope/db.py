@@ -39,7 +39,11 @@ def init_db():
     with current_app.open_resource('schema.sql') as f:
         db.executescript(f.read().decode('utf8'))
 
-    # init admin
+    # init master and admin
+    db.execute(
+        'INSERT INTO users (username, password) VALUES (?, ?)',
+        ("master", generate_password_hash("0000"))
+    )
     db.execute(
         'INSERT INTO users (username, password) VALUES (?, ?)',
         ("admin", generate_password_hash("0000"))
@@ -63,13 +67,13 @@ def import_library():
     from . import wordlists
     wordlists.lib2db()
 
-    # # macros
-    # from . import macros
-    # macros.lib2db(lib_path)
+    # macros
+    from . import macros
+    macros.lib2db()
 
-    # # queries and patterns
-    # from . import queries
-    # queries.lib2db(lib_path)
+    # queries and patterns
+    from . import queries
+    queries.lib2db()
 
 
 @click.command('import-lib')
