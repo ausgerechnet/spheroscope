@@ -1,99 +1,110 @@
 import os
 from glob import glob
+from datetime import datetime
+
+# ccc
+from ccc.cwb import Corpus
+
+# requirements
 from pymagnitude import Magnitude
 
 # flask
 from flask import (
-    Blueprint, g, redirect, render_template, request, url_for, current_app
+    Blueprint, redirect, render_template, request, url_for, current_app, g
 )
 from werkzeug.exceptions import abort
 
 # this app
 from .auth import login_required
 from .db import get_db
-from .corpora import init_corpus
-
+from .corpora import init_corpus, read_config
 
 bp = Blueprint('wordlists', __name__, url_prefix='/wordlists')
 
 
-def read_wordlist_from_db(id, check_author=False):
+def read_from_path(path):
+    """ reads a wordlist from specified path """
 
-    wordlist = get_db().execute(
-        'SELECT wl.id, name, words, corpus, p_att, modified, author_id, username'
-        ' FROM wordlists wl JOIN users u ON wl.author_id = u.id'
-        ' WHERE wl.id = ?',
-        (id,)
-    ).fetchone()
+    if not os.path.isfile(path):
+        abort(404, "word list '%s' doesn't exist." % path)
 
-    if wordlist is None:
-        abort(404, "word list id {0} doesn't exist.".format(id))
+    # determine corpus from path
+    corpus = path.split("/")[-3]
 
-    if check_author and wordlist['author_id'] != g.user['id']:
-        abort(403)
-
-    return wordlist
-
-
-def read_wordlists_from_db():
-
-    wordlists = get_db().execute(
-        'SELECT wl.id, name, words, corpus, modified, author_id, username'
-        ' FROM wordlists wl JOIN users u ON wl.author_id = u.id'
-        ' ORDER BY name ASC'
-    ).fetchall()
-
-    wordlists_new = list()
-    for wl in wordlists:
-        wl_new = dict(wl)
-        wl_new['length'] = len(wl_new['words'].split("\n"))
-        wordlists_new.append(wl_new)
-
-    return wordlists_new
-
-
-def read_wordlist_from_path(path):
-
-    # determine p-attribute from file name
+    # determine name from path
     name = path.split("/")[-1].split(".")[0]
+
+    # determine p-attribute from name
     if name.startswith("tag"):
         p_att = "pos_ark"
     else:
         p_att = "lemma"
-
-    # determine corpus
-    corpus = path.split("/")[-3]
 
     # get all words
     words = set()
     with open(path, "rt") as f:
         for line in f:
             words.add(line.rstrip())
+
+    # modified
+    modified = datetime.utcfromtimestamp(os.path.getmtime(path))
+
     return {
+        # id
+        # user_id
+        'modified': modified,
+        'corpus': corpus,
         'name': name,
+        'words': words,
         'p_att': p_att,
-        'words': "\n".join(words),
-        'corpus': corpus
+        'length': len(words)
     }
 
 
-def write_wordlist(wordlist, write_db=True, write_file=True):
-    """ writes to database and instance folder """
+def write(wordlist, write_db=True, write_file=True, update_modified=True):
+    """ writes wordlist to database and instance folder """
+
+    if update_modified:
+        modified = datetime.now()
+    else:
+        modified = wordlist['modified']
+
     if write_db:
         current_app.logger.info(
-            "writing wordlist %s to database" % wordlist['name']
+            "writing wordlist '%s' to database" % wordlist['name']
         )
         db = get_db()
-        db.execute(
-            'INSERT INTO wordlists (name, words, p_att, corpus, author_id)'
-            ' VALUES (?, ?, ?, ?, ?)',
-            (wordlist['name'], wordlist['words'],
-             wordlist['p_att'], wordlist['corpus'], 1)  # TODO determine user
-        )
+        if 'id' in wordlist:
+            db.execute(
+                'INSERT INTO wordlists '
+                '(id, user_id, modified, corpus, name, words, p_att)'
+                ' VALUES (?, ?, ?, ?, ?, ?, ?)', (
+                    wordlist['id'],
+                    wordlist['user_id'],
+                    modified,
+                    wordlist['corpus'],
+                    wordlist['name'],
+                    "\n".join(wordlist['words']),
+                    wordlist['p_att']
+                )
+            )
+        else:
+            db.execute(
+                'INSERT INTO wordlists (user_id, modified, corpus, name, words, p_att)'
+                ' VALUES (?, ?, ?, ?, ?, ?)', (
+                    wordlist['user_id'],
+                    modified,
+                    wordlist['corpus'],
+                    wordlist['name'],
+                    "\n".join(wordlist['words']),
+                    wordlist['p_att']
+                )
+            )
         db.commit()
 
     if write_file:
-        # determine path
+
+        # ensure directory for wordlists exists
         dir_out = os.path.join(
             current_app.instance_path, wordlist['corpus'], 'wordlists'
         )
@@ -102,21 +113,54 @@ def write_wordlist(wordlist, write_db=True, write_file=True):
         path = os.path.join(
             dir_out, wordlist['name'] + ".txt"
         )
+
         # write
         current_app.logger.info(
-            "writing wordlist %s to %s" % (wordlist['name'], path)
+            "writing wordlist '%s' to '%s'" % (wordlist['name'], path)
         )
         with open(path, "wt") as f:
-            f.write(wordlist['words'])
+            f.write("\n".join(wordlist['words']))
+
+
+def read_from_db(ids=None):
+    """ reads one or all wordlists from database """
+
+    sql_cmd = (
+        'SELECT wl.id, user_id, modified, corpus, name, words, p_att, username'
+        ' FROM wordlists wl JOIN users u ON wl.user_id = u.id'
+    )
+    db = get_db()
+
+    if ids is None:
+        sql_cmd += ' ORDER BY name ASC'
+        wordlists = db.execute(sql_cmd).fetchall()
+    else:
+        sql_cmd += ' WHERE wl.id = ?'
+        wordlists = list()
+        for id in ids:
+            wordlist = db.execute(sql_cmd, (id, )).fetchone()
+            if wordlist is None:
+                abort(404, "word list id %d doesn't exist." % id)
+            wordlists.append(wordlist)
+
+    # post-processing
+    wordlists_dicts = list()
+    for wl in wordlists:
+        wl_dict = dict(wl)
+        wl_dict['words'] = set(wl['words'].split("\n"))
+        wl_dict['length'] = len(wl_dict['words'])
+        wordlists_dicts.append(wl_dict)
+
+    return wordlists_dicts
 
 
 def delete(id, delete_db=True, delete_file=True):
 
-    wordlist = read_wordlist_from_db(id)
+    wordlist = read_from_db(ids=[id])[0]
 
     if delete_db:
-        current_app.logger.warning(
-            "removing wordlist %s" % wordlist['name']
+        current_app.logger.info(
+            "deleting wordlist '%s'" % wordlist['name']
         )
         db = get_db()
         db.execute('DELETE FROM wordlists WHERE id = ?', (id,))
@@ -127,56 +171,66 @@ def delete(id, delete_db=True, delete_file=True):
         dir_out = os.path.join(
             current_app.instance_path, wordlist['corpus'], 'wordlists'
         )
-        path = os.path.join(
-            dir_out, "wordlists", wordlist['name'] + ".txt"
+        path_del = os.path.join(
+            dir_out, wordlist['name'] + ".txt"
         )
         # delete
         current_app.logger.warning(
-            "removing wordlist file %s:" % (path)
+            "deleting wordlist file '%s':" % (path_del)
         )
-        print(path)
-        # os.remove(path)
+        if os.path.isfile(path_del):
+            os.remove(path_del)
+        else:
+            current_app.logger.warning(
+                "file does not exist, skipping delete request"
+            )
 
 
-# copy from master library
 def lib2db():
+    """ reads all wordlists in library, writes to database """
 
-    import os
+    user_id = 1                 # master
     paths = glob(os.path.join('library', '*', 'wordlists', '*'))
-    # current_app.logger.debug(paths)
     for p in paths:
-        wlist = read_wordlist_from_path(p)
-        write_wordlist(wlist, write_file=False)
+        wlist = read_from_path(p)
+        wlist['user_id'] = user_id
+        write(wlist, update_modified=False)
 
 
 # frequencies
-def get_frequencies(words, p_att):
+def get_frequencies(cwb_id, words, p_att):
 
     # get frequencies
     current_app.logger.info(
         'getting frequency info for %d items' % (len(words))
     )
-    corpus = init_corpus(current_app.config)
+    corpus_config = read_config(cwb_id)
+    corpus = init_corpus(corpus_config)
     freq = corpus.counts.marginals(words, p_att=p_att)
 
     return freq
 
 
-def get_similar_ones(words, p_att, number):
+def get_similar_ones(cwb_id, words, p_att, number):
+
+    words = list(words)
+    corpus_config = read_config(cwb_id)
+
+    # get resources
+    embeddings = Magnitude(corpus_config['resources']['embeddings'])
+    corpus = init_corpus(corpus_config)
 
     # get similar ones
     current_app.logger.info(
         'getting %d similar items for %d items' % (number, len(words))
     )
-    embeddings = Magnitude(current_app.config['CORPUS']['resources']['embeddings'])
     similar = embeddings.most_similar(positive=words, topn=number)
     similar_ones = [s[0] for s in similar]
 
     # get frequencies
     current_app.logger.info(
-        'getting frequency info for %d items' % (len(words))
+        'getting frequency info for %d items' % (len(similar_ones))
     )
-    corpus = init_corpus(current_app.config)
     freq_similar = corpus.counts.marginals(similar_ones, p_att=p_att)
     freq_similar.columns = ["frequency"]
 
@@ -194,30 +248,9 @@ def get_similar_ones(words, p_att, number):
 @bp.route('/')
 @login_required
 def index():
-    wordlists = read_wordlists_from_db()
-    return render_template('wordlists/index.html', wordlists=wordlists)
-
-
-@bp.route('/create', methods=('GET', 'POST'))
-@login_required
-def create():
-    if request.method == 'POST':
-
-        wordlist = {
-            'name': request.form['name'],
-            'words': request.form['words'],
-            'p_att': request.form['p_att'],
-            'corpus': current_app.config['CORPUS']['resources']['cwb_id']
-        }
-
-        if not wordlist['name']:
-            current_app.logger.error('name is required.')
-
-        else:
-            write_wordlist(wordlist)
-            return redirect(url_for('wordlists.index'))
-
-    return render_template('wordlists/create.html')
+    wordlists = read_from_db()
+    cwb_id = current_app.config['CORPUS']['resources']['cwb_id']
+    return render_template('wordlists/index.html', wordlists=wordlists, cwb_id=cwb_id)
 
 
 @bp.route('/<int:id>/delete', methods=('POST',))
@@ -227,18 +260,66 @@ def delete_cmd(id):
     return redirect(url_for('wordlists.index'))
 
 
-@bp.route('/<int:id>/update', methods=('GET', 'POST'))
+@bp.route('/create', methods=('GET', 'POST'))
 @login_required
-def update(id):
-    # TODO: give same id
+def create():
 
-    wordlist = read_wordlist_from_db(id)
+    # get corpus info (for p-atts)
+    cwb_id = current_app.config['CORPUS']['resources']['cwb_id']
+    corpus = Corpus(cwb_id)
+    a = corpus.attributes_available
+    p_atts = list(a.name[a.att == 'p-Att'].values)
+    corpus = {
+        'cwb_id': cwb_id,
+        'p_atts': p_atts
+    }
+
+    # get user input
     if request.method == 'POST':
+
         wordlist = {
+            'user_id': g.user['id'],
             'name': request.form['name'],
             'words': request.form['words'],
             'p_att': request.form['p_att'],
-            'corpus': current_app.config['CORPUS']['resources']['cwb_id']
+            'corpus': cwb_id
+        }
+
+        if not wordlist['name']:
+            current_app.logger.error('name is required.')
+
+        else:
+            write(wordlist)
+            return redirect(url_for('wordlists.index'))
+
+    return render_template('wordlists/create.html', corpus=corpus)
+
+
+@bp.route('/<int:id>/update', methods=('GET', 'POST'))
+@login_required
+def update(id):
+
+    wordlist = read_from_db([id])[0]
+    wordlist['words'] = "\n".join(wordlist['words'])
+
+    cwb_id = current_app.config['CORPUS']['resources']['cwb_id']
+    corpus = Corpus(cwb_id)
+    a = corpus.attributes_available
+    p_atts = list(a.name[a.att == 'p-Att'].values)
+    corpus = {
+        'cwb_id': cwb_id,
+        'p_atts': p_atts
+    }
+
+    if request.method == 'POST':
+
+        wordlist = {
+            'id': id,
+            'user_id': g.user['id'],
+            'corpus': wordlist['corpus'],
+            'name': request.form['name'],
+            'words': set([w.rstrip() for w in request.form['words'].split("\n")]),
+            'p_att': request.form['p_att'],
         }
 
         if not wordlist['name']:
@@ -246,50 +327,51 @@ def update(id):
 
         else:
             delete(id)
-            write_wordlist(wordlist)
+            write(wordlist)
             return redirect(url_for('wordlists.index'))
 
-    return render_template('wordlists/update.html', wordlist=wordlist)
+    return render_template('wordlists/update.html',
+                           wordlist=wordlist,
+                           corpus=corpus)
 
 
-@bp.route('/<int:id>/frequencies', methods=['GET'])
+@bp.route('/<cwb_id>/<int:id>/frequencies', methods=['GET'])
 @login_required
-def show_frequencies(id):
+def show_frequencies(cwb_id, id):
 
     # get lemmas
-    wordlist = read_wordlist_from_db(id)
-
-    # format lemmas
-    words = wordlist['words'].split("\n")
-    words = [word.rstrip() for word in words]
+    wordlist = read_from_db([id])[0]
 
     # get frequencies
-    freq = get_frequencies(words, wordlist['p_att'])
+    freq = get_frequencies(
+        cwb_id, wordlist['words'], wordlist['p_att']
+    )
 
     return render_template(
         'wordlists/show_frequencies.html',
         wordlist=wordlist,
-        original=freq.to_html(escape=False)
+        original=freq.to_html(escape=False),
+        cwb_id=cwb_id
     )
 
 
-@bp.route('/<int:id>/similar', methods=['GET'])
+@bp.route('/<cwb_id>/<int:id>/similar', methods=['GET'])
 @login_required
-def show_similar_ones(id, number=200):
+def show_similar_ones(cwb_id, id, number=200):
 
-    # get lemmas
-    wordlist = read_wordlist_from_db(id)
+    # get wordlist
+    wordlist = read_from_db([id])[0]
 
-    # format lemmas
-    words = wordlist['words'].split("\n")
-    words = [word.rstrip() for word in words]
-
-    # get frequencies
-    freq = get_similar_ones(words, wordlist['p_att'], number)
+    # get similar ones with frequencies
+    freq = get_similar_ones(cwb_id,
+                            wordlist['words'],
+                            wordlist['p_att'],
+                            number)
 
     # render result
     return render_template(
         'wordlists/show_similar_ones.html',
         wordlist=wordlist,
-        similar=freq.to_html(escape=False)
+        similar=freq.to_html(escape=False),
+        cwb_id=cwb_id
     )
