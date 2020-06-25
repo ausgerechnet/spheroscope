@@ -1,4 +1,3 @@
-import logging
 import os
 from configparser import ConfigParser
 
@@ -12,19 +11,55 @@ from flask import Blueprint, render_template, current_app, redirect, request
 from .auth import login_required
 
 
-logger = logging.getLogger(__name__)
 bp = Blueprint('corpora', __name__, url_prefix='/corpora')
 
 
-def init_corpus(config):
+def read_config(cwb_id):
 
-    logger.info('initializing corpus')
+    # paths
+    corpus_path = os.path.join(current_app.instance_path, cwb_id)
+    if not os.path.isdir(corpus_path):
+        os.makedirs(corpus_path)
+    cfg_path = os.path.join(corpus_path, cwb_id + '.cfg')
+
+    # get corpus config
+    if os.path.isfile(cfg_path):
+        corpus_config = ConfigParser()
+        corpus_config.read(cfg_path)
+
+    # init config file with defaults if necessary
+    else:
+        corpus_config = current_app.config['CORPUS']
+        corpus_config['resources']['cwb_id'] = cwb_id
+        corpus_config['resources']['lib_path'] = corpus_path
+        corpus_config['resources']['embeddings'] = ''
+        # save to disk
+        with open(cfg_path, "wt") as f:
+            corpus_config.write(f)
+
+    return corpus_config
+
+
+def activate_corpus(cwb_id):
+    current_app.logger.info('activating corpus "%s"' % cwb_id)
+    corpus_config = read_config(cwb_id)
+    current_app.config['CORPUS'] = corpus_config
+
+
+def init_corpus(corpus_config):
+
+    current_app.logger.info('initializing corpus')
+
+    if 'lib_path' in corpus_config['resources']:
+        lib_path = corpus_config['resources']['lib_path']
+    else:
+        lib_path = None
 
     corpus = Corpus(
-        corpus_name=config['CORPUS']['resources']['cwb_id'],
-        lib_path=config['CORPUS']['resources']['lib_path'],
-        registry_path=config['REGISTRY_PATH'],
-        data_path=config['CACHE_PATH']
+        corpus_name=corpus_config['resources']['cwb_id'],
+        lib_path=lib_path,
+        registry_path=current_app.config['REGISTRY_PATH'],
+        data_path=current_app.config['CACHE_PATH']
     )
 
     return corpus
@@ -33,8 +68,11 @@ def init_corpus(config):
 @bp.route('/', methods=('GET', 'POST'))
 @login_required
 def choose():
+
     if request.method == 'POST':
+        activate_corpus(request.form['corpus'])
         return redirect("/corpora/" + request.form['corpus'])
+
     engine = Engine(current_app.config['REGISTRY_PATH'])
     corpora = engine.show_corpora()
     if 'CORPUS' in current_app.config:
@@ -50,30 +88,10 @@ def choose():
 @login_required
 def corpus_config(cwb_id):
 
-    # paths
     corpus_path = os.path.join(current_app.instance_path, cwb_id)
-    if not os.path.isdir(corpus_path):
-        os.makedirs(corpus_path)
     cfg_path = os.path.join(corpus_path, cwb_id + '.cfg')
 
-    corpus_config = ConfigParser()
-    # get corpus config
-    if os.path.isfile(cfg_path):
-        corpus_config.read(cfg_path)
-    # init config file with defaults if necessary
-    else:
-        corpus_config = current_app.config['CORPUS_DEFAULTS']
-        corpus_config['resources']['cwb_id'] = cwb_id
-        corpus_config['resources']['lib_path'] = corpus_path
-        corpus_config['resources']['embeddings'] = ''
-        with open(cfg_path, "wt") as f:
-            corpus_config.write(f)
-
-    # init cwb corpus
-    current_app.config['CORPUS'] = corpus_config
-
     if request.method == 'POST':
-        request.form.getlist('p_show')
         corpus_config = ConfigParser()
         corpus_config.read_dict({
             'resources': {
@@ -96,6 +114,9 @@ def corpus_config(cwb_id):
         current_app.config['CORPUS'] = corpus_config
         with open(cfg_path, "wt") as f:
             corpus_config.write(f)
+
+    # get corpus config
+    corpus_config = current_app.config['CORPUS']
 
     # check corpus attributes
     corpus = Corpus(cwb_id)
