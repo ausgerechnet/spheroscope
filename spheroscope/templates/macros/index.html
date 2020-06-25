@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>
+  {% block title %}Macros{% endblock %}
+</h1>
+<a class="action" href="{{ url_for('macros.create') }}">
+  new
+</a>
+{% endblock %}
+
+{% block content %}
+<h2>Definitions</h2>
+<ul>
+  {% for macro in macros %}
+  <li>
+    {{ macro['name'] }}
+    <span style="float:right;">
+      <a class="action" href="{{ url_for('macros.update', id=macro['id']) }}">
+	edit
+      </a>
+    </span>
+  </li>
+  {% endfor %}
+</ul>
+
+<h2>Active</h2>
+corpus: <em>{{ corpus['cwb_id'] }}
+<ul>
+  {% for macro in corpus['macros'] %}
+  <li>
+    {{ macro }}
+  </li>
+  {% endfor %}
+</ul>
+{% endblock %}
