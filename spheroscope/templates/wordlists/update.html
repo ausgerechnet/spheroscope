@@ -1,23 +1,36 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}Edit "{{ wordlist['name'] }}"{% endblock %}</h1>
+<h1>{% block title %}Word List "{{ wordlist['name'] }}"{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
-  <form method="post">
-    <label for="name">name</label>
-    <input name="name" id="name"
-      value="{{ request.form['name'] or wordlist['name'] }}" required>
-    <label for="p_att">p-attribute</label>
-    <input name="p_att" id="patt" value="{{ request.form['p_att'] or wordlist['p_att'] }}">
-    <label for="words">words</label>
-    <textarea name="words" id="words">{{ request.form['words'] or
-      wordlist['words'] }}</textarea>
-    <input type="submit" value="Save">
-  </form>
-  <hr>
-  <form action="{{ url_for('wordlists.delete_cmd', id=wordlist['id']) }}" method="post">
-    <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
-  </form>
+last modified: <em>{{ wordlist['modified'] }}</em><br/>
+corpus: <em>{{ wordlist['corpus'] }}</em>
+<form method="post">
+  <label for="name">
+    name
+  </label>
+  <input name="name" id="name" value="{{ request.form['name'] or wordlist['name'] }}" required>
+
+  <label for="p_att">p-attribute</label>
+  <select class="form-control" id="p_att" name="p_att">
+    {% for p_att in corpus['p_atts'] %}
+    <option value="{{ p_att }}"{% if p_att==wordlist['p_att'] %} selected{% endif %}>
+      {{ p_att }}
+    </option>
+    {% endfor %}
+  </select>
+  
+  <label for="words">
+    words
+  </label>
+  <textarea name="words" id="words">{{ request.form['words'] or wordlist['words'] }}</textarea>
+  
+  <input type="submit" value="Save">
+</form>
+<form action="{{ url_for('wordlists.delete_cmd', id=wordlist['id']) }}" method="post">
+  <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
+</form>
+
 {% endblock %}
