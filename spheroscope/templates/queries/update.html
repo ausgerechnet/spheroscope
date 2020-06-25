@@ -1,17 +1,15 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}Edit "{{ query['name'] }}"{% endblock %}</h1>
+  <h1>{% block title %}Query "{{ query['name'] }}"{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
   <form method="post">
-    <label for="name">name</label>
-    <input name="name" id="name" value="{{ request.form['name'] or
-					  query['name'] }}" required>
+    <label for="name">name ([A-Za-z_])</label>
+    <input name="name" id="name" value="{{ request.form['name'] or query['name'] }}" required>
     <label for="pattern">pattern</label>
-    <input name="pattern" id="pattern" value="{{ request.form['pattern']
-					      or query['pattern'] }}">
+    <input name="pattern" id="pattern" value="{{ request.form['pattern'] or query['pattern'] }}">
     <label for="query">query</label>
     <textarea name="query" id="query">{{ request.form['query'] or query['query'] }}</textarea>
     <label for="anchors">anchors</label>
@@ -21,7 +19,7 @@
     <input type="submit" value="Save">
   </form>
   <hr>
-  <form action="{{ url_for('queries.delete', id=query['id']) }}" method="post">
+  <form action="{{ url_for('queries.delete_cmd', id=query['id']) }}" method="post">
     <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
   </form>
 {% endblock %}
