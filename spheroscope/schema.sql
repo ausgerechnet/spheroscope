@@ -10,9 +10,30 @@ CREATE TABLE users (
   password TEXT NOT NULL
 );
 
+CREATE TABLE wordlists (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER NOT NULL,
+  modified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  corpus TEXT,			--file-directory
+  name TEXT NOT NULL,		--file-name
+  words TEXT NOT NULL,		--file
+  p_att TEXT NOT NULL,		--file-name
+  FOREIGN KEY (user_id) REFERENCES users (id)
+);
+
+CREATE TABLE macros (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_id INTEGER NOT NULL,
+  modified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  corpus TEXT,			--file-directory
+  name TEXT NOT NULL,		--file-name
+  macro TEXT NOT NULL,		--file
+  FOREIGN KEY (user_id) REFERENCES users (id)
+);
+
 CREATE TABLE queries (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  author_id INTEGER NOT NULL,
+  user_id INTEGER NOT NULL,
   modified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   corpus TEXT,			--file-directory
   name TEXT NOT NULL,		--file-name
@@ -20,36 +41,15 @@ CREATE TABLE queries (
   anchors TEXT,			--file
   regions TEXT,			--file
   pattern INTEGER,		--file
-  FOREIGN KEY (author_id) REFERENCES users (id)
-);
-
-CREATE TABLE wordlists (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  author_id INTEGER NOT NULL,
-  modified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  corpus TEXT,			--file-directory
-  name TEXT NOT NULL,		--file-name
-  words TEXT NOT NULL,		--file
-  p_att TEXT NOT NULL,		--file-name
-  FOREIGN KEY (author_id) REFERENCES users (id)
-);
-
-CREATE TABLE macros (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  author_id INTEGER NOT NULL,
-  modified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  corpus TEXT,			--file-directory
-  name TEXT NOT NULL,		--file-name
-  macro TEXT NOT NULL,		--file
-  FOREIGN KEY (author_id) REFERENCES users (id)
+  FOREIGN KEY (user_id) REFERENCES users (id)
 );
 
 CREATE TABLE patterns (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  author_id INTEGER NOT NULL,
+  user_id INTEGER NOT NULL,
   modified TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   name TEXT,			--file
   template TEXT NOT NULL,	--file
   explanation TEXT,		--file
-  FOREIGN KEY (author_id) REFERENCES users (id)
+  FOREIGN KEY (user_id) REFERENCES users (id)
 );
