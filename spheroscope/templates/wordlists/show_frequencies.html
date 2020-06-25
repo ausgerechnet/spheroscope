@@ -4,20 +4,19 @@
 <h1>
   {% block title %}Word List "{{ wordlist['name'] }}"{% endblock %}
 </h1>
-{% if g.user['id'] %}
-<a class="action" href="{{ 
-			url_for('wordlists.show_similar_ones', id=wordlist['id'])
-			}}">similar</a>
-<a class="action" href="{{
-			url_for('wordlists.update', id=wordlist['id'])
-			}}">edit</a>
-{% endif %}
+<a class="action" href="{{ url_for('wordlists.show_similar_ones', id=wordlist['id'], cwb_id=cwb_id) }}">
+  similar
+</a>
+<a class="action" href="{{ url_for('wordlists.update', id=wordlist['id'], cwb_id=cwb_id) }}">
+  edit
+</a>
 {% endblock %}
 
 {% block content %}
 <article class="post">
   <br>
-  showing frequency in whole corpus (layer: {{ wordlist['p_att'] }})
+  corpus: <em>{{ cwb_id }}</em><br/>
+  p-attribute: <em>{{ wordlist['p_att'] }}</em>
   <p class="body">
     {{ original | safe }}
   </p>
