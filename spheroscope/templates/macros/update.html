@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>
+  {% block title %} Macro "{{macro['name'] }}"{% endblock %}
+</h1>
+{% endblock %}
+
+{% block content %}
+<!-- corpus: <em>{{ corpus['cwb_id'] }}</em><br/> -->
+<!-- available s-attributes: <em>{{ corpus['s_atts'] }}</em> -->
+
+<form method="post">
+  
+  <label for="name">name ([A-Za-z_])</label>
+  <input name="name" id="name" value="{{ request.form['name'] or macro['name'] }}" required>
+  <label for="macro">macro</label>
+  <textarea name="macro" id="macro">{{ request.form['macro'] or macro['macro'] }}</textarea>
+  <input type="submit" value="Save">
+
+</form>
+
+{% endblock %}
