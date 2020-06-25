@@ -1,22 +1,25 @@
+import os
 from collections import defaultdict
+
+# requirements
 from pandas import read_csv
-import logging
 
 # flask
 from flask import Blueprint, render_template
 
 # this app
 from .auth import login_required
+from .db import get_db
 from .queries import get_queries_from_db
 
 
-logger = logging.getLogger(__name__)
 bp = Blueprint('patterns', __name__, url_prefix='/patterns')
 
 
-def get_patterns():
+def read_patterns_from_path(path):
+    """ reads all patterns from specified path """
 
-    definitions = read_csv("instance-stable/patterns.csv", index_col=0)
+    definitions = read_csv(path, index_col=0)
     queries = get_queries_from_db()
     p2q = defaultdict(list)
     for q in queries:
@@ -42,8 +45,22 @@ def get_patterns():
     return patterns
 
 
+def read_pattern_from_db(id):
+    pattern = get_db().execute(
+    'SELECT pat.id, name, template, explanation, user_id, username)'
+    )
+
+
+def write_pattern(pattern, write_db=True):
+    current_app.logger.info(
+        "writing pattern %d to database" % pattern['id']
+    )
+    db = get_db()
+    sql_insert = "INSERT INTO patterns (name"
+
+
 def get_pattern(id):
-    patterns = get_patterns()
+    patterns = read_patterns()
     for p in patterns:
         if p['id'] == id:
             pattern = p
@@ -51,10 +68,17 @@ def get_pattern(id):
     return pattern
 
 
+def lib2db():
+    path = os.path.join('library', 'patterns.csv')
+    patterns = read_patterns(path)
+    for p in patterns:
+        pass
+
+
 @bp.route('/')
 @login_required
 def index():
-    patterns = get_patterns()
+    patterns = read_patterns()
     return render_template('patterns/index.html',
                            patterns=patterns)
 
