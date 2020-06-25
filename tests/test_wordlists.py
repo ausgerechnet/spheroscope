@@ -1,47 +1,79 @@
-from spheroscope.wordlists import get_frequencies
-from spheroscope import spheroscope
+from spheroscope.wordlists import read_from_path, read_from_db
+from spheroscope.wordlists import write, delete
+from spheroscope.wordlists import lib2db
 
-import os
 import pytest
-import tempfile
 
 
-@pytest.fixture
-def client():
-
-    db_fd, spheroscope.app.config['DATABASE'] = tempfile.mkstemp()
-    spheroscope.app.config['TESTING'] = True
-
-    with spheroscope.app.test_client() as client:
-        with spheroscope.app.app_context():
-            spheroscope.init_db()
-        yield client
-
-    os.close(db_fd)
-    os.unlink(spheroscope.app.config['DATABASE'])
+def test_read_from_path():
+    path = (
+        "/home/ausgerechnet/repositories/spheroscope/library/"
+        "BREXIT_V20190522_DEDUP/wordlists/adj_adv_difference.txt"
+    )
+    wordlist = read_from_path(path)
+    print(wordlist)
 
 
-def login(client, username, password):
-    return client.post('/login', data=dict(
-        username=username,
-        password=password
-    ), follow_redirects=True)
+def test_write(app):
+
+    user_id = 1
+    path = (
+        "/home/ausgerechnet/repositories/spheroscope/library/"
+        "BREXIT_V20190522_DEDUP/wordlists/adj_adv_difference.txt"
+    )
+    wordlist = read_from_path(path)
+    wordlist['user_id'] = user_id
+    with app.app_context():
+        write(wordlist)
 
 
-def logout(client):
-    return client.get('/logout', follow_redirects=True)
+def test_read_from_db_all(app):
+
+    user_id = 1
+    path = (
+        "/home/ausgerechnet/repositories/spheroscope/library/"
+        "BREXIT_V20190522_DEDUP/wordlists/adj_adv_difference.txt"
+    )
+    wordlist = read_from_path(path)
+    wordlist['user_id'] = user_id
+    with app.app_context():
+        write(wordlist)
+        wordlists = read_from_db()
+    print(wordlists)
+
+
+def test_read_from_db_one(app):
+
+    user_id = 1
+    path = (
+        "/home/ausgerechnet/repositories/spheroscope/library/"
+        "BREXIT_V20190522_DEDUP/wordlists/adj_adv_difference.txt"
+    )
+    wordlist = read_from_path(path)
+    wordlist['user_id'] = user_id
+    with app.app_context():
+        write(wordlist)
+        wordlists = read_from_db([1])
+    print(wordlists)
+
+
+def test_delete(app):
+
+    user_id = 1
+    path = (
+        "/home/ausgerechnet/repositories/spheroscope/library/"
+        "BREXIT_V20190522_DEDUP/wordlists/adj_adv_difference.txt"
+    )
+    wordlist = read_from_path(path)
+    wordlist['user_id'] = user_id
+    with app.app_context():
+        write(wordlist)
+        delete(1)
 
 
 @pytest.mark.now
-def test_empty_db(client):
-    """Start with a blank database."""
-
-    rv = client.get('/')
-    assert b'No entries here so far' in rv.data
-
-
-def test_show_frequencies(client):
-    words = ['test', 'angela']
-    p_att = 'lemma'
-    test = get_frequencies(words, p_att)
-    print(test)
+def test_lib2db(app):
+    with app.app_context():
+        lib2db()
+        wordlists = read_from_db()
+    print(wordlists)
