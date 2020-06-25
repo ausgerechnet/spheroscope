@@ -1,5 +1,20 @@
 import pandas as pd
 from collections import Counter
+from hashlib import md5
+
+
+def generate_idx(*args, prefix='idx', length=None):
+    """
+    create identifier from list of strings
+    """
+
+    string = ' '.join([str(elem) for elem in args])
+    if string == "":
+        return None
+    h = md5(str(string).encode()).hexdigest()
+    if length is not None and length < len(h):
+        h = h[:length]
+    return prefix + h
 
 
 def format_query_result(query_result):
