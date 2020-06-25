@@ -19,18 +19,20 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    # load corpus defaults
+    # load defaults
     cfg_path = os.path.join(app.instance_path, 'corpus_defaults.cfg')
     corpus_config = ConfigParser()
     if os.path.isfile(cfg_path):
         corpus_config.read(cfg_path)
     else:
-        # load and save default corpus config
+        # copy defaults from master
         cfg_default = os.path.join('library', 'corpus_defaults.cfg')
         corpus_config.read(cfg_default)
         with open(cfg_path, "wt") as f:
             corpus_config.write(f)
-    app.config['CORPUS_DEFAULTS'] = corpus_config
+
+    # save in current config
+    app.config['CORPUS'] = corpus_config
 
     # read configuration if not testing
     if test_config is None:
@@ -64,15 +66,19 @@ def create_app(test_config=None):
     from . import wordlists
     app.register_blueprint(wordlists.bp)
 
-    # patterns
-    from . import patterns
-    app.register_blueprint(patterns.bp)
+    # wordlists
+    from . import macros
+    app.register_blueprint(macros.bp)
+
+    # # patterns
+    # from . import patterns
+    # app.register_blueprint(patterns.bp)
 
     # queries
     from . import queries
     app.register_blueprint(queries.bp)
 
-    # add run-queries command
-    queries.add_run_queries(app)
+    # # add run-queries command
+    # queries.add_run_queries(app)
 
     return app
