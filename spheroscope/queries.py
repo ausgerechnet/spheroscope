@@ -213,24 +213,23 @@ def run(id, cwb_id):
     query['regions'] = regions
 
     # run query
-    corpus = init_corpus(corpus_config)
     current_app.logger.info('running query')
-    result = corpus.query(query=query['query'],
-                          context=query.get('context', None),
-                          s_context=query.get('s_context', None),
-                          corrections=query['corrections'],
-                          match_strategy=query['match_strategy'])
+    corpus = init_corpus(corpus_config)
+    dump = corpus.query(cqp_query=query['query'],
+                        context=query.get('context', None),
+                        context_break=query.get('s_context', None),
+                        corrections=query['corrections'],
+                        match_strategy=query['match_strategy'])
 
-    conc = corpus.concordance(result)
-    result = conc.lines(
-        form='extended',
+    conc = dump.concordance(
         p_show=query['p_show'],
         s_show=query['s_show'],
         p_text=query['p_text'],
         p_slots=query['p_slots'],
         regions=query['regions'],
         order='first',
-        cut_off=None
+        cut_off=None,
+        form='extended'
     )
 
     result_parameters = [query[key] for key in query.keys() if key not in [
@@ -246,9 +245,9 @@ def run(id, cwb_id):
 
     # save result
     current_app.logger.info('saving result')
-    result.to_csv(path_result, sep="\t")
+    conc.to_csv(path_result, sep="\t")
 
-    return result
+    return conc
 
 
 ######################################################
