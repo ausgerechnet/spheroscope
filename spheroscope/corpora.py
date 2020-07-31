@@ -2,7 +2,7 @@ import os
 from configparser import ConfigParser
 
 # ccc
-from ccc.cwb import Corpus, Engine
+from ccc.cwb import Corpus, Corpora
 
 # flask
 from flask import Blueprint, render_template, current_app, redirect, request
@@ -73,8 +73,7 @@ def choose():
         activate_corpus(request.form['corpus'])
         return redirect("/corpora/" + request.form['corpus'])
 
-    engine = Engine(current_app.config['REGISTRY_PATH'])
-    corpora = engine.show_corpora()
+    corpora = Corpora(registry_path=current_app.config['REGISTRY_PATH']).show_corpora()
     if 'CORPUS' in current_app.config:
         active = current_app.config['CORPUS']['resources']['cwb_id']
     else:
