@@ -206,7 +206,7 @@ def get_frequencies(cwb_id, words, p_att):
     )
     corpus_config = read_config(cwb_id)
     corpus = init_corpus(corpus_config)
-    freq = corpus.counts.marginals(words, p_att=p_att)
+    freq = corpus.marginals(words, p_att=p_att)
 
     return freq
 
@@ -231,7 +231,7 @@ def get_similar_ones(cwb_id, words, p_att, number):
     current_app.logger.info(
         'getting frequency info for %d items' % (len(similar_ones))
     )
-    freq_similar = corpus.counts.marginals(similar_ones, p_att=p_att)
+    freq_similar = corpus.marginals(similar_ones, p_att=p_att)
     freq_similar.columns = ["frequency"]
 
     # attach similarity score
