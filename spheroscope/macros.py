@@ -200,7 +200,9 @@ def index():
     cwb_id = current_app.config['CORPUS']['resources']['cwb_id']
     corpus_config = read_config(cwb_id)
     corpus = init_corpus(corpus_config)
-    defined_macros = corpus.cqp.Exec("show macro;").split("\n")
+    cqp = corpus.start_cqp()
+    defined_macros = cqp.Exec("show macro;").split("\n")
+    cqp.__kill__()
     corpus = {
         'macros': defined_macros,
         'cwb_id': cwb_id
