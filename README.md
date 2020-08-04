@@ -1,49 +1,58 @@
 # spheroscope #
+
 spheroscope is a corpus viewer and analyzer. The backend is based on
-the Concordance and Collocation Computer
-([CCC](https://github.com/ausgerechnet/cwb-ccc)), which runs anchored
-CQPqueries.
+[cwb-ccc](https://pypi.org/project/cwb-ccc/), which runs multiply
+anchored CQP queries.
 
-## set-up ##
-We use `pipenv`. Install necessary modules via
-
-	pipenv install
+## Setup ##
+We use `pipenv` for dependency management. Install `pipenv` via `pip`:
 	
-and swith to an interactive shell:
+	pip install -r requirements.txt
+
+`pipenv` takes care of the rest:
+
+	pipenv install --dev
+	
+Switch to an interactive shell via
 
 	pipenv shell
 
-
-## configuration ##
+## Configuration ##
 You will need a CWB indexed corpus and word embeddings for most of
-what this app offers. Configure the app via "spheroscope.cfg" in the
-[instance](instance/) folder. You can find an [example config
-file](spheroscope_example.cfg) in the repository.
+what this app offers. Configure the app via "spheroscope.cfg". You can
+find an [example config file](spheroscope_example.cfg) in the
+repository.
 
-You can use the `LIB_PATH` of the [stable
-instance](instance-stable/lib/).
-
-`EMBEDDINGS` should point to a magnitude file.
-
-Download the latest version of `FILLFORM`
+Set the `REGISTRY_PATH` to your CWB registry and `CACHE_PATH` to some
+directory where you have access (e.\,g. `/tmp/spheroscope`). Link to a
+stable version of `FILLFORM` (download
 [here](https://gitlab.com/mgttlinger/fillform/-/jobs)). Don't provide
 this key if you do not want to use fillform.
 
-Results will be written to and read from `RESULTS_PATH`. You can use
-use one of the results of the [stable
-instance](instance-stable/query-results/).
+You can then run
 
-For the queries to run, you will have to provide a `CORPUS_NAME`, the
-structural attribute where the meta identifier is stored in `S_META`
-("tweet_id") and the structural attribute where to break your queries
-("tweet").
+	./init.sh
+	
+to populate your local instance with all queries, macros, and
+wordlists from the `library`.
 
-The `CACHE_PATH` will be used to store temporary query results from
-cwb-ccc.
+You can now start the flask server via
 
-## usage ##
-Start the app like so:
+	./start-server.sh
 
-	./start-sterver.sh
+and navigate to [http://127.0.0.1:5000/](http://127.0.0.1:5000/) to
+access the interface.
 
-and navigate to [http://127.0.0.1:5000/](http://127.0.0.1:5000/).
+## Corpus Settings ##
+After starting the app, you will find the [default corpus
+settings](instance-stable/corpus_defaults.cfg) in your instance
+folder.
+
+When selecting one of your system corpora through the interface, a new
+folder and config file will be created for this corpus in your
+instance folder. You should point the `embeddings` parameter to
+appropriate embeddings stored as `pymagnitude` files.
+
+# Usage
+
+TBD
