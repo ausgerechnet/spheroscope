@@ -55,11 +55,13 @@ def init_corpus(corpus_config):
     else:
         lib_path = None
 
+    print(current_app.config['REGISTRY_PATH'])
+
     corpus = Corpus(
         corpus_name=corpus_config['resources']['cwb_id'],
         lib_path=lib_path,
-        registry_path=current_app.config['REGISTRY_PATH'],
-        data_path=current_app.config['CACHE_PATH']
+        registry_path=corpus_config['REGISTRY_PATH'],
+        data_path=corpus_config['CACHE_PATH']
     )
 
     return corpus
