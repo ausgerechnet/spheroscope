@@ -55,8 +55,6 @@ def init_corpus(corpus_config):
     else:
         lib_path = None
 
-    print(current_app.config['REGISTRY_PATH'])
-
     corpus = Corpus(
         corpus_name=corpus_config['resources']['cwb_id'],
         lib_path=lib_path,
