@@ -19,7 +19,13 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    # load defaults
+    # read configuration if not testing
+    if test_config is None:
+        app.config.from_pyfile('../spheroscope.cfg')
+    else:
+        app.config.from_mapping(test_config)
+
+    # load corpus settings
     cfg_path = os.path.join(app.instance_path, 'corpus_defaults.cfg')
     corpus_config = ConfigParser()
     if os.path.isfile(cfg_path):
@@ -30,15 +36,8 @@ def create_app(test_config=None):
         corpus_config.read(cfg_default)
         with open(cfg_path, "wt") as f:
             corpus_config.write(f)
-
     # save in current config
     app.config['CORPUS'] = corpus_config
-
-    # read configuration if not testing
-    if test_config is None:
-        app.config.from_pyfile('../spheroscope.cfg')
-    else:
-        app.config.from_mapping(test_config)
 
     # say hello
     @app.route('/hello')
