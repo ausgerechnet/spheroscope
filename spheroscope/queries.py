@@ -7,7 +7,7 @@ from .utils import generate_idx
 
 # flask
 from flask import (
-    Blueprint, redirect, render_template, request, url_for, current_app
+    Blueprint, redirect, render_template, request, url_for, current_app, g
 )
 from werkzeug.exceptions import abort
 # from flask.cli import with_appcontext
@@ -275,7 +275,8 @@ def create():
             ).replace("\'", "\"")),
             'regions': json.loads(request.form['regions'].replace(
                 "None", "null"
-            ).replace("\'", "\""))
+            ).replace("\'", "\"")),
+            'user_id': g.user['id']
         }
 
         if not query['name']:
@@ -302,7 +303,9 @@ def update(id):
             ).replace("\'", "\"")),
             'regions': json.loads(request.form['regions'].replace(
                 "None", "null"
-            ).replace("\'", "\""))
+            ).replace("\'", "\"")),
+            'user_id': g.user['id'],
+            'corpus': current_app.config['CORPUS']['resources']['cwb_id']
         }
 
         if not query['name']:
