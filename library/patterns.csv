@@ -1,5 +1,5 @@
 id,template,explanation
--2,\newcommand{\mcauses}{\Box\kern-.5em{\implies}} \newcommand{\gimplies}{\overset{g}{\implies}},the preamble
+-2,\newcommand{\mcauses}{\Box\kern-.5em{\implies}} \newcommand{\gimplies}{\overset{g}{\implies}},the preamble (for exporting)
 0,L_{{?0 : entity}}({?1 : formula}),entity 0 claiming that 1 is true; any kind of quotation basically
 1,({?0 : formula}) \mcauses ({?1 : formula});{?0};{?1},0 is the reason why 1 is true; note that 0 and 1 could be formulas talking about the past
 2,({?0 : formula}) \mcauses ({?1 : formula}),0 would cause 1 to be true; this also covers speculations about how things could have been if past events would have gone differently
@@ -13,16 +13,17 @@ id,template,explanation
 10,B_{{?0 : entity}}({?1 : formula}),entity 0 believes 1 is true;note that knowing is also treated as belief in our setting as people think they know but actually only believe
 11,A_{{?0 : entity}}({?1 : action}),entity 0 has the ability to perform action 1
 12,({?0 : formula}) \gimplies ({?1 : formula}),0 usually implies 1; in the sense that it might not always be the case but one can assume it is unless evidence for the contrary is presented
-13,@_{{?0 : situation}}({?1 : formula}),in situation/point in time 0 1 was/is/would be the case; e.g. 'in the industrial revolution {1}'; so named points in time together with something that was or will be tha case there
-14,({?0 : situation}) \sim ({?1 : situation}),situations 0 and 1 are similar
-15,({?0 : entity}) \sim ({?1 : entity}),entities 0 and 1 are similar; e.g. hitler comparisons
+13,@_{{?0 : situation}}({?1 : formula}),in situation/point in time 0 1 was/is/would be the case; e.g. 'in the industrial revolution {1}'; so named points in time together with something that was or will be the case there
+-14,({?0 : situation}) \sim ({?1 : situation}),situations 0 and 1 are similar
+15,({?0 : concept}) \sim ({?1 : concept}),concepts 0 and 1 are similar; e.g. Hitler comparisons
 16,({?0 : formula}) \leq_{{?1 : entity}} ({?2 : formula}),entity 1 prefers 2 to be true over 0; e.g. utterances like 'xy would rather 0 than 2'
 17,biased({?0 : entity}),entity 0 is accused of being biased
-18,unqualified({?0 : entity}),entity 0 is accused of being somehow unqualified to make meningful contributions to the dialogue; e.g. 'idiot'
+18,unqualified({?0 : entity}),entity 0 is accused of being somehow unqualified to make meaningful contributions to the dialogue; e.g. 'idiot'
 19,S_{{?0 : entity}} ({?1 : formula}),entity 0 should make 1 true
-20,\neg(L_{{?0 : entity}} ({?1 : formula}) \implies B_{{?0}} ({?1})),entity 0 is accused of lying about truth of 1; 0's beliefs don't reflect what 0 sais
+20,\neg(L_{{?0 : entity}} ({?1 : formula}) \implies B_{{?0}} ({?1})),entity 0 is accused of lying about truth of 1; 0's beliefs don't reflect what 0 said
 21,\neg moral({?0 : entity}),entity 0 is morally bad and should be condemned
 22,\neg (({?0 : formula}) \mcauses \neg ({?1 : formula})),truth of 0 is necessary for 1 to be true
-23,({?0 : formula}) \implies ({?1 : formula}),if 0 then 1; note that if this is to be read in the sense that truth of 0 is responsible/causes truth of 1 then this is not tw right scheme
+23,({?0 : formula}) \implies ({?1 : formula}),if 0 then 1; note that if this is to be read in the sense that truth of 0 is responsible/causes truth of 1 then this is not the right scheme
 24,({?0 : entity}) \in ({?1 : entity}),entity 0 is claimed to be part of entity 1 (most likely some group)
 25,\forall ({?0 : entity}) \in ({?1 : entity}) : ({?2 : property})(?0),all entities in entity 1 have property 2 e.g. being an idiot
+26,"({?0 : entity})\Rightarrow \downarrow x.\,K_x ({?1 : formula}); K_{{?2 : entity}}(?1)); (?2) \in (?0)",entity 2 is claimed to be part of group/entity 0 whose members generally belief/know truth of 1; e.g. as a scientist I know that this is true
