@@ -29,3 +29,5 @@ id,template,explanation,specialises
 26,"({?0 : entity})\Rightarrow \downarrow x.\,K_x ({?1 : formula}); K_{{?2 : entity}}(?1)); (?2) \in (?0)",entity 2 is claimed to be part of group/entity 0 whose members generally belief/know truth of 1; e.g. as a scientist I know that this is true,[10;24;25]
 27,\neg {?0 : formula},falsity of formula 0 is claimed,[]
 28,L_{{?0 : entity}}({?1 : formula}) \implies K_{{?0}} ({?1}),entity 0 is claimed to be honest w.r.t. formula 1 in the sense that they say what they believe,[0;10;23]
+29,[{?0 : action}]F({?1 : formula}),by executing action 0 truth of 1 would be achieved,[]
+30,D_{?0 : entity}({?1 : action}),entity 0 executed action 1,[]
