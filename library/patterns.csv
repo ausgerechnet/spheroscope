@@ -31,3 +31,4 @@ id,template,explanation,specialises
 28,L_{{?0 : entity}}({?1 : formula}) \implies K_{{?0}} ({?1}),entity 0 is claimed to be honest w.r.t. formula 1 in the sense that they say what they believe,[0;10;23]
 29,[{?0 : action}]F({?1 : formula}),by executing action 0 truth of 1 would be achieved,[]
 30,D_{?0 : entity}({?1 : action}),entity 0 executed action 1,[]
+31,[\{?0 : entity or list of entities\};\{{?1 : action or list of actions or list of lists of actions}\} : {?2 : entity or list of entities}]({?3 : formula}),the entities 0 can collaborate to enforce truth of 3 as long as entities 2 execute one of the (joint) actions from 1,[]
