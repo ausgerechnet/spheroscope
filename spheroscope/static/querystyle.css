@@ -1,0 +1,27 @@
+#top-section{
+    overflow: hidden;
+    /*width: 800px;*/
+}
+
+#select-query{
+    overflow-y: scroll;
+    border: 1px solid black;
+    background: white;
+    width: 50%;
+    height: 200px;
+    float: left;
+}
+
+#show-macros{
+    overflow-x: auto;
+    overflow-y: auto;
+    border: 1px solid black;
+    height: 200px;
+}
+
+#show-query-results{
+    overflow-y: auto;
+    overflow-x: auto;
+    border: 1px solid black;
+    height: 300px;
+}
