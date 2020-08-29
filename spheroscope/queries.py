@@ -51,8 +51,9 @@ def write(query, write_db=True, write_file=True, update_modified=True):
         )
         db = get_db()
         if 'id' in query:
+            # overwrite
             db.execute(
-                "INSERT INTO queries"
+                "INSERT OR REPLACE INTO queries"
                 " (id, user_id, modified, corpus, name, query,"
                 " anchors, regions, pattern)"
                 " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);", (
@@ -295,6 +296,7 @@ def update(id):
     query = read_from_db([id])[0]
     if request.method == 'POST':
         query = {
+            'id': id,
             'name': request.form['name'],
             'query': request.form['query'],
             'pattern': request.form['pattern'],
@@ -308,12 +310,8 @@ def update(id):
             'corpus': current_app.config['CORPUS']['resources']['cwb_id']
         }
 
-        if not query['name']:
-            current_app.logger.error('name is required.')
-
-        else:
-            write(query)
-            return redirect(url_for('queries.index'))
+        write(query)
+        return redirect(url_for('queries.index'))
 
     return render_template('queries/update.html', query=query)
 

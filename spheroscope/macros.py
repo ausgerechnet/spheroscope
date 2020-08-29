@@ -63,7 +63,7 @@ def write(macro, write_db=True, write_file=True, update_modified=True):
         db = get_db()
         if 'id' in macro:
             db.execute(
-                'INSERT INTO macros (id, user_id, modified, corpus, name, macro)'
+                'INSERT OR REPLACE INTO macros (id, user_id, modified, corpus, name, macro)'
                 ' VALUES (?, ?, ?, ?, ?, ?)', (
                     macro['id'],
                     macro['user_id'],
@@ -94,11 +94,11 @@ def write(macro, write_db=True, write_file=True, update_modified=True):
         )
         if not os.path.isdir(dir_out):
             os.makedirs(dir_out)
+
+        # write
         path = os.path.join(
             dir_out, macro['name'] + ".txt"
         )
-
-        # write
         current_app.logger.info(
             "writing macro '%s' to '%s'" % (macro['name'], path)
         )
@@ -268,6 +268,7 @@ def update(id):
     }
     if request.method == 'POST':
         macro = {
+            'id': id,
             'macro': request.form['macro'],
             'name': request.form['name'],
             'corpus': cwb_id,
