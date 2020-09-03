@@ -24,7 +24,7 @@ $(document).ready(function(){
 $(document).ready(function(){
 
    $(editQuery).click(function(){
-       $('#show-macros').load($(this).attr('href'));
+       $('#editing-window').load($(this).attr('href'));
        return false;
    });
 });
@@ -32,7 +32,7 @@ $(document).ready(function(){
 $(document).ready(function(){
 
    $(newQuery).click(function(){
-       $('#show-macros').load($(this).attr('href'));
+       $('#editing-window').load($(this).attr('href'));
        return false;
    });
 });
