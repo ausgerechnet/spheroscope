@@ -255,7 +255,7 @@ def index():
     cwb_id = current_app.config['CORPUS']['resources']['cwb_id']
     return render_template('newqueries/index.html', queries=queries, cwb_id=cwb_id)
 
-@bp.route('/')
+@bp.route('/', methods=('GET','POST'))
 @login_required
 def index():
     queries = read_from_db()
@@ -288,9 +288,7 @@ def create():
             write(query)
             return redirect(url_for('newqueries.index'))
 
-    # newqueries/index.html should be able to do this
-
-    return render_template('queries/create.html')
+    return render_template('newqueries/create.html')
 
 
 @bp.route('/<int:id>/update', methods=('GET', 'POST'))
@@ -317,11 +315,11 @@ def update(id):
 
         else:
             write(query)
-            return redirect(url_for('queries.index'))
+            return redirect(url_for('newqueries.index'))
 
-    # newqueries/index.html should be able to do this
 
-    return render_template('queries/update.html', query=query)
+
+    return render_template('newqueries/update.html', query=query)
 
 
 @bp.route('/<int:id>/delete', methods=('POST',))
@@ -341,6 +339,7 @@ def run_cmd(cwb_id, id, show=True):
     ]]
 
     r_test = result[display_columns].to_html(escape=False, table_id="query-results")
+
     # r_test = result[display_columns].to_html("table.html")
 
     # test_html = open("table.html", "w")

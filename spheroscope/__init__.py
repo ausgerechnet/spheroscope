@@ -77,6 +77,9 @@ def create_app(test_config=None):
     from . import queries
     app.register_blueprint(queries.bp)
 
+    from . import newqueries
+    app.register_blueprint(newqueries.bp)
+
     # # add run-queries command
     # queries.add_run_queries(app)
 

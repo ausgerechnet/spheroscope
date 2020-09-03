@@ -13,7 +13,7 @@
 
       <h1>{% block title %}Queries{% endblock %}</h1>
 <!--      {% if g.user %}-->
-<!--      <a class="action" href="{{ url_for('queries.create') }}">new</a>-->
+<!--      <a class="action" href="{{ url_for('newqueries.create') }}">new</a>-->
 <!--      {% endif %}-->
       {% endblock %}
 
@@ -23,7 +23,7 @@
 
         <div id="select-query">
           {% if g.user %}
-            <button><a id="new-test" href="{{ url_for('queries.create') }}">new</a></button>
+            <button><a id="new-test" href="{{ url_for('newqueries.create') }}">new</a></button>
           {% endif %}
           <button><a id="macros" href="{{ url_for('macros.index') }}">macros</a></button>
 
@@ -36,7 +36,7 @@
 <!--              <span style="float:right;">-->
               <span>
 
-                <a href="{{ url_for('queries.update', id=query['id']) }}" class="edit-test">edit</a> –
+                <a href="{{ url_for('newqueries.update', id=query['id']) }}" class="edit-test">edit</a> –
                 <button><a href="{{ url_for('newqueries.run_cmd', cwb_id=cwb_id, id=query['id']) }}" class="run-test">run</a></button>
 
               </span>
@@ -47,13 +47,9 @@
           </ul>
 
         </div>
-
-        <br>
       <!-- edit macros -->
 
-        <div id="show-macros">
-
-        </div>
+        <div id="editing-window"></div>
 
     </div>
 
