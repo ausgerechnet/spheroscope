@@ -51,7 +51,7 @@ class WordList(db.Model):
         return len(self.words.split("\n"))
 
     def __repr__(self):
-        return 'wordlist file "%s" with %d words on attribute "%s"' % (
+        return 'wordlist "%s" with %d words on attribute "%s"' % (
             self.name, self.length, self.p_att
         )
 
@@ -109,7 +109,7 @@ class WordList(db.Model):
         # delete file
         if delete_file:
             current_app.logger.info(
-                'deleting wordlist "%s" from database' % self.name
+                'deleting wordlist file "%s"' % self.path
             )
             if os.path.isfile(self.path):
                 os.remove(self.path)
@@ -187,7 +187,7 @@ class Macro(db.Model):
         # delete file
         if delete_file:
             current_app.logger.info(
-                'deleting macro "%s" at "%s"' % (self.name, self.path)
+                'deleting macro file "%s"' % self.path
             )
             if os.path.isfile(self.path):
                 os.remove(self.path)
@@ -284,7 +284,7 @@ class Query(db.Model):
         # delete file
         if delete_file:
             current_app.logger.info(
-                'deleting query "%s" at "%s"' % (self.name, self.path)
+                'deleting query file "%s"' % self.path
             )
             if os.path.isfile(self.path):
                 os.remove(self.path)
@@ -324,7 +324,6 @@ class Corpus(db.Model):
     __tablename__ = 'corpus'
 
     id = db.Column(db.Integer, primary_key=True)
-    modified = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     user = db.relationship('User', backref=db.backref('corpora', lazy=True))
