@@ -13,6 +13,9 @@ from .database import db, User
 bp = Blueprint('auth', __name__, url_prefix='/auth')
 
 
+######################################################
+# ROUTING ############################################
+######################################################
 @bp.route('/register', methods=('GET', 'POST'))
 def register():
 

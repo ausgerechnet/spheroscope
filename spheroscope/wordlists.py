@@ -3,8 +3,8 @@
 
 import os
 
-from ccc.cwb import Corpus
 from pymagnitude import Magnitude
+from ccc.cwb import Corpus
 
 from flask import (
     Blueprint, redirect, render_template, request, url_for, current_app, g
