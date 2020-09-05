@@ -2,7 +2,7 @@
 
 {% block header %}
 <h1>
-  {% block title %}Word Lists{% endblock %}
+  {% block title %}wordlists{% endblock %}
 </h1>
 {% if g.user %}
 <a class="action" href="{{ url_for('wordlists.create') }}">
@@ -15,15 +15,15 @@
 <ul>
   {% for wordlist in wordlists %}
   <li>
-    {{ wordlist['name'] }} ({{ wordlist['length'] }})
+    {{ wordlist.name }} ({{ wordlist.length }})
     <span style="float:right;">
-      <a class="action" href="{{ url_for('wordlists.update', id=wordlist['id']) }}">
+      <a class="action" href="{{ url_for('wordlists.update', id=wordlist.id) }}">
 	edit
       </a> – 
-      <a class="action" href="{{ url_for('wordlists.show_frequencies', id=wordlist['id'], cwb_id=cwb_id)}} ">
+      <a class="action" href="{{ url_for('wordlists.frequencies', id=wordlist.id) }} ">
       	marginals
       </a> –
-      <a class="action" href="{{ url_for('wordlists.show_similar_ones', id=wordlist['id'], cwb_id=cwb_id) }}">
+      <a class="action" href="{{ url_for('wordlists.similar', id=wordlist.id) }}">
       	similar
       </a>
     </span>

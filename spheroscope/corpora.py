@@ -16,7 +16,7 @@ bp = Blueprint('corpora', __name__, url_prefix='/corpora')
 
 def read_config(cwb_id):
 
-    # data path
+    # corpus specific data path
     corpus_path = os.path.join(current_app.instance_path, cwb_id)
     if not os.path.isdir(corpus_path):
         os.makedirs(corpus_path)
@@ -24,11 +24,11 @@ def read_config(cwb_id):
     # corpus config
     cfg_path = os.path.join(corpus_path, cwb_id + '.cfg')
     if os.path.isfile(cfg_path):
+        # read from file if exists
         corpus_config = ConfigParser()
         corpus_config.read(cfg_path)
-
-    # init config file with defaults if necessary
     else:
+        # init config file with defaults
         corpus_config = current_app.config['CORPUS']
         corpus_config['resources']['cwb_id'] = cwb_id
         corpus_config['resources']['lib_path'] = corpus_path
@@ -43,7 +43,6 @@ def read_config(cwb_id):
 def activate_corpus(cwb_id):
 
     current_app.logger.info('activating corpus "%s"' % cwb_id)
-
     corpus_config = read_config(cwb_id)
     current_app.config['CORPUS'] = corpus_config
 

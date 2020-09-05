@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>
+  {% block title %}macro "{{ macro.name }}"{% endblock %}
+</h1>
+<a class="action" href="{{ url_for('macros.update', id=macro.id, cwb_id=cwb_id) }}">
+  edit
+</a>
+{% endblock %}
+
+{% block content %}
+<article class="post">
+  <br>
+  corpus: <em>{{ cwb_id }}</em><br/>
+  <p class="body">
+    {{ frequencies | safe }}
+  </p>
+</article>
+<hr>
+{% endblock %}

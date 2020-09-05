@@ -1,16 +1,16 @@
 {% extends 'base.html' %}
 
 {% block header %}
-<h1>{% block title %}Word List "{{ wordlist['name'] }}"{% endblock %}</h1>
+<h1>{% block title %}wordlist "{{ wordlist['name'] }}"{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
 last modified: <em>{{ wordlist['modified'] }}</em><br/>
-corpus: <em>{{ wordlist['corpus'] }}</em>
+corpus: <em>{{ corpus['cwb_id'] }}</em>
+
 <form method="post">
-  <label for="name">
-    name
-  </label>
+
+  <label for="name">name ([A-Za-z_])</label>
   <input name="name" id="name" value="{{ request.form['name'] or wordlist['name'] }}" required>
 
   <label for="p_att">p-attribute</label>
@@ -22,14 +22,12 @@ corpus: <em>{{ wordlist['corpus'] }}</em>
     {% endfor %}
   </select>
   
-  <label for="words">
-    words
-  </label>
+  <label for="words">words</label>
   <textarea name="words" id="words">{{ request.form['words'] or wordlist['words'] }}</textarea>
   
   <input type="submit" value="Save">
 </form>
-<form action="{{ url_for('wordlists.delete_cmd', id=wordlist['id']) }}" method="post">
+<form action="{{ url_for('wordlists.delete_cmd', id=wordlist.id) }}" method="post">
   <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
 </form>
 
