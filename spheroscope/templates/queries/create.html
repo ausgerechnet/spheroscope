@@ -1,16 +1,20 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}New Query{% endblock %}</h1>
+  <h1>{% block title %}new query{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
   <form method="post">
-    <label for="name">name</label>
-    <input name="name" id="name" value="{{ request.form['name'] }}" required>
-    <label for="pattern">pattern</label>
+    <label for="name">name ([A-Za-z_])</label>
+    <input name="name" id="name" value="{{ request.form['name'] }}" required><br>
+    <label for="pattern">pattern (int)</label>
     <input name="pattern" id="pattern" value="{{ request.form['pattern'] }}">
-    <label for="query">query</label>
+    <label for="corrections">corrections (dict)</label><br>
+    <textarea name="corrections" id="corrections">{{ request.form['corrections'] }}</textarea><br>
+    <label for="slots">slots (dict)</label><br>
+    <textarea name="slots" id="slots">{{ request.form['slots'] }}</textarea><br>
+    <h3>cqp</h3>
     <textarea name="query" id="query">{{ request.form['query'] }}</textarea>
     <input type="submit" value="Save">
   </form>

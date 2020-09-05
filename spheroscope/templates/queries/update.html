@@ -1,25 +1,30 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}Query "{{ query['name'] }}"{% endblock %}</h1>
+<h1>
+  {% block title %}query "{{ query.name }}"{% endblock %}
+</h1>
 {% endblock %}
-
+  
 {% block content %}
   <form method="post">
+    <h3>meta</h3>
     <label for="name">name ([A-Za-z_])</label>
-    <input name="name" id="name" value="{{ request.form['name'] or query['name'] }}" required>
-    <label for="pattern">pattern</label>
-    <input name="pattern" id="pattern" value="{{ request.form['pattern'] or query['pattern'] }}">
-    <label for="query">query</label>
-    <textarea name="query" id="query">{{ request.form['query'] or query['query'] }}</textarea>
-    <label for="anchors">anchors</label>
-    <textarea name="anchors" id="anchors">{{ request.form['anchors'] or query['anchors'] }}</textarea>
-    <label for="regions">regions</label>
-    <textarea name="regions" id="regions">{{ request.form['regions'] or query['regions'] }}</textarea>
+    <input name="name" id="name" value="{{ request.form['name'] or query.name }}" required>
+    <label for="pattern">pattern (int)</label>
+    <input name="pattern" id="pattern" value="{{ request.form['pattern'] or query.pattern_id }}">
+    <h3>cqp</h3>
+    <textarea name="query" id="query">{{ request.form['query'] or query.cqp }}</textarea>
+    <h3>anchors</h3>
+    <label for="corrections">corrections (dict)</label>
+    <textarea name="corrections" id="corrections">{{ request.form['corrections'] or query.corrections }}</textarea>
+    <label for="slots">slots (dict)</label>
+    <textarea name="slots" id="slots">{{ request.form['slots'] or query.slots }}</textarea>
     <input type="submit" value="Save">
   </form>
-  <hr>
-  <form action="{{ url_for('queries.delete_cmd', id=query['id']) }}" method="post">
-    <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
-  </form>
+ 
+<form action="{{ url_for('queries.delete_cmd', id=query.id) }}" method="post">
+  <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
+</form>
+  
 {% endblock %}

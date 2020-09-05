@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 
 {% block header %}
-<h1>{% block title %}Corpora{% endblock %}</h1>
+<h1>{% block title %}corpora{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
 <div class="container-fluid" id="feedback">
-  <p>Your system corpora
+  <p>available corpora
   <form method="post">
     <select class="form-control" id="corpus" name="corpus">
       {% for corpus in corpora %}
