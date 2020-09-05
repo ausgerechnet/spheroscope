@@ -2,7 +2,7 @@
 
 {% block header %}
 <h1>
-  {% block title %}Word List "{{ wordlist['name'] }}"{% endblock %}
+  {% block title %}wordlist "{{ wordlist['name'] }}"{% endblock %}
 </h1>
 <a class="action" href="{{ url_for('wordlists.frequencies', id=wordlist.id, cwb_id=cwb_id) }}">marginals</a>
 <a class="action" href="{{ url_for('wordlists.update', id=wordlist.id, cwb_id=cwb_id) }}">edit</a>

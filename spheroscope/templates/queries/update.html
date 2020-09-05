@@ -4,27 +4,28 @@
 <h1>
   {% block title %}query "{{ query.name }}"{% endblock %}
 </h1>
+<a class="action" href="{{ url_for('queries.create') }}">new</a>
 {% endblock %}
   
 {% block content %}
-  <form method="post">
-    <h3>meta</h3>
-    <label for="name">name ([A-Za-z_])</label>
-    <input name="name" id="name" value="{{ request.form['name'] or query.name }}" required>
-    <label for="pattern">pattern (int)</label>
-    <input name="pattern" id="pattern" value="{{ request.form['pattern'] or query.pattern_id }}">
-    <h3>cqp</h3>
-    <textarea name="query" id="query">{{ request.form['query'] or query.cqp }}</textarea>
-    <h3>anchors</h3>
-    <label for="corrections">corrections (dict)</label>
-    <textarea name="corrections" id="corrections">{{ request.form['corrections'] or query.corrections }}</textarea>
-    <label for="slots">slots (dict)</label>
-    <textarea name="slots" id="slots">{{ request.form['slots'] or query.slots }}</textarea>
-    <input type="submit" value="Save">
-  </form>
- 
+
+<form method="post">
+  <ul>
+    <li>name <input name="name" value="{{ request.form['name'] or query.name }}" required /> ([A-Za-z_])
+    <li> pattern <input name="pattern" value="{{ request.form['pattern'] or query.pattern_id }}"/> (-1 .. 32)
+      <span style="float:right;"> \( {{ query.pattern.preamble }} {{ query.pattern.template }} \)</span>
+    <li>cqp<br> <textarea name="query" id="query" rows="4" cols="100">{{ request.form['query'] or query.cqp }}</textarea>
+    <li>slots <input name="slots" value="{{ request.form['slots'] or query.slots }}"/> (dict: {slot: [start, end]})
+    <li>corrections <input name="corrections" value="{{ request.form['corrections'] or query.corrections }}"/> (dict: {anchor: correction})
+  </ul>
+  <input type="submit" value="save">
+</form>
+
 <form action="{{ url_for('queries.delete_cmd', id=query.id) }}" method="post">
-  <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
+  <input class="danger" type="submit" value="delete" onclick="return confirm('Are you sure?');">
+</form>
+<form action="{{ url_for('queries.run_cmd', id=query.id) }}" method="post">
+  <input type="submit" value="run">
 </form>
   
 {% endblock %}
