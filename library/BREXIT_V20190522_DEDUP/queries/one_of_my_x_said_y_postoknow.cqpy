@@ -1,0 +1,26 @@
+# --- # CQPY query file
+# anchors:
+#   corrections:
+#     4: -1
+#   slots: {}
+# corpus:
+#   corpus_name: BREXIT_V20190522_DEDUP
+#   lib_path: null
+# display:
+#   p_show:
+#   - word
+#   - lemma
+#   p_slots: lemma
+#   p_text: word
+#   s_show:
+#   - tweet_id
+# meta:
+#   name: one_of_my_x_said_y_postoknow
+#   pattern: -1
+# query:
+#   context: null
+#   match_strategy: longest
+#   s_context: tweet
+# ---
+
+[lemma = $wordlist_quantifiers] "of"? <np>[]* "my" @0:[]* @1:[::][]</np> (<np>[]*</np>)* "to"? <vp>[]* [lemma = $verbs_communication] []*</vp> @3:[::] (/ap[] | <np>[]*</np>)? (<np>[]*</np> | /region[vp] | <pp>[]*</pp>)* @4[::]
