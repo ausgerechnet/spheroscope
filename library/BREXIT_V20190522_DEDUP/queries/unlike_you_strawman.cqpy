@@ -1,0 +1,26 @@
+# --- # CQPY query file
+# anchors:
+#   corrections: {}
+#   slots:
+#     '0': 0
+# corpus:
+#   corpus_name: BREXIT_V20190522_DEDUP
+#   lib_path: null
+# display:
+#   p_show:
+#   - word
+#   - lemma
+#   p_slots: lemma
+#   p_text: word
+#   s_show:
+#   - tweet_id
+# meta:
+#   name: unlike_you_strawman
+#   pattern: 17
+# query:
+#   context: null
+#   match_strategy: longest
+#   s_context: tweet
+# ---
+
+[lemma=$adj_adv_difference] [pos_ner="IN|TO"]? (/region[advp] | /region[adjp])? <np>[]* @0[pos_ner = "NN|NNP|NNS|PRP|USR"] []* </np> ","? [lemma="i|i'm|we|we're"] (/region[advp] | /region[adjp])? @1:[::]/region[vp] (/region[advp] | /region[np] | /region[pp] | /region[vp])+ @2:[::]

@@ -1,0 +1,33 @@
+# --- # CQPY query file
+# anchors:
+#   corrections:
+#     2: -1
+#     4: -1
+#   slots:
+#     '0':
+#     - 3
+#     - 4
+#     '1':
+#     - 0
+#     - 2
+# corpus:
+#   corpus_name: BREXIT_V20190522_DEDUP
+#   lib_path: null
+# display:
+#   p_show:
+#   - word
+#   - lemma
+#   p_slots: lemma
+#   p_text: word
+#   s_show:
+#   - tweet_id
+# meta:
+#   name: x_will_y_if_brexit_strawman
+#   pattern: 2
+# query:
+#   context: null
+#   match_strategy: longest
+#   s_context: tweet
+# ---
+
+<np> []* @0:[lemma = $strawman_nouns] []* </np> @1:[::](<vp> []* "a|can|will" [word = "not"]? []* [lemma= $verbs_destruction] []* </vp>) (/region[np] | /region[vp])* @2:[::] "if" <np>@3[::][]* [pos_simple="N|Z|P|@"]+ []*</np> (/region[np] | /region[vp])+@4:[::]

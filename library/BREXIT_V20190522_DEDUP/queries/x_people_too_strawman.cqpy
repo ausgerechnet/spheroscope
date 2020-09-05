@@ -1,0 +1,26 @@
+# --- # CQPY query file
+# anchors:
+#   corrections:
+#     2: -1
+#   slots: {}
+# corpus:
+#   corpus_name: BREXIT_V20190522_DEDUP
+#   lib_path: null
+# display:
+#   p_show:
+#   - word
+#   - lemma
+#   p_slots: lemma
+#   p_text: word
+#   s_show:
+#   - tweet_id
+# meta:
+#   name: x_people_too_strawman
+#   pattern: -1
+# query:
+#   context: null
+#   match_strategy: longest
+#   s_context: tweet
+# ---
+
+<np>[]* @0:[pos_simple="N|Z"]+ []*</np> [lemma="be"] (/region[advp] | /region[adjp])? <np>[]* @1:[lemma = $nouns_common_people]+ []*</np> "too" [pos_ner=",|\.|HT"]? @2:[::]

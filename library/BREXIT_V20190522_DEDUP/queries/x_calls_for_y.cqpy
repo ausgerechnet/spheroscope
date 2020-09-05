@@ -1,0 +1,32 @@
+# --- # CQPY query file
+# anchors:
+#   corrections:
+#     1: -1
+#   slots:
+#     '0':
+#     - 0
+#     - 1
+#     '1':
+#     - 2
+#     - 4
+# corpus:
+#   corpus_name: BREXIT_V20190522_DEDUP
+#   lib_path: null
+# display:
+#   p_show:
+#   - word
+#   - lemma
+#   p_slots: lemma
+#   p_text: word
+#   s_show:
+#   - tweet_id
+# meta:
+#   name: x_calls_for_y
+#   pattern: 3
+# query:
+#   context: null
+#   match_strategy: longest
+#   s_context: tweet
+# ---
+
+@0:[::][lemma = $nouns_experts | lemma = $nouns_profession_people | pos_simple = "Z"]+ @1:[::] [lemma = "ask|call|push"] "for" <np>@2:[::][]* @3:[]</np> (<np>[]*</np>  | /ap[] | <pp>[]*</pp> | [pos_simple="Z"])* @4:[::]
