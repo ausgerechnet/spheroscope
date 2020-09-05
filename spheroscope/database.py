@@ -316,7 +316,7 @@ class Pattern(db.Model):
         return len(queries)
 
     def __repr__(self):
-        return 'pattern "%s" with %d queries' % (self.name, self.nr_queries)
+        return 'pattern %d with %d queries' % (self.id, self.nr_queries)
 
 
 class Corpus(db.Model):
@@ -374,6 +374,20 @@ def import_library():
         query.write()
 
     # patterns
+
+    # uncategorized ones
+    pattern = Pattern(
+        id=-1,
+        user_id=1,              # admin
+        explanation="uncategorized queries"
+    )
+    current_app.logger.info(
+        'writing pattern %d to database' % pattern.id
+    )
+    db.session.add(pattern)
+    db.session.commit()
+
+    # patterns.csv
     path = os.path.join("library", "patterns.csv")
     df_patterns = read_csv(path, index_col=0)
     for p in df_patterns.iterrows():
