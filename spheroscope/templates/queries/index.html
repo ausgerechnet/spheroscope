@@ -11,7 +11,7 @@
 <ul>
   {% for query in queries %}
   <li>
-    {{ query.name }}
+    {{ query.name }} (pattern <a class="action" href="{{ url_for('patterns.pattern', id=query.pattern_id) }}">{{ query.pattern_id }}</a>)
     <span style="float:right;">
       <a class="action" href="{{ url_for('queries.update', id=query.id) }}">edit</a> – 
       <a class="action" href="{{ url_for('queries.run_cmd', id=query.id) }}">run</a> –
