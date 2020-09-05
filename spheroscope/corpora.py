@@ -1,15 +1,16 @@
+#! /usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import os
 from configparser import ConfigParser
 
-# ccc
 from ccc.cwb import Corpus, Corpora
 
-# flask
-from flask import Blueprint, render_template, current_app, redirect, request
+from flask import (
+    Blueprint, render_template, current_app, redirect, request
+)
 
-# this app
 from .auth import login_required
-
 
 bp = Blueprint('corpora', __name__, url_prefix='/corpora')
 
@@ -66,6 +67,9 @@ def init_corpus(corpus_config):
     return corpus
 
 
+######################################################
+# ROUTING ############################################
+######################################################
 @bp.route('/', methods=('GET', 'POST'))
 @login_required
 def choose():

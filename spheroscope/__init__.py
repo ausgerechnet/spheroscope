@@ -7,13 +7,11 @@ from configparser import ConfigParser
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
-
 NAME = 'spheroscope'
 DATABASE_PATH = 'spheroscope.sqlite'
 CONFIG_PATH = 'spheroscope.cfg'
 
 SECRET_KEY = 'dev'
-
 
 db = SQLAlchemy()
 

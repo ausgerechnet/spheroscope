@@ -16,7 +16,6 @@ from .database import Macro
 bp = Blueprint('macros', __name__, url_prefix='/macros')
 
 
-# frequencies
 def get_frequencies(cwb_id, macro):
 
     # get frequencies

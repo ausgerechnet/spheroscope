@@ -2,15 +2,16 @@
 # -*- coding: utf-8 -*-
 
 import os
-from datetime import datetime
-from glob import glob
-from ccc.queries import cqpy_load, cqpy_dump
-from pandas import read_csv
 import json
+from glob import glob
+from pandas import read_csv
+from datetime import datetime
 
-from werkzeug.security import generate_password_hash
-from flask.cli import with_appcontext
+from ccc.queries import cqpy_load, cqpy_dump
+
 from flask import current_app
+from flask.cli import with_appcontext
+from werkzeug.security import generate_password_hash
 import click
 
 from . import db
@@ -334,7 +335,7 @@ class Corpus(db.Model):
 
 
 #########################################
-# DATABASE ##############################
+# DATABASE INIT #########################
 #########################################
 def init_db():
 

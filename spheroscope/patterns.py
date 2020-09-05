@@ -9,6 +9,9 @@ from .database import Pattern, Query
 bp = Blueprint('patterns', __name__, url_prefix='/patterns')
 
 
+######################################################
+# ROUTING ############################################
+######################################################
 @bp.route('/')
 @login_required
 def index():

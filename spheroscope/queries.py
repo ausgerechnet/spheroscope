@@ -1,3 +1,6 @@
+#! /usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import os
 import json
 
@@ -10,7 +13,6 @@ from flask import (
 from .auth import login_required
 from .corpora import read_config, init_corpus
 from .database import Query
-
 
 bp = Blueprint('queries', __name__, url_prefix='/queries')
 
