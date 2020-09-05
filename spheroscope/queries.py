@@ -118,7 +118,6 @@ def create():
 @login_required
 def update(id):
     query = Query.query.filter_by(id=id).first()
-
     if request.method == 'POST':
 
         query = Query(

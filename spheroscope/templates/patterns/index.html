@@ -1,18 +1,15 @@
 {% extends 'base.html' %}
 
 {% block header %}
+\( {{ preamble }} \)
 <h1>{% block title %}patterns{% endblock %}</h1>
 {% endblock %}
 
 {% block content %}
 <ul>
-  {% for pattern in patterns %}
-  <li>pattern {{ pattern.id }} ({{ pattern.nr_queries }}
-    <a class="action" href="{{ 
-			    url_for('patterns.pattern', id=pattern.id) 
-			    }}">queries</a>)<br>
-    explanation: {{ pattern['explanation'] }}<br>
-    template: {{ pattern['template'] }}
+  {% for pattern in patterns %} 
+  <li>
+    <a class="action" href="{{ url_for('patterns.pattern', id=pattern.id) }}">pattern {{ pattern.id }}</a> ({{ pattern.nr_queries }} queries): \( {{ pattern['template'] }} \)
     <hr>
   </li>
   {% endfor %}

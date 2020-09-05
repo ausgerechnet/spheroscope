@@ -15,9 +15,11 @@ bp = Blueprint('patterns', __name__, url_prefix='/patterns')
 @bp.route('/')
 @login_required
 def index():
-    patterns = Pattern.query.order_by(Pattern.id).all()
+    patterns = Pattern.query.filter(Pattern.id >= -1).order_by(Pattern.id).all()
+    preamble = Pattern.query.filter_by(id=-2).first().template
     return render_template('patterns/index.html',
-                           patterns=patterns)
+                           patterns=patterns,
+                           preamble=preamble)
 
 
 @bp.route('/<int(signed=True):id>', methods=('GET', 'POST'))

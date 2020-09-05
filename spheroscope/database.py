@@ -293,6 +293,10 @@ class Query(db.Model):
                     "file does not exist, skipping delete request"
                 )
 
+    @property
+    def pattern(self):
+        return Pattern.query.filter_by(id=self.pattern_id).first()
+
 
 class Pattern(db.Model):
 
@@ -314,6 +318,11 @@ class Pattern(db.Model):
     def nr_queries(self):
         queries = Query.query.filter_by(pattern_id=self.id).all()
         return len(queries)
+
+    @property
+    def preamble(self):
+        preamble = self.query.filter_by(id=-2).first()
+        return preamble.template
 
     def __repr__(self):
         return 'pattern %d with %d queries' % (self.id, self.nr_queries)
@@ -375,21 +384,15 @@ def import_library():
 
     # patterns
 
-    # uncategorized ones
-    pattern = Pattern(
-        id=-1,
-        user_id=1,              # admin
-        explanation="uncategorized queries"
-    )
-    current_app.logger.info(
-        'writing pattern %d to database' % pattern.id
-    )
-    db.session.add(pattern)
-    db.session.commit()
-
     # patterns.csv
     path = os.path.join("library", "patterns.csv")
+    init_patterns(path)
+
+
+def init_patterns(path):
+
     df_patterns = read_csv(path, index_col=0)
+
     for p in df_patterns.iterrows():
         pattern = Pattern(
             id=int(p[0]),
@@ -403,6 +406,19 @@ def import_library():
         )
         db.session.add(pattern)
         db.session.commit()
+
+    # add extra pattern for uncategorized ones
+    pattern = Pattern(
+        id=-1,
+        user_id=1,              # admin
+        explanation="uncategorized queries",
+        template=r"(\forall x(x=x))\lor (\lnot \forall x(x=x))"
+    )
+    current_app.logger.info(
+        'writing pattern %d to database' % pattern.id
+    )
+    db.session.add(pattern)
+    db.session.commit()
 
 
 #########################################

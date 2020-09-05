@@ -2,13 +2,14 @@
 
 {% block header %}
 <h1>
-  {% block title %}{{ pattern.nr_queries }} queries for pattern {{ pattern.id }}{% endblock %}
+  {% block title %}pattern {{ pattern.id }} ({{ pattern.nr_queries }} queries{% endblock %})
 </h1>
 {% endblock %}
 
 {% block content %}
-explanation: {{pattern.explanation }}<br>
-template: {{ pattern.template }}
+\( {{ pattern.preamble }} {{ pattern.template }} \)
+<br>
+<i>Merlin says:</i> {{ pattern.explanation }}
 
 
 <ul>
