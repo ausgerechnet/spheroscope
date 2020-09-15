@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+import shutil
 from configparser import ConfigParser
 
 from flask import Flask
@@ -10,7 +11,6 @@ from flask_sqlalchemy import SQLAlchemy
 NAME = 'spheroscope'
 DATABASE_PATH = 'spheroscope.sqlite'
 CONFIG_PATH = 'spheroscope.cfg'
-
 SECRET_KEY = 'dev'
 
 db = SQLAlchemy()
@@ -41,18 +41,13 @@ def create_app(test_config=None):
     else:
         app.config.from_mapping(test_config)
 
-    # read corpus configuration
-    cfg_path = os.path.join(app.instance_path, 'corpus_defaults.cfg')
-    corpus_config = ConfigParser()
-    if os.path.isfile(cfg_path):
-        corpus_config.read(cfg_path)
-    else:
-        # copy defaults from master
-        cfg_default = os.path.join('library', 'corpus_defaults.cfg')
-        corpus_config.read(cfg_default)
-        with open(cfg_path, "wt") as f:
-            corpus_config.write(f)
-    app.config['CORPUS'] = corpus_config
+    # ensure corpus defaults exist
+    cfg_path = os.path.join(app.instance_path, 'corpus_defaults.yaml')
+    if not os.path.isfile(cfg_path):
+        shutil.copy(
+            os.path.join('library', 'corpus_defaults.yaml'),
+            cfg_path
+        )
 
     # initialize database
     from . import database

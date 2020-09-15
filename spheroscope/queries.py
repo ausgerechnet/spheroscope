@@ -7,7 +7,7 @@ import json
 from ccc.queries import run_query
 
 from flask import (
-    Blueprint, redirect, render_template, request, url_for, current_app, g
+    Blueprint, redirect, render_template, request, url_for, current_app, g, session
 )
 
 from .auth import login_required
@@ -45,8 +45,6 @@ def run(id, cwb_id):
     query['query'] = dict(corpus_config['query'])
     query['query']['context'] = None
     query['display'] = dict(corpus_config['display'])
-    for k in query['display'].keys():
-        query['display'][k] = str2json(query['display'][k])
 
     # run query
     current_app.logger.info('running query')
@@ -87,7 +85,7 @@ def index():
 def create():
 
     # get corpus info (path)
-    cwb_id = current_app.config['CORPUS']['resources']['cwb_id']
+    cwb_id = session['corpus']['resources']['cwb_id']
 
     if request.method == 'POST':
 
@@ -155,7 +153,7 @@ def delete_cmd(id):
 @login_required
 def run_cmd(id):
 
-    cwb_id = current_app.config['CORPUS']['resources']['cwb_id']
+    cwb_id = session['corpus']['resources']['cwb_id']
     result = run(id, cwb_id)
 
     if result is None:

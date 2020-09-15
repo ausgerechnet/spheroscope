@@ -2,12 +2,12 @@
 # -*- coding: utf-8 -*-
 
 import os
-from configparser import ConfigParser
+import yaml
 
 from ccc.cwb import Corpus, Corpora
 
 from flask import (
-    Blueprint, render_template, current_app, redirect, request
+    Blueprint, render_template, current_app, redirect, request, flash, session
 )
 
 from .auth import login_required
@@ -15,51 +15,73 @@ from .auth import login_required
 bp = Blueprint('corpora', __name__, url_prefix='/corpora')
 
 
-def read_config(cwb_id):
+def load_default():
 
-    # corpus specific data path
-    corpus_path = os.path.join(current_app.instance_path, cwb_id)
-    if not os.path.isdir(corpus_path):
-        os.makedirs(corpus_path)
-
-    # corpus config
-    cfg_path = os.path.join(corpus_path, cwb_id + '.cfg')
-    if os.path.isfile(cfg_path):
-        # read from file if exists
-        corpus_config = ConfigParser()
-        corpus_config.read(cfg_path)
-    else:
-        # init config file with defaults
-        corpus_config = current_app.config['CORPUS']
-        corpus_config['resources']['cwb_id'] = cwb_id
-        corpus_config['resources']['lib_path'] = corpus_path
-        corpus_config['resources']['embeddings'] = ''
-        # save to disk
-        with open(cfg_path, "wt") as f:
-            corpus_config.write(f)
+    default_path = os.path.join(current_app.instance_path, 'corpus_defaults.yaml')
+    corpus_config = yaml.load(
+        open(default_path, "rt").read(), Loader=yaml.FullLoader
+    )
 
     return corpus_config
 
 
-def activate_corpus(cwb_id):
+def read_config(cwb_id=None, init=False):
 
-    current_app.logger.info('activating corpus "%s"' % cwb_id)
-    corpus_config = read_config(cwb_id)
-    current_app.config['CORPUS'] = corpus_config
+    if cwb_id is None:
+        init = True
+
+    if init:
+        # load defaults
+        corpus_config = load_default()
+
+        # take default cwb_id or provided one
+        if cwb_id is None:
+            cwb_id = corpus_config['resources']['cwb_id']
+        else:
+            corpus_config['resources']['cwb_id'] = cwb_id
+
+        # init corpus specific data directory
+        corpus_dir = os.path.join(
+            current_app.instance_path, cwb_id
+        )
+        if not os.path.isdir(corpus_dir):
+            os.makedirs(corpus_dir)
+
+        # more defaults
+        corpus_config['resources']['lib_path'] = corpus_dir
+        corpus_config['resources']['embeddings'] = None
+
+        # save defaults to appropriate place
+        cfg_path = os.path.join(corpus_dir, cwb_id + '.yaml')
+        with open(cfg_path, "wt") as f:
+            yaml.dump(corpus_config, f)
+
+        return corpus_config
+
+    else:
+        corpus_dir = os.path.join(
+            current_app.instance_path, cwb_id
+        )
+        cfg_path = os.path.join(corpus_dir, cwb_id + '.yaml')
+        # read or init settings
+        if os.path.isfile(cfg_path):
+            corpus_config = yaml.load(
+                open(cfg_path, "rt").read(), Loader=yaml.FullLoader
+            )
+        else:
+            # load default and save to appropriate place
+            corpus_config = read_config(cwb_id=cwb_id, init=True)
+
+    return corpus_config
 
 
 def init_corpus(corpus_config):
 
     current_app.logger.info('initializing corpus')
 
-    if 'lib_path' in corpus_config['resources']:
-        lib_path = corpus_config['resources']['lib_path']
-    else:
-        lib_path = None
-
     corpus = Corpus(
         corpus_name=corpus_config['resources']['cwb_id'],
-        lib_path=lib_path,
+        lib_path=corpus_config['resources'].get('lib_path', None),
         registry_path=current_app.config['REGISTRY_PATH'],
         data_path=current_app.config['CACHE_PATH']
     )
@@ -75,14 +97,23 @@ def init_corpus(corpus_config):
 def choose():
 
     if request.method == 'POST':
-        activate_corpus(request.form['corpus'])
+        cwb_id = request.form['corpus']
+        current_app.logger.info('activating corpus "%s"' % cwb_id)
+        current_app.config['CORPUS'] = cwb_id
+        session['corpus'] = read_config(cwb_id)
+        flash(f"activated corpus {request.form['corpus']}")
+        flash(f"{session['corpus']}")
         return redirect("/corpora/" + request.form['corpus'])
 
-    corpora = Corpora(registry_path=current_app.config['REGISTRY_PATH']).show_corpora()
+    corpora = Corpora(
+        registry_path=current_app.config['REGISTRY_PATH']
+    ).show_corpora()
+
     if 'CORPUS' in current_app.config:
-        active = current_app.config['CORPUS']['resources']['cwb_id']
+        active = current_app.config['CORPUS']
     else:
         active = None
+
     return render_template('corpora/choose.html',
                            corpora=corpora,
                            active=active)
@@ -93,49 +124,48 @@ def choose():
 def corpus_config(cwb_id):
 
     corpus_path = os.path.join(current_app.instance_path, cwb_id)
-    cfg_path = os.path.join(corpus_path, cwb_id + '.cfg')
+    cfg_path = os.path.join(corpus_path, cwb_id + '.yaml')
+    corpus_config = session['corpus']
 
     if request.method == 'POST':
-        corpus_config = ConfigParser()
-        corpus_config.read_dict({
-            'resources': {
-                'cwb_id': current_app.config['CORPUS']['resources']['cwb_id'],
-                'lib_path': current_app.config['CORPUS']['resources']['lib_path'],
-                'embeddings': current_app.config['CORPUS']['resources']['embeddings']
-            },
-            'query': {
-                'match_strategy': request.form['match_strategy'],
-                's_query': request.form['s_query'],
-                's_context': request.form['s_context']
-            },
-            'display': {
-                's_show': request.form.getlist('s_show'),
-                'p_text': request.form['p_text'],
-                'p_slots': request.form['p_slots'],
-                'p_show': request.form.getlist('p_show')
-            }
-        })
-        current_app.config['CORPUS'] = corpus_config
+        corpus_config['query'] = {
+            'match_strategy': request.form['match_strategy'],
+            's_query': request.form['s_query'],
+            's_context': request.form['s_context']
+        }
+        corpus_config['display'] = {
+            's_show': request.form.getlist('s_show'),
+            'p_text': request.form['p_text'],
+            'p_slots': request.form['p_slots'],
+            'p_show': request.form.getlist('p_show')
+        }
+        session['corpus'] = corpus_config
         with open(cfg_path, "wt") as f:
-            corpus_config.write(f)
+            yaml.dump(corpus_config, f)
 
-    # get corpus config
-    corpus_config = current_app.config['CORPUS']
+    # get available corpora
+    corpora = Corpora(
+        registry_path=current_app.config['REGISTRY_PATH']
+    ).show_corpora()
 
-    # check corpus attributes
-    corpus = Corpus(cwb_id)
-    a = corpus.attributes_available
-    p_atts = list(a.name[a.att == 'p-Att'].values)
-    s_atts_anno = list(a.name[list(a.annotation) & (a.att == 's-Att')].values)
+    # get current corpus attributes
+    attributes = Corpus(cwb_id).attributes_available
+    p_atts = list(attributes.name[attributes.att == 'p-Att'].values)
+    s_atts_anno = list(
+        attributes.name[list(attributes.annotation) & (attributes.att == 's-Att')].values
+    )
     s_atts_none = list(
-        a.name[([not b for b in a.annotation]) & (a.att == 's-Att')].values
+        attributes.name[([not b for b in attributes.annotation]) & (attributes.att == 's-Att')].values
     )
 
-    return render_template('corpora/corpus.html',
-                           name=cwb_id,
-                           p_atts=p_atts,
-                           s_atts_anno=s_atts_anno,
-                           s_atts_none=s_atts_none,
-                           resources=dict(corpus_config.items('resources')),
-                           query=dict(corpus_config.items('query')),
-                           display=dict(corpus_config.items('display')))
+    return render_template(
+        'corpora/corpus.html',
+        name=cwb_id,
+        p_atts=p_atts,
+        s_atts_anno=s_atts_anno,
+        s_atts_none=s_atts_none,
+        resources=corpus_config['resources'],
+        query=corpus_config['query'],
+        display=corpus_config['display'],
+        corpora=corpora
+    )

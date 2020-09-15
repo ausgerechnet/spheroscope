@@ -1,0 +1,14 @@
+resources:
+  cwb_id: BREXIT_V20190522_DEDUP
+query:
+  context: null
+  match_strategy: longest
+  s_context: tweet
+display:
+  s_show:
+  - tweet_id
+  p_text: word
+  p_slots: lemma
+  p_show:
+  - word
+  - lemma

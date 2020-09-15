@@ -36,7 +36,6 @@ class WordList(db.Model):
     modified = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    # user = db.relationship('User', backref=db.backref('wordlists', lazy=True))
 
     path = db.Column(db.Unicode, nullable=False)
 
@@ -127,7 +126,6 @@ class Macro(db.Model):
     modified = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    # user = db.relationship('User', backref=db.backref('macros', lazy=True))
 
     path = db.Column(db.Unicode, nullable=False)
 
@@ -205,9 +203,7 @@ class Query(db.Model):
     modified = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    # user = db.relationship('User', backref=db.backref('queries', lazy=True))
     pattern_id = db.Column(db.Integer, db.ForeignKey('pattern.id'))
-    # pattern = db.relationship('Pattern', backref=db.backref('queries', lazy=True))
 
     path = db.Column(db.Unicode, nullable=False)
 
@@ -306,7 +302,6 @@ class Pattern(db.Model):
     modified = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    # user = db.relationship('User', backref=db.backref('patterns', lazy=True))
 
     template = db.Column(db.Unicode)
     explanation = db.Column(db.Unicode)
@@ -338,8 +333,12 @@ class Corpus(db.Model):
     user = db.relationship('User', backref=db.backref('corpora', lazy=True))
 
     name = db.Column(db.Unicode(50))
+
     cwb_id = db.Column(db.Unicode)
     lib_path = db.Column(db.Unicode)
+    embeddings = db.Column(db.Unicode)
+
+    attribute = db.Column(db.Unicode)
 
 
 #########################################
@@ -349,10 +348,10 @@ def init_db():
 
     db.drop_all()
     db.create_all()
-    db.session.add(
-        User(username="admin",
-             password=generate_password_hash("0000"))
-    )
+    db.session.add(User(
+        username="admin",
+        password=generate_password_hash("0000")
+    ))
     db.session.commit()
 
 
@@ -383,16 +382,14 @@ def import_library():
         query.write()
 
     # patterns
-
-    # patterns.csv
     path = os.path.join("library", "patterns.csv")
-    init_patterns(path)
+    read_patterns(path)
 
 
-def init_patterns(path):
+def read_patterns(path):
 
+    # read all the patterns in the csv
     df_patterns = read_csv(path, index_col=0)
-
     for p in df_patterns.iterrows():
         pattern = Pattern(
             id=int(p[0]),
@@ -407,7 +404,7 @@ def init_patterns(path):
         db.session.add(pattern)
         db.session.commit()
 
-    # add extra pattern for uncategorized ones
+    # add an extra pattern for uncategorized queries
     pattern = Pattern(
         id=-1,
         user_id=1,              # admin
