@@ -4,6 +4,9 @@ from datetime import datetime
 from glob import glob
 import ast
 from .utils import generate_idx
+import re
+import pandas as pd
+import codecs
 
 # ccc
 from ccc.cwb import Corpus
@@ -332,20 +335,65 @@ def delete_cmd(id):
 @bp.route('/<cwb_id>/<int:id>/run', methods=('GET', 'POST'))
 @login_required
 def run_cmd(cwb_id, id, show=True):
-
     result = run(id, cwb_id)
+    result.to_json(r'table.json')
+    tmp = result.to_json()
+    tbl = json.loads(tmp)
+
+    # old/full table
+
     display_columns = [x for x in result.columns if x not in [
         'match', 'matchend', 'context_id', 'context', 'contextend', 'df'
     ]]
+    r_test_alt = result[display_columns].to_html(escape=False, table_id="query-results")
 
-    r_test = result[display_columns].to_html(escape=False, table_id="query-results")
+    # print(display_columns)
 
+    # create html file from table
     # r_test = result[display_columns].to_html("table.html")
+    result[display_columns].to_html("table.html")
 
-    # test_html = open("table.html", "w")
-    # test_html.write(r_test)
-    # test_html.close()
+    # print(r_test)
 
-    return r_test
+    for idx in tbl["text"]:
+        matchcontext = [int(s) for s in re.findall(r'\b\d+\b', idx)]
+
+        txt = (tbl["text"][idx]).lower()  # <- Tweet
+
+        tmp = txt.split()  # <- Aufteilung
+
+        # match = (tbl["match_lemma"][idx])
+
+        match = [s for s in tmp if s.startswith(tbl["match_lemma"][idx][:-1])][0]  # <- Anfang vom Match-Bereich
+
+        # besserer Ansatz:
+        # letztes Token - (Kontext-Ende - Match-Ende) = Match-Ende
+        # erstes Token + (Kontext-Ende - Match-Anfang)
+
+        insertbeg = [s for s in tmp if s.startswith(match)][0]
+        insertend = tmp[tmp.index(insertbeg) + (matchcontext[1] - matchcontext[0])]  # <- Ende vom Match-Bereich
+
+        tmp.insert(tmp.index(insertbeg), '<span class="match-highlight">')
+        tmp.insert(tmp.index(insertend) + 1, '</span>')
+        res = ' '.join(tmp)
+
+        # schreibe 'res' in Pandas df
+
+        tbl["text"][idx] = res
+
+        new_tbl = open('table.json', 'w')
+        json.dump(tbl, new_tbl)
+        new_tbl.close()
+
+    df = pd.read_json('table.json')
+
+    display_columns = [x for x in df.columns if x not in [
+        'match', 'matchend', 'context_id', 'context', 'contextend', 'df'
+    ]]
+    cols = ["text", "match_lemma", "matchend_lemma", "tweet_id"]
+    table = df[display_columns].to_html('showTable.html', escape=False, table_id="query-results", columns=cols)
+    file = codecs.open('showTable.html', 'r', 'utf-8')
+    test = file.read()
+    return test
 
 
