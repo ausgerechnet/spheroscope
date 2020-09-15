@@ -7,7 +7,7 @@ from pymagnitude import Magnitude
 from ccc.cwb import Corpus
 
 from flask import (
-    Blueprint, redirect, render_template, request, url_for, current_app, g
+    Blueprint, redirect, render_template, request, url_for, current_app, g, session
 )
 
 from .auth import login_required
@@ -22,10 +22,7 @@ def get_frequencies(cwb_id, words, p_att):
     current_app.logger.info(
         'getting frequency info for %d items' % (len(words))
     )
-    corpus_config = read_config(cwb_id)
-    corpus = init_corpus(corpus_config)
-
-    # marginals
+    corpus = init_corpus(session['corpus'])
     freq = corpus.marginals(words, p_att=p_att)
 
     return freq
@@ -79,7 +76,7 @@ def delete_cmd(id):
 def create():
 
     # get corpus info (for p-atts and path)
-    cwb_id = current_app.config['CORPUS']['resources']['cwb_id']
+    cwb_id = current_app.config['CORPUS']
     attributes = Corpus(cwb_id).attributes_available
     p_atts = list(attributes.name[attributes.att == 'p-Att'].values)
     corpus = {
@@ -116,7 +113,7 @@ def update(id):
     wordlist = WordList.query.filter_by(id=id).first()
 
     # get corpus info (for p-atts and frequencies)
-    cwb_id = current_app.config['CORPUS']['resources']['cwb_id']
+    cwb_id = session['corpus']['resources']['cwb_id']
     attributes = Corpus(cwb_id).attributes_available
     p_atts = list(attributes.name[attributes.att == 'p-Att'].values)
     corpus = {
@@ -150,8 +147,8 @@ def update(id):
 @login_required
 def frequencies(id):
 
-    cwb_id = current_app.config['CORPUS']['resources']['cwb_id']
     wordlist = WordList.query.filter_by(id=id).first()
+    cwb_id = session['corpus']['resources']['cwb_id']
 
     # get frequencies
     freq = get_frequencies(
@@ -172,8 +169,8 @@ def frequencies(id):
 @login_required
 def similar(id, number=200):
 
-    cwb_id = current_app.config['CORPUS']['resources']['cwb_id']
     wordlist = WordList.query.filter_by(id=id).first()
+    cwb_id = session['corpus']['resources']['cwb_id']
 
     # get similar ones with frequencies
     freq = get_similar_ones(

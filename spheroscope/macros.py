@@ -6,7 +6,7 @@ import os
 from ccc.cwb import Corpus
 
 from flask import (
-    Blueprint, redirect, render_template, request, url_for, current_app, g
+    Blueprint, redirect, render_template, request, url_for, current_app, g, session
 )
 
 from .auth import login_required
@@ -29,6 +29,15 @@ def get_frequencies(cwb_id, macro):
     return freq
 
 
+def get_defined_macros(cwb_id):
+    corpus_config = read_config(cwb_id)
+    corpus = init_corpus(corpus_config)
+    cqp = corpus.start_cqp()
+    defined_macros = cqp.Exec("show macro;").split("\n")
+    cqp.__kill__()
+    return defined_macros
+
+
 ######################################################
 # ROUTING ############################################
 ######################################################
@@ -36,14 +45,14 @@ def get_frequencies(cwb_id, macro):
 @login_required
 def index():
     macros = Macro.query.order_by(Macro.name).all()
-    cwb_id = current_app.config['CORPUS']['resources']['cwb_id']
-    corpus_config = read_config(cwb_id)
-    corpus = init_corpus(corpus_config)
-    cqp = corpus.start_cqp()
-    defined_macros = cqp.Exec("show macro;").split("\n")
-    cqp.__kill__()
+
+    if 'corpus' in session:
+        cwb_id = session['corpus']['resources']['cwb_id']
+    else:
+        cwb_id = None
+
     corpus = {
-        'macros': defined_macros,
+        'macros': get_defined_macros(cwb_id),
         'cwb_id': cwb_id
     }
     return render_template('macros/index.html',
@@ -64,7 +73,7 @@ def delete_cmd(id):
 def create():
 
     # get corpus info (for s-atts)
-    cwb_id = current_app.config['CORPUS']['resources']['cwb_id']
+    cwb_id = session['corpus']['resources']['cwb_id']
     attributes = Corpus(cwb_id).attributes_available
     s_atts = list(
         attributes.name[([
@@ -102,7 +111,7 @@ def update(id):
     macro = Macro.query.filter_by(id=id).first()
 
     # get corpus info (for s-atts)
-    cwb_id = current_app.config['CORPUS']['resources']['cwb_id']
+    cwb_id = session['corpus']['resources']['cwb_id']
     attributes = Corpus(cwb_id).attributes_available
     s_atts = list(
         attributes.name[([
@@ -136,7 +145,7 @@ def update(id):
 @login_required
 def frequencies(id):
 
-    cwb_id = current_app.config['CORPUS']['resources']['cwb_id']
+    cwb_id = session['corpus']['resources']['cwb_id']
     macro = Macro.query.filter_by(id=id).first()
 
     # get frequencies
