@@ -31,32 +31,34 @@ def read_config(cwb_id=None, init=False):
         init = True
 
     if init:
+
         # load defaults
         corpus_config = load_default()
 
-        # take default cwb_id or provided one
+        # get default cwb_id if necessary
         if cwb_id is None:
             cwb_id = corpus_config['resources']['cwb_id']
-        else:
-            corpus_config['resources']['cwb_id'] = cwb_id
 
-        # init corpus specific data directory
+        # init corpus specific data directory if necessary
         corpus_dir = os.path.join(
             current_app.instance_path, cwb_id
         )
         if not os.path.isdir(corpus_dir):
             os.makedirs(corpus_dir)
 
-        # more defaults
-        corpus_config['resources']['lib_path'] = corpus_dir
-        corpus_config['resources']['embeddings'] = None
-
-        # save defaults to appropriate place
         cfg_path = os.path.join(corpus_dir, cwb_id + '.yaml')
-        with open(cfg_path, "wt") as f:
-            yaml.dump(corpus_config, f)
-
-        return corpus_config
+        if os.path.isfile(cfg_path):
+            corpus_config = yaml.load(
+                open(cfg_path, "rt").read(), Loader=yaml.FullLoader
+            )
+        else:
+            # set defaults
+            corpus_config['resources']['cwb_id'] = cwb_id
+            corpus_config['resources']['lib_path'] = corpus_dir
+            corpus_config['resources']['embeddings'] = None
+            # save defaults to appropriate place
+            with open(cfg_path, "wt") as f:
+                yaml.dump(corpus_config, f)
 
     else:
         corpus_dir = os.path.join(
@@ -99,10 +101,8 @@ def choose():
     if request.method == 'POST':
         cwb_id = request.form['corpus']
         current_app.logger.info('activating corpus "%s"' % cwb_id)
-        current_app.config['CORPUS'] = cwb_id
         session['corpus'] = read_config(cwb_id)
         flash(f"activated corpus {request.form['corpus']}")
-        flash(f"{session['corpus']}")
         return redirect("/corpora/" + request.form['corpus'])
 
     corpora = Corpora(
