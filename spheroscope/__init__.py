@@ -3,7 +3,6 @@
 
 import os
 import shutil
-from configparser import ConfigParser
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
