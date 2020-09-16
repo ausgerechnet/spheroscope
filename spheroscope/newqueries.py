@@ -366,10 +366,6 @@ def run_cmd(cwb_id, id, show=True):
 
         match = [s for s in tmp if s.startswith(tbl["match_lemma"][idx][:-1])][0]  # <- Anfang vom Match-Bereich
 
-        # besserer Ansatz:
-        # letztes Token - (Kontext-Ende - Match-Ende) = Match-Ende
-        # erstes Token + (Kontext-Ende - Match-Anfang)
-
         insertbeg = [s for s in tmp if s.startswith(match)][0]
         insertend = tmp[tmp.index(insertbeg) + (matchcontext[1] - matchcontext[0])]  # <- Ende vom Match-Bereich
 
@@ -391,7 +387,7 @@ def run_cmd(cwb_id, id, show=True):
         'match', 'matchend', 'context_id', 'context', 'contextend', 'df'
     ]]
     cols = ["text", "match_lemma", "matchend_lemma", "tweet_id"]
-    table = df[display_columns].to_html('showTable.html', escape=False, table_id="query-results", columns=cols)
+    #table = df[display_columns].to_html('showTable.html', escape=False, table_id="query-results", columns=cols)
     file = codecs.open('showTable.html', 'r', 'utf-8')
     test = file.read()
     return test
