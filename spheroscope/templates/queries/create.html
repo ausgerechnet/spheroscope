@@ -1,17 +1,22 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}New Query{% endblock %}</h1>
+<h1>
+  {% block title %}new query{% endblock %}
+</h1>
 {% endblock %}
 
 {% block content %}
-  <form method="post">
-    <label for="name">name</label>
-    <input name="name" id="name" value="{{ request.form['name'] }}" required>
-    <label for="pattern">pattern</label>
-    <input name="pattern" id="pattern" value="{{ request.form['pattern'] }}">
-    <label for="query">query</label>
-    <textarea name="query" id="query">{{ request.form['query'] }}</textarea>
-    <input type="submit" value="Save">
-  </form>
+
+<form method="post">
+  <ul>
+    <li>name <input name="name" value="{{ request.form['name'] }}" required /> ([A-Za-z_])
+    <li> pattern <input name="pattern" value="{{ request.form['pattern'] }}"/> (-1 .. 32)
+    <li>cqp<br> <textarea name="query" id="query" rows="4" cols="100">{{ request.form['query'] }}</textarea>
+    <li>slots <input name="slots" value="{{ request.form['slots'] }}"/> (dict: {slot: [start, end]})
+    <li>corrections <input name="corrections" value="{{ request.form['corrections'] }}"/> (dict: {anchor: correction})
+  </ul>
+  <input type="submit" value="save">
+</form>
+
 {% endblock %}

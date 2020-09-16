@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>
+  {% block title %}pattern {{ pattern.id }} ({{ pattern.nr_queries }} queries{% endblock %})
+</h1>
+{% endblock %}
+
+{% block content %}
+\( {{ pattern.preamble }} {{ pattern.template }} \)
+<br>
+<i>Merlin says:</i> {{ pattern.explanation }}
+
+
+<ul>
+  {% for query in pattern.queries %}
+  <li>
+    {{ query.name }}
+    <span style="float:right;">
+      <a class="action" href="{{ url_for('queries.update', id=query.id) }}"> edit</a> –
+      <a class="action" href="{{ url_for('queries.run_cmd', id=query.id)}}">run</a>
+    </span>
+  </li>
+  {% endfor %}  
+
+</ul>
+
+{% endblock %}
+

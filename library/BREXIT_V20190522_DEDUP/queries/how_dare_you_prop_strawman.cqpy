@@ -1,0 +1,29 @@
+# --- # CQPY query file
+# anchors:
+#   corrections:
+#     2: -1
+#   slots:
+#     '0':
+#     - 1
+#     - 2
+# corpus:
+#   corpus_name: BREXIT_V20190522_DEDUP
+#   lib_path: null
+# display:
+#   p_show:
+#   - word
+#   - lemma
+#   p_slots: lemma
+#   p_text: word
+#   s_show:
+#   - tweet_id
+# meta:
+#   name: how_dare_you_prop_strawman
+#   pattern: 4
+# query:
+#   context: null
+#   match_strategy: longest
+#   s_context: tweet
+# ---
+
+"how" ([lemma="dare"] <np>[]*@0:[pos_simple="P|N|Z"][]*</np> | [lemma="do|can"] <np>[]*@0:[pos_simple="P|N|Z"][]*</np> [lemma="dare"]) @1:[::](/region[advp])* <vp>[]* [lemma = $verbs_cog_positive | lemma = $verbs_gen_positive | lemma="say|imagine|mention|criticise|question|think|challenge|report|hope|suggest"] []*</vp> ([pos_simple="A"] | /region[advp] | /region[np] | /region[pp] | /region[vp])+ @2:[::]

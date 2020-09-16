@@ -1,0 +1,34 @@
+# --- # CQPY query file
+# anchors:
+#   corrections: {}
+#   slots:
+#     '0':
+#     - 4
+#     - 5
+#     '1':
+#     - 0
+#     - 1
+#     '2':
+#     - 2
+#     - 3
+# corpus:
+#   corpus_name: BREXIT_V20190522_DEDUP
+#   lib_path: null
+# display:
+#   p_show:
+#   - word
+#   - lemma
+#   p_slots: lemma
+#   p_text: word
+#   s_show:
+#   - tweet_id
+# meta:
+#   name: x_rather_y_than_z_16
+#   pattern: 16
+# query:
+#   context: null
+#   match_strategy: longest
+#   s_context: tweet
+# ---
+
+<np>@0:[::][]*@1:[]</np> (/region[advp])* <vp>[]*[lemma=$verbs_prefer][]*</vp> <np>@2:[::][]*@3:[]</np> "over|(more|rather) than" <np>@4:[::][]*@5:[]</np>

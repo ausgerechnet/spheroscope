@@ -1,5 +1,5 @@
 <!doctype html>
-<title>{% block title %}{% endblock %} - spheroscope</title>
+<title>spheroscope</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='querystyle.css') }}">
 <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
@@ -14,12 +14,15 @@
 <nav>
   <h1><a href="{{ url_for('index') }}">spheroscope</a></h1>
   <ul>
+    {% if session.corpus %}
+    <li><a href="{{ url_for('corpora.corpus_config', cwb_id=session.corpus.resources.cwb_id) }}">{{ session.corpus.resources.cwb_id }}</a>
+    {% endif %}
     {% if g.user %}
-      <li><span>{{ g.user['username'] }}</span>
-      <li><a href="{{ url_for('auth.logout') }}">Log Out</a>
+    <li><span>{{ g.user['username'] }}</span>
+    <li><a href="{{ url_for('auth.logout') }}">logout</a>
     {% else %}
-      <li><a href="{{ url_for('auth.register') }}">Register</a>
-      <li><a href="{{ url_for('auth.login') }}">Log In</a>
+    <li><a href="{{ url_for('auth.register') }}">register</a>
+    <li><a href="{{ url_for('auth.login') }}">login</a>
     {% endif %}
   </ul>
 </nav>

@@ -1,0 +1,27 @@
+# --- # CQPY query file
+# anchors:
+#   corrections:
+#     3: -1
+#     4: -1
+#   slots: {}
+# corpus:
+#   corpus_name: BREXIT_V20190522_DEDUP
+#   lib_path: null
+# display:
+#   p_show:
+#   - word
+#   - lemma
+#   p_slots: lemma
+#   p_text: word
+#   s_show:
+#   - tweet_id
+# meta:
+#   name: common_folks_eca
+#   pattern: -1
+# query:
+#   context: null
+#   match_strategy: longest
+#   s_context: tweet
+# ---
+
+<np>[pos_simple="D"]? @0:"common|regular|normal|average|ordinary" @1:[lemma=$nouns_person_common | lemma = $nouns_person_support | lemma = $nouns_person_origin | lemma = $nouns_person_profession]  </np> (<pp>[]*</pp>)? [pos_simple="I|P"]? (/ap[])* <vp>@2:[::][word != "will"]*</vp>@3:[::] (<vp>[]*</vp> | <pp>[]*</pp> | <np>[]*</np> | /ap[] | [pos_simple="D|I|R|#" & word!="\.|\!"])+ @4:[::]

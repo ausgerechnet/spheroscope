@@ -1,0 +1,25 @@
+# --- # CQPY query file
+# anchors:
+#   corrections: {}
+#   slots: {}
+# corpus:
+#   corpus_name: BREXIT_V20190522_DEDUP
+#   lib_path: null
+# display:
+#   p_show:
+#   - word
+#   - lemma
+#   p_slots: lemma
+#   p_text: word
+#   s_show:
+#   - tweet_id
+# meta:
+#   name: nobody_x_a_y
+#   pattern: -1
+# query:
+#   context: null
+#   match_strategy: longest
+#   s_context: tweet
+# ---
+
+/nobody[] <vp>[]*@0:[lemma = $verbs_cog_positive] []* @1:[]</vp> <np>@2:[::][]* [lemma = $adj_cog_negative]* [lemma = $nouns_person_negative][]* @3:[]</np>
