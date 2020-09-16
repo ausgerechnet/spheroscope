@@ -1,0 +1,32 @@
+# --- # CQPY query file
+# anchors:
+#   corrections:
+#     3: -1
+#   slots:
+#     '0':
+#     - 0
+#     - 1
+#     '1':
+#     - 2
+#     - 3
+# corpus:
+#   corpus_name: BREXIT_V20190522_DEDUP
+#   lib_path: null
+# display:
+#   p_show:
+#   - word
+#   - lemma
+#   p_slots: lemma
+#   p_text: word
+#   s_show:
+#   - tweet_id
+# meta:
+#   name: pattern_12_np_suggests_y
+#   pattern: 12
+# query:
+#   context: null
+#   match_strategy: longest
+#   s_context: tweet
+# ---
+
+<np>[]* @0:[pos_simple="N|Z"] @1:[]*</np> [lemma ="be"]? (<advp>[]*[lemma=$adv_usually][]*</advp>) <vp>[lemma="indicate|imply|suggest|point" | lemma=$verbs_cause] []*</vp> "that"? <np>@2:[::][]*</np> (/region[advp]|/region[pp]| /region[np]| /region[vp])*@3:[::]

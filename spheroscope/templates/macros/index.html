@@ -2,7 +2,7 @@
 
 {% block header %}
 <h1>
-  {% block title %}Macros{% endblock %}
+  {% block title %}macros{% endblock %}
 </h1>
 <a class="action" href="{{ url_for('macros.create') }}">
   new
@@ -16,9 +16,12 @@
   <li>
     {{ macro['name'] }}
     <span style="float:right;">
-      <a class="action" href="{{ url_for('macros.update', id=macro['id']) }}">
+      <a class="action" href="{{ url_for('macros.update', id=macro.id) }}">
 	edit
-      </a>
+      </a> – 
+      <a class="action" href="{{ url_for('macros.frequencies', id=macro.id) }} ">
+      	frequencies
+      </a> 
     </span>
   </li>
   {% endfor %}

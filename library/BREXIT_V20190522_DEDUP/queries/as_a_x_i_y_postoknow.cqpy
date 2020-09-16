@@ -1,0 +1,34 @@
+# --- # CQPY query file
+# anchors:
+#   corrections:
+#     1: -1
+#     4: -1
+#   slots:
+#     '0': 5
+#     '1':
+#     - 0
+#     - 1
+#     '2':
+#     - 2
+#     - 4
+# corpus:
+#   corpus_name: BREXIT_V20190522_DEDUP
+#   lib_path: null
+# display:
+#   p_show:
+#   - word
+#   - lemma
+#   p_slots: lemma
+#   p_text: word
+#   s_show:
+#   - tweet_id
+# meta:
+#   name: as_a_x_i_y_postoknow
+#   pattern: 25
+# query:
+#   context: null
+#   match_strategy: longest
+#   s_context: tweet
+# ---
+
+[lemma = "as|being"] <np>@0:[::][]* @6:[lemma = $nouns_common_people | lemma = $nouns_person_origin | lemma = $nouns_profession_people | lemma = $nouns_person_support] []*</np> @1:[::] ","? @5:[lemma = "i"] <vp>[]* @2[pos_simple="V"] []*</vp> @3:[::](/region[vp] | /region[np] | /be_ap[] | /region[pp] | /region[advp] | /region[adjp])+ @4:[::]
