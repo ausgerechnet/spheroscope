@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import os
-import json
 
 from ccc.queries import run_query
 
@@ -15,15 +14,6 @@ from .corpora import read_config, init_corpus
 from .database import Query
 
 bp = Blueprint('queries', __name__, url_prefix='/queries')
-
-
-def str2json(s):
-    s = s.replace("'", '"')
-    try:
-        s = json.loads(s)
-    except json.decoder.JSONDecodeError:
-        pass
-    return s
 
 
 def run(id, cwb_id):
