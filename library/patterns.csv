@@ -33,3 +33,4 @@ id,template,explanation,specialises
 30,D_{?0 : entity}({?1 : action}),entity 0 executed action 1,[]
 31,[\{?0 : entity or list of entities\};\{{?1 : action or list of actions or list of lists of actions}\} : {?2 : entity or list of entities}]({?3 : formula}),the entities 0 can collaborate to enforce truth of 3 as long as entities 2 execute one of the (joint) actions from 1,[]
 32,"({?0 : entity})\gimplies \downarrow x.\,({?1 : formula mentioning x})",most entities in entity 0 have property 1 e.g. most brexit supporters are idiots,[12;25]
+33,L_{{?0 : entity}} P (({?1 : formula}) \mcauses ({?2 : formula})),entity 0 claims that 1 might cause 2 to be true,[1;2;5]
