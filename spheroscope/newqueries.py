@@ -2,9 +2,8 @@
 # -*- coding: utf-8 -*-
 
 import os
-# import json
-# import re
-# import pandas as pd
+import json
+import pandas as pd
 import codecs
 
 from ccc.queries import run_query
@@ -67,7 +66,7 @@ def run(id, cwb_id):
 ######################################################
 # ROUTING ############################################
 ######################################################
-@bp.route('/')
+@bp.route('/', methods=('GET', 'POST'))
 @login_required
 def index():
     queries = Query.query.order_by(Query.name).all()
@@ -152,60 +151,125 @@ def run_cmd(id):
     cwb_id = session['corpus']['resources']['cwb_id']
     result = run(id, cwb_id)
 
-    # write data to disk in different formats for Yuliya to inspect
-    result.to_json('table.json')
-    result.to_csv('table.csv')
-    result.to_html('table.html')
-    # tmp = result.to_json()
-    # tbl = json.loads(tmp)
+    result.to_json(r'table.json')
+    # this one is for testing
+    result.to_json(r'tableresult.json')
 
-    # move index to columns to be able to work with
-    result = result.reset_index()
+    tojson = result.to_json()
+    tbl = json.loads(tojson)
 
-    # we will use the following list to collect the results
-    # NB this is way faster than updating the dataframe each time
-    texts = list()
+    # old/full table
 
-    for text, match, matchend, context, contextend in zip(result["text"], result["match"], result["matchend"], result["context"], result["contextend"]):
+    # display_columns = [x for x in result.columns if x not in [
+    #     'match', 'matchend', 'context_id', 'context', 'contextend', 'df'
+    # ]]
+    # r_test_alt = result[display_columns].to_html(escape=False, table_id="query-results")
 
-        txt = text.lower()      # <- Tweet
-        tmp = txt.split()       # <- Aufteilung
+    # print(display_columns)
 
-        # match beginn
-        # matchcontext = [int(s) for s in re.findall(r'\b\d+\b', idx)]
-        # # match = (result["match_lemma"][idx])
+    # create html file from table
+    # r_test = result[display_columns].to_html("table.html")
+    # result[display_columns].to_html("table.html")
 
-        # match = [s for s in tmp if s.startswith(result["match_lemma"][idx][:-1])][0]  # <- Anfang vom Match-Bereich
+    # print(r_test)
 
-        # insertbeg = [s for s in tmp if s.startswith(match)][0]
-        # insertend = tmp[tmp.index(insertbeg) + (matchcontext[1] - matchcontext[0])]  # <- Ende vom Match-Bereich
+    for idx in tbl["text"]:
 
-        # now we can just work with relative positions
-        insertbeg = match - context
-        insertend = matchend - context + 2
+        txt = (tbl["text"][idx]).lower()  # <- pure Tweet
 
-        tmp.insert(insertbeg, '<span class="match-highlight">')
-        tmp.insert(insertend, '</span>')
-        res = ' '.join(tmp)
+        # print(txt)
 
-        texts.append(res)
+        tmp = txt.split()
+
+        # print(tmp)
+
+        # cpos:
+
+        cpos = list(tbl["df"][idx]["lemma"].keys())
+
+        # beginning and end positions of the match:
+
+        match = list(tbl["df"][idx]["match"].values())
+        matchend = list(tbl["df"][idx]["matchend"].values())
+
+        # temporary list
+
+        tmp_2 = []
+
+        for word in tmp:
+
+            w_pos = cpos[tmp.index(word)]
+
+            is_matchbeg = match[tmp.index(word)]
+            is_matchend = matchend[tmp.index(word)]
+
+            a0 = tbl["df"][idx]["0"][w_pos]
+            a1 = tbl["df"][idx]["1"][w_pos]
+            a2 = tbl["df"][idx]["2"][w_pos]
+            a3 = tbl["df"][idx]["3"][w_pos]
+
+            # there can be a max. of 10 anchor points
+
+            #anchor_points = []
+
+           # for i in anchor_points:
+
+            #    if tbl["df"][idx][i][w_pos] :
+
+            anchor_points = [["a0", a0], ["a1", a1], ["a2", a2], ["a3", a3]]
+            anchor_points = [ai[0] for ai in anchor_points if ai[1] == True]
+
+            tupl = [word, w_pos, is_matchbeg, is_matchend, anchor_points]
+
+            if is_matchbeg:
+                tupl.insert(0, '<span class="match-highlight">')
+            elif is_matchend:
+                tupl.insert(5, '</span>')
+
+            if "a0" in anchor_points:
+                tupl.insert(tupl.index(word), '<sub class="anchor">0</sub>')
+                tupl.insert(tupl.index(word), '<span class="anchor-highlight">')
+
+            if "a1" in anchor_points:
+                tupl.insert(tupl.index(word) + 1, '</span>')
+                tupl.insert(tupl.index(word) + 1, '<sub class="anchor">1</sub>')
+
+            if "a2" in anchor_points:
+                tupl.insert(tupl.index(word), '<sub class="anchor">2</sub>')
+                tupl.insert(tupl.index(word), '<span class="anchor-highlight">')
+
+            if "a3" in anchor_points:
+                tupl.insert(tupl.index(word) + 1, '</span>')
+                tupl.insert(tupl.index(word) + 1, '<sub class="anchor">3</sub>')
+
+            tupl.remove(w_pos)
+            tupl.remove(is_matchbeg)
+            tupl.remove(is_matchend)
+            tupl.remove(anchor_points)
+
+            for i in tupl:
+                # print(i)
+                tmp_2.append(i)
+
+        print(tmp_2)
+
+        res = ' '.join(tmp_2)
 
         # schreibe 'res' in Pandas df
-        # result["text"][idx] = res
 
-        # new_result = open('table.json', 'w')
-        # json.dump(result, new_result)
-        # new_result.close()
+        tbl["text"][idx] = res
 
-    result['text'] = texts
-    # df = pd.read_json('table.json')
-    cols = ["tweet_id", "text"]
-    result.to_html('showTable.html',
-                   escape=False,
-                   table_id="query-results",
-                   columns=cols)
+        new_tbl = open('table.json', 'w')
+        json.dump(tbl, new_tbl)
+        new_tbl.close()
 
-    # here's where the magic happens
-    file = codecs.open('showTable.html', 'r', 'utf-8')
+    df = pd.read_json('table.json')
+
+    display_columns = [x for x in df.columns if x not in [
+        'match', 'matchend', 'context_id', 'context', 'contextend', 'df'
+    ]]
+    cols = ["text"]
+    df[display_columns].to_html('showTable.html', escape=False, table_id="query-results", columns=cols)
+    file = codecs.open('./showTable.html', 'r', 'utf-8')
     test = file.read()
     return test

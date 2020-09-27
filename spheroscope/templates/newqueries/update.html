@@ -6,7 +6,6 @@
 <h1>
   {% block title %}query "{{ query.name }}"{% endblock %}
 </h1>
-<a class="action" href="{{ url_for('queries.create') }}">new</a>
 {% endblock %}
 
   
@@ -27,8 +26,6 @@
 <form action="{{ url_for('newqueries.delete_cmd', id=query.id) }}" method="post">
   <input class="danger" type="submit" value="delete" onclick="return confirm('Are you sure?');">
 </form>
-<form action="{{ url_for('newqueries.run_cmd', id=query.id) }}" method="post">
-  <input type="submit" value="run">
-</form>
+
   
 {% endblock %}
