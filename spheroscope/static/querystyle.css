@@ -25,3 +25,15 @@
     border: 1px solid black;
     height: 300px;
 }
+
+.match-highlight {
+    background: yellow;
+}
+
+.anchor-highlight:hover {
+    background-color: darkorange;
+}
+
+.anchor {
+    color: blue;
+}
