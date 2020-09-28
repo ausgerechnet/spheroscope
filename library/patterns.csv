@@ -38,3 +38,4 @@ id,template,explanation,specialises
 35,\Box  ({?0 : formula}),formula 0 is necessarily true in the sense that it cannot be the case that 0 is false,[]
 36,P ({?0 : formula}),formula 0 is permitted in the sense that it is morally acceptable to make 0 true or that 0 is true,[]
 37,"L_{{?0 : entity}} ({?1 : entity} \implies \downarrow x.\,O_x ({?2 : formula})",entity 0 states that entities in group 1 should make 2 true,[3;25]
+38,L_{{?0 : entity}} ({?1 : formula});({?1} \cfac bad_{{?2 : entity}}),entity 0 warns of 1 being bad,[0;6]
