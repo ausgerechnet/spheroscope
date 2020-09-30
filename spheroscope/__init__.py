@@ -88,7 +88,7 @@ def create_app(test_config=None):
     # patterns
     from . import patterns
     app.register_blueprint(patterns.bp)
-    
+
     # new queries
     from . import newqueries
     app.register_blueprint(newqueries.bp)
