@@ -6,17 +6,19 @@
 
 {% block content %}
 <div class="container-fluid" id="feedback">
-  <p>available corpora
   <form method="post">
-    <select class="form-control" id="corpus" name="corpus">
-      {% for corpus in corpora %}
-      <option value="{{corpus}}"{% if corpus==active %}selected{% endif %}>
-	{{ corpus }}
-      </option>
-      {% endfor %}
-    </select>
+    <ul>
+      <li>available corpora
+	<select class="form-control" id="corpus" name="corpus">
+	  {% for corpus in corpora %}
+	  <option value="{{ corpus }}"{% if corpus==active %}selected{% endif %}>
+	    {{ corpus }}
+	  </option>
+	  {% endfor %}
+	</select>
+      </li>
+    </ul>
     <input type="submit" value="Enter">
   </form>
-  </p>
 </div>
 {% endblock %}

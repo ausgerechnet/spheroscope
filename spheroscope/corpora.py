@@ -109,8 +109,9 @@ def choose():
         registry_path=current_app.config['REGISTRY_PATH']
     ).show_corpora()
 
-    if 'CORPUS' in current_app.config:
-        active = current_app.config['CORPUS']
+    if 'corpus' in session:
+        active = session['corpus']['resources']['cwb_id']
+        print(active)
     else:
         active = None
 
