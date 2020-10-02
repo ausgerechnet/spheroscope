@@ -4,6 +4,7 @@
 import os
 import json
 import pandas as pd
+import re
 import codecs
 
 from ccc.queries import run_query
@@ -150,6 +151,7 @@ def run_cmd(id):
     # get result
     cwb_id = session['corpus']['resources']['cwb_id']
     result = run(id, cwb_id)
+    print(result['df'].iloc[1])
 
     result.to_json(r'table.json')
     # this one is for testing
@@ -158,22 +160,13 @@ def run_cmd(id):
     tojson = result.to_json()
     tbl = json.loads(tojson)
 
-    # old/full table
-
-    # display_columns = [x for x in result.columns if x not in [
-    #     'match', 'matchend', 'context_id', 'context', 'contextend', 'df'
-    # ]]
-    # r_test_alt = result[display_columns].to_html(escape=False, table_id="query-results")
-
-    # print(display_columns)
-
-    # create html file from table
-    # r_test = result[display_columns].to_html("table.html")
-    # result[display_columns].to_html("table.html")
-
-    # print(r_test)
-
     for idx in tbl["text"]:
+
+        regions = []
+
+        for col in tbl:
+            if re.findall(r'\d\_\w+', col):
+                regions.append(col)
 
         txt = (tbl["text"][idx]).lower()  # <- pure Tweet
 
@@ -182,78 +175,87 @@ def run_cmd(id):
         tmp = txt.split()
 
         # print(tmp)
+        # print(' ')
 
         # cpos:
 
-        cpos = list(tbl["df"][idx]["lemma"].keys())
+        cpos_dict = tbl["df"][idx]["word"]
+        cpos = list(tbl["df"][idx]["word"].keys())
+        cpos_words = list(tbl["df"][idx]["word"].values())
+        # print(cpos_dict)
+        # print(' ')
 
         # beginning and end positions of the match:
 
         match = list(tbl["df"][idx]["match"].values())
         matchend = list(tbl["df"][idx]["matchend"].values())
 
+        match_dict = tbl["df"][idx]["match"]
+        matchend_dict = tbl["df"][idx]["matchend"]
+
         # temporary list
 
         tmp_2 = []
 
-        for word in tmp:
+        # all of the possible anchors for this query
 
-            w_pos = cpos[tmp.index(word)]
+        anchor_points = []
 
-            is_matchbeg = match[tmp.index(word)]
-            is_matchend = matchend[tmp.index(word)]
+        for i in tbl["df"][idx]:
+            if re.findall(r'\b\d+\b', i):
+                anchor_points.append(["a" + str(i)])
+        # print(anchor_points)
 
-            a0 = tbl["df"][idx]["0"][w_pos]
-            a1 = tbl["df"][idx]["1"][w_pos]
-            a2 = tbl["df"][idx]["2"][w_pos]
-            a3 = tbl["df"][idx]["3"][w_pos]
+        tupl = []
 
-            # there can be a max. of 10 anchor points
+        for k in cpos_dict:
+            # cpos:
+            # print(k)
 
-            #anchor_points = []
+            # word:
+            # print(cpos_dict[k])
+            # print(' ')
 
-           # for i in anchor_points:
+            word = cpos_dict[k]
+            w_pos = k
 
-            #    if tbl["df"][idx][i][w_pos] :
+            is_matchbeg = match_dict[k]
+            is_matchend = matchend_dict[k]
 
-            anchor_points = [["a0", a0], ["a1", a1], ["a2", a2], ["a3", a3]]
-            anchor_points = [ai[0] for ai in anchor_points if ai[1] == True]
+            anchor_points_in = [ai[0] for ai in anchor_points if tbl["df"][idx][str(ai[0])[-1]][w_pos] == True]
 
-            tupl = [word, w_pos, is_matchbeg, is_matchend, anchor_points]
+            tupl = [word, w_pos, is_matchbeg, is_matchend, anchor_points_in]
+            # print(tupl)
+            # print(' ')
 
             if is_matchbeg:
                 tupl.insert(0, '<span class="match-highlight">')
             elif is_matchend:
                 tupl.insert(5, '</span>')
 
-            if "a0" in anchor_points:
-                tupl.insert(tupl.index(word), '<sub class="anchor">0</sub>')
-                tupl.insert(tupl.index(word), '<span class="anchor-highlight">')
+            for i in anchor_points_in:
 
-            if "a1" in anchor_points:
-                tupl.insert(tupl.index(word) + 1, '</span>')
-                tupl.insert(tupl.index(word) + 1, '<sub class="anchor">1</sub>')
-
-            if "a2" in anchor_points:
-                tupl.insert(tupl.index(word), '<sub class="anchor">2</sub>')
-                tupl.insert(tupl.index(word), '<span class="anchor-highlight">')
-
-            if "a3" in anchor_points:
-                tupl.insert(tupl.index(word) + 1, '</span>')
-                tupl.insert(tupl.index(word) + 1, '<sub class="anchor">3</sub>')
+                if int(i[-1]) % 2 == 0:
+                    tupl.insert(tupl.index(word), '<sub class="anchor">{s}</sub>'.format(s=i[-1]))
+                    if len(regions) > 0:
+                        tupl.insert(tupl.index(word), '<span class="anchor-highlight">')
+                elif int(i[-1]) % 2 != 0:
+                    if len(regions) > 0:
+                        tupl.insert(tupl.index(word) + 1, '</span>')
+                    tupl.insert(tupl.index(word) + 1, '<sub class="anchor">{s}</sub>'.format(s=i[-1]))
 
             tupl.remove(w_pos)
             tupl.remove(is_matchbeg)
             tupl.remove(is_matchend)
-            tupl.remove(anchor_points)
+            tupl.remove(anchor_points_in)
 
             for i in tupl:
-                # print(i)
                 tmp_2.append(i)
 
-        print(tmp_2)
-
         res = ' '.join(tmp_2)
+
+        #print(res)
+        #print(' ')
 
         # schreibe 'res' in Pandas df
 
@@ -270,6 +272,7 @@ def run_cmd(id):
     ]]
     cols = ["text"]
     df[display_columns].to_html('showTable.html', escape=False, table_id="query-results", columns=cols)
+    #df[display_columns].to_html('showTable.html', escape=False, table_id="query-results")
     file = codecs.open('./showTable.html', 'r', 'utf-8')
     test = file.read()
     return test
