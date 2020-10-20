@@ -76,7 +76,7 @@ def delete_cmd(id):
 def create():
 
     # get corpus info (for p-atts and path)
-    cwb_id = current_app.config['CORPUS']
+    cwb_id = session['corpus']['resources']['cwb_id']
     attributes = Corpus(cwb_id).attributes_available
     p_atts = list(attributes.name[attributes.att == 'p-Att'].values)
     corpus = {
