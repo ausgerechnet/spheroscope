@@ -1,6 +1,7 @@
 # spheroscope #
 
-spheroscope is a corpus viewer and analyzer. The backend is based on
+spheroscope is a corpus viewer and analyzer designated to
+argumentation mining. The backend is based on
 [cwb-ccc](https://pypi.org/project/cwb-ccc/), which runs multiply
 anchored CQP queries.
 
@@ -61,11 +62,13 @@ common p- and s-attributes of your system corpora.
 When selecting one of your corpora for the first time through the
 interface, a new folder and config file will be created for this
 corpus in your instance folder; the config file will be populated with
-the corpus defaults. If you want to use similarity-based
-recommendations for wordlists, you should point the `embeddings`
-parameter to appropriate embeddings stored as `pymagnitude` files. The
-`query` and `display` settings can be change through the interface
+the corpus defaults. Most settings, such as the `query` and `display`
+parameters, can be changed through the interface
 (http://127.0.0.1:5000/corpora/).
+
+If you want to use similarity-based recommendations for wordlists, you
+should point the `embeddings` parameter to appropriate embeddings
+stored as `pymagnitude` files.
 
 # Usage
 
