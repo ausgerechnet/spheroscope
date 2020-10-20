@@ -21,7 +21,8 @@
 ## entity groups
 - (24) _entity_ is part of _entity group_
 - (25) _entity group_ has certain _property_
-- (32) _entity group_ usually have _property_
+- (32) most entities in _entity group_ have _property_
+- (39) some entities in _entity group_ have _property_
 - (26) _entity_ is part of _entity group_; _entity group_ usually believes _formula_
 
 # entities and formulae #
