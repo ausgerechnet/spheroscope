@@ -40,4 +40,4 @@ id,template,explanation,specialises
 37,"L_{{?0 : entity}} ({?1 : entity} \implies \downarrow x.\,O_x ({?2 : formula})",entity 0 states that entities in group 1 should make 2 true,[3;25]
 38,L_{{?0 : entity}} ({?1 : formula});({?1} \cfac bad_{{?2 : entity}}),entity 0 warns of 1 being bad,[0;6]
 39,"\neg(({?0 : entity} \implies \downarrow x.\,\neg {?1 : formula\text{ mentioning }x}) \lor ({0} \dimplies \downarrow x,\, {1}))",some entities in 0 have property 1,[25;27;32]
-40,"\neg({?0 : entity} \implies \downarrow x.\,{?1 : formula\text{ mentioning }x})", nobody in 0 has property 1,[25,27]
+40,"\neg({?0 : entity} \implies \downarrow x.\,{?1 : formula\text{ mentioning }x})", nobody in 0 has property 1,[25;27]
