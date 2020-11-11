@@ -1,3 +1,4 @@
+
 acknowledge
 admit
 advise
@@ -27,6 +28,7 @@ describe
 disclose
 discuss
 downplay
+emphasise
 emphasize
 explain
 guarantee
@@ -57,6 +59,7 @@ require
 respond
 say
 signal
+specify
 suggest
 tell
 testify
