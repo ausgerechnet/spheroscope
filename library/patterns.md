@@ -17,12 +17,12 @@
 ------------
 ## attack on entity
 - (21) _entity_ is morally bad (ad-hominem catch-all)
-- (20) _entity_ lies about _formula_ (since entity's beliefs contradict formula)
 ## entity groups
 - (24) _entity_ is part of _entity group_
 - (25) _entity group_ has certain _property_
 - (32) most entities in _entity group_ have _property_
 - (39) some entities in _entity group_ have _property_
+- (40) none of the entities in _entity group_  have _property_
 - (26) _entity_ is part of _entity group_; _entity group_ usually believes _formula_
 
 # entities and formulae #
@@ -33,8 +33,9 @@
 - (10) _entity_ believes: _formula_ is true
 - (34) _entity_ knows: _formula_ is true (_formula_ must be true)
 - (28) _entity_ is honest about _formula_
+- (20) _entity_ lies about _formula_ (since entity's beliefs contradict formula)
 - (16) _entity_ prefers: _formula1_ over _formula2_
-- (38) _entity_ warns that _formula_ is bad
+- (38) _entity_ warns: _formula_ is bad
 ## formula → entity
 - (6) _formula_ would be bad for _entity_
   + (7) _formula_ is bad for _entity_
