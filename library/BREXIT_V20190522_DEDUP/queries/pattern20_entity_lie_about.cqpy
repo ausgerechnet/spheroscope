@@ -1,0 +1,19 @@
+# --- CQPY query file
+# anchors:
+#   corrections:
+#     '1': -1
+#     '3': -1
+#   slots:
+#     '0':
+#     - 0
+#     - 1
+#     '1':
+#     - 2
+#     - 3
+# meta:
+#   comment: null
+#   name: pattern20_entity_lie_about
+#   pattern: 20
+# ---
+
+@0[::] <np>[]*[pos_simple="[NZ@#]"][]*</np> @1[::] (/region[advp])* [lemma= $verbs_lying] "about|that" @2[::]/region[np] [word != "[\.\?\!\,]"]* @3[::]

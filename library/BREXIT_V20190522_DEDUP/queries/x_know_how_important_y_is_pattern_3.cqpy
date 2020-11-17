@@ -1,0 +1,19 @@
+# --- CQPY query file
+# anchors:
+#   corrections:
+#     '1': -1
+#     '3': -1
+#   slots:
+#     '0':
+#     - 0
+#     - 1
+#     '1':
+#     - 2
+#     - 3
+# meta:
+#   comment: null
+#   name: x_know_how_important_y_is_pattern_3
+#   pattern: 3
+# ---
+
+<np>@0[] @1[]*</np> (/region[advp])? <vp>[lemma = $verbs_comm_normative | lemma = $verbs_know] []*</vp> ("how"|"it" [lemma="be"]) [lemma = $adj_important] @2[::] [word!="[\.,\!\?]"]+ @3[::]

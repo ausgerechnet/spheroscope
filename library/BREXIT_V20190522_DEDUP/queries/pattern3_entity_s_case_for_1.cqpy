@@ -1,0 +1,18 @@
+# --- CQPY query file
+# anchors:
+#   corrections:
+#     '3': -1
+#   slots:
+#     '0':
+#     - 0
+#     - 1
+#     '1':
+#     - 2
+#     - 3
+# meta:
+#   comment: null
+#   name: pattern3_entity_s_goal_to_1
+#   pattern: 3
+# ---
+
+(<np>@0[] @1[]*</np> "'?s" | <np>@0[] @1[]* "'?s"</np> ) [lemma=$nouns_agenda_p3] [word="for|to"] @2:[pos_ark="V"|pos_ner="V.+"] (/region[np])* @3:[::]
