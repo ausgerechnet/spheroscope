@@ -1,7 +1,8 @@
 var runTest = document.querySelectorAll(".run-test");
 var editQuery = document.querySelectorAll(".edit-test");
 var newQuery = document.querySelectorAll("#new-test");
-var tableResult = document.getElementById("#query-results");
+var showMeta = document.querySelectorAll('.show-meta')
+// var tableResult = document.getElementById("#query-results");
 
 $(document).ready(function(){
 
@@ -12,12 +13,10 @@ $(document).ready(function(){
 
 });
 
-
-
 $(document).ready(function(){
 
    $(editQuery).click(function(){
-       $('#editing-window').load($(this).attr('href'));
+       $('#more-window').load($(this).attr('href'));
        return false;
    });
 });
@@ -25,7 +24,16 @@ $(document).ready(function(){
 $(document).ready(function(){
 
    $(newQuery).click(function(){
-       $('#editing-window').load($(this).attr('href'));
+       $('#more-window').load($(this).attr('href'));
+       return false;
+   });
+
+});
+
+$(document).ready(function(){
+
+   $(showMeta).click(function(){
+       $('#more-window').load($(this).attr('href'));
        return false;
    });
 
@@ -51,5 +59,4 @@ for (var i = 0, row; row = tableResult.rows[i]; i++){
         // col
     }
 }
-
 */
