@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+  </head>
+
+  <body>
+    {% extends 'base.html' %}
+    
+    {% block header %}
+    <h1>{% block title %}queries{% endblock %}</h1>
+    {% endblock %}
+
+    {% block content %}
+
+    <div id="top-section">
+      <div id="select-query">
+
+        <button><a id="new-test" href="{{ url_for('queries.create') }}">new</a></button>
+        <button><a id="macros" href="{{ url_for('macros.index') }}">macros</a></button>
+
+        <ul>
+          {% for query in queries %}
+          <li>
+            {{ query['name'] }}
+	    <span>
+              <a href="{{ url_for('queries.update', id=query['id']) }}" class="edit-test">edit</a> –
+              <button><a href="{{ url_for('queries.run2_cmd', id=query['id']) }}" class="run-test">run</a></button>
+            </span>
+          </li>
+          {% endfor %}
+        </ul>
+
+      </div>
+
+      <div id="editing-window">
+
+      </div>
+
+    </div>
+
+    <br>
+
+    <div id="table-window">
+      <div id="show-query-results">
+
+      </div>
+    </div>
+
+    {% endblock %}
+
+  </body>
+</html>
+
