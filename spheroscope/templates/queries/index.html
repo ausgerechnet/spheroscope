@@ -3,7 +3,7 @@
 {% block header %}
 <h1>{% block title %}queries{% endblock %}</h1>
 <a class="action" href="{{ url_for('queries.create') }}">new</a>
-<a class="action" href="{{ url_for('queries.load') }}">import</a>
+<a class="action" href="">import</a>
 {% endblock %}
 
 {% block content %}
@@ -14,7 +14,7 @@
     <span style="float:right;">
       <a class="action" href="{{ url_for('queries.update', id=query.id) }}">edit</a> –
       <a class="action" href="{{ url_for('queries.run_cmd', id=query.id) }}" onclick="$('#loading').show();">run</a> –
-      <a class="action" href="{{ url_for('queries.run2_cmd', id=query.id) }}" onclick="$('#loading').show();">matches</a>
+      <a class="action" href="{{ url_for('queries.index2') }}" onclick="$('#loading').show();">matches</a>
     </span>
   </li>
   {% endfor %}

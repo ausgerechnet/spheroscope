@@ -75,6 +75,14 @@ def index():
                            queries=queries)
 
 
+@bp.route('/index2')
+@login_required
+def index2():
+    queries = Query.query.order_by(Query.name).all()
+    return render_template('queries/index2.html',
+                           queries=queries)
+
+
 @bp.route('/create', methods=('GET', 'POST'))
 @login_required
 def create():
@@ -105,39 +113,6 @@ def create():
         return redirect(url_for('queries.index'))
 
     return render_template('queries/create.html')
-
-
-@bp.route('/load', methods=('GET', 'POST'))
-@login_required
-def load():
-    # TODO
-
-    # get corpus info (path)
-    cwb_id = session['corpus']['resources']['cwb_id']
-
-    if request.method == 'POST':
-
-        query = Query(
-            cqp=request.form['query'],
-            name=request.form['name'],
-            pattern_id=request.form['pattern'],
-            slots=request.form['slots'].replace(
-                "None", "null"
-            ),
-            corrections=request.form['corrections'].replace(
-                "None", "null"
-            ),
-            path=os.path.join(
-                current_app.instance_path, cwb_id, 'wordlists',
-                request.form['name'] + ".txt"
-            ),
-            user_id=g.user.id
-        )
-        query.write()
-
-        return redirect(url_for('queries.index'))
-
-    return render_template('queries/load.html')
 
 
 @bp.route('/<int:id>/update', methods=('GET', 'POST'))
@@ -204,7 +179,7 @@ def run2_cmd(id):
     # get result
     cwb_id = session['corpus']['resources']['cwb_id']
     result = run(id, cwb_id)
-    print(result['df'].iloc[1])
+    # print(result['df'].iloc[1])
 
     result.to_json(r'table.json')
     # this one is for testing
@@ -222,52 +197,22 @@ def run2_cmd(id):
                 regions.append(col)
 
         # txt = (tbl["text"][idx]).lower()  # <- pure Tweet
-
-        # print(txt)
-
-        # tmp = txt.split()
-
-        # print(tmp)
-        # print(' ')
-
-        # cpos:
-
         cpos_dict = tbl["df"][idx]["word"]
-        # cpos = list(tbl["df"][idx]["word"].keys())
-        # cpos_words = list(tbl["df"][idx]["word"].values())
-        # print(cpos_dict)
-        # print(' ')
-
-        # beginning and end positions of the match:
-
-        # match = list(tbl["df"][idx]["match"].values())
-        # matchend = list(tbl["df"][idx]["matchend"].values())
-
         match_dict = tbl["df"][idx]["match"]
         matchend_dict = tbl["df"][idx]["matchend"]
 
         # temporary list
-
         tmp_2 = []
-
         # all of the possible anchors for this query
-
         anchor_points = []
 
         for i in tbl["df"][idx]:
             if re.findall(r'\b\d+\b', i):
                 anchor_points.append(["a" + str(i)])
-        # print(anchor_points)
 
         tupl = []
 
         for k in cpos_dict:
-            # cpos:
-            # print(k)
-
-            # word:
-            # print(cpos_dict[k])
-            # print(' ')
 
             word = cpos_dict[k]
             w_pos = k
@@ -280,8 +225,6 @@ def run2_cmd(id):
             ]
 
             tupl = [word, w_pos, is_matchbeg, is_matchend, anchor_points_in]
-            # print(tupl)
-            # print(' ')
 
             if is_matchbeg:
                 tupl.insert(0, '<span class="match-highlight">')
@@ -309,11 +252,6 @@ def run2_cmd(id):
 
         res = ' '.join(tmp_2)
 
-        # print(res)
-        # print(' ')
-
-        # schreibe 'res' in Pandas df
-
         tbl["text"][idx] = res
 
         new_tbl = open('table.json', 'w')
@@ -325,12 +263,26 @@ def run2_cmd(id):
     display_columns = [x for x in df.columns if x not in [
         'match', 'matchend', 'context_id', 'context', 'contextend', 'df'
     ]]
-    cols = ["text"]
-    df[display_columns].to_html('showTable.html', escape=False, table_id="query-results", columns=cols)
-    # df[display_columns].to_html('showTable.html', escape=False, table_id="query-results")
+    df[display_columns].to_html(
+        'showTable.html', escape=False, table_id="query-results"
+    )
+
     file = codecs.open('./showTable.html', 'r', 'utf-8')
     test = file.read()
     return test
+
+
+@bp.route('/<int:id>/meta', methods=('GET', 'POST'))
+@login_required
+def show_meta(loc):
+
+    # match und matchend als index für jede zeile
+
+    df = pd.read_html('./showTable.html')[0]
+
+    df['df'].iloc[loc].to_html('./meta.html', escape=False, table_id="meta-df")
+
+    return render_template('newqueries/meta.html')
 
 
 # @bp.route('/<cwb_id>/<int:id>/show_result', methods=('GET', 'POST'))
