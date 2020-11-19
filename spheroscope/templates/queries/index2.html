@@ -25,7 +25,7 @@
             {{ query['name'] }}
 	    <span>
               <a href="{{ url_for('queries.update', id=query['id']) }}" class="edit-test">edit</a> –
-              <button><a href="{{ url_for('queries.run2_cmd', id=query['id']) }}" class="run-test">run</a></button>
+              <button><a href="{{ url_for('queries.run_cmd', id=query['id'], beta=True) }}" class="run-test">run</a></button>
             </span>
           </li>
           {% endfor %}
@@ -48,6 +48,8 @@
     </div>
 
     {% endblock %}
+
+    <script src="{{ url_for('static', filename='queryscript.js') }}" type="text/javascript"></script>
 
   </body>
 </html>
