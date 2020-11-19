@@ -13,6 +13,11 @@ from .auth import login_required
 from .corpora import read_config, init_corpus
 from .database import Query
 
+import re
+import json
+import codecs
+import pandas as pd
+
 bp = Blueprint('queries', __name__, url_prefix='/queries')
 
 
@@ -102,6 +107,39 @@ def create():
     return render_template('queries/create.html')
 
 
+@bp.route('/load', methods=('GET', 'POST'))
+@login_required
+def load():
+    # TODO
+
+    # get corpus info (path)
+    cwb_id = session['corpus']['resources']['cwb_id']
+
+    if request.method == 'POST':
+
+        query = Query(
+            cqp=request.form['query'],
+            name=request.form['name'],
+            pattern_id=request.form['pattern'],
+            slots=request.form['slots'].replace(
+                "None", "null"
+            ),
+            corrections=request.form['corrections'].replace(
+                "None", "null"
+            ),
+            path=os.path.join(
+                current_app.instance_path, cwb_id, 'wordlists',
+                request.form['name'] + ".txt"
+            ),
+            user_id=g.user.id
+        )
+        query.write()
+
+        return redirect(url_for('queries.index'))
+
+    return render_template('queries/load.html')
+
+
 @bp.route('/<int:id>/update', methods=('GET', 'POST'))
 @login_required
 def update(id):
@@ -157,6 +195,142 @@ def run_cmd(id):
 
     # if show:
     #     return redirect(url_for('queries.show_result', id=id))
+
+
+@bp.route('/<int:id>/run2', methods=('GET', 'POST'))
+@login_required
+def run2_cmd(id):
+
+    # get result
+    cwb_id = session['corpus']['resources']['cwb_id']
+    result = run(id, cwb_id)
+    print(result['df'].iloc[1])
+
+    result.to_json(r'table.json')
+    # this one is for testing
+    result.to_json(r'tableresult.json')
+
+    tojson = result.to_json()
+    tbl = json.loads(tojson)
+
+    for idx in tbl["text"]:
+
+        regions = []
+
+        for col in tbl:
+            if re.findall(r'\d\_\w+', col):
+                regions.append(col)
+
+        # txt = (tbl["text"][idx]).lower()  # <- pure Tweet
+
+        # print(txt)
+
+        # tmp = txt.split()
+
+        # print(tmp)
+        # print(' ')
+
+        # cpos:
+
+        cpos_dict = tbl["df"][idx]["word"]
+        # cpos = list(tbl["df"][idx]["word"].keys())
+        # cpos_words = list(tbl["df"][idx]["word"].values())
+        # print(cpos_dict)
+        # print(' ')
+
+        # beginning and end positions of the match:
+
+        # match = list(tbl["df"][idx]["match"].values())
+        # matchend = list(tbl["df"][idx]["matchend"].values())
+
+        match_dict = tbl["df"][idx]["match"]
+        matchend_dict = tbl["df"][idx]["matchend"]
+
+        # temporary list
+
+        tmp_2 = []
+
+        # all of the possible anchors for this query
+
+        anchor_points = []
+
+        for i in tbl["df"][idx]:
+            if re.findall(r'\b\d+\b', i):
+                anchor_points.append(["a" + str(i)])
+        # print(anchor_points)
+
+        tupl = []
+
+        for k in cpos_dict:
+            # cpos:
+            # print(k)
+
+            # word:
+            # print(cpos_dict[k])
+            # print(' ')
+
+            word = cpos_dict[k]
+            w_pos = k
+
+            is_matchbeg = match_dict[k]
+            is_matchend = matchend_dict[k]
+
+            anchor_points_in = [
+                ai[0] for ai in anchor_points if tbl["df"][idx][str(ai[0])[-1]][w_pos]
+            ]
+
+            tupl = [word, w_pos, is_matchbeg, is_matchend, anchor_points_in]
+            # print(tupl)
+            # print(' ')
+
+            if is_matchbeg:
+                tupl.insert(0, '<span class="match-highlight">')
+            elif is_matchend:
+                tupl.insert(5, '</span>')
+
+            for i in anchor_points_in:
+
+                if int(i[-1]) % 2 == 0:
+                    tupl.insert(tupl.index(word), '<sub class="anchor">{s}</sub>'.format(s=i[-1]))
+                    if len(regions) > 0:
+                        tupl.insert(tupl.index(word), '<span class="anchor-highlight">')
+                elif int(i[-1]) % 2 != 0:
+                    if len(regions) > 0:
+                        tupl.insert(tupl.index(word) + 1, '</span>')
+                    tupl.insert(tupl.index(word) + 1, '<sub class="anchor">{s}</sub>'.format(s=i[-1]))
+
+            tupl.remove(w_pos)
+            tupl.remove(is_matchbeg)
+            tupl.remove(is_matchend)
+            tupl.remove(anchor_points_in)
+
+            for i in tupl:
+                tmp_2.append(i)
+
+        res = ' '.join(tmp_2)
+
+        # print(res)
+        # print(' ')
+
+        # schreibe 'res' in Pandas df
+
+        tbl["text"][idx] = res
+
+        new_tbl = open('table.json', 'w')
+        json.dump(tbl, new_tbl)
+        new_tbl.close()
+
+    df = pd.read_json('table.json')
+
+    display_columns = [x for x in df.columns if x not in [
+        'match', 'matchend', 'context_id', 'context', 'contextend', 'df'
+    ]]
+    cols = ["text"]
+    df[display_columns].to_html('showTable.html', escape=False, table_id="query-results", columns=cols)
+    # df[display_columns].to_html('showTable.html', escape=False, table_id="query-results")
+    file = codecs.open('./showTable.html', 'r', 'utf-8')
+    test = file.read()
+    return test
 
 
 # @bp.route('/<cwb_id>/<int:id>/show_result', methods=('GET', 'POST'))
