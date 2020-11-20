@@ -5,11 +5,15 @@ essential
 fundamental
 imperative
 important
+imp
 impt
+indispensable
 indispensible
 integral
 invaluable
 necessary
+pivotal
+required
 urgent
 valuable
 vital
