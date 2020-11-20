@@ -1,0 +1,19 @@
+# --- CQPY query file
+# anchors:
+#   corrections:
+#     '4': -1
+#   slots:
+#     '0':
+#     - 0
+#     - 1
+#     '1':
+#     - 3
+#     - 4
+#     '2': 2
+# meta:
+#   comment: null
+#   name: pattern16_entity_favour_1_over_policy
+#   pattern: 16
+# ---
+
+<np>@0[] @1[]*</np> <vp>[]* [pos_ner="VB[GPZ]" & lemma = $verbs_prefer & lemma != "want"] []*</vp>  "more"? @3:[::][word!="[,\.\!|\?]"]+ @4[::] (("and" "less" |"instead" "of" | "rather|more" "than") @2:[lemma=$nouns_policies | lemma = $nouns_values] | "over" @2:[lemma=$nouns_policies & lemma !="#?brexit"| lemma = $nouns_values])
