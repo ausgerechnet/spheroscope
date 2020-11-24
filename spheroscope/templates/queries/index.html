@@ -2,9 +2,8 @@
 
 {% block header %}
 <h1>{% block title %}queries{% endblock %}</h1>
-{% if g.user %}
 <a class="action" href="{{ url_for('queries.create') }}">new</a>
-{% endif %}
+<a class="action" href="">import</a>
 {% endblock %}
 
 {% block content %}
@@ -13,22 +12,11 @@
   <li>
     {{ query.name }} (pattern <a class="action" href="{{ url_for('patterns.pattern', id=query.pattern_id) }}">{{ query.pattern_id }}</a>)
     <span style="float:right;">
-      <a class="action" href="{{ url_for('queries.update', id=query.id) }}">edit</a> – 
-      <a class="action" href="{{ url_for('queries.run_cmd', id=query.id) }}">run</a> –
+      <a class="action" href="{{ url_for('queries.update', id=query.id) }}">edit</a> –
+      <a class="action" href="{{ url_for('queries.run_cmd', id=query.id) }}" onclick="$('#loading').show();">run</a> –
+      <a class="action" href="{{ url_for('queries.index2') }}" onclick="$('#loading').show();">matches</a>
     </span>
   </li>
   {% endfor %}
 </ul>
 {% endblock %}
-
-{#
-<!-- <i>(by {{ query['username'] }} -->
-<!--   on {{ query['modified'].strftime('%Y-%m-%d') }}) -->
-<!-- </i> -->
-<!-- (<a class="action" href="{{ url_for('patterns.show_pattern', id=query['pattern'])}}"> -->
-<!--   pattern {{ query['pattern'] }} -->
-<!--     </a>) -->
-<!-- <a class="action" href="{{ -->
-<!--       			url_for('queries.show_result', id=query['id']) -->
-<!--       			}}">result</a> -->
-#}
