@@ -1,4 +1,4 @@
-# --- # CQPY query file
+# --- CQPY query file
 # anchors:
 #   corrections:
 #     '1': -1
@@ -16,4 +16,4 @@
 #   pattern: 20
 # ---
 
-@0[::] <np>[]*[pos_simple="[NZ@#]"][]*</np> @1:[::] (/region[advp])* [lemma= $verbs_communicate_publish| lemma= $verbs_lying] [lemma= $nouns_lies] "about|that" @2[::]/region[np] [word != "[\.\?\!\,]"]* @3[::]
+@0[::]([lemma = $nouns_person_common | lemma = $nouns_person_origin | lemma = $nouns_person_negative | lemma = $nouns_person_profession | lemma = $nouns_person_support |pos_ark = "[@OZ#^]" & lemma != "it"] | /region[np])+ @1:[::] ([pos_ner="R" & word != "not"])* [lemma= $verbs_communicate_publish| lemma= $verbs_lying] [pos_ark="J"]* [lemma= $nouns_lies] "about|that" @2[::]/region[np] [word != "[\.\?\!\,]"]* @3[::]

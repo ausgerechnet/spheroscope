@@ -21,8 +21,8 @@ derail
 destroy
 detonate
 devastate
-dismantle
 disintegrate
+dismantle
 dissolve
 distroy
 eliminate
@@ -36,6 +36,7 @@ exterminate
 extinguish
 flood
 fracture
+harm
 hijack
 hurt
 implode
@@ -68,7 +69,6 @@ sweep
 tear
 terminate
 thrash
-turn
 vaporise
 vaporize
 wreck
