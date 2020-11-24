@@ -1,0 +1,16 @@
+# --- CQPY query file
+# anchors:
+#   corrections:
+#     '1': -1
+#   slots:
+#     '0':
+#     - 0
+#     - 1
+#     '1': 2
+# meta:
+#   comment: null
+#   name: pattern3_entity_for_1_exclamation
+#   pattern: 3
+# ---
+
+@0:[lbound(tweet)] [lemma = $nouns_person_common | lemma = $nouns_person_negative | lemma = $nouns_person_profession | lemma = $nouns_person_support |pos_ark = "[@OZ#^]" & lemma != "it"]+ @1:[::] (/region[advp])* "for" (@2:[lemma = $nouns_policies | lemma = $nouns_agenda_p3 | lemma = $nouns_values]) "!+"

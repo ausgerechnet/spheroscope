@@ -1,0 +1,12 @@
+# --- CQPY query file
+# anchors:
+#   corrections: {}
+#   slots:
+#     '0': 0
+# meta:
+#   comment: null
+#   name: pattern20_another_entity_lie
+#   pattern: 20
+# ---
+
+"another|more" @0:[lemma = $nouns_person_common | lemma = $nouns_person_negative | lemma = $nouns_person_profession | lemma = $nouns_person_support | pos_ark="[NZ^#@]" & lemma != "#?brexit"] [lemma=$nouns_lies & lemma != "story"]
