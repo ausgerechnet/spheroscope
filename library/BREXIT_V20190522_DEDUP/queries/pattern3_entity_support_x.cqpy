@@ -1,18 +1,16 @@
-# --- # CQPY query file
+# --- CQPY query file
 # anchors:
 #   corrections:
-#     '3': -1
+#     '2': -1
 #   slots:
-#     '0':
-#     - 0
-#     - 1
+#     '0': 0
 #     '1':
+#     - 1
 #     - 2
-#     - 3
 # meta:
 #   comment: null
 #   name: pattern3_entity_support_x
 #   pattern: 3
 # ---
 
-<np>@0[] @1[]*</np> (/region[advp])* <vp>[]* [lemma = $verbs_prefer]</vp> @2[::] [lemma=$nouns_policies] @3[::]
+@0:[lemma = $nouns_person_common | lemma = $nouns_person_origin | lemma = $nouns_person_negative | lemma = $nouns_person_profession | lemma = $nouns_person_support |pos_ark = "[@OZ#^]" & lemma != "it"]+ (/region[advp])* <vp>[]* [lemma = $verbs_prefer]</vp> @1[::] [lemma=$nouns_policies] @2[::]

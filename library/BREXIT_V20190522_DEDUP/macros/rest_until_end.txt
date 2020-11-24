@@ -1,0 +1,5 @@
+MACRO rest_until_end(0)
+(
+[]* [word="htt.+|\.|,|\?|\!|\(|\)" | rbound(tweet)]
+)
+;

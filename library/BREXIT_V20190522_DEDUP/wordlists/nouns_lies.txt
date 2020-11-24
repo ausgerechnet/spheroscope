@@ -22,8 +22,6 @@ fakenews
 fakery
 falsehood
 falsity
-fearmongering
-fear-mongering
 hogwash
 horseshit
 garbage
@@ -31,14 +29,7 @@ gossip
 lie
 misinfo
 misinformation
-misrepresentation
-non-sense
-nonesense
-nonsense
 rubbish
-rumor
-rumour
-scaremongering
 shit
 sh*t
 story

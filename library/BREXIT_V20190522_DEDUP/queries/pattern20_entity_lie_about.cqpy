@@ -1,4 +1,4 @@
-# --- # CQPY query file
+# --- CQPY query file
 # anchors:
 #   corrections:
 #     '1': -1
@@ -16,4 +16,4 @@
 #   pattern: 20
 # ---
 
-@0[::] <np>[]*[pos_simple="[NZ@#]"][]*</np> @1[::] (/region[advp])* [lemma= $verbs_lying] "about|that" @2[::]/region[np] [word != "[\.\?\!\,]"]* @3[::]
+@0[::] <np>[]*[pos_ark="[NZ@#]"][]*</np> @1[::] (/region[advp])* [lemma= $verbs_lying] ([pos_ark="[^#ZNO]"]){,2} "about|that" @2[::]/region[np] [word != "[\.\?\!\,]"]* @3[::]

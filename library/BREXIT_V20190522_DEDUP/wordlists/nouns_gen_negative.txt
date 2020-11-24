@@ -1,3 +1,4 @@
+
 armageddon
 chaos
 collapse
@@ -12,10 +13,10 @@ devastation
 disaster
 downturn
 end
-hardship
-havoc
 failure
 flood
+hardship
+havoc
 instability
 loss
 meltdown
@@ -26,6 +27,5 @@ scaremongering
 shock
 trouble
 uncertainty
-untruth
 violence
 war

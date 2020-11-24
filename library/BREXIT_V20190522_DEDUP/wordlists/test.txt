@@ -1,0 +1,14 @@
+# --- CQPY query file
+# anchors:
+#   corrections: {}
+#   slots: {}
+# meta:
+#   comment: null
+#   name: test
+#   pattern: -1
+# ---
+
+@0:([pos_ark="[NZ@H]"] "'?s" | [pos_ner="PRP.?"]) 
+@1:[lemma=$nouns_agenda_p3] [word="for|to"] 
+@2:[pos_ark="V"&pos_ner="V.+"]
+[word!="htt.+|\.|,|\?|\!|\(|\)"]* @3:[::]
