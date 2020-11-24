@@ -13,6 +13,10 @@ from .auth import login_required
 from .corpora import read_config, init_corpus
 from .database import Query
 
+import re
+import json
+from pandas import DataFrame
+
 bp = Blueprint('queries', __name__, url_prefix='/queries')
 
 
@@ -67,6 +71,14 @@ def run(id, cwb_id):
 def index():
     queries = Query.query.order_by(Query.name).all()
     return render_template('queries/index.html',
+                           queries=queries)
+
+
+@bp.route('/index2')
+@login_required
+def index2():
+    queries = Query.query.order_by(Query.name).all()
+    return render_template('queries/index2.html',
                            queries=queries)
 
 
@@ -143,6 +155,7 @@ def delete_cmd(id):
 @login_required
 def run_cmd(id):
 
+    beta = request.args.get('beta', False)
     cwb_id = session['corpus']['resources']['cwb_id']
     result = run(id, cwb_id)
 
@@ -153,74 +166,80 @@ def run_cmd(id):
         'match', 'matchend', 'context_id', 'context', 'contextend', 'df'
     ]]
 
-    return result[display_columns].to_html(escape=False)
+    if not beta:
+        return result[display_columns].to_html(escape=False)
 
-    # if show:
-    #     return redirect(url_for('queries.show_result', id=id))
+    else:
 
+        tojson = result.to_json()
+        tbl = json.loads(tojson)
 
-# @bp.route('/<cwb_id>/<int:id>/show_result', methods=('GET', 'POST'))
-# @login_required
-# def show_result(cwb_id, id):
+        for idx in tbl["text"]:
 
-#     # load results
-#     current_app.logger.info("taking result from %s" % path_result)
-#     with gzip.open(path_result, "rt") as f:
-#         result = json.loads(f.read())
+            regions = []
 
-#     # run fillform
-#     if "FILLFORM" in current_app.config.keys():
-#         path_patterns = "instance-stable/patterns.csv"
-#         fillform_result = subprocess.run("{} table {} {}".format(
-#             current_app.config['FILLFORM'], path_patterns, path_result
-#         ), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-#         errors = fillform_result.stderr.decode("utf-8")
-#         if len(errors) > 0:
-#             current_app.logger.warning(
-#                 "%s says: %s" % (current_app.config['FILLFORM'], errors)
-#             )
-#         table = fillform_result.stdout.decode("utf-8")
-#     else:
-#         table = None
+            for col in tbl:
+                if re.findall(r'\d\_\w+', col):
+                    regions.append(col)
 
-#     # render result
-#     return render_template('queries/show_result.html',
-#                            result=result,
-#                            table=table)
+            # txt = (tbl["text"][idx]).lower()  # <- pure Tweet
+            cpos_dict = tbl["df"][idx]["word"]
+            match_dict = tbl["df"][idx]["match"]
+            matchend_dict = tbl["df"][idx]["matchend"]
 
-# def run_all_queries():
+            # temporary list
+            tmp_2 = []
+            # all of the possible anchors for this query
+            anchor_points = []
 
-#     from ccc.concordances import process_argmin_file
-#     corpus = init_corpus(current_app.config)
+            for i in tbl["df"][idx]:
+                if re.findall(r'\b\d+\b', i):
+                    anchor_points.append(["a" + str(i)])
 
-#     paths_queries = sorted(glob(
-#         os.path.join(current_app.config['LIB_PATH'], "queries", "*.query")
-#     ))
-#     current_app.logger.info("running all queries")
-#     for p in paths_queries:
-#         current_app.logger.info("path: " + p)
-#         dir_result = current_app.config['RESULTS_PATH']
-#         if not os.path.isdir(dir_result):
-#             os.makedirs(dir_result)
-#         query_name = p.split("/")[-1].split(".")[0]
-#         path_result = os.path.join(dir_result, query_name + ".query.json.gz")
-#         try:
-#             result = process_argmin_file(
-#                 corpus, p, p_show=['lemma'], context=None,
-#                 s_break=current_app.config['S_BREAK'], match_strategy='longest'
-#             )
-#         except:
-#             current_app.logger.error('unexpected error in path "%s"' % p)
-#             result = {'error': str(sys.exc_info()[0])}
-#         with gzip.open(path_result, 'wt') as f_out:
-#             json.dump(result, f_out, indent=4)
+            tupl = []
 
+            for k in cpos_dict:
 
-# @click.command('run-all-queries')
-# @with_appcontext
-# def run_all_queries_command():
-#     run_all_queries()
+                word = cpos_dict[k]
+                w_pos = k
 
+                is_matchbeg = match_dict[k]
+                is_matchend = matchend_dict[k]
 
-# def add_run_queries(app):
-#     app.cli.add_command(run_all_queries_command)
+                anchor_points_in = [
+                    ai[0] for ai in anchor_points if tbl["df"][idx][str(ai[0])[-1]][w_pos]
+                ]
+
+                tupl = [word, w_pos, is_matchbeg, is_matchend, anchor_points_in]
+
+                if is_matchbeg:
+                    tupl.insert(0, '<span class="match-highlight">')
+                elif is_matchend:
+                    tupl.insert(5, '</span>')
+
+                for i in anchor_points_in:
+
+                    if int(i[-1]) % 2 == 0:
+                        tupl.insert(tupl.index(word), '<sub class="anchor">{s}</sub>'.format(s=i[-1]))
+                        if len(regions) > 0:
+                            tupl.insert(tupl.index(word), '<span class="anchor-highlight">')
+                    elif int(i[-1]) % 2 != 0:
+                        if len(regions) > 0:
+                            tupl.insert(tupl.index(word) + 1, '</span>')
+                        tupl.insert(tupl.index(word) + 1, '<sub class="anchor">{s}</sub>'.format(s=i[-1]))
+
+                tupl.remove(w_pos)
+                tupl.remove(is_matchbeg)
+                tupl.remove(is_matchend)
+                tupl.remove(anchor_points_in)
+
+                for i in tupl:
+                    tmp_2.append(i)
+
+            res = ' '.join(tmp_2)
+
+            tbl["text"][idx] = res
+
+        df = DataFrame.from_dict(tbl)
+        display_columns = ['tweet_id', 'text']
+        return df[display_columns].to_html(escape=False, table_id="query-results")

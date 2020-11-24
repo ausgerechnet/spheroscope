@@ -1,41 +1,44 @@
 {% extends 'base.html' %}
 
 {% block header %}
-<!-- <h1>{% block title %}Overview{% endblock %}</h1> -->
 {% endblock %}
 
 {% block content %}
-<ul>
-  <li>
-    <a class="action" href="{{ url_for('corpora.choose') }}">
-      corpora
-    </a>
-  <li>
-    <a class="action" href="{{ url_for('wordlists.index') }}">
-      wordlists
-    </a>
-  <li>
-    <a class="action" href="{{ url_for('macros.index') }}">
-      macros
-    </a>
-  <li>
-    <a class="action" href="{{ url_for('queries.index') }}">
-      queries
-    </a>
-  <li>
-    <a class="action" href="{{ url_for('patterns.index') }}">
-      patterns
-    </a>
-  <li>
-    <a class="action" href="{{ url_for('newqueries.index') }}">
-      Yuliya's queries
-    </a>
-</ul>
-{% endblock %}
+<div id="wrapper">
+  <div id="left">
+    <h3>library</h3>
+    <ul>
+      <li>
+	<a class="action" href="{{ url_for('queries.index') }}">
+	  queries
+	</a>
+      <li>
+	<a class="action" href="{{ url_for('wordlists.index') }}">
+	  wordlists
+	</a>
+      <li>
+	<a class="action" href="{{ url_for('macros.index') }}">
+	  macros
+	</a>
+      <li>
+	<a class="action" href="{{ url_for('patterns.index') }}">
+	  patterns
+	</a>
+    </ul>
+  </div>
 
-{#
-<!-- <li> -->
-<!--   <a class="action" href="{{ url_for('patterns.index') }}"> -->
-<!--     patterns -->
-<!--   </a> -->
-#}
+  <div id="right">
+    <h3>settings</h3>
+    <ul>
+      <li>
+	<a class="action" href="{{ url_for('corpora.choose') }}">
+	  corpora
+	</a>
+      <li>
+	<a class="action" href="">
+	  users
+	</a>
+    </ul>
+  </div>
+</div>
+{% endblock %}

@@ -225,6 +225,12 @@ class Query(db.Model):
 
         query = cqpy_load(path)
 
+        if query is None:
+            current_app.logger.error(
+                "could not load query in path %s" % path
+            )
+            return None
+
         return Query(
             name=query['meta']['name'],
             pattern_id=query['meta']['pattern'],
@@ -355,37 +361,6 @@ def init_db():
     db.session.commit()
 
 
-def import_library():
-
-    # wordlists
-    paths = glob(os.path.join("library", "**", "wordlists", "*.txt"), recursive=True)
-    for p in paths:
-        wl = WordList().load(p)
-        wl.path = wl.path.replace("library", "instance")
-        wl.user_id = 1          # admin
-        wl.write()
-
-    # macros
-    paths = glob(os.path.join("library", "**", "macros", "*.txt"), recursive=True)
-    for p in paths:
-        macro = Macro().load(p)
-        macro.path = macro.path.replace("library", "instance")
-        macro.user_id = 1       # admin
-        macro.write()
-
-    # queries
-    paths = glob(os.path.join("library", "**", "queries", "*.cqpy"), recursive=True)
-    for p in paths:
-        query = Query().load(p)
-        query.path = query.path.replace("library", "instance")
-        query.user_id = 1       # admin
-        query.write()
-
-    # patterns
-    path = os.path.join("library", "patterns.csv")
-    read_patterns(path)
-
-
 def read_patterns(path):
 
     # read all the patterns in the csv
@@ -416,6 +391,37 @@ def read_patterns(path):
     )
     db.session.add(pattern)
     db.session.commit()
+
+
+def import_library():
+
+    # wordlists
+    paths = glob(os.path.join("library", "**", "wordlists", "*.txt"), recursive=True)
+    for p in paths:
+        wl = WordList().load(p)
+        wl.path = wl.path.replace("library", "instance")
+        wl.user_id = 1          # admin
+        wl.write()
+
+    # macros
+    paths = glob(os.path.join("library", "**", "macros", "*.txt"), recursive=True)
+    for p in paths:
+        macro = Macro().load(p)
+        macro.path = macro.path.replace("library", "instance")
+        macro.user_id = 1       # admin
+        macro.write()
+
+    # queries
+    paths = glob(os.path.join("library", "**", "queries", "*.cqpy"), recursive=True)
+    for p in paths:
+        query = Query().load(p)
+        query.path = query.path.replace("library", "instance")
+        query.user_id = 1       # admin
+        query.write()
+
+    # patterns
+    path = os.path.join("library", "patterns.csv")
+    read_patterns(path)
 
 
 #########################################
