@@ -33,11 +33,11 @@ Configure the app via `cfg.py` in the app folder. You can find an
 [example config file](cfg_example.py) in the repository.
 
 Set the `REGISTRY_PATH` to your CWB registry and `CACHE_PATH` to some
-directory where you have appropriate rights (e.g. `/tmp/spheroscope`).
+directory where you have appropriate rights.
 
-Link to a stable version of
-[fillform](https://gitlab.com/mgttlinger/fillform/-/jobs) via
-`FILLFORM`. Don't provide this key if you do not want to use fillform.
+<!-- Link to a stable version of -->
+<!-- [fillform](https://gitlab.com/mgttlinger/fillform/-/jobs) via -->
+<!-- `FILLFORM`. Don't provide this key if you do not want to use fillform. -->
 
 You can then run
 
