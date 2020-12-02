@@ -25,3 +25,11 @@
     border: 1px solid black;
     height: 300px;
 }
+
+.anchor-highlight:hover {
+    background-color: orange;
+}
+
+.anchor {
+    color: blue;
+}

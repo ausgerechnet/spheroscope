@@ -151,16 +151,45 @@ def run_cmd(id):
     # get result
     cwb_id = session['corpus']['resources']['cwb_id']
     result = run(id, cwb_id)
-    #print(result['df'].iloc[1])
+
+    display_columns = [x for x in result.columns if x not in [
+        'match', 'matchend', 'context_id', 'context', 'contextend'
+    ]]
+
+    result[display_columns].to_html('showTableTest.html', escape=False, columns=["text","df"])
+
+    # proper df display
+    # and it is an actual pandas dataframe
+    # so lets convert it into a str
+    #print(str(result['df'].iloc[0]))
+    #print(type(result['df'].iloc[0]))
+
+    #delete_this = result['df'].iloc[0]
+    #delete_this = delete_this.astype('string')
+    #print(type(delete_this))
 
     result.to_json(r'table.json')
+
     # this one is for testing
     result.to_json(r'tableresult.json')
 
     tojson = result.to_json()
     tbl = json.loads(tojson)
 
+    tweet_idx = 0
+    meta_dict = {}
+
     for idx in tbl["text"]:
+
+        # ???
+        # mit JavaScript aus JSON herauslesen
+        # Metadaten mit tweet_idx hinzufügen
+        # Tweet verlinken mit text idx (hier idx)
+        # ???
+
+        # Metadaten => result['df'].iloc[tweet_idx]
+        df_to_str = str(result['df'].iloc[tweet_idx])
+        meta_dict[idx] = df_to_str
 
         regions = []
 
@@ -180,15 +209,15 @@ def run_cmd(id):
         # cpos:
 
         cpos_dict = tbl["df"][idx]["word"]
-        cpos = list(tbl["df"][idx]["word"].keys())
-        cpos_words = list(tbl["df"][idx]["word"].values())
+        #cpos = list(tbl["df"][idx]["word"].keys())
+        #cpos_words = list(tbl["df"][idx]["word"].values())
         # print(cpos_dict)
         # print(' ')
 
         # beginning and end positions of the match:
 
-        match = list(tbl["df"][idx]["match"].values())
-        matchend = list(tbl["df"][idx]["matchend"].values())
+        #match = list(tbl["df"][idx]["match"].values())
+        #matchend = list(tbl["df"][idx]["matchend"].values())
 
         match_dict = tbl["df"][idx]["match"]
         matchend_dict = tbl["df"][idx]["matchend"]
@@ -206,15 +235,13 @@ def run_cmd(id):
                 anchor_points.append(["a" + str(i)])
         # print(anchor_points)
 
-        tupl = []
-
         for k in cpos_dict:
+
             # cpos:
             # print(k)
 
             # word:
             # print(cpos_dict[k])
-            # print(' ')
 
             word = cpos_dict[k]
             w_pos = k
@@ -252,8 +279,9 @@ def run_cmd(id):
             for i in tupl:
                 tmp_2.append(i)
 
-        tmp_2.append("<a href='{{ url_for('newqueries.show_meta' }}' class='show-meta'><sub>[more]</sub></a>")
-
+        html_string = '<sub class="show-meta"><button class="show-meta-button">show metadata</button></sub>'
+        tmp_2.append(html_string)
+        tweet_idx += 1
         res = ' '.join(tmp_2)
 
         #print(res)
@@ -267,26 +295,52 @@ def run_cmd(id):
         json.dump(tbl, new_tbl)
         new_tbl.close()
 
+    with open('tweet_metadata.js','w') as md:
+        json.dump(meta_dict, md)
+
     df = pd.read_json('table.json')
 
     display_columns = [x for x in df.columns if x not in [
-        'match', 'matchend', 'context_id', 'context', 'contextend', 'df'
+        'match', 'matchend', 'context_id', 'context', 'contextend'
     ]]
+
     cols = ["text"]
+
     df[display_columns].to_html('showTable.html', escape=False, table_id="query-results", columns=cols)
-    df[display_columns].to_html('showTable.html', escape=False, table_id="query-results")
     file = codecs.open('./showTable.html', 'r', 'utf-8')
+
     test = file.read()
+
     return test
 
-@bp.route('/<int:id>/meta', methods=('GET', 'POST'))
+#
+#
+#
+#
+#
+#
+#
+#
+#
+
+@bp.route('/meta', methods=('GET', 'POST'))
 @login_required
 def show_meta(loc):
 
+    # loc steht für ausgewählten Tweet
+
     # match und matchend als index für jede zeile
 
-    df = pd.read_html('./showTable.html')[0]
+    # nimmt erstellte Tablelle
 
-    df['df'].iloc[loc].to_html('./meta.html', escape=False, table_id="meta-df")
+    df = pd.read_html('./showTableTest.html')[0]
 
-    return render_template('newqueries/meta.html')
+    # extrahiert Zeile DF
+
+    # gibt den String der Metadaten Tablette zurück
+
+    #df['df'].iloc[loc].to_html('./meta.html', escape=False, table_id="meta-df")
+
+    current_md_table = str(df['df'].iloc[loc])
+
+    return render_template('meta.html', display_table=current_md_table)
