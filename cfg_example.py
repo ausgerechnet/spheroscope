@@ -10,6 +10,6 @@ class DevConfig:
 
     SESSION_COOKIE_SECURE = True
 
-    REGISTRY_PATH = "/path/to/your/cwb/registry"
+    REGISTRY_PATH = "/usr/local/share/cwb/registry/"
     CACHE_PATH = "/tmp/spheroscope-cache"
     # FILLFORM = "fillform-static"
