@@ -17,4 +17,4 @@
 #   pattern: 16
 # ---
 
-@0:[lemma = $nouns_person_common | lemma = $nouns_person_origin | lemma = $nouns_person_negative | lemma = $nouns_person_profession | lemma = $nouns_person_support |pos_ark = "[@OZ#^]" & lemma != "it"]+ "will|would" [lemma = "gladly|readily|happily|eagerly"]? [lemma = "exchange|swap|switch|replace|trade"]  @2[::]([pos_ark="[NZO^#@]"]| /region[np] | /region[pp])+ @3[::] "against|for|over|with" @4:[::]([pos_ark="[NZO^#@]"]| /region[np] | /region[pp])+ @5[::]
+@0:[lemma = $nouns_person_common | lemma = $nouns_person_origin | lemma = $nouns_person_negative | lemma = $nouns_person_profession | lemma = $nouns_person_support |pos_ark = "[@OZ#^]" & lemma != "it"]+ "will|would" ([lemma = "gladly|readily|happily|eagerly"]? | [lemma=$verbs_prefer] "to" ) [lemma = "exchange|swap|switch|replace|trade"]  @2[::]([pos_ark="[NZO^#@]"]| /region[np] | /region[pp])+ @3[::] "against|for|over|with" @4:[::]([pos_ark="[NZO^#@]"]| /region[np] | /region[pp])+ @5[::]
