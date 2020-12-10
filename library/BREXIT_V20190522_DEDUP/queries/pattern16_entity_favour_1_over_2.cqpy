@@ -3,9 +3,12 @@
 #   corrections:
 #     '4': -1
 #   slots:
-#     '1':
+#     '0':
 #     - 3
 #     - 4
+#     '1':
+#     - 0
+#     - 1
 #     '2': 2
 # meta:
 #   comment: null
