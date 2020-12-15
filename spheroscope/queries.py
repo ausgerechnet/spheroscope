@@ -85,7 +85,7 @@ def matches(id, name):
     query_table = run_cmd(query_id, beta)
     frequency_table = frequency_table_list(query_id)
     meta_data = meta_data_list(query_id)
-    selected_query = query(query_id)
+    selected_query = select_query(query_id)
     return render_template('queries/matches.html', query_table=query_table, meta_data=meta_data, query_name=query_name,
                            frequency_table=frequency_table, selected_query=selected_query)
 
@@ -163,7 +163,7 @@ def delete_cmd(id):
 
 #@bp.route('/<int:id>/query', methods=('GET', 'POST'))
 #@login_required
-def query(id):
+def select_query(id):
 
     shown_query = Query.query.filter_by(id=id).first()
     return render_template('queries/query.html',
