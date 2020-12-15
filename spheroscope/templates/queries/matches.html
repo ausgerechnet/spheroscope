@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+
+  </head>
+
+  <body>
+
+    {% extends 'base.html' %}
+    
+    {% block header %}
+    <h1>{% block title %}queries{% endblock %}</h1>
+    {% endblock %}
+
+    {% block content %}
+
+
+
+        <div id="top-section">
+
+          <div id="select-query">
+
+              <a id="macros" href="{{ url_for('macros.index') }}">macros</a>
+
+              <section id="show-query">{{ selected_query|safe }}</section>
+
+          </div>
+
+          <div id="editing-window">{{ meta_data|safe }}{{ frequency_table|safe }}</div>
+
+        </div>
+
+        <br>
+
+        <div id="table-window">
+
+          <div id="show-query-results">{{ query_table|safe }}</div>
+
+        </div>
+
+        <script>
+
+            const resultsContainer = document.querySelector("#show-query-results");
+            const selectedQuery = document.querySelector("#select-query");
+            const table = document.querySelector("#query-results");
+
+        </script>
+    {% endblock %}
+
+    <script src="{{ url_for('static', filename='queryscript.js') }}" type="text/javascript"></script>
+
+  </body>
+</html>
+

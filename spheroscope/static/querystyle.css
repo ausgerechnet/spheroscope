@@ -4,7 +4,8 @@
 }
 
 #select-query{
-    overflow-y: scroll;
+    overflow-y: auto;
+    overflow-x: auto;
     border: 1px solid black;
     background: white;
     width: 50%;
@@ -36,4 +37,8 @@
 
 .anchor {
     color: blue;
+}
+
+#query-formula {
+    color: navy;
 }

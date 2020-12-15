@@ -66,6 +66,7 @@ def run(id, cwb_id):
 ######################################################
 # ROUTING ############################################
 ######################################################
+
 @bp.route('/')
 @login_required
 def index():
@@ -74,12 +75,19 @@ def index():
                            queries=queries)
 
 
-@bp.route('/index2')
+@bp.route('/<int:id>/<name>/matches', methods=('GET', 'POST'))
 @login_required
-def index2():
-    queries = Query.query.order_by(Query.name).all()
-    return render_template('queries/index2.html',
-                           queries=queries)
+def matches(id, name):
+
+    beta = request.args.get('beta', False)
+    query_id = id
+    query_name = name
+    query_table = run_cmd(query_id, beta)
+    frequency_table = frequency_table_list(query_id)
+    meta_data = meta_data_list(query_id)
+    selected_query = query(query_id)
+    return render_template('queries/matches.html', query_table=query_table, meta_data=meta_data, query_name=query_name,
+                           frequency_table=frequency_table, selected_query=selected_query)
 
 
 @bp.route('/create', methods=('GET', 'POST'))
@@ -117,7 +125,9 @@ def create():
 @bp.route('/<int:id>/update', methods=('GET', 'POST'))
 @login_required
 def update(id):
+
     query = Query.query.filter_by(id=id).first()
+
     if request.method == 'POST':
 
         query = Query(
@@ -151,16 +161,27 @@ def delete_cmd(id):
     return redirect(url_for('queries.index'))
 
 
-@bp.route('/<int:id>/run', methods=('GET', 'POST'))
-@login_required
-def run_cmd(id):
+#@bp.route('/<int:id>/query', methods=('GET', 'POST'))
+#@login_required
+def query(id):
 
-    beta = request.args.get('beta', False)
+    shown_query = Query.query.filter_by(id=id).first()
+    return render_template('queries/query.html',
+                           shown_query=shown_query)
+
+
+@bp.route('/<int:id>/run', methods=('GET', 'POST'))
+def run_cmd(id, beta):
+
+    #beta = request.args.get('beta', False)
     cwb_id = session['corpus']['resources']['cwb_id']
     result = run(id, cwb_id)
+    #print(beta)
 
     if result is None:
         return 'query does not have any matches'
+
+    #print(str(result["0_lemma"].value_counts()))
 
     display_columns = [x for x in result.columns if x not in [
         'match', 'matchend', 'context_id', 'context', 'contextend', 'df'
@@ -175,6 +196,9 @@ def run_cmd(id):
         tbl = json.loads(tojson)
 
         for idx in tbl["text"]:
+
+            # Metadaten => result['df'].iloc[tweet_idx]
+            # df_to_str = str(result['df'].iloc[tweet_idx])
 
             regions = []
 
@@ -195,8 +219,6 @@ def run_cmd(id):
             for i in tbl["df"][idx]:
                 if re.findall(r'\b\d+\b', i):
                     anchor_points.append(["a" + str(i)])
-
-            tupl = []
 
             for k in cpos_dict:
 
@@ -242,4 +264,66 @@ def run_cmd(id):
 
         df = DataFrame.from_dict(tbl)
         display_columns = ['tweet_id', 'text']
-        return df[display_columns].to_html(escape=False, table_id="query-results")
+        return df.to_html(escape=False, table_id="query-results", columns=display_columns)
+
+
+def meta_data_list(id):
+
+    cwb_id = session['corpus']['resources']['cwb_id']
+    result = run(id, cwb_id)
+
+    if result is None:
+        return 'query does not have any matches'
+
+    tojson = result.to_json()
+    tbl = json.loads(tojson)
+    tweet_idx = 0
+    meta_dict = {}
+
+    for idx in tbl["text"]:
+        df_to_str = str(result['df'].iloc[tweet_idx])
+        meta_dict[idx] = df_to_str
+        tweet_idx += 1
+
+    md = json.dumps(meta_dict)
+
+    return md
+
+
+def frequency_table_list(id):
+
+    # df['x_lemma'].value_counts()
+    # x steht für eine Region z.B. vom Ankerpunkt 0 bis 1
+
+    cwb_id = session['corpus']['resources']['cwb_id']
+    result = run(id, cwb_id)
+
+    if result is None:
+        return 'query does not have any matches'
+
+    tojson = result.to_json()
+    tbl = json.loads(tojson)
+    frequency_dict = {}
+
+    #print(result["0_lemma"].value_counts())
+
+    for idx in tbl["text"]:
+
+        # Regions
+
+        regions = []
+        freq_tables = {}
+
+        for col in tbl:
+            if re.findall(r'\d\_\w+', col):
+                regions.append(col)
+
+        for region in regions:
+            freq_tables[region] = (str(result[region].value_counts()))
+
+        frequency_dict[idx] = freq_tables
+
+    freq = json.dumps(frequency_dict)
+    #print(frequency_dict)
+
+    return freq

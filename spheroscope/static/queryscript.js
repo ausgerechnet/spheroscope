@@ -1,35 +1,39 @@
-var runTest = document.querySelectorAll(".run-test");
-var editQuery = document.querySelectorAll(".edit-test");
-var newQuery = document.querySelectorAll("#new-test");
-var showMeta = document.querySelectorAll('.show-meta')
-// var tableResult = document.getElementById("#query-results");
+//const run = document.querySelector(".run");
+//const editQuery = document.querySelector(".edit");
+//const newQuery = document.querySelector("#new");
+//const showMeta = document.querySelector('.show-meta')
+// const tableResult = document.querySelector("#query-results");
 
+/*
 $(document).ready(function(){
 
-   $(runTest).click(function(){
+   $(run).click(function(){
        $('#show-query-results').load($(this).attr('href'));
        return false;
    });
 
 });
+*/
 
-$(document).ready(function(){
+
+
+/*$(document).ready(function(){
 
    $(editQuery).click(function(){
        $('#more-window').load($(this).attr('href'));
        return false;
    });
-});
+});*/
 
-$(document).ready(function(){
+/*$(document).ready(function(){
 
    $(newQuery).click(function(){
        $('#more-window').load($(this).attr('href'));
        return false;
    });
 
-});
-
+});*/
+/*
 $(document).ready(function(){
 
    $(showMeta).click(function(){
@@ -38,7 +42,7 @@ $(document).ready(function(){
    });
 
 });
-
+*/
 
 
 

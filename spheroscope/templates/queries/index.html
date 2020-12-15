@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 
+<script>
+
+</script>
+
 {% block header %}
 <h1>{% block title %}queries{% endblock %}</h1>
 <a class="action" href="{{ url_for('queries.create') }}">new</a>
@@ -7,16 +11,19 @@
 {% endblock %}
 
 {% block content %}
-<ul>
-  {% for query in queries %}
-  <li>
-    {{ query.name }} (pattern <a class="action" href="{{ url_for('patterns.pattern', id=query.pattern_id) }}">{{ query.pattern_id }}</a>)
-    <span style="float:right;">
-      <a class="action" href="{{ url_for('queries.update', id=query.id) }}">edit</a> –
-      <a class="action" href="{{ url_for('queries.run_cmd', id=query.id) }}" onclick="$('#loading').show();">run</a> –
-      <a class="action" href="{{ url_for('queries.index2') }}" onclick="$('#loading').show();">matches</a>
-    </span>
-  </li>
-  {% endfor %}
-</ul>
+    <ul>
+      {% for query in queries %}
+
+      <li>
+        {{ query.name }} (pattern <a class="action" href="{{ url_for('patterns.pattern', id=query.pattern_id) }}">{{ query.pattern_id }}</a>)
+        <span style="float:right;">
+          <a class="action" href="{{ url_for('queries.update', id=query.id) }}" class="edit">edit</a> –
+          <a class="action" href="{{ url_for('queries.matches', id=query.id, name=query.name, beta=True) }}" onclick="$('#loading').show();"
+             class="run">run</a>
+        </span>
+      </li>
+
+      {% endfor %}
+    </ul>
+    <script src="{{ url_for('static', filename='queryscript.js') }}" type="text/javascript"></script>
 {% endblock %}

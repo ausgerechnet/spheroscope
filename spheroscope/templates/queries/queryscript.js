@@ -1,9 +1,9 @@
-var runTest = document.querySelectorAll("#run-test");
+const run = document.querySelectorAll("#run");
 
 
-for(var i=0; i < runTest.length; i++){
+for(let i=0; i < run.length; i++){
 
-    runTest[i].addEventListener("click", function(){
+    run[i].addEventListener("click", function(){
         console.log("yes");
         $("#show-query-results").load("{{ url_for('newqueries.run_cmd', id=query['id']) }}");
     });

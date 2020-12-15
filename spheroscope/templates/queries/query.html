@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block login %}{% endblock %}
+
+{% block header %}
+<h1>
+  {% block title %}query "{{ shown_query.name }}"{% endblock %}
+</h1>
+{% endblock %}
+  
+{% block content %}
+
+{#<form method="post">#}
+<ul>
+    <li> pattern <strong>{{ request.form['pattern'] or shown_query.pattern_id }}</strong> (-1 .. 32)
+        <br>
+      <span style="float:right; overflow-x:auto;"> \( {{ shown_query.pattern.preamble }} {{ shown_query.pattern.template }} \)</span>
+    <li>cqp<br><p id="query-formula">{{ request.form['query'] or shown_query.cqp }}</p>
+    <li>slots <strong>{{ request.form['slots'] or shown_query.slots }}</strong> (dict: {slot: [start, end]})
+    <li>corrections <strong>{{ request.form['corrections'] or shown_query.corrections }}</strong> (dict: {anchor: correction})
+</ul>
+{#</form>#}
+  
+{% endblock %}
