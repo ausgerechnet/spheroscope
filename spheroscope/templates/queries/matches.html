@@ -71,9 +71,9 @@
         }
 
         //document.querySelectorAll(".md-tbl").style.display = "none";
-
+        let tweetId = 0;
         try{
-            let tweetId = 1;
+
 
             for(let row in tweets){
 
@@ -95,8 +95,40 @@
 
         }*/
 
+        const tooltipArea = document.querySelectorAll(".tooltip-area");
+        const tooltip = document.querySelectorAll(".tooltip");
+        //tooltipArea[0].id, $(".tooltip-area#1")
+
         // display tooltip on hover for every tweet
-        $(function() {
+
+        /* for(let i = 1; i<=10; i++){
+	        console.log($(`.tooltip-area#${i}`));
+        }       */
+
+        /*for(let i = 1; i<=tweetId; i++){
+            //console.log($(`.tooltip-area#${i}`));
+
+            // mouse hover
+            $(`.tooltip-area#${i}`).hover(function() {
+
+                let offset = $(`.tooltip-area#${i}`).offset();
+
+                $(`.tooltip#${i}`).css({
+                    top: offset.top - 130,
+                    left: offset.left - 62,
+                    display: "block"
+                })
+
+                $(`.tooltip#${i}`).animate({ opacity: 1.0 }, 0);
+            // move away mouse
+            },  function(){
+                $(`.tooltip#${i}`).animate({ opacity: 0.0 }, 200);
+                $(`.tooltip#${i}`).css({ display: "none" });
+            })
+
+        }*/
+
+        /*$(function() {
 
             // mouse hover
             $(".tooltip-area").hover(function() {
@@ -115,6 +147,34 @@
                 $(".tooltip").animate({ opacity: 0.0 }, 200);
                 $(".tooltip").css({ display: "none" });
             })
+
+        });*/
+
+        $(function() {
+
+            // mouse hover
+        for(let i = 0; i<=tweetId; i++){
+                //console.log($(`.tooltip-area#${i}`));
+
+                // mouse hover
+                $(`.tooltip-area#${i}`).hover(function() {
+
+                    let offset = $(`.tooltip-area#${i}`).offset();
+
+                    $(`.tooltip:hidden`).eq(i).css({
+                        top: offset.top - 130,
+                        left: offset.left - 62,
+                        display: "block"
+                    })
+
+                    $(`.tooltip:hidden`).eq(i).animate({ opacity: 1.0 }, 0);
+                    // move away mouse
+                },  function(){
+                    $(`.tooltip:hidden`).eq(i).animate({ opacity: 0.0 }, 200);
+                    $(`.tooltip:hidden`).eq(i).css({ display: "none" });
+                })
+
+            }
 
         });
 
