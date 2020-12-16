@@ -45,6 +45,7 @@
         const table = document.querySelector("#query-results");
 
         const tweets = $("#query-results tr");
+        delete tweets[0];
 
         const metadataString = document.querySelector("#meta-data")
         const metadata = JSON.parse(metadataString.innerText);
@@ -55,32 +56,44 @@
         const mdList = document.createElement("ol");
         listContainer.appendChild(mdList);
 
-        // div with class tooltip around all tables
+        // div with class tooltip around all metadata tables (hide tooltip)
         // div with class tooltip area around all tweets
 
+        let tooltipId = 1;
         for(let tbl in metadata){
             let tooltip = document.createElement("div")
             tooltip.classList.add("tooltip");
+            tooltip.id = tooltipId;
             tooltip.innerHTML = metadata[tbl];
             //tooltip.style.display = "none";
             document.body.appendChild(tooltip);
+            tooltipId += 1;
         }
+
         //document.querySelectorAll(".md-tbl").style.display = "none";
 
-        for(let row in tweets){
+        try{
+            let tweetId = 1;
 
-          let tooltipContainer = document.createElement("div");
-          tooltipContainer.classList.add("tooltip-area");
-          let innerHtml = tweets[row].children[2].innerHTML;
-          tweets[row].children[2].innerHTML = "";
-          tweets[row].children[2].appendChild(tooltipContainer);
-          tooltipContainer.innerHTML = innerHtml;
+            for(let row in tweets){
+
+              let tooltipContainer = document.createElement("div");
+              tooltipContainer.classList.add("tooltip-area");
+              let innerHtml = tweets[row].children[2].innerHTML;
+              tweets[row].children[2].innerHTML = "";
+              tweets[row].children[2].appendChild(tooltipContainer);
+              tooltipContainer.innerHTML = innerHtml;
+              tooltipContainer.id = tweetId;
+              tweetId += 1;
+            }
+
+        }catch{
 
         }
 
-        for(let tbl in metadata){
+        /*for(let tbl in metadata){
 
-        }
+        }*/
 
         // display tooltip on hover for every tweet
         $(function() {
