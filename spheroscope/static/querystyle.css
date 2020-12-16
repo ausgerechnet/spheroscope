@@ -46,7 +46,7 @@
 .tooltip {
     background: white;
     width: 200px;
-    height: 200px;
+    height: 50px;
     padding: 20px;
     display: none;
     position: absolute;

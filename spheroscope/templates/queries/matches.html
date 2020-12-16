@@ -170,11 +170,12 @@
                     $(`.tooltip:hidden`).eq(i).animate({ opacity: 1.0 }, 0);
                     // move away mouse
                 },  function(){
-                    $(`.tooltip:hidden`).eq(i).animate({ opacity: 0.0 }, 200);
-                    $(`.tooltip:hidden`).eq(i).css({ display: "none" });
+                    $(`.tooltip`).eq(i).animate({ opacity: 0.0 }, 200);
+                    $(`.tooltip`).eq(i).css({ display: "none" });
                 })
 
             }
+
 
         });
 
