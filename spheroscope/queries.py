@@ -281,7 +281,7 @@ def meta_data_list(id):
     meta_dict = {}
 
     for idx in tbl["text"]:
-        df_to_str = str(result['df'].iloc[tweet_idx])
+        df_to_str = result['df'].iloc[tweet_idx].to_html(escape=False)
         meta_dict[idx] = df_to_str
         tweet_idx += 1
 
