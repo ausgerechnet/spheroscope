@@ -13,7 +13,7 @@
     float: left;
 }
 
-#editing-window{
+#show-list{
     overflow-x: auto;
     overflow-y: auto;
     border: 1px solid black;
@@ -40,5 +40,18 @@
 }
 
 #query-formula {
-    color: navy;
+    color: cadetblue;
+}
+
+.tooltip {
+    background: white;
+    width: 200px;
+    height: 200px;
+    padding: 20px;
+    display: none;
+    position: absolute;
+}
+
+.tooltip-area {
+    cursor: pointer;
 }

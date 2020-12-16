@@ -312,14 +312,14 @@ def frequency_table_list(id):
         # Regions
 
         regions = []
-        freq_tables = {}
+        freq_tables = ""
 
         for col in tbl:
             if re.findall(r'\d\_\w+', col):
                 regions.append(col)
 
         for region in regions:
-            freq_tables[region] = (str(result[region].value_counts()))
+            freq_tables += (str(result[region].value_counts()))
 
         frequency_dict[idx] = freq_tables
 

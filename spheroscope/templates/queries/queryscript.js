@@ -1,4 +1,4 @@
-const run = document.querySelectorAll("#run");
+/*const run = document.querySelectorAll("#run");
 
 
 for(let i=0; i < run.length; i++){
@@ -8,4 +8,4 @@ for(let i=0; i < run.length; i++){
         $("#show-query-results").load("{{ url_for('newqueries.run_cmd', id=query['id']) }}");
     });
 
-}
+}*/
