@@ -28,4 +28,4 @@
 #   s_context: tweet
 # ---
 
-<np>@0:[::][]*</np> <vp>[]*</vp> (/be_ap[] | [pos_simple = "R"] | <np>[]*</np> | <vp>[]*</vp> | <pp>[]*</pp> | <advp> []* </advp>)+ @1:[::] "," "as"? <np> @2:[]* [lemma= $person_any | pos_simple = "Z"]+ @3:[]* </np> <vp>[lemma = $verbs_communication] [pos_simple="#"]*
+@2:[::] [lemma = $nouns_person_common | lemma = $nouns_person_origin | lemma = $nouns_person_negative | lemma = $nouns_person_profession | lemma = $nouns_person_support |pos_ark = "[@OZ#^]" & lemma != "it" | lemma = $nouns_policies | lemma = $nouns_agenda_p3 | lemma = $nouns_values] [pos_ark="V"]+ []+ @1:[::] "," "as"? [word="the"]? [lemma = $nouns_person_common | lemma = $nouns_person_origin | lemma = $nouns_person_negative | lemma = $nouns_person_profession | lemma = $nouns_person_support |pos_ark = "[@Z#^]" & lemma != "it" | pos_ner="PRP" & lemma != "it"]{,2} @3:[word!="[\.,\?\!]"]* </np> [lemma = $verbs_communication & lemma !="claim|require"]
