@@ -6,10 +6,8 @@
 #   slots:
 #     '0':
 #     - 0
-#     - 1
 #     '1':
-#     - 2
-#     - 3
+#     - 1
 # corpus:
 #   corpus_name: BREXIT_V20190522_DEDUP
 #   lib_path: null
@@ -22,12 +20,12 @@
 #   s_show:
 #   - tweet_id
 # meta:
-#   name: pattern10_x_be_sure
-#   pattern: 10
+#   name: pattern15_0_equals_1
+#   pattern: 15
 # query:
 #   context: null
 #   match_strategy: longest
 #   s_context: tweet
 # ---
 
-@0:[pos_ark="[NZ^]" | pos_ner ="PRP" & lemma!="it"] @1:[::] [lemma = "be" | lemma = $verbs_stay] ([pos_ark="R" & lemma != "not"])? [lemma=$adj_belief] "that"? @2:[pos_ark="[NZ^]" | pos_ner ="PRP"] [word !="[\.,\?\!]|http.+|t\.co.+" & pos_ark !="[#@]"]+ @3:[::]
+@0:[lemma = $nouns_values | lemma = $nouns_agenda_p3 | lemma = $nouns_policies] "=" [lemma = $nouns_policies|lemma = $nouns_agenda_p3 | lemma = $nouns_values]
