@@ -22,7 +22,7 @@
 #   s_show:
 #   - tweet_id
 # meta:
-#   name: pattern10_x_be_sure
+#   name: pattern10_entity_believe_1
 #   pattern: 10
 # query:
 #   context: null
@@ -30,4 +30,4 @@
 #   s_context: tweet
 # ---
 
-@0:[pos_ark="[NZ^]" | pos_ner ="PRP" & lemma!="it"] @1:[::] [lemma = "be" | lemma = $verbs_stay] ([pos_ark="R" & lemma != "not"])? [lemma=$adj_belief] "that"? @2:[pos_ark="[NZ^]" | pos_ner ="PRP"] [word !="[\.,\?\!]|http.+|t\.co.+" & pos_ark !="[#@]"]+ @3:[::]
+@0:[pos_ark="[NZ^]" | pos_ner ="PRP"] @1:[::] ([pos_ark="R" & lemma != "not"])? ([lemma = $verbs_stay] "to")? [lemma=$verbs_belief_knowledge] "that"? @2:[pos_ark="[NZ^]" | pos_ner ="PRP"] [word !="[\.,\?\!]|http.+|t\.co.+" & pos_ark !="[#@]"]+ @3:[::]
