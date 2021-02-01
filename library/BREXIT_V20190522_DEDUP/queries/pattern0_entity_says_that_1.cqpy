@@ -22,7 +22,7 @@
 #   s_show:
 #   - tweet_id
 # meta:
-#   name: x_says_that_y_does_z
+#   name: pattern0_entity_says_that_1
 #   pattern: 0
 # query:
 #   context: null

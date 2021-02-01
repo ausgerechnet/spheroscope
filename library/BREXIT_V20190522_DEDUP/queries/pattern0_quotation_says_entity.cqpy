@@ -11,7 +11,7 @@
 #     - 2
 #     - 3
 # meta:
-#   name: pattern_0_quot_entity
+#   name: pattern0_quotation_says_entity
 #   pattern: 0
 # query:
 #   context: null

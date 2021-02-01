@@ -30,15 +30,15 @@
 # pattern 3
 -notes:
  - the pattern matches tweets that contain expressions of:
-   - desire (*want*, *wish*),
+   - desire (*want*, *wish*) of a particular outcome or event,
    - affiliation (*support*, *back*),
    - conscious decision or reasoning (Johnson's *reason* to remain, her *case* for leave),
    - change in reasoning (he was leave, but has *switched* to remain)
- - the entity making the statement is to be explicitly marked - this is also true if they are the author of the tweet (e.g. by a first-person pronoun: I *support* brexit)
+ - the entity making the statement should be explicitly marked - an exception applies for ellipsis (i.e. when the subject is not realised in the surface form)
  - pattern 3 is **not** assigned if:
-  - the 'wanter' is implicit (*democracy should be protected* pattern 4)
-  - the statement specifies *who* should realise the action (*She argued that Johnson should resign* pattern 19)
+  - the 'wanter' is implicit in a non-elliptical sentence (*democracy should be protected* pattern 4)
   - the desire can only be inferred from a particular action taken by an entity (he *voted* remain might be interpreted as him /remain/ to be made true, but we do not consider such actions a sufficiently clear expression of desire)
+  - somebody expresses desire towards an item etc.; where we would have to infer that what they actually want is to *obtain* the item
 # pattern 13
 - notes:
   - refers to named points in time (e.g. during "WWII"
@@ -52,6 +52,7 @@
  - in addition, 'pure' preference statements that do not indicate a necessary desire for either formula (*direct democracy is better than representative democracy*)
  - pattern 16 is *not* assigned if:
   - one of the options is implicit (*I prefer brexit*)
+  - the 'formula' part is realised by an entity reference (*I trust men who X, not men who Y*)
 # pattern 23
 - notes:
   - no causal implication (in dubio pattern 2)
