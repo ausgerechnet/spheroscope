@@ -1,0 +1,18 @@
+# --- # CQPY query file
+# anchors:
+#   corrections:
+#     '3': -1
+#   slots:
+#     '0':
+#     - 0
+#     - 1
+#     '1':
+#     - 2
+#     - 3
+# meta:
+#   comment: null
+#   name: pattern19_only_thing_for_entity_to_do
+#   pattern: 19
+# ---
+
+("correct|only|right|single|straightforward"%c | [lemma = $adj_moral_positive|lemma = $adj_cog_positive] | "best"%c)+ "thing" "for"? @0:[lemma = $nouns_person_common | lemma = $nouns_person_origin | lemma = $nouns_person_negative | lemma = $nouns_person_profession | lemma = $nouns_person_support | pos_ark = "[@OZ#^]" & lemma != "we|it"]+ @1:[::] [pos_simple="V" | lemma = "can|should|to"] "do" "would"? [lemma="be"] "to"? @2[::] [word !="[\.\?\!]"]+ @3[::]
