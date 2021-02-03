@@ -16,10 +16,6 @@
 - notes:
   - negations
   - nested quotations 
-# pattern 1
-- notes:
-  - causality
-  - facts
 # pattern 2
 - notes:
   - counterfactual reasoning
@@ -27,6 +23,7 @@
   - speculations
   - premise sufficient
   - often in combination with p5
+  - basically any implication where there is a reason (not necessarily given) why truth of the antecedent is causing and not just correlating with truth of the consequent
 # pattern 13
 - notes:
   - refers to named points in time (e.g. during "WWII"
