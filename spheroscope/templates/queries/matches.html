@@ -26,7 +26,11 @@
 
             <div id="show-list">
               <section id="meta-data" hidden>{{ meta_data }}</section>
-              <section id="freq-tables" hidden>{{ frequency_table|safe }}</section></div>
+{#                pagination #}
+                <div id="freq-table-pagination">
+                    <section id="freq-tables">{{ frequency_table|safe }}</section>
+                </div>
+            </div>
             </div>
 
         <br>

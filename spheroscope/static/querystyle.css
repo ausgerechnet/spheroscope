@@ -39,10 +39,6 @@
     color: blue;
 }
 
-#query-formula {
-    color: cadetblue;
-}
-
 .tooltip {
     background: rgb(0,0,.9);
     color: white;
@@ -55,3 +51,39 @@
 .tooltip-area {
     cursor: pointer;
 }
+
+.freq-table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.freq-table thead tr {
+    color: #000000;
+    text-align: left;
+}
+
+.freq-table th,
+.freq-table td {
+    padding: 12px 15px;
+}
+
+.freq-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.freq-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.freq-table tbody tr:last-of-type {
+    border-bottom: 2px solid;
+}
+
+.freq-table tbody tr.active-row {
+    font-weight: bold;
+}
+

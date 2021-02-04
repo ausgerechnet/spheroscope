@@ -183,6 +183,8 @@ def run_cmd(id, beta):
 
     #print(str(result["0_lemma"].value_counts()))
 
+    result.to_pickle("table_raw_df.pkl")
+
     display_columns = [x for x in result.columns if x not in [
         'match', 'matchend', 'context_id', 'context', 'contextend', 'df'
     ]]
@@ -279,9 +281,10 @@ def meta_data_list(id):
     tbl = json.loads(tojson)
     tweet_idx = 0
     meta_dict = {}
+    display_columns = ["lemma", "offset", "word"]
 
     for idx in tbl["text"]:
-        df_to_str = result['df'].iloc[tweet_idx].to_html(escape=False)
+        df_to_str = result['df'].iloc[tweet_idx].to_html(escape=False, columns=display_columns)
         meta_dict[idx] = df_to_str
         tweet_idx += 1
 
@@ -303,27 +306,18 @@ def frequency_table_list(id):
 
     tojson = result.to_json()
     tbl = json.loads(tojson)
-    frequency_dict = {}
 
-    #print(result["0_lemma"].value_counts())
+    freq_tables = []
+    regions = []
 
-    for idx in tbl["text"]:
+    for col in tbl:
+        if re.findall(r'\d\_\w+', col):
+            regions.append(col)
 
-        # Regions
+    for region in regions:
+        freq_tables.append(result[region].value_counts().to_frame().to_html(escape=False, classes="freq-table",
+                                                                            header=False))
 
-        regions = []
-        freq_tables = ""
-
-        for col in tbl:
-            if re.findall(r'\d\_\w+', col):
-                regions.append(col)
-
-        for region in regions:
-            freq_tables += (str(result[region].value_counts()))
-
-        frequency_dict[idx] = freq_tables
-
-    freq = json.dumps(frequency_dict)
-    #print(frequency_dict)
+    freq = ''.join(freq_tables)
 
     return freq
