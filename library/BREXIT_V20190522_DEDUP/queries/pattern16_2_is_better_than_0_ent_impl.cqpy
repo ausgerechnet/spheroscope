@@ -13,4 +13,4 @@
 #   pattern: 16
 # ---
 
-@2:[lemma = $nouns_agenda_p3 | lemma = $nouns_policies | lemma = $nouns_values] "is" "better|preferable" "than|to" @0[::] [word!="[,\.\?\!]" & pos_ark!="G#@U"]+ @3[::]
+@2:[::][pos_ark="[AD]"]* [lemma = $nouns_agenda_p3 | lemma = $nouns_policies | lemma = $nouns_values] "is" ("by" "far" | "a" "lot"| "much" | "far")? "better|preferable" "than|to" @0[::] [word!="[,\.\?\!]" & pos_ark!="[G#@U]" | lemma = $nouns_agenda_p3 | lemma = $nouns_policies | lemma = $nouns_values]+ @3[::];
