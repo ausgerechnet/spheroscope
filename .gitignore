@@ -20,4 +20,4 @@ build/
 
 Pipfile.lock
 
-spheroscope.cfg
+cfg.py
