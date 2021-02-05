@@ -355,8 +355,8 @@ def init_db():
     db.drop_all()
     db.create_all()
     db.session.add(User(
-        username="admin",
-        password=generate_password_hash("0000")
+        username=current_app.config['DB_USERNAME'],
+        password=generate_password_hash(current_app.config['DB_PASSWORD'])
     ))
     db.session.commit()
 
