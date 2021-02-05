@@ -16,10 +16,6 @@
 - notes:
   - negations
   - nested quotations 
-# pattern 1
-- notes:
-  - causality
-  - facts
 # pattern 2
 - notes:
   - counterfactual reasoning
@@ -27,8 +23,10 @@
   - speculations
   - premise sufficient
   - often in combination with p5
+  - basically any implication where there is a reason (not necessarily given) why truth of the antecedent is causing and not just correlating with truth of the consequent
+
 # pattern 3
--notes:
+- notes:
  - the pattern matches tweets that contain expressions of:
    - desire (*want*, *wish*) of a particular outcome or event,
    - affiliation (*support*, *back*),
@@ -43,6 +41,7 @@
 - notes:
   - refers to named points in time (e.g. during "WWII"
   - context-dependent variants (next Friday) may be annotated, but cannot be formalized
+
 # pattern 15
 
 # pattern 16
@@ -57,4 +56,21 @@
 - notes:
   - no causal implication (in dubio pattern 2)
   - necessity
-# pattern 26
+
+# pattern 20
+- notes:
+    - the pattern matches instances where an entity is accused of lying about a topic or the truth of a proposition.
+- pattern 20 is *not* assigned if:
+    - the entity is accused of being generally dishonest, without specification of what they were lying about
+    - the entity is accused of being unsincere in some other way, e.g. hypocritical, scaremongering...
+    - the entity is accused of saying something that is untrue -- it has to be clear from the context that they are deliberately saying something incorrect (e.g. *X is talking BS* is a negative example)
+
+# pattern 38
+- notes:
+    -the pattern matches instances of an entity 0 warning about formula 1 being bad.
+    - negative connotations may be directly encoded in the verb, e.g. 'warn'
+    - example: *Juncker warns about the outcome of Brexit*
+    - alternatively, a more neutral communication verb (e.g. say) can be used if formula 1 is clearly inherently negative:
+    - example: *He said that #brexit will wreck the job market*
+- pattern 38 is *not* assigned if:
+    -neither the verb nor formula 1 show an unambiguously negative evaluation (e.g. *the IMF said that brexit will prolong austerity*)

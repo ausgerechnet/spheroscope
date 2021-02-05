@@ -29,15 +29,15 @@ Alternatively, you can can configure an anaconda environment using the
 additional [requirements file](requirements_anaconda.txt).
 
 ## Configuration ##
-Configure the app via `spheroscope.cfg`. You can find an [example
-config file](spheroscope_example.cfg) in the repository.
+Configure the app via `cfg.py` in the app folder. You can find an
+[example config file](cfg_example.py) in the repository.
 
 Set the `REGISTRY_PATH` to your CWB registry and `CACHE_PATH` to some
-directory where you have appropriate rights (e.g. `/tmp/spheroscope`).
+directory where you have appropriate rights.
 
-Link to a stable version of
-[fillform](https://gitlab.com/mgttlinger/fillform/-/jobs) via
-`FILLFORM`. Don't provide this key if you do not want to use fillform.
+<!-- Link to a stable version of -->
+<!-- [fillform](https://gitlab.com/mgttlinger/fillform/-/jobs) via -->
+<!-- `FILLFORM`. Don't provide this key if you do not want to use fillform. -->
 
 You can then run
 
@@ -55,9 +55,9 @@ access the interface.
 
 ## Corpus Settings ##
 After starting the app, you will find [default corpus
-settings](instance/corpus_defaults.cfg) in your instance folder. You
-can change these to your liking, taking into consideration the most
-common p- and s-attributes of your system corpora.
+settings](instance/corpus_defaults.yaml) in your instance folder. You
+can change the defaults to your liking, taking into consideration the
+most common p- and s-attributes of your system corpora.
 
 When selecting one of your corpora for the first time through the
 interface, a new folder and config file will be created for this

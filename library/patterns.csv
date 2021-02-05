@@ -1,7 +1,7 @@
 id,template,explanation,specialises
 -2,\newcommand{\mcauses}{\Box\kern-.5em{\implies}} \newcommand{\dimplies}{\overset{d}{\implies}} \newcommand{\cfac}{\overset{c}{\implies}},the preamble (for exporting),[]
 0,L_{{?0 : entity}}({?1 : formula}),entity 0 claiming that 1 is true; any kind of quotation basically,[]
-1,({?0 : formula}) \mcauses ({?1 : formula}),0 is the reason why 1 is true; note that 0 and 1 could be formulas talking about the past stating that something was the reason why something was the case at some point in time,[2]
+-1,({?0 : formula}) \mcauses ({?1 : formula}),0 is the reason why 1 is true; note that 0 and 1 could be formulas talking about the past stating that something was the reason why something was the case at some point in time,[2]
 2,({?0 : formula}) \cfac ({?1 : formula}),0 would cause 1 to be true; this also covers speculations about how things could have been if past events would have gone differently,[]
 3,L_{{?0 : entity}} O ({?1 : formula}),entity 0 makes a normative statement that 1 should be made true without specifying who should make 1 true,[1;4]
 4,O ({?0 : formula}),0 should be made true; note that it is unspecified who should see to make 0 true; this 'should' is distinct from specifying uncertainty,[]
@@ -38,6 +38,7 @@ id,template,explanation,specialises
 35,\Box  ({?0 : formula}),formula 0 is necessarily true in the sense that it cannot be the case that 0 is false,[]
 36,P ({?0 : formula}),formula 0 is permitted in the sense that it is morally acceptable to make 0 true or that 0 is true,[]
 37,"L_{{?0 : entity}} ({?1 : entity} \implies \downarrow x.\,O_x ({?2 : formula})",entity 0 states that entities in group 1 should make 2 true,[3;25]
-38,L_{{?0 : entity}} ({?1 : formula});L_{{?0}}L_{{?2 : entity}} bad({?1}),entity 0 warns of 1 being bad (for entity 2),[0;6]
+38,L_{{?0 : entity}} bad({?1 : formula}),entity 0 warns of 1 being bad,[0;6]
 39,"\neg(({?0 : entity} \implies \downarrow x.\,\neg {?1 : formula\text{ mentioning }x}) \lor ({0} \dimplies \downarrow x,\, {1}))",some entities in 0 have property 1,[25;27;32]
-40,"\neg({?0 : entity} \implies \downarrow x.\,{?1 : formula\text{ mentioning }x})", nobody in 0 has property 1,[25;27]
+40,"\neg({?0 : entity} \implies \downarrow x.\,{?1 : formula\text{ mentioning }x})",nobody in 0 has property 1,[25;27]
+41,L_{{?0 : entity}}(bad({?2 : formula}) \land {?1 : formula} \cfac {?2}),entity 0 warns of bad consequences 2 of formula 1,[0;2;6;38]

@@ -8,50 +8,46 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
 NAME = 'spheroscope'
-DATABASE_PATH = 'spheroscope.sqlite'
-CONFIG_PATH = 'spheroscope.cfg'
-SECRET_KEY = 'dev'
+CONFIG = 'cfg.DevConfig'
 
 db = SQLAlchemy()
 
 
 def create_app(test_config=None):
 
-    # create and configure app
-    app = Flask(
-        NAME,
-        instance_relative_config=True
-    )
-    app.config['SECRET_KEY'] = SECRET_KEY
-    app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///" + os.path.join(
-        app.instance_path, DATABASE_PATH
-    )
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    # create app
+    app = Flask(NAME, instance_relative_config=True)
 
     # ensure the instance folder exists
     try:
         os.makedirs(app.instance_path, exist_ok=True)
     except OSError:
-        app.logger.warning("could not create instance folder")
+        app.logger.error("could not create instance folder")
 
     # read configuration if not testing
     if test_config is None:
-        app.config.from_pyfile('../spheroscope.cfg')
+        app.config.from_object(CONFIG)
     else:
         app.config.from_mapping(test_config)
 
+    # init database connection
+    app.config.update(
+        SQLALCHEMY_DATABASE_URI="sqlite:///" + os.path.join(
+            app.instance_path, app.config['DB_NAME']
+        ),
+        SQLALCHEMY_TRACK_MODIFICATIONS=False
+    )
+
     # ensure corpus defaults exist
-    cfg_path = os.path.join(app.instance_path, 'corpus_defaults.yaml')
-    if not os.path.isfile(cfg_path):
-        shutil.copy(
-            os.path.join('library', 'corpus_defaults.yaml'),
-            cfg_path
-        )
+    corpus_cfg_path = os.path.join(app.instance_path, 'corpus_defaults.yaml')
+    corpus_cfg_default = os.path.join('library', 'corpus_defaults.yaml')
+    if not os.path.isfile(corpus_cfg_path):
+        shutil.copy(corpus_cfg_default, corpus_cfg_path)
 
     # initialize database
     from . import database
     db.init_app(app)
-    # add CLI commands
+    # add database CLI commands
     app.cli.add_command(database.init_db_command)
     app.cli.add_command(database.import_lib_command)
 
@@ -88,9 +84,5 @@ def create_app(test_config=None):
     # patterns
     from . import patterns
     app.register_blueprint(patterns.bp)
-
-    # # new queries
-    # from . import newqueries
-    # app.register_blueprint(newqueries.bp)
 
     return app
