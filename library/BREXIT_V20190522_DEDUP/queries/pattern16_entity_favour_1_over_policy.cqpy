@@ -3,7 +3,10 @@
 #   corrections:
 #     '4': -1
 #   slots:
-#     '1': 2
+#     '1': 
+#     - 0
+#     - 1
+#     '0': 2
 #     '2':
 #     - 3
 #     - 4
@@ -13,4 +16,4 @@
 #   pattern: 16
 # ---
 
-<np>@0[] @1[]*</np> <vp>[]* [pos_ner="VB[GPZ]" & lemma = $verbs_prefer & lemma != "want"] []*</vp>  "more"? @3:[::][word!="[,\.\!|\?]"]+ @4[::] (("and" "less" |"instead" "of" | "rather|more" "than") @2:[lemma=$nouns_policies | lemma = $nouns_values] | "over" @2:[lemma=$nouns_policies & lemma !="#?brexit"| lemma = $nouns_values])
+@0:[::] [lemma = $nouns_person_common | lemma = $nouns_person_origin | lemma = $nouns_person_negative| lemma = $nouns_person_profession | lemma = $nouns_person_support |pos_ark = "[@OPZ#^NJ]" & lemma != "it"]+ @1[::] "would"? [pos_ner="VB[GPZ]" & lemma = $verbs_prefer & lemma != "want"]  "more"? @3:[::][word!="[,\.\!|\?]"]+ @4[::] (("and" "less" |"instead" "of" | "rather|more" "than") @2:[lemma=$nouns_policies | lemma = $nouns_values] | "over" @2:[lemma=$nouns_policies & lemma !="#?brexit"| lemma = $nouns_values])
