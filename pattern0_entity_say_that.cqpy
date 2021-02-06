@@ -27,4 +27,4 @@
 #   s_context: tweet
 # ---
 
-<np> @0:[::][]* [lemma =$nouns_experts | pos_simple="Z"] []* </np> (<np>@1:[]*</np>)* <vp> []* [lemma =$verbs_communication & word != ".+ing"] []*</vp> "that"? <np>@2:[::][]*</np> (<vp>[]*</vp>)+ (<np>[]*</np> | <vp>[]*</vp> |<pp>[]*</pp> | [pos_simple = "I|R"])+ @3:[::]
+@0[::] [pos_ark="D"]? [lemma = $nouns_person_common | lemma = $nouns_person_origin | lemma = $nouns_person_negative | lemma = $nouns_person_profession | lemma = $nouns_person_support |pos_ark = "[@OZ#^]" & lemma != "it"]+ @1:[::] [lemma="have|be"]? [lemma =$verbs_communication] "that"? <np>@2:[::][word != "(http.+|www.+|t\.co).+"]*</np> [pos_ark="V"] [word !="[\.,\?\!]" & word !="@.+ | (http.+|www.+|t\.co)"]+ @3:[::]

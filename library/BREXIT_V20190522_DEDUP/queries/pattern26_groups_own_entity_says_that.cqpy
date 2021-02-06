@@ -1,0 +1,37 @@
+# --- # CQPY query file
+# anchors:
+#   corrections:
+#     1: -1
+#     3: -1
+#     5: -1
+#   slots:
+#     '0':
+#     - 0
+#     - 1
+#     '1':
+#     - 2
+#     - 3
+#     '2':
+#     - 4
+#     - 5
+# corpus:
+#   corpus_name: BREXIT_V20190522_DEDUP
+#   lib_path: null
+# display:
+#   p_show:
+#   - word
+#   - lemma
+#   p_slots: lemma
+#   p_text: word
+#   s_show:
+#   - tweet_id
+# meta:
+#   name: pattern26_groups_own_entity_says_that
+#   pattern: 26
+# query:
+#   context: null
+#   match_strategy: longest
+#   s_context: tweet
+# ---
+
+@0[::] [word="the"]?  [lemma = $nouns_person_common | lemma = $nouns_person_origin | lemma = $nouns_person_negative | lemma = $nouns_person_profession | lemma = $nouns_person_support |pos_ark = "[@Z#^]" & lemma != "it" | pos_ner="PRP" & lemma != "it"]{,2} @1:[::] "'?s" "very"? "own"? @4[::] [lemma = $nouns_person_common | lemma = $nouns_person_origin | lemma = $nouns_person_negative | lemma = $nouns_person_profession | lemma = $nouns_person_support |pos_ark = "[@Z#^]" & lemma != "it"]+ @5:[::] [lemma="be|have"]? [lemma = $verbs_communication & lemma !="claim"] "that" @2:[::] [word!="[\.,\?\!]"]+ @3:[::]within tweet

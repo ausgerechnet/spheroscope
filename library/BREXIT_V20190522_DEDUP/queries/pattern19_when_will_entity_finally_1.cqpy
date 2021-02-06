@@ -1,0 +1,18 @@
+# --- # CQPY query file
+# anchors:
+#   corrections:
+#     '3': -1
+#   slots:
+#     '0':
+#     - 0
+#     - 1
+#     '1':
+#     - 2
+#     - 3
+# meta:
+#   comment: null
+#   name: pattern19_when_will_entity_finally_1
+#   pattern: 19
+# ---
+
+"When"%c [lemma="will|can"] @0:[lemma = $nouns_person_common | lemma = $nouns_person_origin | lemma = $nouns_person_negative | lemma = $nouns_person_profession | lemma = $nouns_person_support | pos_ark = "[@OZ#^]" & lemma != "we|it"]+ @1:[::] ([pos_simple="[JR]"]* @2[::] [lemma=$verbs_know] "that" [word !="[\.\?\!]"]+ @3[::] | [word="ever|finally"] @2[::] [word !="[\.\?\!]"]+ @3[::])

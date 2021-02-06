@@ -22,12 +22,12 @@
 #   s_show:
 #   - tweet_id
 # meta:
-#   name: x_will_y_say_experts
-#   pattern: 0
+#   name: pattern10_entity_believe_1
+#   pattern: 10
 # query:
 #   context: null
 #   match_strategy: longest
 #   s_context: tweet
 # ---
 
-<np>@2:[::][]*</np> (/region[vp])+ (/region[np] | /region[vp] |/region[pp] | [pos_simple = "I|R"])+ @3:[::]"," <np> @0:[::][]* [lemma =$nouns_experts | pos_simple="Z"] []* </np> (/region[np])*@1:[::] <vp> []* [lemma =$verbs_communication & word != ".+ing"] []*</vp> ([word="#.+|@.+|\.|\?|\!|;"|pos_ner="UH|URL|ITJ|HT"]+ | </tweet> )
+@0:[pos_ark="[NZ^]" | pos_ner ="PRP"] @1:[::] ([pos_ark="R" & lemma != "not"])? ([lemma = $verbs_stay] "to")? [lemma=$verbs_belief_knowledge] "that"? @2:[pos_ark="[NZ^]" | pos_ner ="PRP"] [word !="[\.,\?\!]|http.+|t\.co.+" & pos_ark !="[#@]"]+ @3:[::]
