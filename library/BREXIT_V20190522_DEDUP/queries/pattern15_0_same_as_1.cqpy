@@ -22,12 +22,12 @@
 #   s_show:
 #   - tweet_id
 # meta:
-#   name: x_will_y_experts_say
-#   pattern: 0
+#   name: pattern15_0_same_as_1
+#   pattern: 15
 # query:
 #   context: null
 #   match_strategy: longest
 #   s_context: tweet
 # ---
 
-<np>@2:[::][]*</np> (<vp>[]*</vp>)+ (<np>[]*</np> | <vp>[]*</vp> |<pp>[]*</pp> | [pos_simple = "I|R"])+ @3:[::]"," <vp> []* [lemma =$verbs_communication & word != ".+ing"] []*</vp> <np> @0:[::][]* [lemma =$nouns_experts | pos_simple="Z"] []* </np>*@1:[::] (<np>[]*</np>)* [pos_simple = "@|#|\." | rbound(tweet)]
+@0:[pos_ark="[NZ^]" | pos_ner ="PRP"] ".+ing|that|who" []+ @1:"is|are" ("the" "same" "as"? | [pos_ark="R" & word!="not"] "like") @2[::] ("ones|that|who" | [pos_ark="[NZ^]" | pos_ner ="PRP"])+ [word !="[\.,\?\!]|http.+|t\.co.+" & pos_ark !="[#@]"]+ @3:[::] within tweet

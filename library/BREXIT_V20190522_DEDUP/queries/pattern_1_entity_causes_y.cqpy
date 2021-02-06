@@ -22,7 +22,7 @@
 #   s_show:
 #   - tweet_id
 # meta:
-#   name: pattern_1_entity_causes_y
+#   name: pattern1_entity_causes_y
 #   pattern: 1
 # query:
 #   context: null
@@ -30,4 +30,4 @@
 #   s_context: tweet
 # ---
 
-@0:[::] (/region[np])? /name_any[] @1:[::] (<vp>[lemma = $verbs_cause & lemma !="imply|lead|make" & word!=".+ing"] []*</vp> |  [lemma="lead"] "to") [pos_ark="R" | pos_ner = "TO"]* <np>@2:[::][]+</np> (<np>[]*</np> | <vp>[]*</vp> | <pp>[]*</pp>)+@3:[::]
+@0:[::] [pos_ark="[NZ^]" | pos_ner ="PRP"] @1:[::] [pos_ark="R" | lemma ="be|have"]* ([lemma = $verbs_cause & lemma !="imply|lead" & word!=".+ing"]  |  [lemma="lead"] "to") [pos_ark="R" | pos_ner = "TO"]* @2:[::] [word !="[\.,\?\!]|http.+|t\.co.+" & pos_ark !="[#@]"]* @3:[::]

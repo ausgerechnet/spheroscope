@@ -1,0 +1,18 @@
+# --- # CQPY query file
+# anchors:
+#   corrections:
+#     '3': -1
+#   slots:
+#     '0':
+#     - 0
+#     - 1
+#     '1':
+#     - 2
+#     - 3
+# meta:
+#   comment: null
+#   name: pattern19_entity_would_be_dumb_not_to_1
+#   pattern: 19
+# ---
+
+@0:[lemma = $nouns_person_common | lemma = $nouns_person_origin | lemma = $nouns_person_negative | lemma = $nouns_person_profession | lemma = $nouns_person_support | pos_ark = "[@OZ#^]" & lemma != "it"]+ @1:[::] "would" [pos_simple="R"]? "be" [pos_simple="R"]? [lemma=$adj_cog_negative] "not" "to" @2[::] [word !="[\.\?\!]"]+ @3[::]

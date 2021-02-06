@@ -1,8 +1,13 @@
-blow
 climb
 expand
 explode
+grow
 increase
 move
 multiply
 rise
+sky-rocket
+skyrocket
+soar
+surge
+
