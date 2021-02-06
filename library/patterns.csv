@@ -1,7 +1,7 @@
 id,template,explanation,specialises
 -2,\newcommand{\mcauses}{\Box\kern-.5em{\implies}} \newcommand{\dimplies}{\overset{d}{\implies}} \newcommand{\cfac}{\overset{c}{\implies}},the preamble (for exporting),[]
 0,L_{{?0 : entity}}({?1 : formula}),entity 0 claiming that 1 is true; any kind of quotation basically,[]
--1,({?0 : formula}) \mcauses ({?1 : formula}),0 is the reason why 1 is true; note that 0 and 1 could be formulas talking about the past stating that something was the reason why something was the case at some point in time,[2]
+1,({?0 : formula}) \mcauses ({?1 : formula}),0 is the reason why 1 is true; note that 0 and 1 could be formulas talking about the past stating that something was the reason why something was the case at some point in time,[2]
 2,({?0 : formula}) \cfac ({?1 : formula}),0 would cause 1 to be true; this also covers speculations about how things could have been if past events would have gone differently,[]
 3,L_{{?0 : entity}} O ({?1 : formula}),entity 0 makes a normative statement that 1 should be made true without specifying who should make 1 true,[1;4]
 4,O ({?0 : formula}),0 should be made true; note that it is unspecified who should see to make 0 true; this 'should' is distinct from specifying uncertainty,[]
