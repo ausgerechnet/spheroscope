@@ -220,6 +220,7 @@ class Query(db.Model):
     def load(self, path):
         """ loads query from specified path """
 
+        current_app.logger.info('loading query file "%s".' % path)
         if not os.path.isfile(path):
             current_app.logger.error('query file "%s" does not exist.' % path)
 
