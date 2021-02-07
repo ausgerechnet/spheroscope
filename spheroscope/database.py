@@ -323,7 +323,7 @@ class Pattern(db.Model):
 
     @property
     def preamble(self):
-        preamble = self.query.filter_by(id=-2).first()
+        preamble = self.query.filter_by(id=-9999).first()
         return preamble.template
 
     def __repr__(self):
@@ -379,19 +379,6 @@ def read_patterns(path):
         )
         db.session.add(pattern)
         db.session.commit()
-
-    # add an extra pattern for uncategorized queries
-    pattern = Pattern(
-        id=-1,
-        user_id=1,              # admin
-        explanation="uncategorized queries",
-        template=r"(\forall x(x=x))\lor (\lnot \forall x(x=x))"
-    )
-    current_app.logger.info(
-        'writing pattern %d to database' % pattern.id
-    )
-    db.session.add(pattern)
-    db.session.commit()
 
 
 def import_library():
