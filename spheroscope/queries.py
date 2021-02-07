@@ -9,6 +9,9 @@ from flask import (
     Blueprint, redirect, render_template, request, url_for, current_app, g, session
 )
 
+from flask.cli import with_appcontext
+import click
+
 from .auth import login_required
 from .corpora import read_config, init_corpus
 from .database import Query
@@ -16,6 +19,7 @@ from .database import Query
 import re
 import json
 from pandas import DataFrame
+from collections import defaultdict
 
 bp = Blueprint('queries', __name__, url_prefix='/queries')
 
@@ -243,3 +247,47 @@ def run_cmd(id):
         df = DataFrame.from_dict(tbl)
         display_columns = ['tweet_id', 'text']
         return df[display_columns].to_html(escape=False, table_id="query-results")
+
+
+@click.command('query')
+@click.argument('pattern')
+@click.argument('dir_out')
+@with_appcontext
+def query_command(pattern, dir_out):
+
+    path_summary = os.path.join(dir_out, str(pattern) + "-summary.tsv")
+    summary = defaultdict(list)
+
+    # get all queries belonging to the query
+    queries = Query.query.filter_by(pattern_id=pattern).all()
+    current_app.logger.info(
+        "pattern %s: %d queries" % (len(queries), pattern)
+    )
+
+    for query in queries:
+
+        current_app.logger.info(query.name)
+
+        p_out = None
+        n_hits = None
+        n_unique = None
+
+        lines = run(query.id, None)
+
+        if lines is not None:
+            p_out = os.path.join(dir_out, str(pattern) + '-' + query.name + '.tsv')
+            lines = lines.drop('df', axis=1)
+            lines.to_csv(p_out, sep="\t")
+            n_hits = len(lines)
+            n_unique = len(lines.tweet_id.value_counts())
+        else:
+            n_hits = 0
+            n_unique = 0
+
+        summary['query'].append(query.name)
+        summary['n_hits'].append(n_hits)
+        summary['n_unique'].append(n_unique)
+        summary['path'].append(p_out)
+
+    summary = DataFrame(summary)
+    summary.to_csv(path_summary, sep="\t")
