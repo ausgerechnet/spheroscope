@@ -261,7 +261,7 @@ def query_command(pattern, dir_out):
     # get all queries belonging to the query
     queries = Query.query.filter_by(pattern_id=pattern).all()
     current_app.logger.info(
-        "pattern %s: %d queries" % (len(queries), pattern)
+        "pattern %s: %d queries" % (str(pattern), len(queries))
     )
 
     for query in queries:
