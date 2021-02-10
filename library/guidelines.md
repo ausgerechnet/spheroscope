@@ -1,19 +1,6 @@
-# schema
-## name
-short name (e.g. 'generic ad hominem', 'quotation')
-## description
-concise description
-## formalization
-the logical formula
-## examples
-list of positive examples
-## counter-examples
-list of examples with according pattern
-## notes
-list of further comments
 # pattern 0
 ## examples
-  - 'I told you'
+  - 'I told you …'
 ## counter-examples:
   - URLs
   - 'sb. shouted "Britain First"' NOT p0 but normative statement (p3)
@@ -22,6 +9,10 @@ list of further comments
 ## notes:
   - negations
   - nested quotations 
+  
+# pattern 1
+  retired
+  
 # pattern 2
 ## notes
   - counterfactual reasoning
@@ -43,11 +34,28 @@ list of further comments
    - the 'wanter' is implicit in a non-elliptical sentence (*democracy should be protected* pattern 4)
    - the desire can only be inferred from a particular action taken by an entity (he *voted* remain might be interpreted as him /remain/ to be made true, but we do not consider such actions a sufficiently clear expression of desire)
    - somebody expresses desire towards an item etc.; where we would have to infer that what they actually want is to *obtain* the item
+
+# pattern 4
+# pattern 5
+# pattern 6
+# pattern 7
+  retired
+  
+# pattern 8
+# pattern 9
+  retired
+  
+# pattern 10
+# pattern 11
+# pattern 12
 # pattern 13
+  retired
 ## notes
   - refers to named points in time (e.g. during "WWII"
   - context-dependent variants (next Friday) may be annotated, but cannot be formalized
 
+# pattern 14
+  retired
 # pattern 15
 
 # pattern 16
@@ -58,11 +66,11 @@ list of further comments
  - pattern 16 is *not* assigned if:
    - one of the options is implicit (*I prefer brexit*)
    - the 'formula' part is realised by an entity reference (*I trust men who X, not men who Y*)
-# pattern 23
-## notes
-  - no causal implication (in dubio pattern 2)
-  - necessity
-
+# pattern 17
+  retired
+# pattern 18
+  retired
+# pattern 19
 # pattern 20
 ## notes
   - the pattern matches instances where an entity is accused of lying about a topic or the truth of a proposition.
@@ -70,7 +78,27 @@ list of further comments
     - the entity is accused of being generally dishonest, without specification of what they were lying about
     - the entity is accused of being unsincere in some other way, e.g. hypocritical, scaremongering...
     - the entity is accused of saying something that is untrue -- it has to be clear from the context that they are deliberately saying something incorrect (e.g. *X is talking BS* is a negative example)
+# pattern 21
+# pattern 22
+# pattern 23
+## notes
+  - no causal implication (in dubio pattern 2)
+  - necessity
 
+# pattern 24
+# pattern 25
+# pattern 26
+# pattern 27
+# pattern 28
+# pattern 29
+# pattern 30
+# pattern 31
+# pattern 32
+# pattern 33
+# pattern 34
+# pattern 35
+# pattern 36
+# pattern 37
 # pattern 38
 ## notes
   - the pattern matches instances of an entity 0 warning about formula 1 being bad.
@@ -80,3 +108,6 @@ list of further comments
   - example: *He said that #brexit will wreck the job market*
 - pattern 38 is *not* assigned if:
   - neither the verb nor formula 1 show an unambiguously negative evaluation (e.g. *the IMF said that brexit will prolong austerity*)
+# pattern 39
+# pattern 40
+# pattern 41
