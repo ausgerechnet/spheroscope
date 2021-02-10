@@ -10,5 +10,12 @@
 #     '1':
 #     - 2
 #     - 3
+# corpus:
+#   corpus_name: BREXIT_V20190522_DEDUP
+#   lib_path: null
+# meta:
+#   name: pattern1_thanks_to_0_1_is_true
+#   pattern: 9999
+# ---
 
 "due|because|thanks" "of|to" @0[::] [pos_ark="[AD]"]* [pos_ark = "[@NZ#^]" | pos_ner = "PRP" & lemma != "it" | lemma = $nouns_policies | lemma = $nouns_agenda_p3 | lemma = $nouns_values]+ @1[::] ","? @2[::] [pos_ark="[AD]"]* [pos_ark = "[@Z#^]" | pos_ner="PRP" & lemma != "it"]+ [pos_ark="V"]+ [word !="[\.,\?\!]" & pos_ark !="[#@]"]* @3[::]
