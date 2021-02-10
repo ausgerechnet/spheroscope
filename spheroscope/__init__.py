@@ -80,6 +80,8 @@ def create_app(test_config=None):
     # queries
     from . import queries
     app.register_blueprint(queries.bp)
+    # add queries CLI commands
+    app.cli.add_command(queries.query_command)
 
     # patterns
     from . import patterns

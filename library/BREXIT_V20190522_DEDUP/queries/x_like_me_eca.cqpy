@@ -17,7 +17,7 @@
 #   - tweet_id
 # meta:
 #   name: x_like_me_eca
-#   pattern: -1
+#   pattern: 9999
 # query:
 #   context: null
 #   match_strategy: longest
