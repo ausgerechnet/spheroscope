@@ -26,10 +26,10 @@ retired
 ## notes
 - the pattern matches tweets that contain expressions of:
   - desire (*want*, *wish*) of a particular outcome or event,
-  - affiliation (*support*, *back*),
+  - affiliation (*support*, *back*, *say yes to*),
   - conscious decision or reasoning (Johnson's *reason* to remain, her *case* for leave),
   - change in reasoning (he was leave, but has *switched* to remain)
-- the entity making the statement should be explicitly marked - an exception applies for ellipsis (i.e. when the subject is not realised in the surface form)
+- the entity making the statement should be explicitly marked - an exception applies for ellipsis (i.e. when the subject is not realised in the surface form) and for imperatives. In both of the latter cases, the 'wanter' is understood to be the author of the message
 ## counter-examples:
 - the 'wanter' is implicit in a non-elliptical sentence (*democracy should be protected* pattern 4)
 - the desire can only be inferred from a particular action taken by an entity (he *voted* remain might be interpreted as him /remain/ to be made true, but we do not consider such actions a sufficiently clear expression of desire)
@@ -60,12 +60,14 @@ retired
 # pattern 15
 # pattern 16
 ## notes
-- the entity can be left implicit if it is clear who made the statement (*It is better to leave than to remain*: user who posted the tweet prefers leaving over remaining)
+- Like in pattern 3, the entity can be left implicit if it is clearly the author of the message, e.g. in elliptical constructions
 - a portion of the hits will overlap with pattern 3, as often statements that something should be realised go along with a preference of one outcome over another.
 - in addition, 'pure' preference statements that do not indicate a necessary desire for either formula (*direct democracy is better than representative democracy*)
 ## counter-examples:
 - one of the options is implicit (*I prefer brexit*)
 - the 'formula' part is realised by an entity reference (*I trust men who X, not men who Y*)
+- general preferability of a concept over another without ascribing the preference to any entity (*It is better to leave than to remain*: user who posted the tweet prefers leaving over remaining)
+
 
 # pattern 17
 retired
@@ -77,6 +79,10 @@ retired
 # pattern 20
 ## notes
 - the pattern matches instances where an entity is accused of lying about a topic or the truth of a proposition.
+	- the formula that is being lied about may be:
+	- a particular claim (*For anyone who still believes the enduring Brexit lie* **that the EU is undemocratic** )
+	-  a topic (*And believe this man who told lies* **about Iraq**)
+	- a claim that is not elaborated upon in the given message, but clearly concerns a particular lie (*@JunckerEU says* **Boris making up stories**)
 ## counter-examples:
   - the entity is accused of being generally dishonest, without specification of what they were lying about
   - the entity is accused of being unsincere in some other way, e.g. hypocritical, scaremongering...
