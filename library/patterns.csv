@@ -3,7 +3,7 @@ id,template,explanation,specialises
 0,L_{{?0 : entity}}({?1 : formula}),entity 0 claiming that 1 is true; any kind of quotation basically,[]
 -1,({?0 : formula}) \mcauses ({?1 : formula}),0 is the reason why 1 is true; note that 0 and 1 could be formulas talking about the past stating that something was the reason why something was the case at some point in time,[2]
 2,({?0 : formula}) \cfac ({?1 : formula}),there is a causal relation where 0 would make 1 true; this also covers speculations about how things could have been if past events would have gone differently,[]
-3,L_{{?0 : entity}} D ({?1 : formula}),entity 0 sais that 1 is desirable,[1;4]
+3,L_{{?0 : entity}} D ({?1 : formula}),entity 0 says that 1 is desirable,[1;4]
 4,O ({?0 : formula}),0 should be made true; this 'should' is distinct from specifying uncertainty,[]
 5,\diamond ({?0 : formula}),it is possible that 0 is true; in the sense that nothing prevents 0 from being true,[]
 6,L_{{?0 : entity}} bad({?1 : formula}),1 is/would be bad for entity 0,[]
