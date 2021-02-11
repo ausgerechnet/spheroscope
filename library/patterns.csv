@@ -6,7 +6,7 @@ id,template,explanation,specialises
 3,L_{{?0 : entity}} D ({?1 : formula}),entity 0 says that 1 is desirable,[1;4]
 4,O ({?0 : formula}),0 should be made true; this 'should' is distinct from specifying uncertainty,[]
 5,\diamond ({?0 : formula}),it is possible that 0 is true; in the sense that nothing prevents 0 from being true,[]
-6,badFor({{?0 : concept}}, {?1 : formula}),1 is/would be bad for concept 0,[]
+6,"badFor({{?0 : concept}}, {?1 : formula})",1 is/would be bad for concept 0,[]
 -7,({?1 : formula}) \mcauses L_{{?0 : entity}} bad,1 is bad for entity 0,[6]
 8,L_{{?0 : entity}} good({?1 : formula}),1 is/would be good for entity 0,[]
 -9,({?1 : formula}) \mcauses L_{{?0 : entity}} good,1 is good for entity 0,[8]
