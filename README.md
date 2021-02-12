@@ -1,5 +1,7 @@
 # spheroscope #
 
+[![DOI](https://zenodo.org/badge/291022407.svg)](https://zenodo.org/badge/latestdoi/291022407)
+
 spheroscope is a corpus viewer and analyzer designated to
 argumentation mining. The backend is based on
 [cwb-ccc](https://pypi.org/project/cwb-ccc/), which runs multiply
