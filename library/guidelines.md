@@ -16,7 +16,7 @@ retired
 # pattern 2
 ## notes
 - counterfactual reasoning
-- frequently reasoning about past / future
+- frequently reasoning about consequences of past events or future results of things
 - speculations
 - premise sufficient
 - often in combination with p5
@@ -55,7 +55,7 @@ retired
 - context-dependent variants (next Friday) may be annotated, but cannot be formalized
 
 # pattern 14
-  retired
+retired
 
 # pattern 15
 # pattern 16
@@ -64,7 +64,7 @@ retired
 - a portion of the hits will overlap with pattern 3, as often statements that something should be realised go along with a preference of one outcome over another.
 - in addition, 'pure' preference statements that do not indicate a necessary desire for either formula (*direct democracy is better than representative democracy*)
 ## counter-examples:
-- one of the options is implicit (*I prefer brexit*)
+- one of the options is implicit (*I prefer brexit*) which is then p3
 - the 'formula' part is realised by an entity reference (*I trust men who X, not men who Y*)
 - general preferability of a concept over another without ascribing the preference to any entity (*It is better to leave than to remain*: user who posted the tweet prefers leaving over remaining)
 
@@ -93,7 +93,6 @@ retired
 # pattern 23
 ## notes
 - no causal implication (in dubio pattern 2)
-- necessity
 
 # pattern 24
 # pattern 25
@@ -122,6 +121,9 @@ retired
 # pattern 39
 # pattern 40
 # pattern 41
+## notes
+- indirect version of p38 where something is claimed to be bad by consequence
+
 # Inverse lookup
 ![](https://mermaid.ink/svg/eyJjb2RlIjoiZ3JhcGggVERcbiAgICBGe0Zvcm11bGFlfSBcbiAgICBGIC0tPiBPbmVcbiAgICBGIC0tPiBUd29cbiAgICBPbmUgLS0-IE8oNDogT2JsaWdhdGlvbilcbiAgICBPbmUgLS0-IFAoMzY6IFBlcm1pc3Npb24pXG4gICAgT25lIC0tPiBEaWEoNTogUG9zc2liaWxpdHkpXG4gICAgT25lIC0tPiBCb3goMzU6IFVuaXZlcnNhbCBGYWN0cylcbiAgICBUd28gLS0-IEltcGwoMjM6IEltcGxpY2F0aW9uKVxuICAgIEltcGwgLS0-IENhdXMoMjogQ2F1c2F0aW9uKVxuICAgIEltcGwgLS0-IERlZigxMjogVXN1YWxseSBpbXBsaWVzKVxuICAgIE9uZSAtLT4gTmVnKDI3OiBOZWdhdGlvbilcbiAgICBDYXVzIC0tPiBOZWMoMjI6IE5lY2Vzc2FyeSBjb25kaXRpb24pXG5cbiAgICBUd28gLS0-IFNpbSgxNTogU2ltaWxhcml0eSlcbiAgICBFIC0tPiBTaW1cblxuICAgIEV7RW50aXRpZXN9XG5cbiAgICBGIC0tPiBMKDA6IExvY3V0aW9ucylcbiAgICBFIC0tPiBMXG4gICAgTCAtLT4gRCgzOiBEZXNpcmUgZXhwcmVzc2lvbilcbiAgICBMIC0tPiBiYWQoNjogQmFkbmVzcyBzdGF0ZW1lbnQpXG4gICAgYmFkIC0tPiBiYWRjb25zKDQxOiBCYWQgY29uc2VxdWVuY2VzIHN0YXRlbWVudClcbiAgICBDYXVzIC0tPiBiYWRjb25zXG4gICAgTCAtLT4gZ29vZCg4OiBHb29kbmVzcyBzdGF0ZW1lbnQpXG5cbiAgICBGIC0tPiBFRFtFcGlzdGVtaWMvRG94YXN0aWNdXG4gICAgRSAtLT4gRURcbiAgICBFRCAtLT4gQigxMDogQmVsaWVmKVxuICAgIEVEIC0tPiBLKDM0OiBLbm93bGVkZ2UpXG4gICAgTCAtLT4gUHJlZigxNjogUHJlZmVyZW5jZSBzdGF0ZW1lbnQpXG4gICAgTCAtLT4gUENhdXNlKDMzOiBQb3NzaWJsZSBjYXVzYXRpb24gc3RhdGVtZW50KVxuICAgIERpYSAtLT4gUENhdXNlXG4gICAgQ2F1cyAtLT4gUENhdXNlXG4gICAgRSAtLT4gR1tHcm91cHNdXG4gICAgRyAtLT4gSW4oMjQ6IFggaW4gZ3JvdXAgWSlcbiAgICBHIC0tPiBNZW1iZXJzXG4gICAgTWVtYmVycyAtLT4gQWxsKDI1OiBBbGwgbWVtYmVycyBoYXZlIHByb3BlcnR5KVxuICAgIEFsbCAtLT4gQWxsT2JsaWdhdGVkKDM3OiBBbGwgbWVtYmVycyBoYXZlIG9ibGlnYXRpb24gdG8uLi4pXG4gICAgT0QgLS0-IEFsbE9ibGlnYXRlZFxuICAgIEFsbCAtLT4gQWxsS25vdygyNjogQWxsIG1lbWJlcnMgaW5jbHVkaW5nIFgga25vdylcbiAgICBBbGwgLS0-IE1vc3QoMzI6IE1vc3QgbWVtYmVycyBoYXZlIHByb3BlcnR5KVxuICAgIEwgLS0-IEhvbmVzdHkoMjg6IFggaXMgaG9uZXN0IGFib3V0IFkpXG4gICAgTWVtYmVycyAtLT4gU29tZSgzOTogU29tZSBtZW1iZXJzIGhhdmUgcHJvcGVydHkpXG4gICAgTWVtYmVycyAtLT4gTm8oNDA6IE5vIG1lbWJlcnMgaGF2ZSBwcm9wZXJ0eSlcbiAgICBFIC0tPiBBdHRhY2tzXG4gICAgQXR0YWNrcyAtLT4gQWQoMjE6IEFkIEhvbWluZW0gY2F0Y2hhbGwpXG4gICAgQXR0YWNrcyAtLT4gTGkoMjA6IEVudGl0eSBsaWVzIGFib3V0IFgpXG4gICAgTyAtLT4gT0QoMTk6IFggaGFzIE9ibGlnYXRpb24pXG5cbiAgICBBe0FjdGlvbnN9XG5cbiAgICBFIC0tPiBBYmlsaXR5KDExOiBBYmlsaXR5KVxuICAgIEEgLS0-IEFiaWxpdHlcbiAgICBFIC0tPiBEaWQoMzA6IFggZGlkIFkpXG4gICAgQSAtLT4gRGlkXG5cbiAgICBPbmUgLS0-IFJlc3VsdCgyOTogRG9pbmcgWCB3b3VsZCBldmVudHVhbGx5IHJlc3VsdCBpbiBZKVxuICAgIEEgLS0-IFJlc3VsdFxuICAgIFJlc3VsdCAtLT4gU3RyZW5ndGgoMzE6IFBvd2VyIHRvIGVuZm9yY2UgWCkiLCJtZXJtYWlkIjp7InRoZW1lIjoiZGVmYXVsdCJ9LCJ1cGRhdGVFZGl0b3IiOmZhbHNlfQ)
 ```mermaid
