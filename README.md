@@ -71,7 +71,3 @@ parameters, can be changed through the interface
 If you want to use similarity-based recommendations for wordlists, you
 should point the `embeddings` parameter to appropriate embeddings
 stored as `pymagnitude` files.
-
-# Usage
-
-TBD
