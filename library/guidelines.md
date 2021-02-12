@@ -55,7 +55,7 @@ retired
 - context-dependent variants (next Friday) may be annotated, but cannot be formalized
 
 # pattern 14
-  retired
+retired
 
 # pattern 15
 # pattern 16
