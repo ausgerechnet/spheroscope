@@ -71,3 +71,9 @@ parameters, can be changed through the interface
 If you want to use similarity-based recommendations for wordlists, you
 should point the `embeddings` parameter to appropriate embeddings
 stored as `pymagnitude` files.
+
+## License ##
+The gold standard is licensed under a [Creative Commons Attribution-ShareAlike 4.0 International License (CC-BY-SA 4.0)](http://creativecommons.org/licenses/by-sa/4.0/).
+![http://creativecommons.org/licenses/by-sa/4.0/](https://i.creativecommons.org/l/by-sa/4.0/88x31.png)
+
+The code and all other assets are licensed under the [GNU General Public License version 3 (GPL-3)](https://www.gnu.org/licenses/gpl-3.0.html).
