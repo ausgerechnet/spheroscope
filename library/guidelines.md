@@ -121,3 +121,5 @@ retired
 # pattern 39
 # pattern 40
 # pattern 41
+## notes
+- indirect version of p38 where something is claimed to be bad by consequence
