@@ -42,4 +42,4 @@ id,template,explanation,specialises
 39,"\neg(({?0 : entity} \implies \downarrow x.\,\neg {?1 : formula\text{ mentioning }x}) \lor ({0} \dimplies \downarrow x,\, {1}))",some entities in 0 have property 1,[25;27;32]
 40,"\neg({?0 : entity} \implies \downarrow x.\,{?1 : formula\text{ mentioning }x})",nobody in 0 has property 1,[25;27]
 41,L_{{?0 : entity}}(bad({?2 : formula}) \land {?1 : formula} \cfac {?2}),entity 0 warns of bad consequences 2 of formula 1,[0;2;6;38]
-9999,\top,uncategorized queries,
+9999,\top,uncategorized queries,[]
