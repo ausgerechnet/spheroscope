@@ -16,7 +16,7 @@ retired
 # pattern 2
 ## notes
 - counterfactual reasoning
-- frequently reasoning about past / future
+- frequently reasoning about consequences of past events or future results of things
 - speculations
 - premise sufficient
 - often in combination with p5
@@ -55,7 +55,7 @@ retired
 - context-dependent variants (next Friday) may be annotated, but cannot be formalized
 
 # pattern 14
-  retired
+retired
 
 # pattern 15
 # pattern 16
@@ -64,7 +64,7 @@ retired
 - a portion of the hits will overlap with pattern 3, as often statements that something should be realised go along with a preference of one outcome over another.
 - in addition, 'pure' preference statements that do not indicate a necessary desire for either formula (*direct democracy is better than representative democracy*)
 ## counter-examples:
-- one of the options is implicit (*I prefer brexit*)
+- one of the options is implicit (*I prefer brexit*) which is then p3
 - the 'formula' part is realised by an entity reference (*I trust men who X, not men who Y*)
 - general preferability of a concept over another without ascribing the preference to any entity (*It is better to leave than to remain*: user who posted the tweet prefers leaving over remaining)
 
@@ -93,7 +93,6 @@ retired
 # pattern 23
 ## notes
 - no causal implication (in dubio pattern 2)
-- necessity
 
 # pattern 24
 # pattern 25
@@ -122,3 +121,5 @@ retired
 # pattern 39
 # pattern 40
 # pattern 41
+## notes
+- indirect version of p38 where something is claimed to be bad by consequence
