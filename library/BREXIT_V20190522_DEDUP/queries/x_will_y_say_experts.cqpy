@@ -1,0 +1,19 @@
+# --- CQPY query file
+# anchors:
+#   corrections:
+#     '1': -1
+#     '3': -1
+#   slots:
+#     '0':
+#     - 0
+#     - 1
+#     '1':
+#     - 2
+#     - 3
+# meta:
+#   comment: null
+#   name: x_will_y_say_experts
+#   pattern: 0
+# ---
+
+<np>@2:[::][]*</np> (/region[vp])+ (/region[np] | /region[vp] |/region[pp] | [pos_simple = "I|R"])+ @3:[::]"," <np> @0:[::][]* [lemma =$nouns_experts | pos_simple="Z"] []* </np> (/region[np])*@1:[::] <vp> []* [lemma =$verbs_communication & word != ".+ing"] []*</vp> ([word="#.+|@.+|\.|\?|\!|;"|pos_ner="UH|URL|ITJ|HT"]+ | </tweet> )

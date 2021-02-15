@@ -1,0 +1,16 @@
+# --- CQPY query file
+# anchors:
+#   corrections:
+#     '5': -1
+#   slots:
+#     '0': 1
+#     '1':
+#     - 2
+#     - 5
+# meta:
+#   comment: null
+#   name: x_say_y_will_z
+#   pattern: 0
+# ---
+
+<np>@0:[pos_simple="D|J"]? @1:[lemma = $nouns_experts]+[]*</np> <vp>[]* [lemma = $verbs_communication] []*</vp> <np>@2:[]* @3:[]</np> (<vp>[]*</vp>)+ @4[::] <np>[]*</np>@5:[::]

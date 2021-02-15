@@ -1,3 +1,4 @@
+
 activist
 advocate
 ally
@@ -40,8 +41,8 @@ conserv
 conservative
 constitutionalist
 corbynite
-democrat
 dem
+democrat
 diehard
 environmentalist
 europhile
@@ -107,10 +108,10 @@ right-wing
 right-winger
 rightist
 rightwing
-sikh
 secular
 secularist
 separatist
+sikh
 skeptic
 socdem
 socialist

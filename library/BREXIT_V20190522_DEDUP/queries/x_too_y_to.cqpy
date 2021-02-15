@@ -1,29 +1,15 @@
-# --- # CQPY query file
+# --- CQPY query file
 # anchors:
 #   corrections:
-#     5: -1
+#     '5': -1
 #   slots:
 #     '0':
 #     - 0
 #     - 1
-# corpus:
-#   corpus_name: BREXIT_V20190522_DEDUP
-#   lib_path: null
-# display:
-#   p_show:
-#   - word
-#   - lemma
-#   p_slots: lemma
-#   p_text: word
-#   s_show:
-#   - tweet_id
 # meta:
+#   comment: null
 #   name: x_too_y_to
 #   pattern: 18
-# query:
-#   context: null
-#   match_strategy: longest
-#   s_context: tweet
 # ---
 
 <np>@0:[::][]* @1:[]</np> [lemma = "be"]? "too" @2:[lemma = $adj_cog_negative]+ <vp>@3:[]* @4:[]</vp> (<np>[]*</np> | <pp>[]*</pp>)*@5:[::]
