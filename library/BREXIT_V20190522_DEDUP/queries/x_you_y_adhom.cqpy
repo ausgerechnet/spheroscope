@@ -17,7 +17,7 @@
 #   - tweet_id
 # meta:
 #   name: x_you_y_adhom
-#   pattern: 9999
+#   pattern: -1
 # query:
 #   context: null
 #   match_strategy: longest
