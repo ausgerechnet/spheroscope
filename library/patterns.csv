@@ -1,45 +1,45 @@
-id,template,explanation,specialises
--9999,\newcommand{\mcauses}{\Box\kern-.5em{\implies}} \newcommand{\dimplies}{\overset{d}{\implies}} \newcommand{\cfac}{\overset{c}{\implies}},the preamble (for exporting),[]
-0,L_{{?0 : entity}}({?1 : formula}),entity 0 claiming that 1 is true; any kind of quotation basically,[]
--1,({?0 : formula}) \mcauses ({?1 : formula}),0 is the reason why 1 is true; note that 0 and 1 could be formulas talking about the past stating that something was the reason why something was the case at some point in time,[2]
-2,({?0 : formula}) \cfac ({?1 : formula}),there is a causal relation where 0 would make 1 true; this also covers speculations about how things could have been if past events would have gone differently,[]
-3,L_{{?0 : entity}} D ({?1 : formula}),entity 0 says that 1 is desirable,[1;4]
-4,O ({?0 : formula}),0 should be made true; this 'should' is distinct from specifying uncertainty,[]
-5,\diamond ({?0 : formula}),it is possible that 0 is true; in the sense that nothing prevents 0 from being true,[]
-6,"badFor({{?0 : concept}}, {?1 : formula})",1 is/would be bad for concept 0,[]
--7,({?1 : formula}) \mcauses L_{{?0 : entity}} bad,1 is bad for entity 0,[6]
-8,L_{{?0 : entity}} good({?1 : formula}),1 is/would be good for entity 0,[]
--9,({?1 : formula}) \mcauses L_{{?0 : entity}} good,1 is good for entity 0,[8]
-10,B_{{?0 : entity}}({?1 : formula}),entity 0 believes 1 is true,[]
-11,A_{{?0 : entity}}({?1 : action}),entity 0 has the ability to perform action 1,[]
-12,({?0 : formula}) \dimplies ({?1 : formula}),0 usually implies 1; in the sense that it might not always be the case but one can assume it is unless evidence for the contrary is presented,[]
--13,@_{{?0 : situation}}({?1 : formula}),in situation/point in time 0 1 was/is/would be the case; e.g. 'in the industrial revolution {1}'; so named points in time together with something that was or will be the case there,[]
--14,({?0 : situation}) \sim ({?1 : situation}),situations 0 and 1 are similar,[]
-15,({?0 : concept}) \sim ({?1 : concept}),concepts (people or situations) 0 and 1 are similar; e.g. Hitler comparisons or comparing the brexit referendum to some other vote,[]
-16,L_{{?1 : entity}}(({?0 : formula}) \leq ({?2 : formula})),entity 1 prefers 2 to be true over 0; e.g. utterances like 'xy would rather have 0 than 2',[]
--17,biased({?0 : entity}),entity 0 is accused of being biased,[]
--18,unqualified({?0 : entity}),entity 0 is accused of being somehow unqualified to make meaningful contributions to the dialogue; e.g. 'idiot',[]
-19,O ({?0 : entity}) stit ({?1 : formula}),entity 0 should make 1 true,[]
-20,L_{{?0 : entity}} ({?1 : formula}) \land \neg B_{{?0}} ({?1}),entity 0 is accused of lying about truth of 1; 0's beliefs about 1 don't reflect what 0 said about 1,[27;28]
-21,\neg moral({?0 : entity}),entity 0 is morally bad and should be condemned; ad-hominem-catchall,[]
-22,(\neg {?0 : formula}) \mcauses (\neg {?1 : formula}),truth of 0 is necessary for 1 to be true,[2;27]
-23,({?0 : formula}) \implies ({?1 : formula}),if 0 then 1; note that if truth of 0 is said to be responsible/cause truth of 1 then it would rather be pattern 1 ,[12]
-24,{?0 : entity} \implies {?1 : entity},entity 0 is claimed to be part of entity 1 (most likely some group),[]
-25,"({?0 : entity})\implies \downarrow x.\,({?1 : formula \text{ mentioning } x})",all entities in entity 0 have property 1 e.g. brexit supporters are idiots,[]
-26,"({?0 : entity})\implies \downarrow x.\,K_x ({?1 : formula}); K_{{?2 : entity}}(?1)); (?2) \implies (?0)",entity 2 is claimed to be part of group/entity 0 whose members generally know truth of 1; e.g. as a scientist I know that this is true,[10;24;25]
-27,\neg {?0 : formula},falsity of formula 0 is claimed,[]
-28,L_{{?0 : entity}}({?1 : formula}) \implies B_{{?0}} ({?1}),entity 0 is claimed to be honest w.r.t. formula 1 in the sense that they say what they believe,[0;10;23]
-29,[{?0 : action}]F({?1 : formula}),by executing action 0 truth of 1 would be eventually achieved,[]
-30,E_{?0 : entity}({?1 : action}),entity 0 executed action 1,[]
-31,[\{?0 : entities\};\{{?1 : \text{list of lists of }actions}\} : {?2 : entities}]({?3 : formula}),the entities 0 can collaborate to enforce truth of 3 as long as entities 2 execute one of the (joint) actions from 1,[]
-32,"({?0 : entity})\dimplies \downarrow x.\,({?1 : formula\text{ mentioning }x})",most entities in entity 0 have property 1 e.g. most brexit supporters are idiots,[12;25]
-33,L_{{?0 : entity}} \diamond (({?1 : formula}) \mcauses ({?2 : formula})),entity 0 claims that 1 might cause 2 to be true,[1;2;5]
-34,K_{{?0 : entity}} ({?1 : formula}),entity 0 knows that 1 is true,[]
-35,\Box  ({?0 : formula}),formula 0 is necessarily true in the sense that it cannot be the case that 0 is false,[]
-36,P ({?0 : formula}),formula 0 is permitted in the sense that it is morally acceptable to make 0 true or that 0 is true,[]
-37,"L_{{?0 : entity}} ({?1 : entity} \implies \downarrow x.\,O (x stit ({?2 : formula}))",entity 0 states that entities in group 1 should make 2 true,[3;25]
-38,L_{{?0 : entity}} bad({?1 : formula}),entity 0 warns of 1 being bad,[0;6]
-39,"\neg(({?0 : entity} \implies \downarrow x.\,\neg {?1 : formula\text{ mentioning }x}) \lor ({0} \dimplies \downarrow x,\, {1}))",some entities in 0 have property 1,[25;27;32]
-40,"\neg({?0 : entity} \implies \downarrow x.\,{?1 : formula\text{ mentioning }x})",nobody in 0 has property 1,[25;27]
-41,L_{{?0 : entity}}(bad({?2 : formula}) \land {?1 : formula} \cfac {?2}),entity 0 warns of bad consequences 2 of formula 1,[0;2;6;38]
-9999,\top,uncategorized queries,[]
+"id","template","explanation","specialises","explanation_ph"
+-9999,"\newcommand{\mcauses}{\Box\kern-.5em{\implies}} \newcommand{\dimplies}{\overset{d}{\implies}} \newcommand{\cfac}{\overset{c}{\implies}}","the preamble (for exporting)","[]",
+0,"L_{{?0 : entity}}({?1 : formula})","entity 0 claiming that 1 is true; any kind of quotation basically","[]","entity claims: formula is true"
+-1,"({?0 : formula}) \mcauses ({?1 : formula})","0 is the reason why 1 is true; note that 0 and 1 could be formulas talking about the past stating that something was the reason why something was the case at some point in time","[2]","formula1 is reason for formula2 (p → q; p; q)"
+2,"({?0 : formula}) \cfac ({?1 : formula})","there is a causal relation where 0 would make 1 true; this also covers speculations about how things could have been if past events would have gone differently","[]","formula1 would be reason for formula2 (p → q) "
+3,"L_{{?0 : entity}} D ({?1 : formula})","entity 0 says that 1 is desirable","[1;4]","entity wants: formula should be made true"
+4,"O ({?0 : formula})","0 should be made true; this 'should' is distinct from specifying uncertainty","[]","formula should be made true"
+5,"\diamond ({?0 : formula})","it is possible that 0 is true; in the sense that nothing prevents 0 from being true","[]","formula could be true"
+6,"badFor({{?0 : concept}}, {?1 : formula})","1 is/would be bad for concept 0","[]","formula would be bad for entity"
+-7,"({?1 : formula}) \mcauses L_{{?0 : entity}} bad","1 is bad for entity 0","[6]","formula is bad for entity"
+8,"L_{{?0 : entity}} good({?1 : formula})","1 is/would be good for entity 0","[]","formula would be good for entity"
+-9,"({?1 : formula}) \mcauses L_{{?0 : entity}} good","1 is good for entity 0","[8]","formula is good for entity"
+10,"B_{{?0 : entity}}({?1 : formula})","entity 0 believes 1 is true","[]","entity believes: formula is true"
+11,"A_{{?0 : entity}}({?1 : action})","entity 0 has the ability to perform action 1","[]","entity can perform: action"
+12,"({?0 : formula}) \dimplies ({?1 : formula})","0 usually implies 1; in the sense that it might not always be the case but one can assume it is unless evidence for the contrary is presented","[]","formula1 usually implies formula2 (p ""→"" q) "
+-13,"@_{{?0 : situation}}({?1 : formula})","in situation/point in time 0 1 was/is/would be the case; e.g. 'in the industrial revolution {1}'; so named points in time together with something that was or will be the case there","[]",
+-14,"({?0 : situation}) \sim ({?1 : situation})","situations 0 and 1 are similar","[]",
+15,"({?0 : concept}) \sim ({?1 : concept})","concepts (people or situations) 0 and 1 are similar; e.g. Hitler comparisons or comparing the brexit referendum to some other vote","[]","concept1 is similar to concept2"
+16,"L_{{?1 : entity}}(({?0 : formula}) \leq ({?2 : formula}))","entity 1 prefers 2 to be true over 0; e.g. utterances like 'xy would rather have 0 than 2'","[]","entity prefers: formula1 over formula2"
+-17,"biased({?0 : entity})","entity 0 is accused of being biased","[]",
+-18,"unqualified({?0 : entity})","entity 0 is accused of being somehow unqualified to make meaningful contributions to the dialogue; e.g. 'idiot'","[]",
+19,"O ({?0 : entity}) stit ({?1 : formula})","entity 0 should make 1 true","[]","entity should make formula true"
+20,"L_{{?0 : entity}} ({?1 : formula}) \land \neg B_{{?0}} ({?1})","entity 0 is accused of lying about truth of 1; 0's beliefs about 1 don't reflect what 0 said about 1","[27;28]","entity lies about formula (since entity's beliefs contradict formula)"
+21,"\neg moral({?0 : entity})","entity 0 is morally bad and should be condemned; ad-hominem-catchall","[]","entity is morally bad (ad-hominem catch-all)"
+22,"(\neg {?0 : formula}) \mcauses (\neg {?1 : formula})","truth of 0 is necessary for 1 to be true","[2;27]","formula1 is necessary for formula2 (¬p → ¬q)"
+23,"({?0 : formula}) \implies ({?1 : formula})","if 0 then 1; note that if truth of 0 is said to be responsible/cause truth of 1 then it would rather be pattern 1 ","[12]","formula1 implies formula2 (p → q)"
+24,"{?0 : entity} \implies {?1 : entity}","entity 0 is claimed to be part of entity 1 (most likely some group)","[]","entity is part of entity group"
+25,"({?0 : entity})\implies \downarrow x.\,({?1 : formula \text{ mentioning } x})","all entities in entity 0 have property 1 e.g. brexit supporters are idiots","[]","entity group has certain property"
+26,"({?0 : entity})\implies \downarrow x.\,K_x ({?1 : formula}); K_{{?2 : entity}}(?1)); (?2) \implies (?0)","entity 2 is claimed to be part of group/entity 0 whose members generally know truth of 1; e.g. as a scientist I know that this is true","[10;24;25]","entity is part of entity group; entity group usually believes formula"
+27,"\neg {?0 : formula}","falsity of formula 0 is claimed","[]","formula is not true (¬p)"
+28,"L_{{?0 : entity}}({?1 : formula}) \implies B_{{?0}} ({?1})","entity 0 is claimed to be honest w.r.t. formula 1 in the sense that they say what they believe","[0;10;23]","entity is honest about formula"
+29,"[{?0 : action}]F({?1 : formula})","by executing action 0 truth of 1 would be eventually achieved","[]","action would make formula true"
+30,"E_{?0 : entity}({?1 : action})","entity 0 executed action 1","[]","entity executed action"
+31,"[\{?0 : entities\};\{{?1 : \text{list of lists of }actions}\} : {?2 : entities}]({?3 : formula})","the entities 0 can collaborate to enforce truth of 3 as long as entities 2 execute one of the (joint) actions from 1","[]","entity1 can enforce formula if entity2 executes action"
+32,"({?0 : entity})\dimplies \downarrow x.\,({?1 : formula\text{ mentioning }x})","most entities in entity 0 have property 1 e.g. most brexit supporters are idiots","[12;25]","most entities in entity group have property"
+33,"L_{{?0 : entity}} \diamond (({?1 : formula}) \mcauses ({?2 : formula}))","entity 0 claims that 1 might cause 2 to be true","[1;2;5]","entity1 claims that entity2 might enforce formula"
+34,"K_{{?0 : entity}} ({?1 : formula})","entity 0 knows that 1 is true","[]","entity knows: formula is true (formula must be true)"
+35,"\Box  ({?0 : formula})","formula 0 is necessarily true in the sense that it cannot be the case that 0 is false","[]","formula is a tautology"
+36,"P ({?0 : formula})","formula 0 is permitted in the sense that it is morally acceptable to make 0 true or that 0 is true","[]","formula is morally acceptable"
+37,"L_{{?0 : entity}} ({?1 : entity} \implies \downarrow x.\,O (x stit ({?2 : formula}))","entity 0 states that entities in group 1 should make 2 true","[3;25]","entity1 wants entity2 to enforce formula"
+38,"L_{{?0 : entity}} bad({?1 : formula})","entity 0 warns of 1 being bad","[0;6]","entity warns: formula is bad"
+39,"\neg(({?0 : entity} \implies \downarrow x.\,\neg {?1 : formula\text{ mentioning }x}) \lor ({0} \dimplies \downarrow x,\, {1}))","some entities in 0 have property 1","[25;27;32]","some entities in entity group have property"
+40,"\neg({?0 : entity} \implies \downarrow x.\,{?1 : formula\text{ mentioning }x})","nobody in 0 has property 1","[25;27]","none of the entities in entity group have property"
+41,"L_{{?0 : entity}}(bad({?2 : formula}) \land {?1 : formula} \cfac {?2})","entity 0 warns of bad consequences 2 of formula 1","[0;2;6;38]",
+9999,"\top","uncategorized queries","[]",
