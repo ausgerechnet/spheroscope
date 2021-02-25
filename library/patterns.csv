@@ -16,7 +16,7 @@ id,template,explanation,specialises
 -13,@_{{?0 : situation}}({?1 : formula}),in situation/point in time 0 1 was/is/would be the case; e.g. 'in the industrial revolution {1}'; so named points in time together with something that was or will be the case there,[]
 -14,({?0 : situation}) \sim ({?1 : situation}),situations 0 and 1 are similar,[]
 15,({?0 : concept}) \sim ({?1 : concept}),concepts (people or situations) 0 and 1 are similar; e.g. Hitler comparisons or comparing the brexit referendum to some other vote,[]
-16,L_{{?1 : entity}}(({?0 : formula}) \leq ({?2 : formula})),entity 1 prefers 2 to be true over 0; e.g. utterances like 'xy would rather have 0 than 2',[0,42]
+16,L_{{?1 : entity}}(({?0 : formula}) \leq ({?2 : formula})),entity 1 prefers 2 to be true over 0; e.g. utterances like 'xy would rather have 0 than 2',[0;42]
 -17,biased({?0 : entity}),entity 0 is accused of being biased,[]
 -18,unqualified({?0 : entity}),entity 0 is accused of being somehow unqualified to make meaningful contributions to the dialogue; e.g. 'idiot',[]
 19,O ({?0 : entity}) stit ({?1 : formula}),entity 0 should make 1 true,[]
