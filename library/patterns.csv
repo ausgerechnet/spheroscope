@@ -44,5 +44,6 @@ id,template,explanation,specialises
 41,L_{{?0 : entity}}(bad({?2 : formula}) \land {?1 : formula} \cfac {?2}),entity 0 warns of bad consequences 2 of formula 1,[0;2;6;38]
 42,({?0 : formula}) \leq ({?1 : formula}),1 is/would be at least as good as 0,[]
 43,({?0 : formula}) \leq_{{?2 : concept}} ({?1 : formula}),1 is/would be at least as good for concept 2 as 0,[]
-44,good({?1 : formula}),1 is/would be genereally good,[]
+44,good({?0 : formula}),0 is/would be genereally good,[]
+45,bad({?0 : formula}),0 is/would be generally bad,[]
 9999,\top,uncategorized queries,[]
