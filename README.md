@@ -1,5 +1,7 @@
 # spheroscope #
 
+[![DOI](https://zenodo.org/badge/291022407.svg)](https://zenodo.org/badge/latestdoi/291022407)
+
 spheroscope is a corpus viewer and analyzer designated to
 argumentation mining. The backend is based on
 [cwb-ccc](https://pypi.org/project/cwb-ccc/), which runs multiply
@@ -70,6 +72,8 @@ If you want to use similarity-based recommendations for wordlists, you
 should point the `embeddings` parameter to appropriate embeddings
 stored as `pymagnitude` files.
 
-# Usage
+## License ##
+The gold standard is licensed under a [Creative Commons Attribution-ShareAlike 4.0 International License (CC-BY-SA 4.0)](http://creativecommons.org/licenses/by-sa/4.0/).
+![http://creativecommons.org/licenses/by-sa/4.0/](https://i.creativecommons.org/l/by-sa/4.0/88x31.png)
 
-TBD
+The code and all other assets are licensed under the [GNU General Public License version 3 (GPL-3)](https://www.gnu.org/licenses/gpl-3.0.html).
