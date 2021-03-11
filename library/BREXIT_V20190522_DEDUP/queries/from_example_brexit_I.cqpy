@@ -1,8 +1,8 @@
-# --- # CQPY query file
+# --- CQPY query file
 # anchors:
 #   corrections:
-#     1: -1
-#     3: -1
+#     '1': -1
+#     '3': -1
 #   slots:
 #     '0':
 #     - 0
@@ -10,24 +10,10 @@
 #     '1':
 #     - 2
 #     - 3
-# corpus:
-#   corpus_name: BREXIT_V20190522_DEDUP
-#   lib_path: null
-# display:
-#   p_show:
-#   - word
-#   - lemma
-#   p_slots: lemma
-#   p_text: word
-#   s_show:
-#   - tweet_id
 # meta:
+#   comment: null
 #   name: from_example_brexit_I
 #   pattern: 25
-# query:
-#   context: null
-#   match_strategy: longest
-#   s_context: tweet
 # ---
 
 <np>[]*[lemma=$nouns_examples][]*</np> ("such" | "as"|"like")+ (<np>@0:[::][]*</np>)+@1:[::] <vp>[]* [lemma="be"] []*</vp> @2:[::](<np>[word != "\.|http.+|\@"]*</np> | /region[vp] | /region[pp] | /region[adjp] | [pos_simple="R"])+ [pos_simple="#"]?@3:[::]

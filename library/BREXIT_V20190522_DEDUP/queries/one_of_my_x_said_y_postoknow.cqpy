@@ -16,7 +16,7 @@
 #   - tweet_id
 # meta:
 #   name: one_of_my_x_said_y_postoknow
-#   pattern: 9999
+#   pattern: -1
 # query:
 #   context: null
 #   match_strategy: longest

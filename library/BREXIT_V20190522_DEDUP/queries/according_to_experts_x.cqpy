@@ -1,0 +1,19 @@
+# --- CQPY query file
+# anchors:
+#   corrections:
+#     '1': -1
+#     '3': -1
+#   slots:
+#     '0':
+#     - 0
+#     - 1
+#     '1':
+#     - 2
+#     - 3
+# meta:
+#   comment: null
+#   name: according_to_experts_x
+#   pattern: 0
+# ---
+
+("according" "to" | "as" [lemma = $verbs_communication] "by") <np> @0:[::][word != "(http.|www|t\.co).+"]* (/name_any[] | [lemma = $nouns_experts | lemma = $nouns_person_profession]) [word != "(http.|www|t\.co).+"]* </np>@1:[::] ","? <np>@2:[::][word != "(http.|www|t\.co).+"]*</np> (<vp>[]*</vp>)+ (<np>[word != "(http.|www|t\.co).+"]*</np> | <vp>[]*</vp> |<pp>[]*</pp> | [pos_simple = "I|R"])+ @3:[::]

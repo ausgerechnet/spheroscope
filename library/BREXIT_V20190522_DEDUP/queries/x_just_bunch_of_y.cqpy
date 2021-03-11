@@ -1,4 +1,4 @@
-# --- # CQPY query file
+# --- CQPY query file
 # anchors:
 #   corrections: {}
 #   slots:
@@ -8,24 +8,10 @@
 #     '2':
 #     - 2
 #     - 3
-# corpus:
-#   corpus_name: BREXIT_V20190522_DEDUP
-#   lib_path: null
-# display:
-#   p_show:
-#   - word
-#   - lemma
-#   p_slots: lemma
-#   p_text: word
-#   s_show:
-#   - tweet_id
 # meta:
+#   comment: null
 #   name: x_just_bunch_of_y
 #   pattern: 25
-# query:
-#   context: null
-#   match_strategy: longest
-#   s_context: tweet
 # ---
 
 <np>[]* @0:[lemma = $nouns_experts|lemma = $nouns_common_people|lemma= $nouns_person_negative|lemma =$nouns_profession_people|lemma = $nouns_person_origin|lemma=$nouns_person_support|pos_simple ="P|Z"]+ @1:[]*</np> [lemma ="be"] [pos_simple = "R" & word!="not"]? <np>[]* [lemma = $nouns_large_number]</np> "of" <np>@2:[]*[lemma = $adj_cog_negative]* @3:[lemma = $nouns_person_negative | lemma = $nouns_gen_negative | lemma = $nouns_cog_negative]</np>
