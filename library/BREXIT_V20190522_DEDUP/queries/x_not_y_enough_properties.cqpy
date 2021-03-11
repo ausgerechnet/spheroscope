@@ -1,28 +1,14 @@
-# --- # CQPY query file
+# --- CQPY query file
 # anchors:
 #   corrections: {}
 #   slots:
 #     '0':
 #     - 0
 #     - 1
-# corpus:
-#   corpus_name: BREXIT_V20190522_DEDUP
-#   lib_path: null
-# display:
-#   p_show:
-#   - word
-#   - lemma
-#   p_slots: lemma
-#   p_text: word
-#   s_show:
-#   - tweet_id
 # meta:
+#   comment: null
 #   name: x_not_y_enough_properties
 #   pattern: 18
-# query:
-#   context: null
-#   match_strategy: longest
-#   s_context: tweet
 # ---
 
 (<np>@0:[::][]* @1:[]</np>)+ /negation_with_optional_verb[] [pos_simple="R"]? @2:[lemma = $adj_moral_positive] "enough"? <vp>@3:[::][]* @4:[]</vp> (<np>[]*</np> | <pp>[]*</pp>)*@5:[::]

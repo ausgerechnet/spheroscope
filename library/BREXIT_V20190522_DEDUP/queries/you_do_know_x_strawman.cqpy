@@ -1,8 +1,8 @@
-# --- # CQPY query file
+# --- CQPY query file
 # anchors:
 #   corrections:
-#     1: -1
-#     3: -1
+#     '1': -1
+#     '3': -1
 #   slots:
 #     '0':
 #     - 0
@@ -10,24 +10,10 @@
 #     '1':
 #     - 2
 #     - 3
-# corpus:
-#   corpus_name: BREXIT_V20190522_DEDUP
-#   lib_path: null
-# display:
-#   p_show:
-#   - word
-#   - lemma
-#   p_slots: lemma
-#   p_text: word
-#   s_show:
-#   - tweet_id
 # meta:
+#   comment: null
 #   name: you_do_know_x_strawman
-#   pattern: 20
-# query:
-#   context: null
-#   match_strategy: longest
-#   s_context: tweet
+#   pattern: -1
 # ---
 
 @0:[pos_ner = "USR|NNP" | word = "@.+"]+ @1:[::]","? "you" "do" /region[advp]? [lemma=$verbs_know] "that"? @2:[::](/region[np])+ /region[vp] (/region[advp] | /region[np] | /region[pp] | /region[vp])+ ","? ("right" | "don't" "you")? @3:[::]

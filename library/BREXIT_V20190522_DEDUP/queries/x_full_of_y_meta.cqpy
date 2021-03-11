@@ -15,7 +15,7 @@
 #   - tweet_id
 # meta:
 #   name: x_full_of_y_meta
-#   pattern: 9999
+#   pattern: -1
 # query:
 #   context: null
 #   match_strategy: longest
