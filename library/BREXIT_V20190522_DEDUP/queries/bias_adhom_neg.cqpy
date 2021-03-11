@@ -1,29 +1,15 @@
-# --- # CQPY query file
+# --- CQPY query file
 # anchors:
 #   corrections:
-#     1: -1
+#     '1': -1
 #   slots:
 #     '0':
 #     - 0
 #     - 1
-# corpus:
-#   corpus_name: BREXIT_V20190522_DEDUP
-#   lib_path: null
-# display:
-#   p_show:
-#   - word
-#   - lemma
-#   p_slots: lemma
-#   p_text: word
-#   s_show:
-#   - tweet_id
 # meta:
+#   comment: null
 #   name: bias_adhom_neg
 #   pattern: 17
-# query:
-#   context: null
-#   match_strategy: longest
-#   s_context: tweet
 # ---
 
 (<np>[pos_ner="DT|JJ"]? @0:[pos_simple="P|Z|#" & word != "your|their" | lemma = $wordlist_entities | lemma = $nouns_person_negative | lemma = $nouns_person_support | lemma = $nouns_common_people] []*</np>)+ @1:[::] [lemma = "be"] [pos_simple = "R"]* "biased" "against" @2:[::](<np>[word!="\."]*</np>)+ @3:[::]

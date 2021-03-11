@@ -16,7 +16,7 @@
 #   - tweet_id
 # meta:
 #   name: as_x_i_y_eca
-#   pattern: 9999
+#   pattern: -1
 # query:
 #   context: null
 #   match_strategy: longest
