@@ -33,7 +33,7 @@
 30,"E_{?0 : entity}({?1 : action})","entity 0 executed action 1","[]","entity executed action"
 31,"[\{?0 : entities\};\{{?1 : \text{list of lists of }actions}\} : {?2 : entities}]({?3 : formula})","the entities 0 can collaborate to enforce truth of 3 as long as entities 2 execute one of the (joint) actions from 1","[]","entity1 can enforce formula if entity2 executes action"
 32,"({?0 : entity})\dimplies \downarrow x.\,({?1 : formula\text{ mentioning }x})","most entities in entity 0 have property 1 e.g. most brexit supporters are idiots","[12;25]","most entities in entity group have property"
-33,"L_{{?0 : entity}} \diamond (({?1 : formula}) \mcauses ({?2 : formula}))","entity 0 claims that 1 might cause 2 to be true","[1;2;5]","entity1 claims that entity2 might enforce formula"
+33,"L_{{?0 : entity}} \diamond (({?1 : formula}) \mcauses ({?2 : formula}))","entity 0 claims that 1 might cause 2 to be true","[1;2;5]","entity claims: formula1 is reason for formula2"
 34,"K_{{?0 : entity}} ({?1 : formula})","entity 0 knows that 1 is true","[]","entity knows: formula is true (formula must be true)"
 35,"\Box  ({?0 : formula})","formula 0 is necessarily true in the sense that it cannot be the case that 0 is false","[]","formula is a tautology"
 36,"P ({?0 : formula})","formula 0 is permitted in the sense that it is morally acceptable to make 0 true or that 0 is true","[]","formula is morally acceptable"
@@ -41,5 +41,5 @@
 38,"L_{{?0 : entity}} bad({?1 : formula})","entity 0 warns of 1 being bad","[0;6]","entity warns: formula is bad"
 39,"\neg(({?0 : entity} \implies \downarrow x.\,\neg {?1 : formula\text{ mentioning }x}) \lor ({0} \dimplies \downarrow x,\, {1}))","some entities in 0 have property 1","[25;27;32]","some entities in entity group have property"
 40,"\neg({?0 : entity} \implies \downarrow x.\,{?1 : formula\text{ mentioning }x})","nobody in 0 has property 1","[25;27]","none of the entities in entity group have property"
-41,"L_{{?0 : entity}}(bad({?2 : formula}) \land {?1 : formula} \cfac {?2})","entity 0 warns of bad consequences 2 of formula 1","[0;2;6;38]",
+41,"L_{{?0 : entity}}(bad({?2 : formula}) \land {?1 : formula} \cfac {?2})","entity 0 warns of bad consequences 2 of formula 1","[0;2;6;38]","entity warns: formula 1 implies formula 2; formula 2 is bad"
 9999,"\top","uncategorized queries","[]",
