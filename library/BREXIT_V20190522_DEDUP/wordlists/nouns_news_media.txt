@@ -1,3 +1,4 @@
+
 article
 campaign
 facebook
@@ -10,7 +11,7 @@ newsfeed
 politics
 poll
 report
-timeline
-twitter
 rhetoric
 strategy
+timeline
+twitter

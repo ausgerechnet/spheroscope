@@ -17,7 +17,7 @@
 #   - tweet_id
 # meta:
 #   name: common_folks_eca
-#   pattern: 9999
+#   pattern: -1
 # query:
 #   context: null
 #   match_strategy: longest

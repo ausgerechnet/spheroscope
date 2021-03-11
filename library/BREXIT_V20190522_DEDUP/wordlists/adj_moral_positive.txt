@@ -1,3 +1,4 @@
+
 admirable
 altruistic
 astute
@@ -29,8 +30,8 @@ great
 heartening
 helpful
 honest
-honourable
 honorable
+honourable
 hospitable
 humble
 industrious

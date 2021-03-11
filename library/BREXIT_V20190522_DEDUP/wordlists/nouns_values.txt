@@ -8,6 +8,7 @@ democracy
 #democracy
 dignity
 #dignity
+diversity
 equality
 #equality
 #fightracism
@@ -42,10 +43,12 @@ pluralism
 #pluralism
 positivity
 #pressfreedom
+prosperity
 quality
 #religiousfreedom
 rights
 #rights
+security
 self-determination
 #socialjustice
 sovereignty
