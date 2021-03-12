@@ -1,3 +1,4 @@
+
 admirable
 adorable
 amazing
@@ -7,9 +8,9 @@ astounding
 baffling
 beautiful
 bizarre
-brilliant
 bold
 brave
+brilliant
 charming
 clever
 compelling
@@ -34,8 +35,8 @@ fortunate
 funny
 generous
 great
-heartening
 heartbreaking
+heartening
 heartwarming
 hilarious
 impressive
@@ -44,8 +45,8 @@ interesting
 ironic
 lovely
 ludicrous
-marvellous
 magnificient
+marvellous
 noble
 odd
 perfect
@@ -53,7 +54,6 @@ phenomenal
 poignant
 remarkable
 ridiculous
-tragic
 smart
 spectacular
 splendid
@@ -62,6 +62,7 @@ superb?
 surprising
 terrific
 thoughtful
+tragic
 unbelievable
 unfortunate
 weird

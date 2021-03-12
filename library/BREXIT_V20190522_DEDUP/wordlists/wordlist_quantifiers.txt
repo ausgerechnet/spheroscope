@@ -1,3 +1,5 @@
+
+[a-z]*load?
 all
 billion
 bunch
@@ -8,7 +10,6 @@ heap
 horde
 hundred
 influx
-[a-z]*load?
 lot
 many
 mass
