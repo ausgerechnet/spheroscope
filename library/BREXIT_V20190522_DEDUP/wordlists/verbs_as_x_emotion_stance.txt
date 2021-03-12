@@ -1,5 +1,6 @@
-agree
+
 act
+agree
 apologize
 believe
 counter
@@ -16,7 +17,7 @@ refuse
 see
 support
 urge
+vote
 want
 welcome
 wish
-vote
