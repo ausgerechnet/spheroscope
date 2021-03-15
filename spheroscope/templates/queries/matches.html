@@ -21,17 +21,22 @@
         <div id="top-section">
 
           <div id="select-query">
-              <section id="show-query">{{ selected_query|safe }}</section>
+                <section id="shown-query">{{ selected_query|safe }}</section>
           </div>
 
             <div id="show-list">
-              <section id="meta-data" hidden>{{ meta_data }}</section>
-{#                pagination #}
-                <div id="freq-table-pagination">
-                    <section id="freq-tables">{{ frequency_table|safe }}</section>
+
+              <section id="extra-information" hidden>{{ match_extra_inf }}</section>
+
+                <section id="meta-data" hidden>{{ meta_data }}</section>
+
+                <div id="freq-table-wrapper">
+                    <section id="freq-tables" hidden>{{ frequency_table|safe }}</section>
                 </div>
+
             </div>
-            </div>
+
+        </div>
 
         <br>
 
@@ -41,116 +46,13 @@
 
         </div>
 
-    <script>
+        <div id="overlay"></div>
 
-        const resultsContainer = document.querySelector("#show-query-results");
-        const selectedQueryContainer = document.querySelector("#select-query");
-        const listContainer = document.querySelector("#show-list");
-        const table = document.querySelector("#query-results");
-
-        const tweets = $("#query-results tr");
-        delete tweets[0];
-
-        const metadataString = document.querySelector("#meta-data")
-        const metadata = JSON.parse(metadataString.innerText);
-
-        const freqTableString = document.querySelector("#meta-data")
-        const freqTables = JSON.parse(freqTableString.innerText);
-
-        const mdList = document.createElement("ol");
-        listContainer.appendChild(mdList);
-
-        // div with class tooltip around all metadata tables (hide tooltip)
-        // div with class tooltip area around all tweets
-
-        let tooltipId = 1;
-        for(let tbl in metadata){
-            let tooltip = document.createElement("div")
-            tooltip.classList.add("tooltip");
-            tooltip.id = tooltipId;
-            tooltip.innerHTML = metadata[tbl];
-            //tooltip.style.display = "none";
-            document.body.appendChild(tooltip);
-            tooltipId += 1;
-        }
-
-        //document.querySelectorAll(".md-tbl").style.display = "none";
-        let tweetId = 0;
-        try{
-
-
-            for(let row in tweets){
-
-              let tooltipContainer = document.createElement("div");
-              tooltipContainer.classList.add("tooltip-area");
-              let innerHtml = tweets[row].children[2].innerHTML;
-              tweets[row].children[2].innerHTML = "";
-              tweets[row].children[2].appendChild(tooltipContainer);
-              tooltipContainer.innerHTML = innerHtml;
-              tooltipContainer.id = tweetId;
-              tweetId += 1;
-            }
-
-        }catch{
-
-        }
-
-        /*for(let tbl in metadata){
-
-        }*/
-
-        const tooltipArea = document.querySelectorAll(".tooltip-area");
-        const tooltip = document.querySelectorAll(".tooltip");
-        //tooltipArea[0].id, $(".tooltip-area#1")
-
-        // display tooltip on hover for every tweet
-
-        /* for(let i = 1; i<=10; i++){
-	        console.log($(`.tooltip-area#${i}`));
-        }       */
-
-        $(function() {
-
-            // mouse hover
-        for(let i = 0; i<=tweetId; i++){
-                //console.log($(`.tooltip-area#${i}`));
-
-                // mouse hover
-                $(`.tooltip-area#${i}`).hover(function() {
-
-                    let offset = $(`.tooltip-area#${i}`).offset();
-
-                    $(`.tooltip:hidden`).eq(i).css({
-                        top: offset.top - 130,
-                        left: offset.left - 62,
-                        display: "block"
-                    })
-
-                    $(`.tooltip:hidden`).eq(i).animate({ opacity: 1.0 }, 0);
-                    // move away mouse
-                },  function(){
-                    $(`.tooltip`).eq(i).animate({ opacity: 0.0 }, 200);
-                    $(`.tooltip`).eq(i).css({ display: "none" });
-                })
-
-            }
-
-
-        });
-
-        /*for(let tbl in metadata){
-        let li = document.createElement("li");
-        mdList.appendChild(li)
-        //let link = document.createElement("a");
-        //li.innerHTML = link;
-        //li.innerHTML = "<span class='md-tbl'>"+metadata[tbl]+"</span>";
-        }*/
-
-    </script>
+        <script src="{{ url_for('static', filename='queryscript.js') }}" type="text/javascript"></script>
 
     {% endblock %}
 
-    <script src="{{ url_for('static', filename='queryscript.js') }}" type="text/javascript"></script>
+
 
   </body>
 </html>
