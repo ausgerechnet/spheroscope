@@ -33,13 +33,13 @@ Set the `REGISTRY_PATH` to your CWB registry and `CACHE_PATH` to some directory 
 
 You can then run
 
-	./init.sh
+    make init
 	
 to populate your local instance with all queries, macros, and wordlists from the [library](library/).
 
 You can now start the flask server via
 
-	./start-server.sh
+    make run
 
 and navigate to [http://127.0.0.1:5000/](http://127.0.0.1:5000/) to access the interface.
 
