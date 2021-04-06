@@ -8,19 +8,15 @@
 You will need a working installation of the [IMS Open Corpus Workbench (CWB)](http://cwb.sourceforge.net/), a CWB-indexed corpus, as well as word embeddings for most of what this app offers.  The python3 dependencies will be installed automatically if you follow the setup guide below.
 
 ## Setup ##
-We use `pipenv` for dependency management. Install `pipenv` via `pip`:
-	
-	pip install -r requirements.txt
 
-`pipenv` takes care of the rest:
+You can simply
 
-	pipenv install --dev
-	
-Don't forget to switch to an interactive shell via
+    make install
 
-	pipenv shell
 
-Alternatively, you can can configure an anaconda environment using the additional [requirements file](requirements_anaconda.txt).
+which uses pipenv to create a virtual environment and install all required packages.
+
+Alternatively, you can can configure your own virtual environment using the [requirements file](requirements_anaconda.txt).
 
 ## Configuration ##
 Configure the app via `cfg.py` in the app folder. You can find an [example config file](cfg_example.py) in the repository.
@@ -31,7 +27,7 @@ Set the `REGISTRY_PATH` to your CWB registry and `CACHE_PATH` to some directory 
 <!-- [fillform](https://gitlab.com/mgttlinger/fillform/-/jobs) via -->
 <!-- `FILLFORM`. Don't provide this key if you do not want to use fillform. -->
 
-You can then run
+You can then
 
     make init
 	
