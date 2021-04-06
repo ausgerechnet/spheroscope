@@ -7,7 +7,7 @@ from glob import glob
 from pandas import read_csv
 from datetime import datetime
 
-from ccc.queries import cqpy_load, cqpy_dump
+from ccc.cqpy import cqpy_load, cqpy_dump
 
 from flask import current_app
 from flask.cli import with_appcontext
