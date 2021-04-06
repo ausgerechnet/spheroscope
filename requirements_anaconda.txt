@@ -6,15 +6,18 @@ wheel
 twine
 
 cython
-Flask==1.0.2
+Flask==1.1.2
 Flask-Migrate==2.3.1
 Flask-Script==2.0.6
-Flask-SQLAlchemy==2.3.2
-Flask-WTF==0.14.2
-Flask-User==1.0.1.5
-Flask-JWT-Extended==3.15.0
-Flask-Caching==1.4.0
+Flask-SQLAlchemy==2.5.1
+Flask-WTF==0.14.3
+Flask-User==1.0.2.2
+Flask-JWT-Extended==4.1.0
+Flask-Caching==1.10.1
+Flask-Cors==3.0.7
+flask-expects-json==1.5.0
+gevent==1.4.0
 pymagnitude==0.1.120
 pandas>=1.0.0
-cwb-ccc==0.9.12
+cwb-ccc==0.9.14
 pyyaml>=5.2.1

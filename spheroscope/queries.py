@@ -3,7 +3,7 @@
 
 import os
 
-from ccc.queries import run_query
+from ccc.cqpy import run_query
 
 from flask import (
     Blueprint, redirect, render_template, request, url_for, current_app, g, session
