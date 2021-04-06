@@ -1,0 +1,4 @@
+graft spheroscope/templates
+graft spheroscope/static
+graft library
+global-exclude *.pyc
