@@ -78,7 +78,7 @@ def create():
     # get corpus info (for p-atts and path)
     cwb_id = session['corpus']['resources']['cwb_id']
     attributes = Corpus(cwb_id).attributes_available
-    p_atts = list(attributes.name[attributes.att == 'p-Att'].values)
+    p_atts = list(attributes['attribute'][attributes['type'] == 'p-Att'].values)
     corpus = {
         'cwb_id': cwb_id,
         'p_atts': p_atts
@@ -115,7 +115,7 @@ def update(id):
     # get corpus info (for p-atts and frequencies)
     cwb_id = session['corpus']['resources']['cwb_id']
     attributes = Corpus(cwb_id).attributes_available
-    p_atts = list(attributes.name[attributes.att == 'p-Att'].values)
+    p_atts = list(attributes['attribute'][attributes['type'] == 'p-Att'].values)
     corpus = {
         'cwb_id': cwb_id,
         'p_atts': p_atts
