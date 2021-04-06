@@ -1,6 +1,6 @@
 id,name,template,explanation,specialises
 -9999,preamble,\newcommand{\mcauses}{\Box\kern-.5em{\implies}} \newcommand{\dimplies}{\overset{d}{\implies}} \newcommand{\cfac}{\overset{c}{\implies}},the preamble (for exporting),[]
-0,qoutation,Q_{{?0 : entity}}({?1 : formula}),entity 0 claims that formula 1 is true,[]
+0,quotation,Q_{{?0 : entity}}({?1 : formula}),entity 0 claims that formula 1 is true,[]
 -1,,({?0 : formula}) \mcauses ({?1 : formula}),0 is the reason why 1 is true; note that 0 and 1 could be formulas talking about the past stating that something was the reason why something was the case at some point in time,[2]
 2,causal implication,({?0 : formula}) \cfac ({?1 : formula}),truth of formula 0 leads to truth of formula 1,[]
 3,desire,D_{{?0 : entity}} ({?1 : formula}),truth of formula 1 is desirable for entity 0,[1;4]
@@ -37,7 +37,7 @@ id,name,template,explanation,specialises
 34,knowledge,K_{{?0 : entity}} ({?1 : formula}),entity 0 knows that formula 1 is true,[]
 35,necessary truth,\top \cfac {?0 : formula},formula 0 is necessarily true,[]
 36,permission,P ({?0 : formula}),formula 0 would be morally acceptable,[]
-37,qoutation of entity's obligation,"Q_{{?0 : entity}} ({?1 : entity} \implies \downarrow x.\,O (x stit ({?2 : formula}))",entity 0 states that everybody in entity 1 should make formula 2 true,[]
+37,quotation of entity's obligation,"Q_{{?0 : entity}} ({?1 : entity} \implies \downarrow x.\,O (x stit ({?2 : formula}))",entity 0 states that everybody in entity 1 should make formula 2 true,[]
 38,warning,Q_{{?0 : entity}} bad({?1 : formula}),entity 0 warns of formula 1 being bad,[0;6]
 39,some,"\neg(({?0 : entity} \implies \downarrow x.\,\neg {?1 : formula\text{ mentioning }x}) \lor ({0} \dimplies \downarrow x,\, {1}))",some entities in 0 have property 1,[25;27;32]
 40,nobody,"\neg({?0 : entity} \implies \downarrow x.\,{?1 : formula\text{ mentioning }x})",nobody in 0 has property 1,[25;27]
