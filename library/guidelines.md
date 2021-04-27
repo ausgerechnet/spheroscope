@@ -212,11 +212,10 @@
 - ENTITY lies about FORMULA
 - ENTITY says FORMULA; FORMULA is not true
 - ENTITY is not honest about FORMULA
-- an entity is accused of lying about a topic or the truth of a proposition.
-- the formula that is being lied about may be:
-  - a particular claim (*For anyone who still believes the enduring Brexit lie* **that the EU is undemocratic** )
-  - a topic (*And believe this man who told lies* **about Iraq**)
-  - a claim that is not elaborated upon in the given message, but clearly concerns a particular lie (*@JunckerEU says* **Boris making up stories**)
+- an entity is accused of lying about a topic or the truth of a formula; the lie can be about:
+  - a topic (*And believe* **this man** *who told lies* **about Iraq**)
+  - a claim that is not elaborated upon in the given message, but clearly concerns a particular lie (*@JunckerEU says* **Boris** **making up stories**)
+  - a particular claim (*For anyone who still believes the enduring Brexit lie* **that the EU is undemocratic**)
 
 ## examples ##
 - this lie that young people can't travel, it's another stay lie
@@ -414,7 +413,7 @@
 - Brexit would be better for the young folks than staying in the EU
 
 # 44 Good #
-
+    
 # 45 Bad #
 
 # 46 Qualified Desire #
