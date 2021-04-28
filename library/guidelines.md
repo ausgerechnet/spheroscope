@@ -52,12 +52,15 @@
   because they prefer NI to remain over NI not remaining which is our encoding of desire
 - ... says The Times, endorsing Brexit
 - I believe in votes at ...
+- ... 50% in favour of ...
+- he is against it (negation on the inside)
 
 ## counter examples ##
 - the 'wanter' is implicit in a non-elliptical sentence (*democracy should be protected* pattern 4)
 - the desire can only be inferred from a particular action taken by an entity (he *voted* remain might be interpreted as him /remain/ to be made true, but we do not consider such actions a sufficiently clear expression of desire)
-- somebody expresses desire towards an item etc.; where we would have to infer that what they actually want is to *obtain* the item
 - it would be nice if ..
+- ... the figures were REMAIN 45% ...
+- I'm Brexit -> group membership
 
 ## specifications ##
 - #1 + desire
@@ -215,7 +218,7 @@
 - an entity is accused of lying about a topic or the truth of a formula; the lie can be about:
   - a topic (*And believe* **this man** *who told lies* **about Iraq**)
   - a claim that is not elaborated upon in the given message, but clearly concerns a particular lie (*@JunckerEU says* **Boris** **making up stories**)
-  - a particular claim (*For anyone who still believes the enduring Brexit lie* **that the EU is undemocratic**)
+  - a particular claim (*For anyone who still believes the enduring* **Brexit** *lie* **that the EU is undemocratic**)
 
 ## examples ##
 - this lie that young people can't travel, it's another stay lie
