@@ -140,8 +140,12 @@ def corpus_config(cwb_id):
             'p_show': request.form.getlist('p_show')
         }
         session['corpus'] = corpus_config
+
         with open(cfg_path, "wt") as f:
             yaml.dump(corpus_config, f)
+
+        flash(f"updated settings for corpus {session['corpus']['resources']['cwb_id']}")
+        return redirect("/")
 
     # get available corpora
     corpora = Corpora(
