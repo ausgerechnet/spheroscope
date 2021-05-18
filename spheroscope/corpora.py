@@ -79,7 +79,9 @@ def read_config(cwb_id=None, init=False):
 
 def init_corpus(corpus_config):
 
-    current_app.logger.info('initializing corpus')
+    current_app.logger.info(
+        'initializing corpus "%s"' % corpus_config['resources']['cwb_id']
+    )
 
     corpus = Corpus(
         corpus_name=corpus_config['resources']['cwb_id'],
