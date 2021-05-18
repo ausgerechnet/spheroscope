@@ -27,6 +27,12 @@ import pandas as pd
 bp = Blueprint('queries', __name__, url_prefix='/queries')
 
 
+PATH_META = (
+    "/home/ausgerechnet/corpora/cwb/upload/brexit/brexit-preref-rant/"
+    "brexit_v20190522_dedup.tsv.gz"
+)
+
+
 def run(id, cwb_id):
 
     # get query
@@ -51,6 +57,29 @@ def run(id, cwb_id):
     corpus = init_corpus(corpus_config)
     current_app.logger.info('running query')
     lines = run_query(corpus, query)
+
+    # add dataframes
+    # (quick hack to make yuliya's queries work)
+    dump = corpus.query(
+        cqp_query=query['cqp'],
+        context=query['query']['context'],
+        context_break=query['query']['s_context'],
+        corrections=query['anchors']['corrections'],
+        match_strategy='longest'
+    )
+
+    dataframes = dump.concordance(
+        p_show=query['display']['p_show'],
+        s_show=query['display']['s_show'],
+        slots=query['anchors']['slots'],
+        cut_off=None,
+        form='dataframe'
+    )['dataframe']
+    for df in dataframes:
+        df['match'] = False
+        df['matchend'] = False
+
+    lines['df'] = dataframes
 
     # result_parameters = [query[key] for key in query.keys() if key not in [
     #     'id', 'user_id', 'modified', 'pattern'
@@ -210,7 +239,7 @@ def get_result(id):
         return result
 
 # returns query as an html table
-# @bp.route('/<int:id>/run', methods=('GET', 'POST'))
+@bp.route('/<int:id>/run', methods=('GET', 'POST'))
 def run_cmd(id):
 
     # beta = request.args.get('beta', False)
@@ -239,9 +268,10 @@ def run_cmd(id):
         return result[display_columns].to_html(escape=False)
 
     else:
-        result[display_columns2].to_html("query_result_raw.html", escape=False)
+        # result[display_columns2].to_html("query_result_raw.html", escape=False)
         query_df_to_json = result.to_json()
         query_json = json.loads(query_df_to_json)
+        query_json["text"] = query_json["word"]
 
         tooltip_counter = 0
 
@@ -343,8 +373,9 @@ def run_cmd(id):
 
         frontend_ready = DataFrame.from_dict(query_json)
         display_columns = ['text']
-        display_columns3 = [x for x in frontend_ready.columns if x not in ['df']]
-        frontend_ready[display_columns3].to_html("query_result_ready.html", escape=False)
+
+        # display_columns3 = [x for x in frontend_ready.columns if x not in ['df']]
+        # frontend_ready[display_columns3].to_html("query_result_ready.html", escape=False)
         return frontend_ready.to_html(escape=False, table_id="query-results", header=False,
                                       border=0, columns=display_columns)
 
@@ -362,6 +393,7 @@ def match_extra(id):
 
     to_json = result.to_json()
     tbl = json.loads(to_json)
+    tbl["text"] = tbl["word"]
     tweet_id = 0
     display_extra_information = {}
     display_columns = ["lemma", "offset", "word"]
@@ -427,12 +459,13 @@ def open_meta_data(id):
 
     # load meta data from tsv and convert to df
 
-    meta_data_df = pd.read_csv("brexit_v20190522_dedup.tsv", sep='\t', header=0, low_memory=False)
+    meta_data_df = pd.read_csv(PATH_META, sep='\t', header=0, low_memory=False)
 
     # convert meta data data frames to html table and link
     # to every tweet
     #df_to_html = ""
     tweet_id = ""
+    query_json["text"] = query_json["word"]
     for row_id in query_json["text"]:
 
         tweet_id = query_json["tweet_id"][row_id]
