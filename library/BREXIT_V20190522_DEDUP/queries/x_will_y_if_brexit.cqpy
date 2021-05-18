@@ -8,24 +8,10 @@
 #     '1':
 #     - 0
 #     - 7
-# corpus:
-#   corpus_name: BREXIT_V20190522_DEDUP
-#   lib_path: null
-# display:
-#   p_show:
-#   - word
-#   - lemma
-#   p_slots: lemma
-#   p_text: word
-#   s_show:
-#   - tweet_id
 # meta:
+#   comment: null
 #   name: x_will_y_if_brexit
 #   pattern: 2
-# query:
-#   context: null
-#   match_strategy: longest
-#   s_context: tweet
 # ---
 
 <np>@0:[::][]* @1:[]</np> <vp>[]* [lemma = $verbs_destruction] @7:[]* </vp> "if" <np>@2:[::][]* @3:[]</np> <vp>@4:[::][]* @5:[]</vp> (<np>[]*</np> | <vp>[]*</vp> | <pp>[]*</pp>)* @6:[::]

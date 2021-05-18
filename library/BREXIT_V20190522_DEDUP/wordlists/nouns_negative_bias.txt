@@ -1,3 +1,7 @@
+
+#?remaniac
+[a-z]+ism
+[a-z]+phile
 bigot
 bigotry
 brexiter
@@ -19,18 +23,15 @@ globalism
 globalist
 hater
 imperialism
-[a-z]+ism
 leaver
 leftist
 lefty
 lib
 liberal
-[a-z]+phile
 populist
 racist
 redneck
 remainer
-#?remaniac
 tory
 view
 voter

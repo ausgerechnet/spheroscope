@@ -18,6 +18,4 @@ build/
 # emacs backup files
 *~
 
-Pipfile.lock
-
 cfg.py

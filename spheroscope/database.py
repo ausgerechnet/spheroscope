@@ -7,7 +7,7 @@ from glob import glob
 from pandas import read_csv
 from datetime import datetime
 
-from ccc.queries import cqpy_load, cqpy_dump
+from ccc.cqpy import cqpy_load, cqpy_dump
 
 from flask import current_app
 from flask.cli import with_appcontext
@@ -220,6 +220,7 @@ class Query(db.Model):
     def load(self, path):
         """ loads query from specified path """
 
+        current_app.logger.info('loading query file "%s".' % path)
         if not os.path.isfile(path):
             current_app.logger.error('query file "%s" does not exist.' % path)
 
@@ -322,7 +323,7 @@ class Pattern(db.Model):
 
     @property
     def preamble(self):
-        preamble = self.query.filter_by(id=-2).first()
+        preamble = self.query.filter_by(id=-9999).first()
         return preamble.template
 
     def __repr__(self):
@@ -378,19 +379,6 @@ def read_patterns(path):
         )
         db.session.add(pattern)
         db.session.commit()
-
-    # add an extra pattern for uncategorized queries
-    pattern = Pattern(
-        id=-1,
-        user_id=1,              # admin
-        explanation="uncategorized queries",
-        template=r"(\forall x(x=x))\lor (\lnot \forall x(x=x))"
-    )
-    current_app.logger.info(
-        'writing pattern %d to database' % pattern.id
-    )
-    db.session.add(pattern)
-    db.session.commit()
 
 
 def import_library():

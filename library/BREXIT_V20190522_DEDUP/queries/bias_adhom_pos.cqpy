@@ -1,30 +1,16 @@
 # --- # CQPY query file
 # anchors:
 #   corrections:
-#     1: -1
-#     3: -1
+#     '1': -1
+#     '3': -1
 #   slots:
 #     '0':
 #     - 0
 #     - 1
-# corpus:
-#   corpus_name: BREXIT_V20190522_DEDUP
-#   lib_path: null
-# display:
-#   p_show:
-#   - word
-#   - lemma
-#   p_slots: lemma
-#   p_text: word
-#   s_show:
-#   - tweet_id
 # meta:
+#   comment: null
 #   name: bias_adhom_pos
 #   pattern: 17
-# query:
-#   context: null
-#   match_strategy: longest
-#   s_context: tweet
 # ---
 
-<np>[pos_ner="DT"]? @0:[pos_simple="@|P|N|Z|#"] []*</np> (/region[np])*@1:[::] [lemma = "be"] [pos_simple = "R"]* "biased" "towards" @2:[::](<np>[pos_simple!="\."]*</np>)+ @3:[::] 
+<np>[pos_ner="DT"]? @0:[pos_simple="@|P|N|Z|#"] []*</np> (/region[np])*@1:[::] [lemma = "be"] [pos_simple = "R"]* "biased" "towards" @2:[::](<np>[pos_simple!="\."]*</np>)+ @3:[::]

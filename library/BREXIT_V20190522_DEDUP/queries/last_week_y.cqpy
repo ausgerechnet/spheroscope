@@ -1,7 +1,7 @@
 # --- # CQPY query file
 # anchors:
 #   corrections:
-#     3: -1
+#     '3': -1
 #   slots:
 #     '0':
 #     - 0
@@ -9,24 +9,10 @@
 #     '1':
 #     - 2
 #     - 3
-# corpus:
-#   corpus_name: BREXIT_V20190522_DEDUP
-#   lib_path: null
-# display:
-#   p_show:
-#   - word
-#   - lemma
-#   p_slots: lemma
-#   p_text: word
-#   s_show:
-#   - tweet_id
 # meta:
+#   comment: null
 #   name: last_week_y
 #   pattern: 13
-# query:
-#   context: null
-#   match_strategy: longest
-#   s_context: tweet
 # ---
 
 @0:[::]"last" @1:[::]"week|month|year" ","? <np>@2:[::][]*</np> <vp>[]* [pos_ner="VBD"]</vp> (<np>[]*</np> | <vp>[]*</vp> | <pp>[]*</pp> | /be_ap[] | <advp>[]*</advp>)+@3:[::]

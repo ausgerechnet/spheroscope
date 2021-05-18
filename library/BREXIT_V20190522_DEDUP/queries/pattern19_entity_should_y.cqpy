@@ -1,0 +1,18 @@
+# --- # CQPY query file
+# anchors:
+#   corrections:
+#     '3': -1
+#   slots:
+#     '0':
+#     - 0
+#     - 1
+#     '1':
+#     - 2
+#     - 3
+# meta:
+#   comment: null
+#   name: pattern19_entity_should_y
+#   pattern: 19
+# ---
+
+@0:[lemma = $nouns_person_common | lemma = $nouns_person_origin | lemma = $nouns_person_negative | lemma = $nouns_person_profession | lemma = $nouns_person_support | pos_ark = "[@OZ#^]" & lemma != "it"]+ @1:[::]  @2[::]([lemma = "should|must"] | [lemma ="have|need"] "to")  [word!="[,\.\!|\?]"]* @3[::]

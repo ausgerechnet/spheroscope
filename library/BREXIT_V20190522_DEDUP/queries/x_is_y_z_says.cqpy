@@ -8,24 +8,10 @@
 #     '1':
 #     - 2
 #     - 3
-# corpus:
-#   corpus_name: BREXIT_V20190522_DEDUP
-#   lib_path: null
-# display:
-#   p_show:
-#   - word
-#   - lemma
-#   p_slots: lemma
-#   p_text: word
-#   s_show:
-#   - tweet_id
 # meta:
+#   comment: null
 #   name: x_is_y_z_says
 #   pattern: 0
-# query:
-#   context: null
-#   match_strategy: longest
-#   s_context: tweet
 # ---
 
 <np>@0:[::][]*</np> <vp>[]*</vp> (/be_ap[] | [pos_simple = "R"] | <np>[]*</np> | <vp>[]*</vp> | <pp>[]*</pp> | <advp> []* </advp>)+ @1:[::] "," "as"? <np> @2:[]* [lemma= $person_any | pos_simple = "Z"]+ @3:[]* </np> <vp>[lemma = $verbs_communication] [pos_simple="#"]*

@@ -9,8 +9,8 @@
 #     '2': 2
 # meta:
 #   comment: null
-#   name: pattern16_2_is_better_than_0_ent_impl
-#   pattern: 16
+#   name: pattern9999_2_is_better_than_0_ent_impl
+#   pattern: 9999
 # ---
 
 @2:[lemma = $nouns_agenda_p3 | lemma = $nouns_policies | lemma = $nouns_values] "is" "better|preferable" "than|to" @0[::] [word!="[,\.\?\!]" & pos_ark!="G#@U"]+ @3[::]

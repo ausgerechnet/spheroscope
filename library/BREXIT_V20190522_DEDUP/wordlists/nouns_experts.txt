@@ -1,3 +1,5 @@
+
+NGO
 academic
 academy
 administrator
@@ -22,12 +24,12 @@ captain
 celeb
 celebrity
 ceo
-chancellor
 chair
 chairman
 chairpeople
 chairperson
 chairwoman
+chancellor
 chief
 commission
 commissioner
@@ -51,10 +53,10 @@ expert
 federation
 financier
 founder
+gov't
 government
 governor
 govt
-gov't
 graduate
 green
 guru
@@ -79,7 +81,6 @@ millionaire
 minister
 ministry
 mp
-NGO
 officer
 official
 officials
@@ -93,11 +94,11 @@ premier
 president
 prime
 principal
-professor
 professional
+professor
 prophet
-researcher
 representative
+researcher
 scholar
 scientist
 senator

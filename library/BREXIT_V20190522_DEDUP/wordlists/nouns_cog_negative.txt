@@ -1,3 +1,6 @@
+
+[a-z]*shit
+[a-z]+ism
 arrogance
 bigotry
 blackmail
@@ -29,7 +32,6 @@ ignorance
 imperialism
 imprisonment
 intelligence
-[a-z]+ism
 lie
 lunacy
 move
@@ -39,7 +41,6 @@ racism
 rambling
 rethoric
 scaremongering
-[a-z]*shit
 strategy
 stupidity
 trait

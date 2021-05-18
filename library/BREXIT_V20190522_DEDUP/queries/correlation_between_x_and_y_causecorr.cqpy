@@ -1,8 +1,8 @@
 # --- # CQPY query file
 # anchors:
 #   corrections:
-#     1: -1
-#     3: -1
+#     '1': -1
+#     '3': -1
 #   slots:
 #     '0':
 #     - 0
@@ -10,24 +10,10 @@
 #     '1':
 #     - 2
 #     - 3
-# corpus:
-#   corpus_name: BREXIT_V20190522_DEDUP
-#   lib_path: null
-# display:
-#   p_show:
-#   - word
-#   - lemma
-#   p_slots: lemma
-#   p_text: word
-#   s_show:
-#   - tweet_id
 # meta:
+#   comment: null
 #   name: correlation_between_x_and_y_causecorr
 #   pattern: 15
-# query:
-#   context: null
-#   match_strategy: longest
-#   s_context: tweet
 # ---
 
 <np> []* [lemma = $nouns_similarity & pos_ner = "N.*"| lemma = $adj_similarity & pos_ark = "A"] []*</np> [pos_ark = "P"] @0:[::](<np>[pos_ark="D|A"]* (/name_any[] | [lemma = $nouns_common_people | lemma = $nouns_person_origin | lemma = $nouns_person_support | lemma = $nouns_person_negative | lemma = $nouns_profession_people])+ []*</np>)+@1:[::] ("and" | /region[conjp]) @2:[::](<np>[pos_ark="D|A"]* (/name_any[] | [lemma = $nouns_common_people | lemma = $nouns_person_origin | lemma = $nouns_person_support | lemma = $nouns_person_negative | lemma = $nouns_profession_people])+ []*</np>) (/region[np] | <vp>[lemma!="be"]</vp> | /region[adjp] | /region[pp] | /be_ap[])* @3:[::]

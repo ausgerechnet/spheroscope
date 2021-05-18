@@ -1,0 +1,34 @@
+# --- # CQPY query file
+# anchors:
+#   corrections:
+#     1: -1
+#     3: -1
+#   slots:
+#     0:
+#     - 0
+#     - 1
+#     1:
+#     - 2
+#     - 3
+# corpus:
+#   corpus_name: BREXIT_V20190522_DEDUP
+#   lib_path: null
+# display:
+#   p_show:
+#   - word
+#   - lemma
+#   p_slots: lemma
+#   p_text: word
+#   s_show:
+#   - tweet_id
+# meta:
+#   name: pattern1_entity_increase_y
+#   pattern: 1
+# query:
+#   context: null
+#   match_strategy: longest
+#   s_context: tweet
+# ---
+
+@0:[::] [pos_ark="[NZ^]" | pos_ner ="PRP"] @1:[::] [pos_ark="R" | lemma ="be|have"]* ([lemma = $verbs_increase | lemma = $verbs_decrease]) [pos_ark="R"]* "as|because|due|thanks" "of|to"? @2:[::] [word !="[\.,\?\!]|http.+|t\.co.+" & pos_ark !="[#@]"]* @3:[::]
+

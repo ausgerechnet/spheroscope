@@ -1,0 +1,33 @@
+# --- # CQPY query file
+# anchors:
+#   corrections:
+#     1: -1
+#     3: -1
+#   slots:
+#     '0':
+#     - 0
+#     - 1
+#     '1':
+#     - 2
+#     - 3
+# corpus:
+#   corpus_name: BREXIT_V20190522_DEDUP
+#   lib_path: null
+# display:
+#   p_show:
+#   - word
+#   - lemma
+#   p_slots: lemma
+#   p_text: word
+#   s_show:
+#   - tweet_id
+# meta:
+#   name: pattern15_0_same_as_1
+#   pattern: 15
+# query:
+#   context: null
+#   match_strategy: longest
+#   s_context: tweet
+# ---
+
+@0:[pos_ark="[NZ^]" | pos_ner ="PRP"] ".+ing|that|who" []+ @1:"is|are" ("the" "same" "as"? | [pos_ark="R" & word!="not"] "like") @2[::] ("ones|that|who" | [pos_ark="[NZ^]" | pos_ner ="PRP"])+ [word !="[\.,\?\!]|http.+|t\.co.+" & pos_ark !="[#@]"]+ @3:[::] within tweet

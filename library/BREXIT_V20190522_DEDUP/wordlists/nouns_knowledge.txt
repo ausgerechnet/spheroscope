@@ -1,0 +1,10 @@
+ability
+competence
+competency
+experience
+expertise
+know-how
+knowledge
+qualification
+skill
+understanding

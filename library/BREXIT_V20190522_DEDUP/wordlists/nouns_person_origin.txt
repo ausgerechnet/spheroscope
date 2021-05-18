@@ -1,3 +1,4 @@
+
 aboriginal
 afghan
 afghani
@@ -15,8 +16,8 @@ aussie
 australian
 austrian
 balkan
-bavarian
 basque
+bavarian
 bedouin
 belarus
 belgian
@@ -64,10 +65,10 @@ estonian
 ethiopian
 eurasian
 european
+ex-pat
 exile
 expat
 expatriate
-ex-pat
 filipino
 finnish
 flemish
@@ -143,11 +144,11 @@ slav
 slovak
 slovakian
 slovenian
-spaniard
-spanish
 somali
 somalian
 southerner
+spaniard
+spanish
 sudanese
 swede
 swedish

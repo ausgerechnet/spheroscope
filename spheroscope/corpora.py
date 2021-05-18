@@ -79,7 +79,9 @@ def read_config(cwb_id=None, init=False):
 
 def init_corpus(corpus_config):
 
-    current_app.logger.info('initializing corpus')
+    current_app.logger.info(
+        'initializing corpus "%s"' % corpus_config['resources']['cwb_id']
+    )
 
     corpus = Corpus(
         corpus_name=corpus_config['resources']['cwb_id'],
@@ -107,11 +109,10 @@ def choose():
 
     corpora = Corpora(
         registry_path=current_app.config['REGISTRY_PATH']
-    ).show_corpora()
+    ).show().index
 
     if 'corpus' in session:
         active = session['corpus']['resources']['cwb_id']
-        print(active)
     else:
         active = None
 
@@ -141,22 +142,26 @@ def corpus_config(cwb_id):
             'p_show': request.form.getlist('p_show')
         }
         session['corpus'] = corpus_config
+
         with open(cfg_path, "wt") as f:
             yaml.dump(corpus_config, f)
+
+        flash(f"updated settings for corpus {session['corpus']['resources']['cwb_id']}")
+        return redirect("/")
 
     # get available corpora
     corpora = Corpora(
         registry_path=current_app.config['REGISTRY_PATH']
-    ).show_corpora()
+    ).show()
 
     # get current corpus attributes
     attributes = Corpus(cwb_id).attributes_available
-    p_atts = list(attributes.name[attributes.att == 'p-Att'].values)
+    p_atts = list(attributes['attribute'][attributes['type'] == 'p-Att'].values)
     s_atts_anno = list(
-        attributes.name[list(attributes.annotation) & (attributes.att == 's-Att')].values
+        attributes['attribute'][list(attributes['annotation']) & (attributes['type'] == 's-Att')].values
     )
     s_atts_none = list(
-        attributes.name[([not b for b in attributes.annotation]) & (attributes.att == 's-Att')].values
+        attributes['attribute'][([not b for b in attributes.annotation]) & (attributes['type'] == 's-Att')].values
     )
 
     return render_template(
