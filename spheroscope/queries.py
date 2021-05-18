@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+import sys
 
 from ccc.cqpy import run_query
 
@@ -45,8 +46,8 @@ def run(id, cwb_id):
     query['display'] = dict(corpus_config['display'])
 
     # run query
-    current_app.logger.info('running query')
     corpus = init_corpus(corpus_config)
+    current_app.logger.info('running query')
     lines = run_query(corpus, query)
 
     # result_parameters = [query[key] for key in query.keys() if key not in [
@@ -167,7 +168,7 @@ def run_cmd(id):
         return 'query does not have any matches'
 
     display_columns = [x for x in result.columns if x not in [
-        'match', 'matchend', 'context_id', 'context', 'contextend', 'df'
+        'context_id', 'context', 'contextend'
     ]]
 
     if not beta:
@@ -250,20 +251,28 @@ def run_cmd(id):
 
 
 @click.command('query')
-@click.argument('pattern')
 @click.argument('dir_out')
+@click.argument('pattern', default=None, required=False)
 @with_appcontext
 def query_command(pattern, dir_out):
 
-    path_summary = os.path.join(dir_out, str(pattern) + "-summary.tsv")
+    os.makedirs(dir_out, exist_ok=True)
+
+    # get all queries belonging to the pattern
+    if pattern is None:
+        queries = Query.query.all()
+        current_app.logger.info(
+            "%d queries" % len(queries)
+        )
+        path_summary = os.path.join(dir_out, "summary.tsv")
+    else:
+        queries = Query.query.filter_by(pattern_id=pattern).all()
+        current_app.logger.info(
+            "pattern %s: %d queries" % (str(pattern), len(queries))
+        )
+        path_summary = os.path.join(dir_out, str(pattern) + "-summary.tsv")
+
     summary = defaultdict(list)
-
-    # get all queries belonging to the query
-    queries = Query.query.filter_by(pattern_id=pattern).all()
-    current_app.logger.info(
-        "pattern %s: %d queries" % (str(pattern), len(queries))
-    )
-
     for query in queries:
 
         current_app.logger.info(query.name)
@@ -272,11 +281,17 @@ def query_command(pattern, dir_out):
         n_hits = None
         n_unique = None
 
-        lines = run(query.id, None)
+        error = ""
+        try:
+            lines = run(query.id, None)
+        except KeyboardInterrupt:
+            return
+        except:
+            error = sys.exc_info()[0]
+            lines = None
 
         if lines is not None:
-            p_out = os.path.join(dir_out, str(pattern) + '-' + query.name + '.tsv')
-            lines = lines.drop('df', axis=1)
+            p_out = os.path.join(dir_out, query.name + '.tsv')
             lines.to_csv(p_out, sep="\t")
             n_hits = len(lines)
             n_unique = len(lines.tweet_id.value_counts())
@@ -284,10 +299,14 @@ def query_command(pattern, dir_out):
             n_hits = 0
             n_unique = 0
 
+        query_pattern = "None" if query.pattern is None else query.pattern.id
+
         summary['query'].append(query.name)
+        summary['pattern'].append(query_pattern)
         summary['n_hits'].append(n_hits)
         summary['n_unique'].append(n_unique)
         summary['path'].append(p_out)
+        summary['error'].append(error)
 
     summary = DataFrame(summary)
     summary.to_csv(path_summary, sep="\t")
