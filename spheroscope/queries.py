@@ -107,7 +107,7 @@ def create():
                 "None", "null"
             ),
             path=os.path.join(
-                current_app.instance_path, cwb_id, 'wordlists',
+                current_app.instance_path, cwb_id, 'queries',
                 request.form['name'] + ".txt"
             ),
             user_id=g.user.id
