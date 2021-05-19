@@ -78,6 +78,12 @@ def run(id, cwb_id):
     for df in dataframes:
         df['match'] = False
         df['matchend'] = False
+        offsets = list(df.loc[df['offset'] == 0].index)
+        match = min(offsets)
+        matchend = max(offsets)
+        df.at[match, 'match'] = True
+        df.at[matchend, 'matchend'] = True
+        print(df)
 
     lines['df'] = dataframes
 
