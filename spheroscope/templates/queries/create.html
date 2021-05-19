@@ -19,6 +19,7 @@
   {{ forms.input('corrections', value=(request.form['corrections']), label='Corrections') }}
   <div class="field is-grouped">
     <input class="button is-link is-light" type="submit" value="Save">
+    <a class="button is-warning is-light" href="{{ url_for('queries.index') }}">Cancel</a>
   </div>
 </form>
 {% endblock %}
