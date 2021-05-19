@@ -7,10 +7,6 @@
 {{ super() }}
 <li><a>{{ query.name }}</a></li>
 {% endblock %}
-
-{% block header %}
-{{ c.add_button(action=url_for('queries.create')) }}
-{% endblock %}
   
 {% block content %}
 

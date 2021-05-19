@@ -1,8 +1,8 @@
 {% macro button(cls,action,text,name='',icon='') %}
-<button class="button is-light {{ cls }}" href="{{ action }}" {% if name != '' %}name="{{ name }}"{% endif %}>
+<a class="button is-light {{ cls }}" href="{{ action }}" {% if name != '' %}name="{{ name }}"{% endif %}>
   {% if icon != '' %}<span class="icon"><i class="fas fa-{{ icon }}" aria-hidden="true"></i></span>{% endif %}
   <span>{{ text }}</span>
-</button>
+</a>
 {% endmacro%}
 
 {% macro add_button(action,text="New",name='') %}
