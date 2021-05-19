@@ -1,33 +1,42 @@
 {% extends 'base.html' %}
 
+{% block title %}<li><a>Wordlists</a></li>{% endblock %}
+
 {% block header %}
-<h1>
-  {% block title %}wordlists{% endblock %}
-</h1>
 {% if g.user %}
-<a class="action" href="{{ url_for('wordlists.create') }}">
+<a class="button is-success" href="{{ url_for('wordlists.create') }}">
   new
 </a>
 {% endif %}
 {% endblock %}
 
 {% block content %}
-<ul>
+<table class="table is-striped is-hoverable">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Length</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
   {% for wordlist in wordlists %}
-  <li>
-    {{ wordlist.name }} ({{ wordlist.length }})
-    <span style="float:right;">
-      <a class="action" href="{{ url_for('wordlists.update', id=wordlist.id) }}">
-	edit
-      </a> – 
-      <a class="action" href="{{ url_for('wordlists.frequencies', id=wordlist.id) }} ">
-      	marginals
-      </a> –
-      <a class="action" href="{{ url_for('wordlists.similar', id=wordlist.id) }}">
-      	similar
-      </a>
-    </span>
-  </li>
+  <tr>
+    <th><a href="{{ url_for('wordlists.update', id=wordlist.id) }}">{{ wordlist.name }}</a></th>
+    <td>{{ wordlist.length }}</td>
+    <td class="field has-addons">
+      <p class="control">
+        <a class="button is-light is-warning" href="{{ url_for('wordlists.update', id=wordlist.id) }}">Edit</a>
+      </p>
+      <p class="control">
+        <a class="button is-light is-info" href="{{ url_for('wordlists.frequencies', id=wordlist.id) }}" onclick="$('#loading').show();">Marginals</a>
+      </p>
+      <p class="control">
+        <a class="button is-light is-info" href="{{ url_for('wordlists.similar', id=wordlist.id) }}" onclick="$('#loading').show();">Similar</a>
+      </p>
+    </td>
+  </tr>
   {% endfor %}
-</ul>
+  </tbody>
+</table>
 {% endblock %}

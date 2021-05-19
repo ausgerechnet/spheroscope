@@ -1,10 +1,6 @@
-{% extends 'base.html' %}
+{% extends 'macros/macros-base.html' %}
 
-{% block header %}
-<h1>
-  {% block title %}macro "{{macro['name'] }}"{% endblock %}
-</h1>
-{% endblock %}
+{% block title %}<li><a>{{ macro['name'] }}</a></li>{% endblock %}
 
 {% block content %}
 

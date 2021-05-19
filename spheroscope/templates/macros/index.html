@@ -1,39 +1,47 @@
-{% extends 'base.html' %}
+{% extends 'macros/macros-base.html' %}
+
+{% import 'helpers/controls.html' as c %}
 
 {% block header %}
-<h1>
-  {% block title %}macros{% endblock %}
-</h1>
-<a class="action" href="{{ url_for('macros.create') }}">
+<a class="button" href="{{ url_for('macros.create') }}">
   new
 </a>
 {% endblock %}
 
 {% block content %}
-<h2>Definitions</h2>
-<ul>
+{% call c.block("Definitions") %}
+<table class="table is-striped is-hoverable">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
   {% for macro in macros %}
-  <li>
-    {{ macro['name'] }}
-    <span style="float:right;">
-      <a class="action" href="{{ url_for('macros.update', id=macro.id) }}">
-	edit
-      </a> – 
-      <a class="action" href="{{ url_for('macros.frequencies', id=macro.id) }} ">
-      	frequencies
-      </a> 
-    </span>
-  </li>
+  <tr>
+    <th><a href="{{ url_for('macros.update', id=macro.id) }}">{{ macro.name }}</a></th>
+    <td class="field has-addons">
+      <p class="control">
+        <a class="button is-light is-warning" href="{{ url_for('macros.update', id=macro.id) }}">Edit</a>
+      </p>
+      <p class="control">
+        <a class="button is-light is-info" href="{{ url_for('macros.frequencies', id=macro.id) }}" onclick="$('#loading').show();">Frequencies</a>
+      </p>
+    </td>
+  </tr>
   {% endfor %}
-</ul>
+  </tbody>
+</table>
+{% endcall %}
 
-<h2>Active</h2>
-corpus: <em>{{ corpus['cwb_id'] }}
-<ul>
+{% call c.block("Active in " + corpus['cwb_id']) %}
+<ul class="is-flex is-flex-wrap-wrap">
   {% for macro in corpus['macros'] %}
-  <li>
-    {{ macro }}
+  <li class="button is-static m-1">
+    {{ macro[1:] }}
   </li>
   {% endfor %}
 </ul>
+{% endcall %}
 {% endblock %}

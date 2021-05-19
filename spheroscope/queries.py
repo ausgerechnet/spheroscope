@@ -73,9 +73,10 @@ def run(id, cwb_id):
 @bp.route('/')
 @login_required
 def index():
-    queries = Query.query.order_by(Query.name).all()
+    pattern = request.args.get('pattern')
+    queries = Query.query.order_by(Query.name)
     return render_template('queries/index.html',
-                           queries=queries)
+                           queries=(queries.filter_by(pattern_id = pattern).all() if pattern else queries.all()))
 
 
 @bp.route('/index2')

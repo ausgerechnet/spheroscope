@@ -1,0 +1,28 @@
+{% macro add_button(action,text) %}
+<a class="button is-light is-primary" href="{{ action }}">{{ text }}</a>
+{% endmacro %}
+
+{% macro del_button(action,text) %}
+<a class="button is-light is-danger" href="{{ action }}">{{ text }}</a>
+{% endmacro %}
+
+{% macro save_button(action,text) %}
+<a class="button is-light is-link" href="{{ action }}">{{ text }}</a>
+{% endmacro %}
+
+{% macro edit_button(action,text) %}
+<a class="button is-light is-warning" href="{{ action }}">{{ text }}</a>
+{% endmacro %}
+
+{% macro block(title) %}
+<section class="section">
+<div class="card">
+  <header class="card-header">
+    <p class="card-header-title">{{ title }}</p>
+  </header>
+  <div class="card-content">
+    {{ caller() }}
+  </div>
+</div>
+</section>
+{% endmacro %}
