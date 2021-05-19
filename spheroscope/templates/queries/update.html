@@ -1,31 +1,47 @@
-{% extends 'base.html' %}
+{% extends 'queries/base.html' %}
+{% import 'helpers/forms.html' as forms %}
+
+{% block title %}
+{{ super() }}
+<li><a>{{ query.name }}</a></li>
+{% endblock %}
 
 {% block header %}
-<h1>
-  {% block title %}query "{{ query.name }}"{% endblock %}
-</h1>
-<a class="action" href="{{ url_for('queries.create') }}">new</a>
+<a class="button" href="{{ url_for('queries.create') }}">New</a>
 {% endblock %}
   
 {% block content %}
 
 <form method="post">
-  <ul>
-    <li>name <input name="name" value="{{ request.form['name'] or query.name }}" required /> ([A-Za-z_])
-    <li> pattern <input name="pattern" value="{{ request.form['pattern'] or query.pattern_id }}"/> (-1 .. 32)
-      <span style="float:right;"> \( {{ query.pattern.preamble }} {{ query.pattern.template }} \)</span>
-    <li>cqp<br> <textarea name="query" id="query" rows="4" cols="100">{{ request.form['query'] or query.cqp }}</textarea>
-    <li>slots <input name="slots" value="{{ request.form['slots'] or query.slots }}"/> (dict: {slot: [start, end]})
-    <li>corrections <input name="corrections" value="{{ request.form['corrections'] or query.corrections }}"/> (dict: {anchor: correction})
-  </ul>
-  <input type="submit" value="save">
+  {{ forms.input('name', value=(request.form['name'] or query.name), label='Name') }}
+  <div class="field">
+    <label class="label">Pattern</label>
+    <div class="field has-addons">
+    <div class="control">
+      <input class="input" type="number" size="5" name="pattern" value="{{ request.form['pattern'] or query.pattern_id }}"/>
+    </div>
+    <div class="control">
+      <a class="button is-static">\( {{ query.pattern.preamble }} {{ query.pattern.template }} \)</a></div>
+    </div>
+  </div>
+  <div class="field">
+    <label class="label">CQP</label>
+    <div class="control">
+      <textarea class="textarea" name="query" id="query" rows="4" cols="100">{{ request.form['query'] or query.cqp }}</textarea>
+    </div>
+  </div>
+  {{ forms.input('slots', value=(request.form['slots'] or query.slots), label='Slots') }}
+  {{ forms.input('corrections', value=(request.form['corrections'] or query.corrections), label='Corrections') }}
+  <div class="field is-grouped">
+    <input class="button is-link is-light" type="submit" value="Save">
+  </div>
 </form>
 
 <form action="{{ url_for('queries.delete_cmd', id=query.id) }}" method="post">
-  <input class="danger" type="submit" value="delete" onclick="return confirm('Are you sure?');">
+  <input class="button is-danger is-light" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
 </form>
 <form action="{{ url_for('queries.run_cmd', id=query.id) }}" method="post">
-  <input type="submit" value="run">
+  <input class="button is-info is-light" type="submit" value="Run">
 </form>
   
 {% endblock %}

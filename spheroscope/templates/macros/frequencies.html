@@ -1,21 +1,17 @@
-{% extends 'base.html' %}
+{% extends 'macros/macros-base.html' %}
+{% import 'helpers/controls.html' as c %}
+{% block title %}
+{{ super() }}
+<li><a href="{{ url_for('macros.update', id=macro.id, cwb_id=cwb_id) }}">{{ macro.name }}</a></li>
+<li><a>Frequencies</a></li>
+{% endblock %}
 
 {% block header %}
-<h1>
-  {% block title %}macro "{{ macro.name }}"{% endblock %}
-</h1>
-<a class="action" href="{{ url_for('macros.update', id=macro.id, cwb_id=cwb_id) }}">
-  edit
-</a>
+{{ c.edit_button(action=url_for('macros.update', id=macro.id, cwb_id=cwb_id), text="Edit") }}
 {% endblock %}
 
 {% block content %}
-<article class="post">
-  <br>
-  corpus: <em>{{ cwb_id }}</em><br/>
-  <p class="body">
-    {{ frequencies | safe }}
-  </p>
-</article>
-<hr>
+<div class="content">
+  {{ frequencies | safe }}
+</div>
 {% endblock %}
