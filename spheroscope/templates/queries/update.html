@@ -1,5 +1,7 @@
 {% extends 'queries/base.html' %}
 {% import 'helpers/forms.html' as forms %}
+{% import 'helpers/controls.html' as c %}
+
 
 {% block title %}
 {{ super() }}
@@ -7,7 +9,7 @@
 {% endblock %}
 
 {% block header %}
-<a class="button" href="{{ url_for('queries.create') }}">New</a>
+{{ c.add_button(action=url_for('queries.create')) }}
 {% endblock %}
   
 {% block content %}
