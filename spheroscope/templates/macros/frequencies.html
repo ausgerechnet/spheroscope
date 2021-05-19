@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block header %}
-{{ c.edit_button(action=url_for('macros.update', id=macro.id, cwb_id=cwb_id), text="Edit") }}
+{{ c.edit_button(action=url_for('macros.update', id=macro.id, cwb_id=cwb_id)) }}
 {% endblock %}
 
 {% block content %}

@@ -1,11 +1,9 @@
-{% extends 'macros/macros-base.html' %}
+{% extends 'macros/base.html' %}
 
 {% import 'helpers/controls.html' as c %}
 
 {% block header %}
-<a class="button" href="{{ url_for('macros.create') }}">
-  new
-</a>
+{{ c.add_button(action=url_for('macros.create')) }}
 {% endblock %}
 
 {% block content %}
@@ -23,10 +21,10 @@
     <th><a href="{{ url_for('macros.update', id=macro.id) }}">{{ macro.name }}</a></th>
     <td class="field has-addons">
       <p class="control">
-        <a class="button is-light is-warning" href="{{ url_for('macros.update', id=macro.id) }}">Edit</a>
+        {{ c.edit_button(action=url_for('macros.update', id=macro.id)) }}
       </p>
       <p class="control">
-        <a class="button is-light is-info" href="{{ url_for('macros.frequencies', id=macro.id) }}" onclick="$('#loading').show();">Frequencies</a>
+        {{ c.run_button(action=url_for('macros.frequencies', id=macro.id), text="Frequencies") }}
       </p>
     </td>
   </tr>

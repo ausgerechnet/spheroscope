@@ -13,16 +13,16 @@
   {% for query in queries %}
   <tr>
     <th><a href="{{ url_for('queries.update', id=query.id) }}">{{ query.name }}</a></th>
-    <td><a class="action" href="{{ url_for('patterns.pattern', id=query.pattern_id) }}">{{ query.pattern_id }}</a></td>
+    <td><a href="{{ url_for('patterns.pattern', id=query.pattern_id) }}">{{ query.pattern_id }}</a></td>
     <td class="field has-addons">
       <p class="control">
-        {{ c.edit_button(action=url_for('queries.update', id=query.id),text="Edit") }}
+        {{ c.edit_button(action=url_for('queries.update', id=query.id)) }}
       </p>
       <p class="control">
-        <a class="button is-light is-info" href="{{ url_for('queries.run_cmd', id=query.id) }}" onclick="$('#loading').show();">Run</a>
+        {{ c.run_button(action=url_for('queries.run_cmd', id=query.id)) }}
       </p>
       <p class="control">
-        <a class="button is-light is-success" href="{{ url_for('queries.index2') }}" onclick="$('#loading').show();">Matches</a>
+        {{ c.run_button(action=url_for('queries.index2'),text="Matches") }}
       </p>
     </td>
   </tr>

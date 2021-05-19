@@ -1,12 +1,10 @@
-{% extends 'base.html' %}
+{% extends 'wordlists/base.html' %}
 
-{% block title %}<li><a>Wordlists</a></li>{% endblock %}
+{% import 'helpers/controls.html' as c %}
 
 {% block header %}
 {% if g.user %}
-<a class="button is-success" href="{{ url_for('wordlists.create') }}">
-  new
-</a>
+{{ c.add_button(action=url_for('wordlists.create')) }}
 {% endif %}
 {% endblock %}
 
@@ -26,13 +24,13 @@
     <td>{{ wordlist.length }}</td>
     <td class="field has-addons">
       <p class="control">
-        <a class="button is-light is-warning" href="{{ url_for('wordlists.update', id=wordlist.id) }}">Edit</a>
+        {{ c.edit_button(action=url_for('wordlists.update', id=wordlist.id)) }}
       </p>
       <p class="control">
-        <a class="button is-light is-info" href="{{ url_for('wordlists.frequencies', id=wordlist.id) }}" onclick="$('#loading').show();">Marginals</a>
+        {{ c.run_button(action=url_for('wordlists.frequencies', id=wordlist.id), text="Marginals") }}
       </p>
       <p class="control">
-        <a class="button is-light is-info" href="{{ url_for('wordlists.similar', id=wordlist.id) }}" onclick="$('#loading').show();">Similar</a>
+        {{ c.run_button(action=url_for('wordlists.similar', id=wordlist.id), text="Similar") }}
       </p>
     </td>
   </tr>

@@ -4,8 +4,8 @@
 {% import 'queries/querylist.html' as q %}
 
 {% block header %}
-  {{ c.add_button(action=url_for('queries.create'), text='New') }}
-  {{ c.save_button(action="", text='Import') }}
+  {{ c.add_button(action=url_for('queries.create')) }}
+  {{ c.add_button(action="", text='Import') }}
 {% endblock %}
 
 {% block content %}
