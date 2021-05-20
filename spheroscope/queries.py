@@ -14,7 +14,7 @@ import click
 
 from .auth import login_required
 from .corpora import read_config, init_corpus
-from .database import Query
+from .database import Query, Pattern
 
 import re
 import json
@@ -116,7 +116,11 @@ def create():
 
         return redirect(url_for('queries.index'))
 
-    return render_template('queries/create.html')
+    patterns = Pattern.query.order_by(Pattern.id).all()
+    # FIXME this conversion should go when the new database is in
+    patterndict = [{"id": abs(p.id), "template": p.template, "explanation": p.explanation, "retired": p.id < 0} for p in patterns]
+    return render_template('queries/create.html',
+                           patterns=patterndict)
 
 
 @bp.route('/<int:id>/update', methods=('GET', 'POST'))
@@ -144,8 +148,12 @@ def update(id):
         query.write()
         return redirect(url_for('queries.index'))
 
+    patterns = Pattern.query.order_by(Pattern.id).all()
+    # FIXME this conversion should go when the new database is in
+    patterndict = [{"id": abs(p.id), "template": p.template, "explanation": p.explanation, "retired": p.id < 0} for p in patterns]
     return render_template('queries/update.html',
-                           query=query)
+                           query=query,
+                           patterns=patterndict)
 
 
 @bp.route('/<int:id>/delete', methods=('POST',))
