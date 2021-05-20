@@ -1,5 +1,7 @@
 {% extends 'queries/base.html' %}
 {% import 'helpers/forms.html' as forms %}
+{% import 'patterns/pattern_options.html' as p %}
+
 {% block title %}
 {{ super() }}
 <li><a>New query</a></li>
@@ -8,7 +10,7 @@
 {% block content %}
 <form method="post">
   {{ forms.input('name', value=(request.form['name']), label='Name') }}
-  {{ forms.input('pattern', value=request.form['pattern'], label='Pattern', type='number') }}
+  {{ p.pattern_select("",patterns) }}
   <div class="field">
     <label class="label">CQP</label>
     <div class="control">

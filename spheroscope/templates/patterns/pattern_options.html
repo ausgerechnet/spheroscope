@@ -1,0 +1,15 @@
+{% macro pattern_select(selected,patterns) %}
+<div class="field">
+    <label class="label">Pattern</label>
+    <div class="field has-addons">
+      <div class="control">
+        <div class="select">
+          <select name="pattern" selected="{{ selected }}">
+            {% for pattern in patterns %}
+            <option value="{{ pattern.id }}" {% if pattern.retired %} disabled {% endif %}>{{ pattern.id }} <a class="button is-static">\( {{ pattern.template }} \)</a></option>
+            {% endfor %}
+          </select>
+        </div>
+    </div>
+  </div>
+{% endmacro %}
