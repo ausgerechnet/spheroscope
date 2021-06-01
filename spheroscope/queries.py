@@ -6,7 +6,7 @@ import os
 from ccc.cqpy import run_query
 
 from flask import (
-    Blueprint, redirect, render_template, request, url_for, current_app, g, session
+    Blueprint, redirect, render_template, request, url_for, current_app, g, session, jsonify
 )
 
 from flask.cli import with_appcontext
@@ -146,7 +146,7 @@ def update(id):
 
         query.delete()
         query.write()
-        return redirect(url_for('queries.index'))
+        return jsonify(success=True)
 
     patterns = Pattern.query.order_by(Pattern.id).all()
     # FIXME this conversion should go when the new database is in
@@ -179,7 +179,21 @@ def run_cmd(id):
         'match', 'matchend', 'context_id', 'context', 'contextend', 'df'
     ]]
 
+    patterns = Pattern.query.order_by(Pattern.id).all()
+    # FIXME this conversion should go when the new database is in
+    patterndict = [{"id": abs(p.id), "template": p.template, "explanation": p.explanation, "retired": p.id < 0} for p in patterns]
+
     if not beta:
+        if request.method == 'POST':
+            cols = dict()
+            for col in result.columns:
+                parts = col.split('_',1)
+                cols[parts[0]].append(col)
+
+            return render_template('queries/result_table.html',
+                                   result=result,
+                                   patterns=patterndict)
+
         return result[display_columns].to_html(escape=False)
 
     else:
