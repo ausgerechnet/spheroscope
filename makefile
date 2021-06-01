@@ -14,3 +14,9 @@ run:
 	export FLASK_APP=spheroscope && \
 	export FLASK_ENV=development && \
 	pipenv run flask run
+
+
+query:
+	export FLASK_APP=spheroscope && \
+	export FLASK_ENV=development && \
+	pipenv run flask query "instance/query-results"
