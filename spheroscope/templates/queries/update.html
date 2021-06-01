@@ -2,6 +2,7 @@
 {% import 'helpers/forms.html' as forms %}
 {% import 'helpers/controls.html' as c %}
 {% import 'patterns/pattern_options.html' as p %}
+{% import 'queries/helpers.html' as h %}
 
 {% block title %}
 {{ super() }}
@@ -10,27 +11,22 @@
   
 {% block content %}
 
-<form method="post">
-  {{ forms.input('name', value=(request.form['name'] or query.name), label='Name') }}
-  {{ p.pattern_select(query.pattern_id,patterns) }}
-  <div class="field">
-    <label class="label">CQP</label>
-    <div class="control">
-      <textarea class="textarea" name="query" id="query" rows="4" cols="100">{{ request.form['query'] or query.cqp }}</textarea>
-    </div>
-  </div>
-  {{ forms.input('slots', value=(request.form['slots'] or query.slots), label='Slots') }}
-  {{ forms.input('corrections', value=(request.form['corrections'] or query.corrections), label='Corrections') }}
+<form>
+  {{ h.query_form(name=query.name,pattern=query.pattern_id, patterns=patterns,content=query.cqp,slots=query.slots,corrections=query.corrections) }}
   <div class="field is-grouped">
-    <input class="button is-link is-light" type="submit" value="Save">
+    <input type="button" class="button is-link is-light" onclick="sendForm('{{ url_for('queries.update', id=query.id) }}',this);" value="Save">
+    <form action="{{ url_for('queries.delete_cmd', id=query.id) }}" method="post">
+      <input class="button is-danger is-light" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
+    </form>
+    <form action="{{ url_for('queries.run_cmd', id=query.id) }}" method="post">
+      <input class="button is-info is-light" type="button" onclick="runButton('{{ url_for('queries.run_cmd', id=query.id) }}',this,{beta: true}, res => $('#results').html(res));" value="Run">
+    </form>
   </div>
 </form>
 
-<form action="{{ url_for('queries.delete_cmd', id=query.id) }}" method="post">
-  <input class="button is-danger is-light" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
-</form>
-<form action="{{ url_for('queries.run_cmd', id=query.id) }}" method="post">
-  <input class="button is-info is-light" type="submit" value="Run">
-</form>
+<div id="results" class="content">
+</div>
+
+
   
 {% endblock %}

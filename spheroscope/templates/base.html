@@ -26,9 +26,17 @@
 </head>
 <body>
   {% block login %}
-  <nav class="navbar" role="navigation" aria-label="main navigation">
+  <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
-      <a class="navbar-item" href="{{ url_for('index') }}">spheroscope</a>
+      <div class="navbar-item">
+        <div class="breadcrumb" aria-label="breadcrumbs">
+          <ul>
+            <li><a href="{{ url_for('index') }}">spheroscope</a></li>
+            {% block title %}
+            {% endblock %}
+          </ul>
+        </div>
+      </div>
       {% if session.corpus %}
       <span class="navbar-item">on</span>
       <a class="navbar-item" href="{{ url_for('corpora.corpus_config', cwb_id=session.corpus.resources.cwb_id) }}">{{ session.corpus.resources.cwb_id }}</a>
@@ -55,17 +63,10 @@
         <a class="navbar-item" href="{{ url_for('auth.register') }}">register</a>
         <a class="navbar-item" href="{{ url_for('auth.login') }}">login</a>
       {% endif %}
+        </div>
       </div>
-    </div>
   </nav>
   {% endblock %}
-  <nav class="breadcrumb" aria-label="breadcrumbs">
-    <ul>
-      <li><a href="{{ url_for('index') }}">spheroscope</a></li>
-      {% block title %}
-      {% endblock %}
-    </ul>
-  </nav>
 
   <section class="section">
     <div class="container">
@@ -89,6 +90,32 @@
     </div>
   </section>
   <script>
+    function sendForm(url, self) {
+        self.classList.add('is-loading');
+        $.ajax({
+            url: url,
+            type: 'post',
+            data: $(self.form).serialize(),
+            success: () => {
+                self.classList.remove('is-loading');
+                console.log(`${url} succeeded`);
+            }
+        });
+    }
+    function runButton(url, self, args, callback) {
+        self.classList.add('is-loading');
+        $.ajax({
+            url: url,
+            type: 'post',
+            data: $.param(args),
+            success: result => {
+                self.classList.remove('is-loading');
+                console.log(`${url} succeeded`);
+                callback(result);
+            }
+        });
+    }
+    
     $(document).ready(function() {
         // Check for click events on the navbar burger icon
         $(".navbar-burger").click(function() {

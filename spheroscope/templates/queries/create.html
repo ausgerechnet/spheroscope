@@ -1,6 +1,7 @@
 {% extends 'queries/base.html' %}
 {% import 'helpers/forms.html' as forms %}
 {% import 'patterns/pattern_options.html' as p %}
+{% import 'queries/helpers.html' as h %}
 
 {% block title %}
 {{ super() }}
@@ -9,18 +10,9 @@
 
 {% block content %}
 <form method="post">
-  {{ forms.input('name', value=(request.form['name']), label='Name') }}
-  {{ p.pattern_select("",patterns) }}
-  <div class="field">
-    <label class="label">CQP</label>
-    <div class="control">
-      <textarea class="textarea" name="query" id="query" rows="4" cols="100">{{ request.form['query']}}</textarea>
-    </div>
-  </div>
-  {{ forms.input('slots', value=(request.form['slots']), label='Slots') }}
-  {{ forms.input('corrections', value=(request.form['corrections']), label='Corrections') }}
+   {{ h.query_form(name=request.form['name'],pattern=0, patterns=patterns,content=request.form['query'],slots=request.form['slots'],corrections=request.form['corrections']) }}
   <div class="field is-grouped">
-    <input class="button is-link is-light" type="submit" value="Save">
+    <input class="button is-link is-light" type="submit" onClick="sendForm({{ url_for('queries.create') }},this);"  value="Save">
     <a class="button is-warning is-light" href="{{ url_for('queries.index') }}">Cancel</a>
   </div>
 </form>
