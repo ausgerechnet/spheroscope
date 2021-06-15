@@ -3,7 +3,7 @@
   <thead>
     <tr>
       <th>Index</th>
-      {% for col in result.columns %}
+      {% for col in result.columns.unique(0) %}
       <th>{{ col }}</th>
       {% endfor %}
     </tr>
@@ -12,8 +12,13 @@
   {% for k,res in result.iterrows() %}
   <tr {% if res['_merge'] == 'right_only' %} class="is-danger is-light" {% elif res['_merge'] == 'left_only' %} class="is-success is-light" {% endif %}>
     <th>{{ k }}</th>
-    {% for c,v in res.iteritems() %}
-    <td><span title="{{ v['lemma'] }}">{{ v['word'] }}</span></td>
+    {{ res.columns }}
+    {% for c,v in res.groupby(level=0, sort=False) %}
+    {% if v.size == 1 %}
+    <td><span>{{ v[0] }}</span></td>
+    {% else %}
+    <td><span title="{{ v[(c,'lemma')] }}">{{ v[(c, 'word')] }}</span></td>
+    {% endif %}
     {% endfor %}
   </tr>
   {% endfor %}
