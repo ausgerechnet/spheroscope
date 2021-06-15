@@ -186,11 +186,8 @@ def run_cmd(id):
 
     if not beta:
         if request.method == 'POST':
-            cols = dict()
-            for col in result.columns:
-                parts = col.split('_',1)
-                cols[parts[0]].append(col)
-
+            result = result.rename(columns={"word": "whole_word", "lemma": "whole_lemma"})
+            result.columns = result.columns.str.split('_', 1, expand=True)
             return render_template('queries/result_table.html',
                                    result=result,
                                    patterns=patterndict)
