@@ -34,7 +34,7 @@ setuptools.setup(
         "flask-expects-json==1.5.0",
         "pymagnitude==0.1.120",
         "pandas>=1.0.0",
-        "cwb-ccc==0.9.14",
+        "cwb-ccc==0.9.16",
         "pyyaml>=5.2.1",
     ],
     classifiers=[
