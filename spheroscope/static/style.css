@@ -35,3 +35,11 @@ input[type=submit] { align-self: start; min-width: 10em; }
 #right {
   flex: 1;
 }
+
+/* Sortable tables */
+table.sortable thead {
+    background-color:#eee;
+    color:#666666;
+    font-weight: bold;
+    cursor: default;
+}
