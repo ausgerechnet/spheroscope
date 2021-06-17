@@ -26,6 +26,14 @@ bp = Blueprint('queries', __name__, url_prefix='/queries')
 
 
 def run(id, cwb_id):
+    """
+    run a query on a corpus. this function
+    - retrieves the query from the database and
+    - translates the query into valid input expected by cwb-ccc's cqpy.run_query
+
+    :param int id: spheroscope ID of the query
+    :param str cwb_id: CWB registry ID of the corpus
+    """
 
     # get query
     query = Query.query.filter_by(id=id).first().serialize()
@@ -77,7 +85,7 @@ def index():
     pattern = request.args.get('pattern')
     queries = Query.query.order_by(Query.name)
     return render_template('queries/index.html',
-                           queries=(queries.filter_by(pattern_id = pattern).all() if pattern else queries.all()))
+                           queries=(queries.filter_by(pattern_id=pattern).all() if pattern else queries.all()))
 
 
 @bp.route('/index2')
@@ -168,14 +176,36 @@ def delete_cmd(id):
 @bp.route('/<int:id>/run', methods=('GET', 'POST'))
 @login_required
 def run_cmd(id):
+    """
+    run a query
+    ---
+    parameters:
+      - name: id
+        in: path
+        type: int
+        required: true
+        description: CWB-id of the corpus
+      - name: beta
+        in: query
+        type: bool
+        required: false
+        default: false
+        description: (deprecated) whether to switch to Yuliya's visualization
+    """
 
-    beta = request.args.get('beta', False)
+    # get corpus from settings
     cwb_id = session['corpus']['resources']['cwb_id']
+
+    # switch to Yuliya's implementation?
+    beta = request.args.get('beta', False)
+
+    # run the actual query
     result = run(id, cwb_id)
 
     if result is None:
         return 'query does not have any matches'
 
+    # pass to frontend
     display_columns = [x for x in result.columns if x not in [
         'context_id', 'context', 'contextend'
     ]]
