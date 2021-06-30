@@ -156,7 +156,7 @@ def frequencies(id):
 
     return render_template(
         'macros/frequencies.html',
-        frequencies=freq.to_html(escape=False),
+        frequencies=freq,
         macro=macro,
         cwb_id=cwb_id
     )

@@ -1,7 +1,8 @@
-{% extends 'base.html' %}
+{% extends 'wordlists/base.html' %}
 
-{% block header %}
-<h1>{% block title %}wordlist "{{ wordlist['name'] }}"{% endblock %}</h1>
+{% block title %}
+{{ super() }}
+<li><a>{{ wordlist['name'] }}</a></li>
 {% endblock %}
 
 {% block content %}

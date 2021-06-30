@@ -160,7 +160,7 @@ def frequencies(id):
     return render_template(
         'wordlists/frequencies.html',
         wordlist=wordlist,
-        original=freq.to_html(escape=False),
+        frequencies=freq,
         cwb_id=cwb_id
     )
 
