@@ -11,7 +11,22 @@
 {% endblock %}
 
 {% block content %}
-<div class="content">
-  {{ frequencies | safe }}
+<div class="table-container">
+<table class="table is-striped is-hoverable is-narrow sortable" style="overflow: auto;">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Frequency</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for k,freq in frequencies.iterrows() %}
+  <tr>
+    <th>{{ freq["name"][0] }}</th>
+    <td>{{ freq["freq"] }}</td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
 </div>
 {% endblock %}
