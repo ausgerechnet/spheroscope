@@ -21,16 +21,24 @@
     {% else %}
     <td id="{{ k }}-{{ c }}">
       <script>
-        y = '{{ v[(c, "word", "y")] }}';
-        x = '{{ v[(c, "word", "x")] }}';
-        target = document.getElementById('{{ k }}-{{ c }}');
-        if (x == 'nan') {
-            x = '';
+        {
+            let y = '{{ v[(c, "word", "y")] }}',
+                x = '{{ v[(c, "word", "x")] }}',
+                hover = '{{ v[(c, "lemma", "y")] }}';
+            const target = document.getElementById('{{ k }}-{{ c }}');
+            if (x == 'nan') {
+                x = '';
+                hover = '{{ v[(c, "lemma", "y")] }}';
+            }
+            if (y == 'nan') {
+                y = '';
+                hover = '{{ v[(c, "lemma", "x")] }}';
+            }
+            diffInto(y, x, target);
+            const sp = document.getElementById("{{ k }}-{{ c }}");
+            sp.classList.add("has-tooltip-multiline");
+            sp.setAttribute("data-tooltip", hover);
         }
-        if (y == 'nan') {
-            y = '';
-        }
-        diffInto(y, x, target);
       </script>
     </td>
     {% endif %}
