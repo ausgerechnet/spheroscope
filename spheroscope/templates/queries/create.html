@@ -13,7 +13,11 @@
    {{ h.query_form(name=request.form['name'],pattern=0, patterns=patterns,content=request.form['query'],slots=request.form['slots'],corrections=request.form['corrections']) }}
   <div class="field is-grouped">
     <input class="button is-link is-light" type="submit" onClick="sendForm({{ url_for('queries.create') }},this);"  value="Save">
+    <input class="button is-info is-light" type="button" onclick="runButton('{{ url_for('queries.run_cmd', id=query.id) }}',this,$(this.form).serializeArray(), res => $('#results').html(res));" value="Run">
     <a class="button is-warning is-light" href="{{ url_for('queries.index') }}">Cancel</a>
   </div>
 </form>
+
+<div id="results" class="content">
+</div>
 {% endblock %}

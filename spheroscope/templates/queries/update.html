@@ -18,15 +18,10 @@
     <form action="{{ url_for('queries.delete_cmd', id=query.id) }}" method="post">
       <input class="button is-danger is-light" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
     </form>
-    <form action="{{ url_for('queries.run_cmd', id=query.id) }}" method="post">
-      <input class="button is-info is-light" type="button" onclick="runButton('{{ url_for('queries.run_cmd', id=query.id) }}',this,{beta: true}, res => $('#results').html(res));" value="Run">
-    </form>
+    <input class="button is-info is-light" type="button" onclick="runButton('{{ url_for('queries.run_cmd', id=query.id) }}',this,$(this.form).serializeArray(), res => $('#results').html(res));" value="Run">
   </div>
 </form>
 
 <div id="results" class="content">
 </div>
-
-
-  
 {% endblock %}
