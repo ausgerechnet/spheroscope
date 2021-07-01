@@ -47,4 +47,11 @@
   {% endfor %}
   </tbody>
 </table>
+<script>
+  {
+      const tab = document.getElementsByTagName("table"),
+            target = tab[tab.length -1];
+      sorttable.makeSortable(target);
+  }
+</script>
 </div>
