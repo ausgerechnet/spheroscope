@@ -24,29 +24,10 @@ from collections import defaultdict
 
 bp = Blueprint('queries', __name__, url_prefix='/queries')
 
-
-def run(id, cwb_id):
-    """
-    run a query on a corpus. this function
-    - retrieves the query from the database and
-    - translates the query into valid input expected by cwb-ccc's cqpy.run_query
-
-    :param int id: spheroscope ID of the query
-    :param str cwb_id: CWB registry ID of the corpus
-    """
-
-    # get query
-    query = Query.query.filter_by(id=id).first().serialize()
+def run_in_corpus(query, cwb_id):
 
     # get corpus config
     corpus_config = read_config(cwb_id)
-
-    # make sure anchors are int
-    corrections_int = dict()
-    for k in query['anchors']['corrections'].keys():
-        c = query['anchors']['corrections'][k]
-        corrections_int[int(k)] = c
-    query['anchors']['corrections'] = corrections_int
 
     # load query and display parameters
     query['query'] = dict(corpus_config['query'])
@@ -75,6 +56,27 @@ def run(id, cwb_id):
 
     return lines
 
+def run(id, cwb_id):
+    """
+    run a query on a corpus. this function
+    - retrieves the query from the database and
+    - translates the query into valid input expected by cwb-ccc's cqpy.run_query
+
+    :param int id: spheroscope ID of the query
+    :param str cwb_id: CWB registry ID of the corpus
+    """
+
+    # get query
+    query = Query.query.filter_by(id=id).first().serialize()
+
+    # make sure anchors are int
+    corrections_int = dict()
+    for k in query['anchors']['corrections'].keys():
+        c = query['anchors']['corrections'][k]
+        corrections_int[int(k)] = c
+    query['anchors']['corrections'] = corrections_int
+
+    return run_in_corpus(query, cwb_id)
 
 ######################################################
 # ROUTING ############################################
@@ -173,6 +175,19 @@ def delete_cmd(id):
     return redirect(url_for('queries.index'))
 
 
+def patch_query_results(results):
+    newresults = results.rename(columns={
+        "word": "whole_word",
+        "word_x": "whole_word_x",
+        "word_y": "whole_word_y",
+        "lemma": "whole_lemma",
+        "lemma_x": "whole_lemma_x",
+        "lemma_y": "whole_lemma_y",
+        "_merge": "merge"
+    })
+    newresults.columns = newresults.columns.str.split('_', 2, expand=True)
+    return newresults
+
 @bp.route('/<int:id>/run', methods=('GET', 'POST'))
 @login_required
 def run_cmd(id):
@@ -199,14 +214,14 @@ def run_cmd(id):
     # switch to Yuliya's implementation?
     beta = request.args.get('beta', False)
 
-    # run the actual query
-    result = run(id, cwb_id)
+    # run the old query
+    oldresult = run(id, cwb_id)
 
-    if result is None:
+    if oldresult is None:
         return 'query does not have any matches'
 
     # pass to frontend
-    display_columns = [x for x in result.columns if x not in [
+    display_columns = [x for x in oldresult.columns if x not in [
         'context_id', 'context', 'contextend'
     ]]
 
@@ -216,17 +231,37 @@ def run_cmd(id):
 
     if not beta:
         if request.method == 'POST':
-            result = result.rename(columns={"word": "whole_word", "lemma": "whole_lemma"})
-            result.columns = result.columns.str.split('_', 1, expand=True)
+            newquery = dict(
+                id=id,
+                user_id=g.user.id,
+                cqp=request.form['query'],
+                meta=dict(
+                    name=request.form['name'],
+                    pattern_id=request.form['pattern'],
+                ),
+                anchors=dict(
+                    corrections=json.loads(request.form['corrections'].replace(
+                        "None", "null"
+                    )),
+                    slots=json.loads(request.form['slots'].replace(
+                    "None", "null"
+                    ))
+                ),
+                path="null"
+            )
+            newresult = run_in_corpus(newquery,cwb_id)
+            oldresult = oldresult
+            result = patch_query_results(newresult.merge(oldresult, how='outer', on='tweet_id', indicator=True))
+
             return render_template('queries/result_table.html',
                                    result=result,
                                    patterns=patterndict)
 
-        return result[display_columns].to_html(escape=False)
+        return oldresult[display_columns].to_html(escape=False)
 
     else:
 
-        tojson = result.to_json()
+        tojson = oldresult.to_json()
         tbl = json.loads(tojson)
 
         for idx in tbl["text"]:
