@@ -5,18 +5,20 @@
   <thead>
     <tr>
       <th>ID</th>
-      <th>Queries</th>
+      <th>Name</th>
+      <th><abbr title="Number of queries">#Q</abbr></th>
       <th>Formula</th>
-      <th>Explanation</th>
+      <td>Modified</td>
     </tr>
   </thead>
   <tbody>
   {% for pattern in patterns %}
   <tr>
-    <th><a href="{{ url_for('patterns.pattern', id=pattern.id) }}">{{ pattern.id }}</a></th>
+    <th {% if pattern.retired %}class="is-warning" {% endif %}><a href="{{ url_for('patterns.pattern', id=pattern.id) }}">{{ pattern.id }}</a></th>
+    <th>{{ pattern.name }}</th>
     <td><a href="{{ url_for('queries.index', pattern=pattern.id) }}">{{ pattern.nr_queries }}</a></td>
-    <td>\( {{ pattern.template }} \)</td>
-    <td>{{ pattern.explanation }}</td>
+    <td data-tooltip="{{ pattern.explanation }}" class="has-tooltip-multiline">\( {{ pattern.template }} \)</td>
+    <td><time>{{ pattern.modified.strftime('%Y-%m-%d %H:%M') }}</time></td>
   </tr>
   {% endfor %}
   </tbody>
