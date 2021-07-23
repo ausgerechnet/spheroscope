@@ -24,6 +24,7 @@ from collections import defaultdict
 
 bp = Blueprint('queries', __name__, url_prefix='/queries')
 
+
 def run_in_corpus(query, cwb_id):
 
     # get corpus config
@@ -55,6 +56,7 @@ def run_in_corpus(query, cwb_id):
     # conc.to_csv(path_result, sep="\t")
 
     return lines
+
 
 def run(id, cwb_id):
     """
@@ -188,6 +190,7 @@ def patch_query_results(results):
     newresults.columns = newresults.columns.str.split('_', 2, expand=True)
     return newresults
 
+
 @bp.route('/<int:id>/run', methods=('GET', 'POST'))
 @login_required
 def run_cmd(id):
@@ -244,12 +247,12 @@ def run_cmd(id):
                         "None", "null"
                     )),
                     slots=json.loads(request.form['slots'].replace(
-                    "None", "null"
+                        "None", "null"
                     ))
                 ),
                 path="null"
             )
-            newresult = run_in_corpus(newquery,cwb_id)
+            newresult = run_in_corpus(newquery, cwb_id)
             oldresult = oldresult
             result = patch_query_results(newresult.merge(oldresult, how='outer', on='tweet_id', indicator=True))
 
