@@ -1,3 +1,4 @@
+- in general, we only annotate *clear* positives
 # 0 Quotation #
 - ENTITY says FORMULA
 - according to ENTITY: FORMULA
