@@ -24,50 +24,23 @@ from collections import defaultdict
 
 bp = Blueprint('queries', __name__, url_prefix='/queries')
 
-def run_in_corpus(query, cwb_id):
+
+def query_corpus(query, cwb_id):
+    """execute a query in a corpus. this function makes sure that the
+    query is valid input as expected by cwb-ccc's cqpy.run_query
+
+    :param dict query: query as dictionary
+    :param str cwb_id: CWB registry ID of the corpus
+    """
 
     # get corpus config
     corpus_config = read_config(cwb_id)
 
     # load query and display parameters
     query['query'] = dict(corpus_config['query'])
-    query['query']['context'] = None
+    if 'context' not in query['query'].keys():
+        query['query']['context'] = None
     query['display'] = dict(corpus_config['display'])
-
-    # run query
-    corpus = init_corpus(corpus_config)
-    current_app.logger.info('running query')
-    lines = run_query(corpus, query)
-
-    # result_parameters = [query[key] for key in query.keys() if key not in [
-    #     'id', 'user_id', 'modified', 'pattern'
-    # ]]
-    # param = generate_idx(result_parameters, prefix='param-', length=10)
-
-    # # determine path to result
-    # dir_result = os.path.join(current_app.instance_path, cwb_id, 'matches', param)
-    # if not os.path.isdir(dir_result):
-    #     os.makedirs(dir_result)
-    # path_result = os.path.join(dir_result, query['name'] + ".tsv.gz")
-
-    # # save result
-    # current_app.logger.info('saving result')
-    # conc.to_csv(path_result, sep="\t")
-
-    return lines
-
-def run(id, cwb_id):
-    """
-    run a query on a corpus. this function
-    - retrieves the query from the database and
-    - translates the query into valid input expected by cwb-ccc's cqpy.run_query
-
-    :param int id: spheroscope ID of the query
-    :param str cwb_id: CWB registry ID of the corpus
-    """
-
-    # get query
-    query = Query.query.filter_by(id=id).first().serialize()
 
     # make sure anchors are int
     corrections_int = dict()
@@ -76,7 +49,15 @@ def run(id, cwb_id):
         corrections_int[int(k)] = c
     query['anchors']['corrections'] = corrections_int
 
-    return run_in_corpus(query, cwb_id)
+    # init corpus
+    corpus = init_corpus(corpus_config)
+
+    # run query
+    current_app.logger.info('running query')
+    lines = run_query(corpus, query)
+
+    return lines
+
 
 ######################################################
 # ROUTING ############################################
@@ -188,6 +169,7 @@ def patch_query_results(results):
     newresults.columns = newresults.columns.str.split('_', 2, expand=True)
     return newresults
 
+
 @bp.route('/<int:id>/run', methods=('GET', 'POST'))
 @login_required
 def run_cmd(id):
@@ -215,7 +197,8 @@ def run_cmd(id):
     beta = request.args.get('beta', False)
 
     # run the old query
-    oldresult = run(id, cwb_id)
+    query = Query.query.filter_by(id=id).first().serialize()
+    oldresult = query_corpus(query, cwb_id)
 
     if oldresult is None:
         return 'query does not have any matches'
@@ -232,8 +215,6 @@ def run_cmd(id):
     if not beta:
         if request.method == 'POST':
             newquery = dict(
-                id=id,
-                user_id=g.user.id,
                 cqp=request.form['query'],
                 meta=dict(
                     name=request.form['name'],
@@ -244,14 +225,15 @@ def run_cmd(id):
                         "None", "null"
                     )),
                     slots=json.loads(request.form['slots'].replace(
-                    "None", "null"
+                        "None", "null"
                     ))
-                ),
-                path="null"
+                )
             )
-            newresult = run_in_corpus(newquery,cwb_id)
+            newresult = query_corpus(newquery, cwb_id)
             oldresult = oldresult
-            result = patch_query_results(newresult.merge(oldresult, how='outer', on='tweet_id', indicator=True))
+            result = patch_query_results(
+                newresult.merge(oldresult, how='outer', on='tweet_id', indicator=True)
+            )
 
             return render_template('queries/result_table.html',
                                    result=result,
@@ -368,7 +350,9 @@ def query_command(pattern, dir_out):
 
         error = ""
         try:
-            lines = run(query.id, None)
+            query = Query.query.filter_by(id=query.id).first().serialize()
+            cwb_id = session['corpus']['resources']['cwb_id']
+            lines = query_corpus(query, cwb_id)
         except KeyboardInterrupt:
             return
         except:
