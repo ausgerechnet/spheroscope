@@ -1,20 +1,23 @@
 {% extends 'macros/base.html' %}
+{% import 'helpers/forms.html' as f %}
+{% import 'helpers/controls.html' as c %}
+{% import 'macros/helpers.html' as h %}
 
-{% block title %}<li><a>{{ macro['name'] }}</a></li>{% endblock %}
+{% block title %}
+{{ super () }}
+<li><a>{{ macro['name'] }}</a></li>
+{% endblock %}
 
 {% block content %}
 
-<form method="post">
-  
-  <label for="name">name ([A-Za-z_])</label>
-  <input name="name" id="name" value="{{ request.form['name'] or macro['name'] }}" required>
-  <label for="macro">macro</label>
-  <textarea name="macro" id="macro">{{ request.form['macro'] or macro['macro'] }}</textarea>
-  <input type="submit" value="Save">
-
-</form>
-<form action="{{ url_for('macros.delete_cmd', id=macro.id) }}" method="post">
-  <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
+<form>
+  {{ h.macro_form(name=macro.name,macro=macro.macro) }}
+  <div class="field is-grouped">
+  <input type="button" class="button is-link is-light" onclick="sendForm('{{ url_for('macros.update', id=macro.id) }}',this);" value="Save">
+  <form action="{{ url_for('macros.delete_cmd', id=macro.id) }}" method="post">
+      <input class="button is-danger is-light" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
+  </form>
+  </div>
 </form>
 
 {% endblock %}

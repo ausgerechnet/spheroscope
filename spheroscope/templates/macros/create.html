@@ -1,19 +1,19 @@
 {% extends 'macros/base.html' %}
 
-{% block title %}New macro{% endblock %}
+{% import 'macros/helpers.html' as h %}
+
+{% block title %}
+{{ super() }}
+<li><a>New macro</a></li>
+{% endblock %}
 
 {% block content %}
 <!-- corpus: <em>{{ corpus['cwb_id'] }}</em><br/> -->
 <!-- available s-attributes: <em>{{ corpus['s_atts'] }}</em> -->
 
-<form method="post">
-  
-  <label for="name">name ([A-Za-z_])</label>
-  <input name="name" id="name" value="{{ request.form['name'] }}" required>
-  <label for="macro">macro</label>
-  <textarea name="macro" id="macro">{{ request.form['macro'] }}</textarea>
-  <input type="submit" value="Save">
-
+<form>
+  {{ h.macro_form(name=request.form['name'],macro=request.form['macro']) }}
+  <input type="button" class="button is-link is-light" onclick="sendForm('{{ url_for('macros.create') }}',this);" value="Save">
 </form>
 
 {% endblock %}
