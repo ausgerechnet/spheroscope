@@ -45,23 +45,27 @@
 - ENTITY wants FORMULA
 - desire (*want*, *wish*) of a particular outcome or event,
 - affiliation (*support*, *back*, *say yes to*),
-- conscious decision or reasoning (Johnson's *reason* to remain, her *case* for leave),
 - the entity making the statement should be explicitly marked - an exception applies for ellipsis (i.e. when the subject is not realised in the surface form) and for imperatives. In both of the latter cases, the 'wanter' is understood to be the author of the message
 
 ## examples ##
-- SF have issues with EU but see it as better for NI to remain
-  because they prefer NI to remain over NI not remaining which is our encoding of desire
 - ... says The Times, endorsing Brexit
-- I believe in votes at ...
+- I believe in votes at 16
 - ... 50% in favour of ...
 - he is against it (negation on the inside)
+- George is for Brexit
 
 ## counter examples ##
+- One-sided preference without explicit marking of desire: SF have issues with EU but *see it as better* for NI to remain
 - the 'wanter' is implicit in a non-elliptical sentence (*democracy should be protected* pattern 4)
-- the desire can only be inferred from a particular action taken by an entity (he *voted* remain might be interpreted as him /remain/ to be made true, but we do not consider such actions a sufficiently clear expression of desire)
+- the desire can only be inferred from an action (he *voted* remain might be interpreted as him /remain/ to be made true, but we do not consider such actions a sufficiently clear expression of desire)
 - it would be nice if ..
 - ... the figures were REMAIN 45% ...
 - I'm Brexit -> group membership
+- rhetorical questions: you want to talk misleading?
+- he's got Brexit as his next agenda item
+- conscious decision or reasoning (Johnson's *reason* to remain, her *case* for leave),
+- the technocrats fighting hard for Britain to remain
+- you seem to like that
 
 ## specifications ##
 - #1 + desire
