@@ -1,29 +1,15 @@
-{% extends 'base.html' %}
+{% extends 'wordlists/base.html' %}
 
-{% block header %}
-<h1>{% block title %}new wordlist{% endblock %}</h1>
+{% block title %}
+{{ super() }}
+<li><a>New wordlist</a></li>
 {% endblock %}
 
 {% block content %}
 
-<form method="post">
-  
-  <label for="name">name ([A-Za-z_])</label>
-  <input name="name" id="name" value="{{ request.form['name'] }}" required>
-  
-  <label for="p_att">p-attribute</label>
-  <select class="form-control" id="p_att" name="p_att">
-    {% for p_att in corpus['p_atts'] %}
-    <option value="{{ request.form['p_att'] }}"{% if p_att=="lemma" %} selected{% endif %}>
-      {{ p_att }}
-    </option>
-    {% endfor %}
-  </select>
-
-  <label for="words">words</label>_
-  <textarea name="words" id="words">{{ request.form['words'] }}</textarea>
-  
-  <input type="submit" value="Save">
+<form>
+  {{ h.wordlist_form(name=request.form.name,p_att=request.form.p_att,words=request.form.words, corpus=corpus) }}
+  <input type="button" class="button is-link is-light" onclick="sendForm('{{ url_for('wordlists.create') }}',this);" value="Save">
 </form>
 
 {% endblock %}

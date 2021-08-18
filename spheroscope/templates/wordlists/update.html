@@ -1,5 +1,7 @@
 {% extends 'wordlists/base.html' %}
 
+{% import 'wordlists/helpers.html' as h %}
+
 {% block title %}
 {{ super() }}
 <li><a>{{ wordlist['name'] }}</a></li>
@@ -8,27 +10,15 @@
 {% block content %}
 last modified: <em>{{ wordlist['modified'] }}</em><br/>
 
-<form method="post">
-
-  <label for="name">name ([A-Za-z_])</label>
-  <input name="name" id="name" value="{{ request.form['name'] or wordlist['name'] }}" required>
-
-  <label for="p_att">p-attribute</label>
-  <select class="form-control" id="p_att" name="p_att">
-    {% for p_att in corpus['p_atts'] %}
-    <option value="{{ p_att }}"{% if p_att==wordlist['p_att'] %} selected{% endif %}>
-      {{ p_att }}
-    </option>
-    {% endfor %}
-  </select>
-  
-  <label for="words">words</label>
-  <textarea name="words" id="words">{{ request.form['words'] or wordlist['words'] }}</textarea>
-  
-  <input type="submit" value="Save">
+<form>
+  {{ h.wordlist_form(name=wordlist.name,p_att=wordlist.p_att,words=wordlist.words, corpus=corpus) }}
+   <div class="field is-grouped">
+  <input type="button" class="button is-link is-light" onclick="sendForm('{{ url_for('wordlists.update', id=wordlist.id) }}',this);" value="Save">
+  <form action="{{ url_for('wordlists.delete_cmd', id=wordlist.id) }}" method="post">
+      <input class="button is-danger is-light" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
+  </form>
+  </div>
 </form>
-<form action="{{ url_for('wordlists.delete_cmd', id=wordlist.id) }}" method="post">
-  <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
-</form>
+
 
 {% endblock %}
