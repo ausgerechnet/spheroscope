@@ -11,35 +11,21 @@ $(document).ready(function(){
        return false;
    });
 
-});
-
-$(document).ready(function(){
-
    $(editQuery).click(function(){
        $('#more-window').load($(this).attr('href'));
        return false;
    });
-});
-
-$(document).ready(function(){
 
    $(newQuery).click(function(){
        $('#more-window').load($(this).attr('href'));
        return false;
    });
 
-});
-
-$(document).ready(function(){
-
    $(showMeta).click(function(){
        $('#more-window').load($(this).attr('href'));
        return false;
    });
-
 });
-
-
 
 
 // delegated event handler

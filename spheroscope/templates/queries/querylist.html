@@ -1,0 +1,31 @@
+{% import 'helpers/controls.html' as c %}
+
+{% macro querylist(queries) %}
+<table class="table is-striped is-hoverable sortable">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Pattern</th>
+      <td>Modified</td>
+      <td>Actions</td>
+    </tr>
+  </thead>
+  <tbody>
+  {% for query in queries %}
+  <tr>
+    <th><a href="{{ url_for('queries.update', id=query.id) }}">{{ query.name }}</a></th>
+    <td><a href="{{ url_for('patterns.pattern', id=query.pattern_id) }}">{{ query.pattern_id }}</a></td>
+    <td><time>{{ query.modified.strftime('%Y-%m-%d %H:%M') }}</time></td>
+    <td class="field has-addons">
+      <p class="control">
+        {{ c.edit_button(action=url_for('queries.update', id=query.id)) }}
+      </p>
+      <p class="control">
+        {{ c.run_button(action=url_for('queries.run_cmd', id=query.id)) }}
+      </p>
+    </td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endmacro %}

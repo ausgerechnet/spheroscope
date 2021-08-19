@@ -1,24 +1,25 @@
-{% extends 'base.html' %}
-
-{% block header %}
-<h1>{% block title %}corpora{% endblock %}</h1>
-{% endblock %}
+{% extends 'corpora/base.html' %}
 
 {% block content %}
-<div class="container-fluid" id="feedback">
-  <form method="post">
-    <ul>
-      <li>available corpora
-	<select class="form-control" id="corpus" name="corpus">
-	  {% for corpus in corpora %}
-	  <option value="{{ corpus }}"{% if corpus==active %}selected{% endif %}>
-	    {{ corpus }}
-	  </option>
-	  {% endfor %}
-	</select>
-      </li>
-    </ul>
-    <input type="submit" value="Enter">
-  </form>
-</div>
+<form method="post">
+  <div class="field">
+    <label class="label">Available corpora</label>
+    <div class="control">
+      <div class="select">
+	    <select name="corpus">
+	    {% for corpus in corpora %}
+	      <option value="{{ corpus }}"{% if corpus==active %}selected{% endif %}>
+	        {{ corpus }}
+	      </option>
+	    {% endfor %}
+	    </select>
+      </div>
+    </div>
+  </div>
+  <div class="field">
+    <div class="control">
+      <input class="button is-link" type="submit" value="Enter">
+    </div>
+  </div>
+</form>
 {% endblock %}

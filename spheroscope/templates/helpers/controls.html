@@ -1,0 +1,41 @@
+{% macro button(cls,action,text,name='',icon='') %}
+<a class="button is-light {{ cls }}" href="{{ action }}" {% if name != '' %}name="{{ name }}"{% endif %}>
+  {% if icon != '' %}<span class="icon"><i class="fas fa-{{ icon }}" aria-hidden="true"></i></span>{% endif %}
+  <span>{{ text }}</span>
+</a>
+{% endmacro%}
+
+{% macro add_button(action,text="New",name='') %}
+{{ button('is-primary', action, text, name, 'plus') }}
+{% endmacro %}
+
+{% macro del_button(action,text="Delete",name='') %}
+{{ button('is-danger', action, text, name, 'trash') }}
+{% endmacro %}
+
+{% macro save_button(action,text="Save",name='') %}
+{{ button('is-link', action, text, name, 'save') }}
+{% endmacro %}
+
+{% macro run_button(action,text="Run",name='') %}
+{{ button('is-link', action, text, name, 'running') }}
+{% endmacro %}
+
+{% macro edit_button(action,text="Edit",name='') %}
+{{ button('is-warning', action, text, name, 'pen') }}
+{% endmacro %}
+
+
+
+{% macro block(title) %}
+<section class="section">
+<div class="card">
+  <header class="card-header">
+    <p class="card-header-title">{{ title }}</p>
+  </header>
+  <div class="card-content">
+    {{ caller() }}
+  </div>
+</div>
+</section>
+{% endmacro %}

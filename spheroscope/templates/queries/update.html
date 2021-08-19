@@ -1,31 +1,27 @@
-{% extends 'base.html' %}
+{% extends 'queries/base.html' %}
+{% import 'helpers/forms.html' as forms %}
+{% import 'helpers/controls.html' as c %}
+{% import 'patterns/pattern_options.html' as p %}
+{% import 'queries/helpers.html' as h %}
 
-{% block header %}
-<h1>
-  {% block title %}query "{{ query.name }}"{% endblock %}
-</h1>
-<a class="action" href="{{ url_for('queries.create') }}">new</a>
+{% block title %}
+{{ super() }}
+<li><a>{{ query.name }}</a></li>
 {% endblock %}
   
 {% block content %}
 
-<form method="post">
-  <ul>
-    <li>name <input name="name" value="{{ request.form['name'] or query.name }}" required /> ([A-Za-z_])
-    <li> pattern <input name="pattern" value="{{ request.form['pattern'] or query.pattern_id }}"/> (-1 .. 32)
-      <span style="float:right;"> \( {{ query.pattern.preamble }} {{ query.pattern.template }} \)</span>
-    <li>cqp<br> <textarea name="query" id="query" rows="4" cols="100">{{ request.form['query'] or query.cqp }}</textarea>
-    <li>slots <input name="slots" value="{{ request.form['slots'] or query.slots }}"/> (dict: {slot: [start, end]})
-    <li>corrections <input name="corrections" value="{{ request.form['corrections'] or query.corrections }}"/> (dict: {anchor: correction})
-  </ul>
-  <input type="submit" value="save">
+<form>
+  {{ h.query_form(name=query.name,pattern=query.pattern_id, patterns=patterns,content=query.cqp,slots=query.slots,corrections=query.corrections) }}
+  <div class="field is-grouped">
+    <input type="button" class="button is-link is-light" onclick="sendForm('{{ url_for('queries.update', id=query.id) }}',this);" value="Save">
+    <form action="{{ url_for('queries.delete_cmd', id=query.id) }}" method="post">
+      <input class="button is-danger is-light" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
+    </form>
+    <input class="button is-info is-light" type="button" onclick="runButton('{{ url_for('queries.run_cmd', id=query.id) }}',this,$(this.form).serializeArray(), res => $('#results').html(res));" value="Run">
+  </div>
 </form>
 
-<form action="{{ url_for('queries.delete_cmd', id=query.id) }}" method="post">
-  <input class="danger" type="submit" value="delete" onclick="return confirm('Are you sure?');">
-</form>
-<form action="{{ url_for('queries.run_cmd', id=query.id) }}" method="post">
-  <input type="submit" value="run">
-</form>
-  
+<div id="results" class="content">
+</div>
 {% endblock %}

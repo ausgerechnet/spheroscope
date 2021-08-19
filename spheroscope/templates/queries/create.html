@@ -1,22 +1,22 @@
-{% extends 'base.html' %}
+{% extends 'queries/base.html' %}
+{% import 'helpers/forms.html' as forms %}
+{% import 'patterns/pattern_options.html' as p %}
+{% import 'queries/helpers.html' as h %}
 
-{% block header %}
-<h1>
-  {% block title %}new query{% endblock %}
-</h1>
+{% block title %}
+{{ super() }}
+<li><a>New query</a></li>
 {% endblock %}
 
 {% block content %}
-
 <form method="post">
-  <ul>
-    <li>name <input name="name" value="{{ request.form['name'] }}" required /> ([A-Za-z_])
-    <li> pattern <input name="pattern" value="{{ request.form['pattern'] }}"/> (-1 .. 32)
-    <li>cqp<br> <textarea name="query" id="query" rows="4" cols="100">{{ request.form['query'] }}</textarea>
-    <li>slots <input name="slots" value="{{ request.form['slots'] }}"/> (dict: {slot: [start, end]})
-    <li>corrections <input name="corrections" value="{{ request.form['corrections'] }}"/> (dict: {anchor: correction})
-  </ul>
-  <input type="submit" value="save">
+   {{ h.query_form(name=request.form['name'],pattern=0, patterns=patterns,content=request.form['query'],slots=request.form['slots'],corrections=request.form['corrections']) }}
+  <div class="field is-grouped">
+    <input class="button is-link is-light" type="submit" onClick="sendForm({{ url_for('queries.create') }},this);"  value="Save">
+    <a class="button is-warning is-light" href="{{ url_for('queries.index') }}">Cancel</a>
+  </div>
 </form>
 
+<div id="results" class="content">
+</div>
 {% endblock %}

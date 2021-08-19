@@ -66,7 +66,7 @@ class WordList(db.Model):
         p_att = "pos_ark" if name.startswith("tag") else "lemma"
         # get all words
         words = set([
-            w.lstrip().rstrip() for w in open(path, "rt").read().split("\n")
+            w.strip() for w in open(path, "rt").read().strip().split("\n")
         ])
 
         return WordList(
@@ -306,13 +306,15 @@ class Pattern(db.Model):
     __tablename__ = 'pattern'
 
     id = db.Column(db.Integer, primary_key=True)
-    modified = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    modified = db.Column(db.DateTime, nullable=False, default=datetime.now)
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     template = db.Column(db.Unicode)
     explanation = db.Column(db.Unicode)
-    generalizations = db.Column(db.Unicode)
+    retired = db.Column(db.Boolean)
+    name = db.Column(db.Unicode)
+    # generalizations = db.Column(db.Unicode)
 
     comment = db.Column(db.Unicode)
 
@@ -321,10 +323,10 @@ class Pattern(db.Model):
         queries = Query.query.filter_by(pattern_id=self.id).all()
         return len(queries)
 
-    @property
-    def preamble(self):
-        preamble = self.query.filter_by(id=-9999).first()
-        return preamble.template
+    # @property
+    # def preamble(self):
+    #     preamble = self.query.filter_by(id=-9999).first()
+    #     return preamble.template
 
     def __repr__(self):
         return 'pattern %d with %d queries' % (self.id, self.nr_queries)
@@ -372,7 +374,8 @@ def read_patterns(path):
             user_id=1,          # admin
             template=p[1]['template'],
             explanation=p[1]['explanation'],
-            generalizations=p[1]['specialises']
+            retired=p[1]['retired'],
+            name=p[1]['name']
         )
         current_app.logger.info(
             'writing pattern %d to database' % pattern.id

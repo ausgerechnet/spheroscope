@@ -1,22 +1,13 @@
-{% extends 'base.html' %}
+{% extends 'queries/base.html' %}
+
+{% import 'helpers/controls.html' as c %}
+{% import 'queries/querylist.html' as q %}
 
 {% block header %}
-<h1>{% block title %}queries{% endblock %}</h1>
-<a class="action" href="{{ url_for('queries.create') }}">new</a>
-<a class="action" href="">import</a>
+  {{ c.add_button(action=url_for('queries.create')) }}
+  <!-- {{ c.add_button(action="", text='Import') }} -->
 {% endblock %}
 
 {% block content %}
-<ul>
-  {% for query in queries %}
-  <li>
-    {{ query.name }} (pattern <a class="action" href="{{ url_for('patterns.pattern', id=query.pattern_id) }}">{{ query.pattern_id }}</a>)
-    <span style="float:right;">
-      <a class="action" href="{{ url_for('queries.update', id=query.id) }}">edit</a> –
-      <a class="action" href="{{ url_for('queries.run_cmd', id=query.id) }}" onclick="$('#loading').show();">run</a> –
-      <a class="action" href="{{ url_for('queries.index2') }}" onclick="$('#loading').show();">matches</a>
-    </span>
-  </li>
-  {% endfor %}
-</ul>
+{{ q.querylist(queries) }}
 {% endblock %}

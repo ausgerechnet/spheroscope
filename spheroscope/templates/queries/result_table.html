@@ -1,0 +1,57 @@
+<div class="table-container" style="overflow: visible;">
+<table class="table is-striped is-hoverable is-narrow sortable">
+  <thead>
+    <tr>
+      <th>Index</th>
+      {% for col in result.columns.unique(0) if not col == "merge" %}
+      <th>{{ col }}</th>
+      {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+  {% for k,res in result.iterrows() %}
+  <tr >
+    <th {% if res['merge'][0] == 'right_only' %} class="is-danger is-light" {% elif res['merge'][0] == 'left_only' %} class="is-success is-light" {% endif %}>{{ k }}</th>
+    {{ res.columns }}
+    {% for c,v in res.groupby(level=0, sort=False) if not c == "merge" %}
+    {% if v.size == 1 %}
+    <td><span>{{ v[0] }}</span></td>
+    {% elif v.size == 2 %}
+    <td><span title="{{ v[(c,'lemma')] }}">{{ v[(c, 'word')] }}</span></td>
+    {% else %}
+    <td id="{{ k }}-{{ c }}">
+      <script>
+        {
+            let y = '{{ v[(c, "word", "y")] }}',
+                x = '{{ v[(c, "word", "x")] }}',
+                hover = '{{ v[(c, "lemma", "y")] }}';
+            const target = document.getElementById('{{ k }}-{{ c }}');
+            if (x == 'nan') {
+                x = '';
+                hover = '{{ v[(c, "lemma", "y")] }}';
+            }
+            if (y == 'nan') {
+                y = '';
+                hover = '{{ v[(c, "lemma", "x")] }}';
+            }
+            diffInto(y, x, target);
+            const sp = document.getElementById("{{ k }}-{{ c }}");
+            sp.classList.add("has-tooltip-multiline");
+            sp.setAttribute("data-tooltip", hover);
+        }
+      </script>
+    </td>
+    {% endif %}
+    {% endfor %}
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+<script>
+  {
+      const tab = document.getElementsByTagName("table"),
+            target = tab[tab.length -1];
+      sorttable.makeSortable(target);
+  }
+</script>
+</div>

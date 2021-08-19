@@ -155,7 +155,8 @@ def corpus_config(cwb_id):
     ).show()
 
     # get current corpus attributes
-    attributes = Corpus(cwb_id).attributes_available
+    corpus = init_corpus(corpus_config)
+    attributes = corpus.attributes_available
     p_atts = list(attributes['attribute'][attributes['type'] == 'p-Att'].values)
     s_atts_anno = list(
         attributes['attribute'][list(attributes['annotation']) & (attributes['type'] == 's-Att')].values

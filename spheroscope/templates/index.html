@@ -4,41 +4,53 @@
 {% endblock %}
 
 {% block content %}
-<div id="wrapper">
-  <div id="left">
-    <h3>library</h3>
-    <ul>
-      <li>
-	<a class="action" href="{{ url_for('queries.index') }}">
-	  queries
-	</a>
-      <li>
-	<a class="action" href="{{ url_for('wordlists.index') }}">
-	  wordlists
-	</a>
-      <li>
-	<a class="action" href="{{ url_for('macros.index') }}">
-	  macros
-	</a>
-      <li>
-	<a class="action" href="{{ url_for('patterns.index') }}">
-	  patterns
-	</a>
-    </ul>
+  <div id="panel">
+    <header class="panel-heading">
+      <p class="card-header-title">Library</p>
+    </header>
+    <a class="panel-block" href="{{ url_for('queries.index') }}">
+      <span class="panel-icon">
+        <i class="fas fa-file-code" aria-hidden="true"></i>
+      </span>
+      Queries
+    </a>
+    <a class="panel-block" href="{{ url_for('wordlists.index') }}">
+      <span class="panel-icon">
+        <i class="fas fa-list" aria-hidden="true"></i>
+      </span>
+	  Wordlists
+    </a>
+    <a class="panel-block" href="{{ url_for('macros.index') }}">
+      <span class="panel-icon">
+        <i class="fas fa-laptop-code" aria-hidden="true"></i>
+      </span>
+	 Macros
+    </a>
+    <a class="panel-block" href="{{ url_for('patterns.index') }}">
+      <span class="panel-icon">
+        <i class="fas fa-code-branch" aria-hidden="true"></i>
+      </span>
+	  Patterns
+    </a>
   </div>
 
-  <div id="right">
-    <h3>settings</h3>
-    <ul>
-      <li>
-	<a class="action" href="{{ url_for('corpora.choose') }}">
-	  corpora
+  <div id="panel">
+    <header class="panel-heading">
+      <p class="card-header-title">Settings</p>
+    </header>
+	<a class="panel-block" href="{{ url_for('corpora.choose') }}">
+      <span class="panel-icon">
+        <i class="fas fa-atlas" aria-hidden="true"></i>
+      </span>
+	  Corpora
 	</a>
-      <li>
-	<a class="action" href="">
-	  users
-	</a>
-    </ul>
+      <!--   <a class="panel-block" href=""> -->
+      <!-- <span class="panel-icon"> -->
+      <!--   <i class="fas fa-users" aria-hidden="true"></i> -->
+      <!-- </span> -->
+      <!--     Users -->
+      <!--   </a> -->
+    </div>
   </div>
-</div>
+
 {% endblock %}
