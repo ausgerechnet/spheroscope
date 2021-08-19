@@ -313,6 +313,7 @@ class Pattern(db.Model):
     template = db.Column(db.Unicode)
     explanation = db.Column(db.Unicode)
     retired = db.Column(db.Boolean)
+    name = db.Column(db.Unicode)
     # generalizations = db.Column(db.Unicode)
 
     comment = db.Column(db.Unicode)
@@ -373,7 +374,8 @@ def read_patterns(path):
             user_id=1,          # admin
             template=p[1]['template'],
             explanation=p[1]['explanation'],
-            retired=p[1]['retired']
+            retired=p[1]['retired'],
+            name=p[1]['name']
         )
         current_app.logger.info(
             'writing pattern %d to database' % pattern.id
