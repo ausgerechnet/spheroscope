@@ -12,7 +12,6 @@
 44,good,good({?0 : formula}),"0 is/would be genereally good",false
 45,bad,bad({?0 : formula}),"0 is/would be generally bad",false
 29,eventual result,[{?0 : action}]F({?1 : formula}),by executing action 0 truth of 1 would be eventually achieved,true
-31,DES,[{?0 : entities};{{?1 : text{list of lists of }actions}} : {?2 : entities}]({?3 : formula}),the entities 0 can collaborate to enforce truth of 3 as long as entities 2 execute one of the (joint) actions from 1,true
 46,qualified desire,"({?0 : entity})\implies \downarrow x.\,D_x ({?1 : formula}); D_{{?2 : entity}}(?1)); (?2) \implies (?0)",entity 2 is part of entity 0 whose members want formula 1,false
 0,quotation,Q_{{?0 : entity}}({?1 : formula}),entity 0 claims that formula 1 is true,false
 47,unary preference,D_{{?0 : entity}} ({?1 : formula}),entity 0 prefers formula 1 being true over it being false,false
@@ -33,7 +32,6 @@
 35,necessary truth,\top \cfac {?0 : formula},formula 0 is necessarily true,false
 41,warning of bad consequence,Q_{{?0 : entity}}(bad({?2 : formula}) \land {?1 : formula} \cfac {?2}),entity 0 warns that formula 1 has negative consequence formula 2,false
 28,honesty,Q_{{?0 : entity}}({?1 : formula}) \implies B_{{?0}} ({?1}),entity 0 is claimed to be honest w.r.t. formula 1 in the sense that they say what they believe,true
-33,possible causation claim,Q_{{?0 : entity}} \diamond (({?1 : formula}) mcauses ({?2 : formula})),entity 0 claims that 1 might cause 2 to be true,true
 43,better for concept,({?0 : formula}) \leq_{{?2 : concept}} ({?1 : formula}),"1 is/would be at least as good for concept 2 as 0",false
 37,quotation of entity's obligation,"Q_{{?0 : entity}} ({?1 : entity} \implies \downarrow x.,O (x stit ({?2 : formula}))",entity 0 states that everybody in entity 1 should make formula 2 true,false
 21,ad-hominem,\neg moral({?0 : entity}),entity 0 is morally bad and should be condemned,false
@@ -49,3 +47,5 @@
 9, ,({?1 : formula}) \mcauses Q_{{?0 : entity}} good,"1 is good for entity 0",true
 14,situation similarity,({?0 : situation}) \sim ({?1 : situation}),situations 0 and 1 are similar,true
 9999,unknown,\top,uncategorized queries,true
+31,DES,[{?0 : entities};{{?1 : \text{list of lists of }actions}} : {?2 : entities}]({?3 : formula}),the entities 0 can collaborate to enforce truth of 3 as long as entities 2 execute one of the (joint) actions from 1,true
+33,possible causation claim,Q_{{?0 : entity}} \diamond (({?1 : formula}) \mcauses ({?2 : formula})),entity 0 claims that 1 might cause 2 to be true,true
