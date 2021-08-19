@@ -66,7 +66,7 @@ class WordList(db.Model):
         p_att = "pos_ark" if name.startswith("tag") else "lemma"
         # get all words
         words = set([
-            w.lstrip().rstrip() for w in open(path, "rt").read().split("\n")
+            w.strip() for w in open(path, "rt").read().strip().split("\n")
         ])
 
         return WordList(
