@@ -182,10 +182,14 @@ def similar(id, number=200):
         number
     )
 
+    freq = freq.reset_index()[['lemma', 'frequency', 'similarity']]
+    freq.columns = [c.capitalize() for c in freq.columns]
+
     # render result
     return render_template(
         'wordlists/similar.html',
         wordlist=wordlist,
-        similar=freq.to_html(escape=False),
+        similar=freq.to_html(escape=False, border=0, index=False, justify='left',
+                             classes=['table', 'is-striped', 'is-hoverable', 'is-narrow', 'sortable']),
         cwb_id=cwb_id
     )
