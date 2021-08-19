@@ -4,12 +4,7 @@ import tempfile
 import pytest
 
 from spheroscope import create_app
-from spheroscope.db import get_db
-from spheroscope.db import init_db
-
-# read in SQL for populating test data
-with open(os.path.join(os.path.dirname(__file__), "tests", "data.sql"), "rb") as f:
-    _data_sql = f.read().decode("utf8")
+from spheroscope.database import init_db, import_library
 
 
 @pytest.fixture
@@ -18,12 +13,20 @@ def app():
     # create a temporary file to isolate the database for each test
     db_fd, db_path = tempfile.mkstemp()
     # create the app with common test config
-    app = create_app({"TESTING": True, "DATABASE": db_path})
+    app = create_app({
+        "TESTING": True,
+        "DATABASE": db_path,
+        "DB_NAME": "test.sqlite",
+        "DB_USERNAME": "admin",
+        "DB_PASSWORD": "0000",
+        "REGISTRY_PATH": "/home/ausgerechnet/corpora/cwb/registry/",
+        "CACHE_PATH": "/tmp/spheroscope-test"
+    })
 
     # create the database and load test data
     with app.app_context():
         init_db()
-        get_db().executescript(_data_sql)
+        import_library()
 
     yield app
 
