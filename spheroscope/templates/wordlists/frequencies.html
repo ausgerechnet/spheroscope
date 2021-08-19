@@ -1,23 +1,38 @@
-{% extends 'base.html' %}
+{% extends 'wordlists/base.html' %}
+
+{% import 'helpers/controls.html' as c %}
+
+{% block title %}
+{{ super() }}
+<li><a href="{{ url_for('wordlists.update', id=wordlist.id) }}">{{ wordlist.name }}</a></li>
+<li><a>Frequencies</a></li>
+{% endblock %}
 
 {% block header %}
-<h1>
-  {% block title %}wordlist "{{ wordlist.name }}"{% endblock %}
-</h1>
-<a class="action" href="{{ url_for('wordlists.similar', id=wordlist.id, cwb_id=cwb_id) }}">
-  similar
-</a>
-<a class="action" href="{{ url_for('wordlists.update', id=wordlist.id, cwb_id=cwb_id) }}">
-  edit
-</a>
+{{ c.run_button(action=url_for('wordlists.similar', id=wordlist.id, cwb_id=cwb_id), text="Similar") }}
+{{ c.edit_button(action=url_for('wordlists.update', id=wordlist.id, cwb_id=cwb_id)) }}
 {% endblock %}
 
 {% block content %}
-<article class="post">
-  p-attribute: <em>{{ wordlist.p_att }}</em><br/>
-  <p class="body">
-    {{ original | safe }}
-  </p>
-</article>
-<hr>
+<div class="block">
+  <strong>p-attribute</strong>: <em>{{ wordlist.p_att }}</em>
+</div>
+<div class="table-container">
+<table class="table is-striped is-hoverable is-narrow sortable" style="overflow: auto;">
+  <thead>
+    <tr>
+      <th>{{ wordlist.p_att|capitalize }}</th>
+      <th>Frequency</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for k,freq in frequencies.iterrows() %}
+  <tr>
+    <th>{{ freq["name"] }}</th>
+    <td>{{ freq["freq"] }}</td>
+  </tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div>
 {% endblock %}

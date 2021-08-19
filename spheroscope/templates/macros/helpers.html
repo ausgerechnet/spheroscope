@@ -1,0 +1,11 @@
+{% import 'helpers/forms.html' as forms %}
+
+{% macro macro_form(name,macro) %}
+  {{ forms.input('name', value=name, label='Name') }}
+  <div class="field">
+  <label class="label">Macro</label>
+  <div class="control">
+    <textarea class="textarea" name="macro" id="macro" rows="6" cols="100">{{ macro }}</textarea>
+  </div>
+</div>
+{% endmacro %}

@@ -1,0 +1,28 @@
+{% import 'helpers/forms.html' as forms %}
+{% import 'helpers/controls.html' as c %}
+{% import 'patterns/pattern_options.html' as p %}
+
+{% macro query_form(name,pattern,patterns,content,slots,corrections) %}
+<div class="columns">
+  <div class="column">
+    {{ forms.input('name', value=name, label='Name') }}
+  </div>
+  <div class="column">
+    {{ p.pattern_select(pattern,patterns) }}
+  </div>
+</div>
+<div class="field">
+  <label class="label">CQP</label>
+  <div class="control">
+    <textarea class="textarea" name="query" id="query" rows="4" cols="100">{{ content }}</textarea>
+  </div>
+</div>
+<div class="columns">
+  <div class="column">
+    {{ forms.input('slots', value=slots, label='Slots') }}
+  </div>
+  <div class="column">
+    {{ forms.input('corrections', value=corrections, label='Corrections') }}
+  </div>
+</div>
+{% endmacro %}

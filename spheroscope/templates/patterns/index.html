@@ -1,17 +1,26 @@
-{% extends 'base.html' %}
-
-{% block header %}
-\( {{ preamble }} \)
-<h1>{% block title %}patterns{% endblock %}</h1>
-{% endblock %}
+{% extends 'patterns/base.html' %}
 
 {% block content %}
-<ul>
-  {% for pattern in patterns %} 
-  <li>
-    <a class="action" href="{{ url_for('patterns.pattern', id=pattern.id) }}">pattern {{ pattern.id }}</a> ({{ pattern.nr_queries }} queries): \( {{ pattern['template'] }} \)
-    <hr>
-  </li>
+<table class="table is-striped is-hoverable sortable">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th><abbr title="Number of queries">#Q</abbr></th>
+      <th>Formula</th>
+      <td>Modified</td>
+    </tr>
+  </thead>
+  <tbody>
+  {% for pattern in patterns %}
+  <tr>
+    <th {% if pattern.retired %}class="is-warning" {% endif %}><a href="{{ url_for('patterns.pattern', id=pattern.id) }}">{{ pattern.id }}</a></th>
+    <th>{{ pattern.name }}</th>
+    <td><a href="{{ url_for('queries.index', pattern=pattern.id) }}">{{ pattern.nr_queries }}</a></td>
+    <td data-tooltip="{{ pattern.explanation }}" class="has-tooltip-multiline">\( {{ pattern.template }} \)</td>
+    <td><time>{{ pattern.modified.strftime('%Y-%m-%d %H:%M') }}</time></td>
+  </tr>
   {% endfor %}
-</ul>
+  </tbody>
+</table>
 {% endblock %}

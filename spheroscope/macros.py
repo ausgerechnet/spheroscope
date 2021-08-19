@@ -3,8 +3,6 @@
 
 import os
 
-from ccc.cwb import Corpus
-
 from flask import (
     Blueprint, redirect, render_template, request, url_for, current_app, g, session
 )
@@ -18,23 +16,26 @@ bp = Blueprint('macros', __name__, url_prefix='/macros')
 
 def get_frequencies(cwb_id, macro):
 
-    # get frequencies
-    current_app.logger.info(
-        'getting frequency info for macro'
-    )
     corpus_config = read_config(cwb_id)
     corpus = init_corpus(corpus_config)
+
+    current_app.logger.info('getting frequency info for macro')
     dump = corpus.query("/" + macro.name + "()")
     freq = dump.breakdown()
+
     return freq
 
 
 def get_defined_macros(cwb_id):
+
     corpus_config = read_config(cwb_id)
     corpus = init_corpus(corpus_config)
+
+    current_app.logger.info('getting defined macros')
     cqp = corpus.start_cqp()
     defined_macros = cqp.Exec("show macro;").split("\n")
     cqp.__kill__()
+
     return defined_macros
 
 
@@ -44,6 +45,7 @@ def get_defined_macros(cwb_id):
 @bp.route('/')
 @login_required
 def index():
+
     macros = Macro.query.order_by(Macro.name).all()
 
     if 'corpus' in session:
@@ -63,6 +65,7 @@ def index():
 @bp.route('/<int:id>/delete', methods=('POST',))
 @login_required
 def delete_cmd(id):
+
     macro = Macro.query.filter_by(id=id).first()
     macro.delete()
     return redirect(url_for('macros.index'))
@@ -74,15 +77,15 @@ def create():
 
     # get corpus info (for s-atts)
     cwb_id = session['corpus']['resources']['cwb_id']
-    attributes = Corpus(cwb_id).attributes_available
-    s_atts = list(
-        attributes.name[([
-            not b for b in attributes.annotation
-        ]) & (attributes.att == 's-Att')].values
+    corpus_config = session['corpus']
+    corpus = init_corpus(corpus_config)
+    attributes = corpus.attributes_available
+    s_atts_none = list(
+        attributes['attribute'][([not b for b in attributes.annotation]) & (attributes['type'] == 's-Att')].values
     )
     corpus = {
         'cwb_id': cwb_id,
-        's_atts': s_atts
+        's_atts': s_atts_none
     }
 
     if request.method == 'POST':
@@ -112,15 +115,15 @@ def update(id):
 
     # get corpus info (for s-atts)
     cwb_id = session['corpus']['resources']['cwb_id']
-    attributes = Corpus(cwb_id).attributes_available
-    s_atts = list(
-        attributes.name[([
-            not b for b in attributes.annotation
-        ]) & (attributes.att == 's-Att')].values
+    corpus_config = session['corpus']
+    corpus = init_corpus(corpus_config)
+    attributes = corpus.attributes_available
+    s_atts_none = list(
+        attributes['attribute'][([not b for b in attributes.annotation]) & (attributes['type'] == 's-Att')].values
     )
     corpus = {
         'cwb_id': cwb_id,
-        's_atts': s_atts
+        's_atts': s_atts_none
     }
 
     if request.method == 'POST':
@@ -156,7 +159,7 @@ def frequencies(id):
 
     return render_template(
         'macros/frequencies.html',
-        frequencies=freq.to_html(escape=False),
+        frequencies=freq,
         macro=macro,
         cwb_id=cwb_id
     )

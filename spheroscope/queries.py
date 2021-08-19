@@ -7,7 +7,7 @@ import sys
 from ccc.cqpy import run_query
 
 from flask import (
-    Blueprint, redirect, render_template, request, url_for, current_app, g, session
+    Blueprint, redirect, render_template, request, url_for, current_app, g, session, jsonify
 )
 
 from flask.cli import with_appcontext
@@ -15,7 +15,7 @@ import click
 
 from .auth import login_required
 from .corpora import read_config, init_corpus
-from .database import Query
+from .database import Query, Pattern
 
 import re
 import json
@@ -25,13 +25,22 @@ from collections import defaultdict
 bp = Blueprint('queries', __name__, url_prefix='/queries')
 
 
-def run(id, cwb_id):
+def query_corpus(query, cwb_id):
+    """execute a query in a corpus. this function makes sure that the
+    query is valid input as expected by cwb-ccc's cqpy.run_query
 
-    # get query
-    query = Query.query.filter_by(id=id).first().serialize()
+    :param dict query: query as dictionary
+    :param str cwb_id: CWB registry ID of the corpus
+    """
 
     # get corpus config
     corpus_config = read_config(cwb_id)
+
+    # load query and display parameters
+    query['query'] = dict(corpus_config['query'])
+    if 'context' not in query['query'].keys():
+        query['query']['context'] = None
+    query['display'] = dict(corpus_config['display'])
 
     # make sure anchors are int
     corrections_int = dict()
@@ -40,30 +49,12 @@ def run(id, cwb_id):
         corrections_int[int(k)] = c
     query['anchors']['corrections'] = corrections_int
 
-    # load query and display parameters
-    query['query'] = dict(corpus_config['query'])
-    query['query']['context'] = None
-    query['display'] = dict(corpus_config['display'])
+    # init corpus
+    corpus = init_corpus(corpus_config)
 
     # run query
-    corpus = init_corpus(corpus_config)
     current_app.logger.info('running query')
     lines = run_query(corpus, query)
-
-    # result_parameters = [query[key] for key in query.keys() if key not in [
-    #     'id', 'user_id', 'modified', 'pattern'
-    # ]]
-    # param = generate_idx(result_parameters, prefix='param-', length=10)
-
-    # # determine path to result
-    # dir_result = os.path.join(current_app.instance_path, cwb_id, 'matches', param)
-    # if not os.path.isdir(dir_result):
-    #     os.makedirs(dir_result)
-    # path_result = os.path.join(dir_result, query['name'] + ".tsv.gz")
-
-    # # save result
-    # current_app.logger.info('saving result')
-    # conc.to_csv(path_result, sep="\t")
 
     return lines
 
@@ -74,9 +65,10 @@ def run(id, cwb_id):
 @bp.route('/')
 @login_required
 def index():
-    queries = Query.query.order_by(Query.name).all()
+    pattern = request.args.get('pattern')
+    queries = Query.query.order_by(Query.name)
     return render_template('queries/index.html',
-                           queries=queries)
+                           queries=(queries.filter_by(pattern_id=pattern).all() if pattern else queries.all()))
 
 
 @bp.route('/index2')
@@ -116,7 +108,11 @@ def create():
 
         return redirect(url_for('queries.index'))
 
-    return render_template('queries/create.html')
+    patterns = Pattern.query.order_by(Pattern.id).all()
+    # FIXME this conversion should go when the new database is in
+    patterndict = [{"id": abs(p.id), "template": p.template, "explanation": p.explanation, "retired": p.id < 0} for p in patterns]
+    return render_template('queries/create.html',
+                           patterns=patterndict)
 
 
 @bp.route('/<int:id>/update', methods=('GET', 'POST'))
@@ -142,10 +138,14 @@ def update(id):
 
         query.delete()
         query.write()
-        return redirect(url_for('queries.index'))
+        return jsonify(success=True)
 
+    patterns = Pattern.query.order_by(Pattern.id).all()
+    # FIXME this conversion should go when the new database is in
+    patterndict = [{"id": abs(p.id), "template": p.template, "explanation": p.explanation, "retired": p.id < 0} for p in patterns]
     return render_template('queries/update.html',
-                           query=query)
+                           query=query,
+                           patterns=patterndict)
 
 
 @bp.route('/<int:id>/delete', methods=('POST',))
@@ -156,27 +156,94 @@ def delete_cmd(id):
     return redirect(url_for('queries.index'))
 
 
+def patch_query_results(results):
+    newresults = results.rename(columns={
+        "word": "whole_word",
+        "word_x": "whole_word_x",
+        "word_y": "whole_word_y",
+        "lemma": "whole_lemma",
+        "lemma_x": "whole_lemma_x",
+        "lemma_y": "whole_lemma_y",
+        "_merge": "merge"
+    })
+    newresults.columns = newresults.columns.str.split('_', 2, expand=True)
+    return newresults
+
+
 @bp.route('/<int:id>/run', methods=('GET', 'POST'))
 @login_required
 def run_cmd(id):
+    """
+    run a query
+    ---
+    parameters:
+      - name: id
+        in: path
+        type: int
+        required: true
+        description: CWB-id of the corpus
+      - name: beta
+        in: query
+        type: bool
+        required: false
+        default: false
+        description: (deprecated) whether to switch to Yuliya's visualization
+    """
 
-    beta = request.args.get('beta', False)
+    # get corpus from settings
     cwb_id = session['corpus']['resources']['cwb_id']
-    result = run(id, cwb_id)
 
-    if result is None:
+    # switch to Yuliya's implementation?
+    beta = request.args.get('beta', False)
+
+    # run the old query
+    query = Query.query.filter_by(id=id).first().serialize()
+    oldresult = query_corpus(query, cwb_id)
+
+    if oldresult is None:
         return 'query does not have any matches'
 
-    display_columns = [x for x in result.columns if x not in [
+    # pass to frontend
+    display_columns = [x for x in oldresult.columns if x not in [
         'context_id', 'context', 'contextend'
     ]]
 
+    patterns = Pattern.query.order_by(Pattern.id).all()
+    # FIXME this conversion should go when the new database is in
+    patterndict = [{"id": abs(p.id), "template": p.template, "explanation": p.explanation, "retired": p.id < 0} for p in patterns]
+
     if not beta:
-        return result[display_columns].to_html(escape=False)
+        if request.method == 'POST':
+            newquery = dict(
+                cqp=request.form['query'],
+                meta=dict(
+                    name=request.form['name'],
+                    pattern_id=request.form['pattern'],
+                ),
+                anchors=dict(
+                    corrections=json.loads(request.form['corrections'].replace(
+                        "None", "null"
+                    )),
+                    slots=json.loads(request.form['slots'].replace(
+                        "None", "null"
+                    ))
+                )
+            )
+            newresult = query_corpus(newquery, cwb_id)
+            oldresult = oldresult
+            result = patch_query_results(
+                newresult.merge(oldresult, how='outer', on='tweet_id', indicator=True)
+            )
+
+            return render_template('queries/result_table.html',
+                                   result=result,
+                                   patterns=patterndict)
+
+        return oldresult[display_columns].to_html(escape=False)
 
     else:
 
-        tojson = result.to_json()
+        tojson = oldresult.to_json()
         tbl = json.loads(tojson)
 
         for idx in tbl["text"]:
@@ -283,7 +350,9 @@ def query_command(pattern, dir_out):
 
         error = ""
         try:
-            lines = run(query.id, None)
+            query = Query.query.filter_by(id=query.id).first().serialize()
+            cwb_id = session['corpus']['resources']['cwb_id']
+            lines = query_corpus(query, cwb_id)
         except KeyboardInterrupt:
             return
         except:

@@ -1,33 +1,42 @@
-{% extends 'base.html' %}
+{% extends 'wordlists/base.html' %}
+
+{% import 'helpers/controls.html' as c %}
 
 {% block header %}
-<h1>
-  {% block title %}wordlists{% endblock %}
-</h1>
 {% if g.user %}
-<a class="action" href="{{ url_for('wordlists.create') }}">
-  new
-</a>
+{{ c.add_button(action=url_for('wordlists.create')) }}
 {% endif %}
 {% endblock %}
 
 {% block content %}
-<ul>
+<table class="table is-striped is-hoverable sortable">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Length</th>
+      <td>Modified</td>
+      <td>Actions</td>
+    </tr>
+  </thead>
+  <tbody>
   {% for wordlist in wordlists %}
-  <li>
-    {{ wordlist.name }} ({{ wordlist.length }})
-    <span style="float:right;">
-      <a class="action" href="{{ url_for('wordlists.update', id=wordlist.id) }}">
-	edit
-      </a> – 
-      <a class="action" href="{{ url_for('wordlists.frequencies', id=wordlist.id) }} ">
-      	marginals
-      </a> –
-      <a class="action" href="{{ url_for('wordlists.similar', id=wordlist.id) }}">
-      	similar
-      </a>
-    </span>
-  </li>
+  <tr>
+    <th><a href="{{ url_for('wordlists.update', id=wordlist.id) }}">{{ wordlist.name }}</a></th>
+    <td>{{ wordlist.length }}</td>
+    <td><time>{{ wordlist.modified.strftime('%Y-%m-%d %H:%M') }}</time></td>
+    <td class="field has-addons">
+      <p class="control">
+        {{ c.edit_button(action=url_for('wordlists.update', id=wordlist.id)) }}
+      </p>
+      <p class="control">
+        {{ c.run_button(action=url_for('wordlists.frequencies', id=wordlist.id), text="Marginals") }}
+      </p>
+      <p class="control">
+        {{ c.run_button(action=url_for('wordlists.similar', id=wordlist.id), text="Similar") }}
+      </p>
+    </td>
+  </tr>
   {% endfor %}
-</ul>
+  </tbody>
+</table>
 {% endblock %}

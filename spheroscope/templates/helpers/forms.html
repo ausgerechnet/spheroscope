@@ -1,0 +1,40 @@
+{% macro labelled_field(label=null,horizontal=false) %}
+<div class="field {% if horizontal %} is-horizontal {% endif %}">
+  {% if label %}<div><label class="label">{{ label }}</label></div>{% endif %}
+  <div class="field-body"><div class="control">
+    {{ caller() }}
+  </div></div>
+</div>
+{% endmacro %}
+
+{% macro input(name, value='', label=null, type='text') %}
+{% call labelled_field(label) %}
+<input class="input" type="{{ type }}" name="{{ name }}" value="{{ value }}" required />
+{% endcall %}
+{% endmacro %}
+
+{% macro login_form(submitname) %}
+<form method="post">
+  <div class="field">
+  <p class="control has-icons-left has-icons-right">
+    <input name="username" class="input" type="text" placeholder="Username">
+    <span class="icon is-small is-left">
+      <i class="fas fa-user"></i>
+    </span>
+  </p>
+</div>
+<div class="field">
+  <p class="control has-icons-left">
+    <input name="password" class="input" type="password" placeholder="Password">
+    <span class="icon is-small is-left">
+      <i class="fas fa-lock"></i>
+    </span>
+  </p>
+</div>
+<div class="field">
+  <div clas="control">
+     <input class="button is-link" type="submit" value="{{ submitname }}">
+  </div>
+</div>
+</form>
+{% endmacro %}

@@ -1,29 +1,34 @@
-{% extends 'base.html' %}
+{% extends 'patterns/base.html' %}
 
-{% block header %}
-<h1>
-  {% block title %}pattern {{ pattern.id }} ({{ pattern.nr_queries }} queries{% endblock %})
-</h1>
+{% import 'queries/querylist.html' as q %}
+{% import 'helpers/controls.html' as c %}
+{% block title %}
+{{ super() }}
+<li><a>{{ pattern.id }}</a></li>
 {% endblock %}
 
 {% block content %}
-\( {{ pattern.preamble }} {{ pattern.template }} \)
-<br>
-<i>Merlin says:</i> {{ pattern.explanation }}
+{% call c.block("Details")%}
+<table class="table is-bordered sortable">
+  <tbody>
+    <tr>
+      <th>Formula</th>
+      <td>\( {{ pattern.template }} \)
+    </tr>
+    <tr>
+      <th>Explanation</th>
+      <td>{{ pattern.explanation }}</td>
+    </tr>
+    <tr>
+      <th>Queries</th>
+      <td>{{ pattern.nr_queries }}</td>
+    </tr>
+  </tbody>
+</table>
+{% endcall %}
 
-
-<ul>
-  {% for query in pattern.queries %}
-  <li>
-    {{ query.name }}
-    <span style="float:right;">
-      <a class="action" href="{{ url_for('queries.update', id=query.id) }}"> edit</a> –
-      <a class="action" href="{{ url_for('queries.run_cmd', id=query.id)}}">run</a>
-    </span>
-  </li>
-  {% endfor %}  
-
-</ul>
-
+{% call c.block("Queries") %}
+{{ q.querylist(pattern.queries) }}
+{% endcall %}
 {% endblock %}
 

@@ -1,0 +1,10 @@
+.removed {
+    font-weight: bold;
+    color: red;
+    text-decoration: line-through;
+}
+
+.added {
+    font-weight: bold;
+    color: green;
+}

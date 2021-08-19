@@ -4,7 +4,6 @@
 import os
 
 from pymagnitude import Magnitude
-from ccc.cwb import Corpus
 
 from flask import (
     Blueprint, redirect, render_template, request, url_for, current_app, g, session
@@ -19,10 +18,10 @@ bp = Blueprint('wordlists', __name__, url_prefix='/wordlists')
 
 def get_frequencies(cwb_id, words, p_att):
 
-    current_app.logger.info(
-        'getting frequency info for %d items' % (len(words))
-    )
-    corpus = init_corpus(session['corpus'])
+    corpus_config = read_config(cwb_id)
+    corpus = init_corpus(corpus_config)
+
+    current_app.logger.info('getting frequency info for %d items' % (len(words)))
     freq = corpus.marginals(words, p_att=p_att)
 
     return freq
@@ -30,12 +29,11 @@ def get_frequencies(cwb_id, words, p_att):
 
 def get_similar_ones(cwb_id, words, p_att, number):
 
+    # similar ones
     current_app.logger.info(
         'getting %d similar items for %d items' % (number, len(words))
     )
     corpus_config = read_config(cwb_id)
-
-    # similar ones
     embeddings = Magnitude(corpus_config['resources']['embeddings'])
     similar = embeddings.most_similar(positive=words, topn=number)
     similar_ones = [s[0] for s in similar]
@@ -77,7 +75,9 @@ def create():
 
     # get corpus info (for p-atts and path)
     cwb_id = session['corpus']['resources']['cwb_id']
-    attributes = Corpus(cwb_id).attributes_available
+    corpus_config = session['corpus']
+    corpus = init_corpus(corpus_config)
+    attributes = corpus.attributes_available
     p_atts = list(attributes['attribute'][attributes['type'] == 'p-Att'].values)
     corpus = {
         'cwb_id': cwb_id,
@@ -114,7 +114,9 @@ def update(id):
 
     # get corpus info (for p-atts and frequencies)
     cwb_id = session['corpus']['resources']['cwb_id']
-    attributes = Corpus(cwb_id).attributes_available
+    corpus_config = session['corpus']
+    corpus = init_corpus(corpus_config)
+    attributes = corpus.attributes_available
     p_atts = list(attributes['attribute'][attributes['type'] == 'p-Att'].values)
     corpus = {
         'cwb_id': cwb_id,
@@ -160,7 +162,7 @@ def frequencies(id):
     return render_template(
         'wordlists/frequencies.html',
         wordlist=wordlist,
-        original=freq.to_html(escape=False),
+        frequencies=freq,
         cwb_id=cwb_id
     )
 
@@ -180,10 +182,14 @@ def similar(id, number=200):
         number
     )
 
+    freq = freq.reset_index()[['lemma', 'frequency', 'similarity']]
+    freq.columns = [c.capitalize() for c in freq.columns]
+
     # render result
     return render_template(
         'wordlists/similar.html',
         wordlist=wordlist,
-        similar=freq.to_html(escape=False),
+        similar=freq.to_html(escape=False, border=0, index=False, justify='left',
+                             classes=['table', 'is-striped', 'is-hoverable', 'is-narrow', 'sortable']),
         cwb_id=cwb_id
     )
