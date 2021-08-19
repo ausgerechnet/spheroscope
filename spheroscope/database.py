@@ -323,10 +323,10 @@ class Pattern(db.Model):
         queries = Query.query.filter_by(pattern_id=self.id).all()
         return len(queries)
 
-    @property
-    def preamble(self):
-        preamble = self.query.filter_by(id=-9999).first()
-        return preamble.template
+    # @property
+    # def preamble(self):
+    #     preamble = self.query.filter_by(id=-9999).first()
+    #     return preamble.template
 
     def __repr__(self):
         return 'pattern %d with %d queries' % (self.id, self.nr_queries)

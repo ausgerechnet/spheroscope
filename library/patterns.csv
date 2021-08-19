@@ -36,7 +36,6 @@
 37,quotation of entity's obligation,"Q_{{?0 : entity}} ({?1 : entity} \implies \downarrow x.,O (x stit ({?2 : formula}))",entity 0 states that everybody in entity 1 should make formula 2 true,false
 21,ad-hominem,\neg moral({?0 : entity}),entity 0 is morally bad and should be condemned,false
 32,weak universal,"({?0 : entity})\dimplies \downarrow x.,({?1 : formula\text{ mentioning }x})",most entities in entity 0 have property 1,false
--9999,preamble,\newcommand{\mcauses}{\Box\kern-.5em{\implies}} \newcommand{\dimplies}{\overset{d}{\implies}} \newcommand{\cfac}{\overset{c}{\implies}},the preamble (for exporting),true
 39,some,"\neg(({?0 : entity} \implies \downarrow x.,\neg {?1 : formula\text{ mentioning }x}) \lor ({0} \dimplies \downarrow x\,, {1}))",some entities in 0 have property 1,false
 40,nobody,"\neg({?0 : entity} \implies \downarrow x.\,{?1 : formula\text{ mentioning }x})",nobody in 0 has property 1,false
 25,universal,"({?0 : entity})\implies \downarrow x.\,({?1 : formula \text{ mentioning } x})",all entities in entity 0 have property 1,false
