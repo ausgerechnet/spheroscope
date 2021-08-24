@@ -1,5 +1,5 @@
-{% macro button(cls,action,text,name='',icon='') %}
-<a class="button is-light {{ cls }}" href="{{ action }}" {% if name != '' %}name="{{ name }}"{% endif %}>
+{% macro button(cls,action,text,name='',icon='', download=null) %}
+<a class="button is-light {{ cls }}" href="{{ action }}" {% if name != '' %}name="{{ name }}"{% endif %} {% if download %}download{% endif %}>
   {% if icon != '' %}<span class="icon"><i class="fas fa-{{ icon }}" aria-hidden="true"></i></span>{% endif %}
   <span>{{ text }}</span>
 </a>
@@ -17,8 +17,8 @@
 {{ button('is-link', action, text, name, 'save') }}
 {% endmacro %}
 
-{% macro run_button(action,text="Run",name='') %}
-{{ button('is-link', action, text, name, 'running') }}
+{% macro run_button(action,text="Run",name='',download=null) %}
+{{ button('is-link', action, text, name, 'running', download) }}
 {% endmacro %}
 
 {% macro edit_button(action,text="Edit",name='') %}
