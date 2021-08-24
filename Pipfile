@@ -30,5 +30,9 @@ flask-expects-json = "==1.5.0"
 gevent = "==1.4.0"
 pymagnitude = "==0.1.120"
 pandas = ">=1.0.0"
+
 cwb-python = {git = "https://github.com/fau-klue/cwb-python"}
 cwb-ccc = {ref = "v0.9.16", git = "https://github.com/ausgerechnet/cwb-ccc"}
+
+[requires]
+python_version = "3.8"
