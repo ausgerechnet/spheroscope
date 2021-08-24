@@ -15,7 +15,7 @@ You can simply
 
 which uses pipenv to create a virtual environment and install all required packages.
 
-Alternatively, you can use [setup.py](setup.py). Make sure to install [cwb-ccc v0.9.16](https://github.com/ausgerechnet/cwb-ccc/tree/v0.9.16), which depends on [cwb-python v0.3.0](https://github.com/fau-klue/cwb-python).
+Alternatively, you can use [setup.py](setup.py) or the [classic requirements file](requirements-classic.txt). Make sure to install [cwb-ccc v0.9.16](https://github.com/ausgerechnet/cwb-ccc/tree/v0.9.16), which depends on [cwb-python v0.3.0](https://github.com/fau-klue/cwb-python).
 
 ## Configuration ##
 Configure the app via `cfg.py` in the app folder. You can find an [example config file](cfg_example.py) in the repository.
