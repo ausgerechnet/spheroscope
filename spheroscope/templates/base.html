@@ -1,159 +1,155 @@
 <!doctype html>
 <html>
-<head>
-  <title>spheroscope</title>
+  <head>
+    <title>spheroscope</title>
 
-  <!-- <link rel="stylesheet" -->
-  <!--       href="{{ url_for('static', filename='style.css') }}?rnd=9"> -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='diff.css') }}">
-  <!-- <link rel="stylesheet" -->
-  <!--       href="{{ url_for('static', filename='querystyle.css') }}?rnd=1"> -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='diff.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-tooltip@3.0.2/dist/css/bulma-tooltip.min.css">
 
-  <!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"> -->
-    <!-- </script> -->
-  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jsdiff/5.0.0/diff.min.js" integrity="sha512-Rjml7/E2zETyVFhzIQnTEjW7PBCH5/Y4ac2uu9MGqh1JclCVHbvT1lIlcVmvAGFipi/L16eA6Jr9km2zit9Tfg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script src="{{ url_for('static', filename='sorttable.js') }}" type="text/javascript"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma-tooltip@3.0.2/dist/css/bulma-tooltip.min.css">
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsdiff/5.0.0/diff.min.js" integrity="sha512-Rjml7/E2zETyVFhzIQnTEjW7PBCH5/Y4ac2uu9MGqh1JclCVHbvT1lIlcVmvAGFipi/L16eA6Jr9km2zit9Tfg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="{{ url_for('static', filename='sorttable.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('static', filename='queryscript.js') }}" type="text/javascript"></script>
 
-<!-- <script type="text/javascript" -->
-<!-- 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"> -->
-<!-- </script> -->
-\( \newcommand{\mcauses}{\Box\kern-.5em{\implies}} \newcommand{\dimplies}{\overset{d}{\implies}} \newcommand{\cfac}{\overset{c}{\implies}} \)
-</head>
-<body>
-  {% block login %}
-  <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
-    <div class="navbar-brand">
-      <div class="navbar-item">
-        <div class="breadcrumb" aria-label="breadcrumbs">
-          <ul>
-            <li><a href="{{ url_for('index') }}">spheroscope</a></li>
-            {% block title %}
-            {% endblock %}
-          </ul>
-        </div>
-      </div>
-      {% if session.corpus %}
-      <span class="navbar-item">on</span>
-      <a class="navbar-item" href="{{ url_for('corpora.corpus_config', cwb_id=session.corpus.resources.cwb_id) }}">{{ session.corpus.resources.cwb_id }}</a>
-      {% endif %}
-      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-        <span aria-hidden="true"></span>
-      </a>
-    </div>
-    <div class="navbar-menu">
-      <div class="navbar-start">
 
-      </div>
-      <div class="navbar-end">
-      {% if g.user %}
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link">{{ g.user['username'] }}</a>
-          <div class="navbar-dropdown">
-            <a class="navbar-item" href="{{ url_for('auth.logout') }}">logout</a>
+    \( \newcommand{\mcauses}{\Box\kern-.5em{\implies}} \newcommand{\dimplies}{\overset{d}{\implies}} \newcommand{\cfac}{\overset{c}{\implies}} \)
+  </head>
+
+  <body>
+
+    {% block login %}
+    <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <div class="navbar-item">
+          <div class="breadcrumb" aria-label="breadcrumbs">
+            <ul>
+              <li><a href="{{ url_for('index') }}">spheroscope</a></li>
+              {% block title %}
+              {% endblock %}
+            </ul>
           </div>
+        </div>
+        
+        {% if session.corpus %}
+        <span class="navbar-item">on</span>
+        <a class="navbar-item" href="{{ url_for('corpora.corpus_config', cwb_id=session.corpus.resources.cwb_id) }}">{{ session.corpus.resources.cwb_id }}</a>
+        {% endif %}
 
-      {% else %}
-        <a class="navbar-item" href="{{ url_for('auth.register') }}">register</a>
-        <a class="navbar-item" href="{{ url_for('auth.login') }}">login</a>
-      {% endif %}
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+        
+      </div>
+      <div class="navbar-menu">
+        <div class="navbar-start"></div>
+        <div class="navbar-end">
+          {% if g.user %}
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">{{ g.user['username'] }}</a>
+            <div class="navbar-dropdown">
+              <a class="navbar-item" href="{{ url_for('auth.logout') }}">logout</a>
+            </div>
+          </div>
+          {% else %}
+          <a class="navbar-item" href="{{ url_for('auth.register') }}">register</a>
+          <a class="navbar-item" href="{{ url_for('auth.login') }}">login</a>
+          {% endif %}
         </div>
       </div>
-    </div>
-  </nav>
-  {% endblock %}
-
-  <section class="section">
-    <div class="container">
-     {% block header %}
-     {% endblock %}
-
-    {% for message in get_flashed_messages() %}
-    <div class="notification is-light">{{ message }}</div>
-    {% endfor %}
-
-    <div id="loading" style="display:none;">
-      <progress class="progress is-medium is-primary" max="100">0%</progress>
-    </div>
-
-    {% block content %}
-
+    </nav>
     {% endblock %}
-    <script src="{{ url_for('static', filename='queryscript.js') }}"
-	        type="text/javascript">
-    </script>
-    </div>
-  </section>
-  <script>
-    function sendForm(url, self) {
-        self.classList.add('is-loading');
-        $.ajax({
-            url: url,
-            type: 'post',
-            data: $(self.form).serialize(),
-            success: () => {
-                self.classList.remove('is-loading');
-                console.log(`${url} succeeded`);
-            }
-        });
-    }
-    function runButton(url, self, args, callback) {
-        self.classList.add('is-loading');
-        $.ajax({
-            url: url,
-            type: 'post',
-            data: $.param(args),
-            success: result => {
-                self.classList.remove('is-loading');
-                console.log(`${url} succeeded`);
-                callback(result);
-            }
-        });
-    }
 
-    function diffInto(newval, oldval, target) {
+    <section class="section">
+      <div class="container">
+
+        {% block header %}
+        {% endblock %}
+        
+        {% for message in get_flashed_messages() %}
+        <div class="notification is-light">{{ message }}</div>
+        {% endfor %}
+        
+        <div id="loading" style="display:none;">
+          <progress class="progress is-medium is-primary" max="100">0%</progress>
+        </div>
+        
+        {% block content %}
+        {% endblock %}
+
+      </div>
+    </section>
+    
+    <script>
+
+      function sendForm(url, self) {
+        self.classList.add('is-loading');
+        $.ajax({
+          url: url,
+          type: 'post',
+          data: $(self.form).serialize(),
+          success: () => {
+            self.classList.remove('is-loading');
+            console.log(`${url} succeeded`);
+            }
+        });
+      }
+      function runButton(url, self, args, callback) {
+        self.classList.add('is-loading');
+        $.ajax({
+          url: url,
+          type: 'post',
+          data: $.param(args),
+          success: result => {
+            self.classList.remove('is-loading');
+            console.log(`${url} succeeded`);
+            callback(result);
+          }
+        });
+      }
+      
+      function diffInto(newval, oldval, target) {
         const  color = '';
         
         let span = null;
-
+        
         const diff = Diff.diffChars(newval, oldval),
               display = target,
               fragment = document.createDocumentFragment();
-
+        
         diff.forEach((part) => {
-            span = document.createElement('span');
-            if (part.removed) {
-                span.classList.add("removed");
-            }
-            if (part.added) {
-                span.classList.add("added");
-            }
-            span.appendChild(document.createTextNode(part.value));
-            fragment.appendChild(span);
+          span = document.createElement('span');
+          if (part.removed) {
+            span.classList.add("removed");
+          }
+          if (part.added) {
+            span.classList.add("added");
+          }
+          span.appendChild(document.createTextNode(part.value));
+          fragment.appendChild(span);
         });
-
+        
         display.appendChild(fragment);
         return fragment;
-    }
-    
-    $(document).ready(function() {
+      }
+      
+      $(document).ready(function() {
         // Check for click events on the navbar burger icon
         $(".navbar-burger").click(function() {
-            // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
-            $(".navbar-burger").toggleClass("is-active");
-            $(".navbar-menu").toggleClass("is-active");
-
+          // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+          $(".navbar-burger").toggleClass("is-active");
+          $(".navbar-menu").toggleClass("is-active");
         });
-    });
-  </script>
-</body>
+      });
+
+    </script>
+  </body>
+
 </html>
