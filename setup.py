@@ -31,11 +31,12 @@ setuptools.setup(
         "Flask-User==1.0.2.2",
         "Flask-JWT-Extended==4.1.0",
         "Flask-Caching==1.10.1",
+        "Flask-Cors==3.0.7",
         "flask-expects-json==1.5.0",
+        "gevent==1.4.0",
         "pymagnitude==0.1.120",
         "pandas>=1.0.0",
-        "cwb-ccc==0.9.16",
-        "pyyaml>=5.2.1",
+        "cwb-ccc==0.9.16"
     ],
     classifiers=[
         "Development Status :: 3 - Alpha",
@@ -43,5 +44,5 @@ setuptools.setup(
         "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
         "Operating System :: Unix",
     ],
-    python_requires='>=3.6',
+    python_requires='==3.8',
 )
