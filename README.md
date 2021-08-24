@@ -13,19 +13,14 @@ You can simply
 
     make install
 
-
 which uses pipenv to create a virtual environment and install all required packages.
 
-Alternatively, you can can configure your own virtual environment using the [requirements file](requirements_anaconda.txt).
+Alternatively, you can use [setup.py](setup.py). Make sure to install [cwb-ccc v0.9.16](https://github.com/ausgerechnet/cwb-ccc/tree/v0.9.16), which depends on [cwb-python v0.3.0](https://github.com/fau-klue/cwb-python).
 
 ## Configuration ##
 Configure the app via `cfg.py` in the app folder. You can find an [example config file](cfg_example.py) in the repository.
 
 Set the `REGISTRY_PATH` to your CWB registry and `CACHE_PATH` to some directory where you have appropriate rights.
-
-<!-- Link to a stable version of -->
-<!-- [fillform](https://gitlab.com/mgttlinger/fillform/-/jobs) via -->
-<!-- `FILLFORM`. Don't provide this key if you do not want to use fillform. -->
 
 You can then
 
