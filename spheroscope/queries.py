@@ -7,7 +7,7 @@ import sys
 from ccc.cqpy import run_query
 
 from flask import (
-    Blueprint, redirect, render_template, request, url_for, current_app, g, session, jsonify
+    Blueprint, Response, redirect, render_template, request, url_for, current_app, g, session, jsonify
 )
 
 from flask.cli import with_appcontext
@@ -239,7 +239,11 @@ def run_cmd(id):
                                    result=result,
                                    patterns=patterndict)
 
-        return oldresult[display_columns].to_html(escape=False)
+        return Response(
+            oldresult[display_columns].to_csv(),
+            mimetype='text/csv',
+            headers={"Content-disposition":
+                     f"attachment; filename={id}-results.csv"})
 
     else:
 
