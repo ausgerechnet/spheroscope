@@ -1,4 +1,3 @@
-agenda
 ambition
 aspiration
 commitment
@@ -8,4 +7,5 @@ goal
 intention
 objective
 purpose
-strategy
+want
+wish

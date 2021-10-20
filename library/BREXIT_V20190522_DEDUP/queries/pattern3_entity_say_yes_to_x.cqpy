@@ -16,4 +16,4 @@
 #   pattern: 3
 # ---
 
-@0:[::] [lemma = $nouns_person_common | lemma = $nouns_person_origin | lemma = $nouns_person_negative | lemma = $nouns_person_profession | lemma = $nouns_person_support |pos_ark = "[@OZ#^]" & lemma != "it"]+ @1[::] [lemma="say" | pos_ner="PRP" | word = "'?s"] [lemma="yes" | lemma = "advocacy|commitment|encouragement|endorsement|support"] ("for|of|to") @2[::] [lemma=$nouns_policies | lemma=$nouns_agenda_p3 | lemma=$nouns_values]+  @3[::]
+@0:[::] [lemma = $nouns_person_common | lemma = $nouns_person_origin | lemma = $nouns_person_negative | lemma = $nouns_person_profession | lemma = $nouns_person_support |pos_ark = "[@ONZ#^]" & lemma != "it"]+ @1[::]  [lemma="say" | pos_ner="PRP$" | word = "'?s"] [lemma="yes|no"] "to" @2[::] [word!="[\.,\?\!]"]+ @3[::]

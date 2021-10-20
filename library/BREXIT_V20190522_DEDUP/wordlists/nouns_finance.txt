@@ -1,4 +1,3 @@
-
 bank
 bill
 cost

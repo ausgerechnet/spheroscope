@@ -1,26 +1,12 @@
 # --- # CQPY query file
 # anchors:
 #   corrections:
-#     4: -1
+#     '4': -1
 #   slots: {}
-# corpus:
-#   corpus_name: BREXIT_V20190522_DEDUP
-#   lib_path: null
-# display:
-#   p_show:
-#   - word
-#   - lemma
-#   p_slots: lemma
-#   p_text: word
-#   s_show:
-#   - tweet_id
 # meta:
+#   comment: null
 #   name: i_know_x_who_y_postoknow
 #   pattern: -1
-# query:
-#   context: null
-#   match_strategy: longest
-#   s_context: tweet
 # ---
 
 @0:[lemma = "i"] [lemma = "have|know|meet"] <np>[]* [lemma=$wordlist_quantifiers] @1[::][]* [(lemma = $nouns_common_people | lemma = $nouns_person_negative | lemma = $nouns_profession_people) & pos_ner = "NNP|NNS"] @2:[]*</np> [word = "that|that\'s|who|whose|who\'s"] @3[::](<vp>[]*</vp> | <np>[]*</np> | <pp>[]*</pp>)+@4[::]

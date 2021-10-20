@@ -18,6 +18,6 @@ protect
 result
 signal
 signify
-start
 spell
+start
 trigger

@@ -1,4 +1,3 @@
-
 act
 agree
 apologize

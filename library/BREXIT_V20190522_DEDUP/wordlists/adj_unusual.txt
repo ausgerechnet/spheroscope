@@ -1,4 +1,3 @@
-
 ironic
 odd
 poignant

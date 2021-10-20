@@ -9,8 +9,8 @@
 #     '1': 2
 # meta:
 #   comment: null
-#   name: pattern3_entity_switched_to_1
-#   pattern: 3
+#   name: pattern24_entity_switched_to_1
+#   pattern: 24
 # ---
 
 @0:[::] [lemma = $nouns_person_common | lemma = $nouns_person_origin | lemma = $nouns_person_negative | lemma = $nouns_person_profession | lemma = $nouns_person_support |pos_ark = "[@OZ#^]" & lemma != "it"]+ @1[::] [lemma ="be|have"]? [lemma = $verbs_change] [pos_ark="P"]? "to" (@2:[lemma = $nouns_policies | lemma = $nouns_agenda_p3 | lemma = $nouns_values])
