@@ -3,9 +3,9 @@ ensure
 extend
 find
 know
-tell
-think
 realize
 recognize
 say
+tell
+think
 understand

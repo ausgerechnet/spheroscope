@@ -1,4 +1,3 @@
-
 #?remaniac
 [a-z]*ass
 [a-z]*fucker
