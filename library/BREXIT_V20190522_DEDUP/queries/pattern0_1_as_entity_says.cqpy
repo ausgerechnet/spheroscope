@@ -8,24 +8,10 @@
 #     '1':
 #     - 2
 #     - 3
-# corpus:
-#   corpus_name: BREXIT_V20190522_DEDUP
-#   lib_path: null
-# display:
-#   p_show:
-#   - word
-#   - lemma
-#   p_slots: lemma
-#   p_text: word
-#   s_show:
-#   - tweet_id
 # meta:
+#   comment: null
 #   name: pattern0_1_as_entity_says
 #   pattern: 0
-# query:
-#   context: null
-#   match_strategy: longest
-#   s_context: tweet
 # ---
 
 @2:[::] [lemma = $nouns_person_common | lemma = $nouns_person_origin | lemma = $nouns_person_negative | lemma = $nouns_person_profession | lemma = $nouns_person_support |pos_ark = "[@OZ#^]" & lemma != "it" | lemma = $nouns_policies | lemma = $nouns_agenda_p3 | lemma = $nouns_values] [pos_ark="V"]+ []+ @3:[::] "," "as"? @0[::] [word="the"]? [lemma = $nouns_person_common | lemma = $nouns_person_origin | lemma = $nouns_person_negative | lemma = $nouns_person_profession | lemma = $nouns_person_support |pos_ark = "[@Z#^]" & lemma != "it" | pos_ner="PRP" & lemma != "it"]{,2} @1:[word!="[\.,\?\!]"]* </np> [lemma = $verbs_communication & lemma !="claim|require"]

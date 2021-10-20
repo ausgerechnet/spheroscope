@@ -1,26 +1,12 @@
 # --- # CQPY query file
 # anchors:
 #   corrections:
-#     5: -1
+#     '5': -1
 #   slots: {}
-# corpus:
-#   corpus_name: BREXIT_V20190522_DEDUP
-#   lib_path: null
-# display:
-#   p_show:
-#   - word
-#   - lemma
-#   p_slots: lemma
-#   p_text: word
-#   s_show:
-#   - tweet_id
 # meta:
+#   comment: null
 #   name: practical_inference_ii
-#   pattern: 3
-# query:
-#   context: null
-#   match_strategy: longest
-#   s_context: tweet
+#   pattern: 9999
 # ---
 
 (<np>@0:[::][]* @1:[]</np>)+ "are|is" <np>[]* [lemma = $adj_moral_positive | word = $adj_cog_positive]+ "measure|step|way" []* </np> <pp>[]*</pp> (<vp>@2:[::][]* @3:[]</vp>)? @4:[::] (<np>[]*</np> | <pp>[]*</pp>)+ @5:[::]

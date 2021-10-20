@@ -1,4 +1,3 @@
-
 [a-z]*shit
 [a-z]+ism
 arrogance
