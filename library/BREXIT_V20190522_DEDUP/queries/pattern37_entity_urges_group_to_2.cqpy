@@ -20,5 +20,4 @@
 #   pattern: 37
 # ---
 
-
 @0:[::][lemma = $nouns_person_common | lemma = $nouns_person_origin | lemma = $nouns_person_negative | lemma = $nouns_person_profession | lemma = $nouns_person_support |pos_ark = "[@Z#^]"]{1,2} @1:[::]  ("about|on" [pos_ark = "[@OZ#N^]"])* [lemma="appeal|ask|call|demand|instruct|push|urge"] "for|to"? @2:[::] []* [lemma = $nouns_person_common & word=".+s|people" | lemma = $nouns_person_origin & word = ".+s" | lemma = $nouns_person_negative & word = ".+s" | lemma = $nouns_person_profession & word = ".+s"| lemma = $nouns_person_support & word = ".+s"| pos_ark = "[@OZ#^]" & lemma != "it" & word = ".+s|we"]+ @3[::] "to"  @4[::] [word!="[,\.\!|\?]"]* @5[::] within tweet

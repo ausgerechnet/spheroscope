@@ -104,8 +104,8 @@ hotelier
 innovator
 inspector
 instructor
-interviewer
 interpreter
+interviewer
 investigator
 investor
 jobseeker
@@ -147,8 +147,8 @@ professional
 professor
 programmer
 psychiatrist
-publicist
 psychologist
+publicist
 radiologist
 realtor
 recruiter
