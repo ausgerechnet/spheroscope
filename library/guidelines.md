@@ -219,12 +219,11 @@
 
 # 20 Lying #
 - ENTITY lies about FORMULA
-- ENTITY says FORMULA; FORMULA is not true
-- ENTITY is not honest about FORMULA
-- an entity is accused of lying about a topic or the truth of a formula; the lie can be about:
+- ENTITY says FORMULA but believes FORMULA is not true
+- an ENTITY is claimed to be lying (by the author of the text or someone referred to in the text) about a topic or the truth of a FORMULA; the lie can be about:
   - a topic (*And believe* **this man** *who told lies* **about Iraq**)
-  - a claim that is not elaborated upon in the given message, but clearly concerns a particular lie (*@JunckerEU says* **Boris** **making up stories**)
   - a particular claim (*For anyone who still believes the enduring* **Brexit** *lie* **that the EU is undemocratic**)
+  - a claim that is not elaborated upon in the given message, but clearly concerns a particular lie (*@JunckerEU says* **Boris** **making up stories**)
 
 ## examples ##
 - this lie that young people can't travel, it's another stay lie
@@ -234,7 +233,8 @@
 ## counter examples ##
 - the entity is accused of being generally dishonest, without specification of what they were lying about
 - the entity is accused of being unsincere in some other way, e.g. hypocritical, scaremongering...
-- the entity is accused of saying something that is untrue -- it has to be clear from the context that they are deliberately saying something incorrect (e.g. *X is talking BS* is a negative example)
+- the entity is accused of saying something that is untrue -- it has to be clear from the context that they are deliberately saying something incorrect 
+  + **X is talking BS** is a negative example
 
 ## confusions ##
 - #21: more bullshit from the in camp , next they'll be claiming that Brexit ' could ' cause Mars to crash in to Venus lol
