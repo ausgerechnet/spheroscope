@@ -103,26 +103,28 @@
 - #36
 
 # 6 Bad for Concept #
-- FORMULA is / would be bad for ENTITY
+- FORMULA is / would be bad for CONCEPT
+- concept can be entity (e.g. person) or system (e.g. economy, environment)
 
 ## examples ##
-- pain would be at least medium term not short
+- I'm not saying **it** would break **us** but **pain** would be at least medium term not short
 - #RemainCosThePoorAreGonnaBeHitTheHardest
-- pensionists stand to lose from Brexit
-- Brexit may seem like the West's biggest problem
-- Brexit is bad for us
+- **pensionists** stand to **lose** from **Brexit**
+- **Brexit** may seem like the **West's** **biggest problem**
+- **Brexit** is **bad** for **us**
 
 ## counter examples ##
 - Johnson is a bad person
 
 # 8 Good for Concept #
-- FORMULA is / would be good for ENTITY
+- FORMULA is / would be good for CONCEPT
+- concept can be entity (e.g. person) or system (e.g. economy, environment)
 
 ## examples ##
-- the UK will be better of out of the EU
-- Brexit might have a positive effect on the EU
-- Brexit will only improve things for the minority
-- I am ... ejoying following your comments on brexit
+- the **UK** will be **better of** **out of the EU**
+- **Brexit** might have a **positive effect** on **the EU**
+- **Brexit** will only **improve** things for **the minority**
+- **I** am ... **enjoying** **following your comments on brexit**
 
 ## counter examples ##
 - Johnson is a good person
@@ -182,9 +184,9 @@
 
 # 16 Expressed Preference #
 - ENTITY prefers FORMULA over FORMULA
-- Like in pattern 3, the entity can be left implicit if it is clearly the author of the message, e.g. in elliptical constructions
+- like in pattern 3, the entity can be left implicit if it is clearly the author of the message, e.g. in elliptical constructions
 - a portion of the hits will overlap with pattern 3, as often statements that something should be realised go along with a preference of one outcome over another.
-- in addition, 'pure' preference statements that do not indicate a necessary desire for either formula (*direct democracy is better than representative democracy*)
+- in addition, "pure" preference statements that do not indicate a necessary desire for either formula (*direct democracy is better than representative democracy*)
 - change in reasoning (he was leave, but has *switched* to remain)
 
 ## examples ##
@@ -193,11 +195,13 @@
 - we go for quality rather than quantity
 
 ## counter examples ##
-- one of the options is implicit (*I prefer brexit*) which is then p3
+- one of the options is implicit (*I prefer brexit*), which is then #3
 - the 'formula' part is realised by an entity reference (*I trust men who X, not men who Y*)
-- general preferability of a concept over another without ascribing the preference to any entity (*It is better to leave than to remain*: user who posted the tweet prefers leaving over remaining)
+- general preferability of a concept over another without ascribing the preference to any entity:
+  + *It is better to leave than to remain*: user who posted the tweet prefers leaving over remaining
 
 ## confusions ##
+- #3: see above
 - #43: Brexit would be better for the young folks than staying in the EU
 
 # 19 Entity's Obligation #
@@ -412,20 +416,28 @@
 - Brexit ' could extend austerity': IFS
 
 # 42 Better #
-
+- FORMULA1 is universally (=for all) better than FORMULA2
 ## examples ##
 - Brexit is still better than being in the EU
 
 # 43 Better for Concept #
-
+- FORMULA1 is better for CONCEPT than FORMULA2
+- concept = entity / system
 ## examples ##
-- Brexit would be better for the young folks than staying in the EU
+- **Brexit** would be **better for** **the young folks** than **staying in the EU**
 
 # 44 Good #
-    
+- FORMULA is universally (=for all) good
+## examples ##
+- nation states are good
 # 45 Bad #
-
+- FORMULA is universally (=for all) bad
+## examples ##
+- nation states are evil
 # 46 Qualified Desire #
+- ENTITY is part of a GROUP who desires FORMULA
+## examples ##
+- **as a son of immigrants** **I** am for **Brexit**
 
 # Categories #
 - entities vs entity groups
