@@ -70,7 +70,7 @@
 
 ## specifications ##
 - #1 + desire
-
+  
 # 4 Ought #
 - ... should / ought ...
 - imperatives
@@ -419,13 +419,15 @@
 - FORMULA1 is universally (=for all) better than FORMULA2
 ## examples ##
 - Brexit is still better than being in the EU
-
+## counter examples ##
+- is there anything worse than a missed flight (pragmatically: #45)
 # 43 Better for Concept #
 - FORMULA1 is better for CONCEPT than FORMULA2
 - concept = entity / system
 ## examples ##
 - **Brexit** would be **better for** **the young folks** than **staying in the EU**
-
+## counter examples ##
+- I see IndyScot as a chance to improve for the majority (#8)
 # 44 Good #
 - FORMULA is universally (=for all) good
 ## examples ##
@@ -434,6 +436,11 @@
 - FORMULA is universally (=for all) bad
 ## examples ##
 - nation states are evil
+## counter examples ##
+- the #UN - a unit of the globalist conspiracy (#21)
+## problematic ##
+- so what exactly is wrong with an EU army
+
 # 46 Qualified Desire #
 - ENTITY is part of a GROUP who desires FORMULA
 ## examples ##
