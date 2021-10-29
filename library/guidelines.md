@@ -67,9 +67,6 @@
 - the desire can only be inferred from an expression of conscious decision or reasoning (Johnson's *reason* to remain, her *case* for leave),
 - the technocrats fighting hard for Britain to remain
 - positive regard without desire: you seem to like that
-
-## specifications ##
-- #1 + desire
   
 # 4 Ought #
 - ... should / ought ...
@@ -186,7 +183,6 @@
 - ENTITY prefers FORMULA over FORMULA
 - like in pattern 3, the entity can be left implicit if it is clearly the author of the message, e.g. in elliptical constructions
 - a portion of the hits will overlap with pattern 3, as often statements that something should be realised go along with a preference of one outcome over another.
-- in addition, "pure" preference statements that do not indicate a necessary desire for either formula (*direct democracy is better than representative democracy*)
 - change in reasoning (he was leave, but has *switched* to remain)
 
 ## examples ##
@@ -195,8 +191,8 @@
 - we go for quality rather than quantity
 
 ## counter examples ##
+- in addition, "pure" preference statements that do not indicate a necessary desire for either formula (*direct democracy is better than representative democracy*), #42
 - one of the options is implicit (*I prefer brexit*), which is then #3
-- the 'formula' part is realised by an entity reference (*I trust men who X, not men who Y*)
 - general preferability of a concept over another without ascribing the preference to any entity:
   + *It is better to leave than to remain*: user who posted the tweet prefers leaving over remaining
 
@@ -421,17 +417,22 @@
 - Brexit is still better than being in the EU
 ## counter examples ##
 - is there anything worse than a missed flight (pragmatically: #45)
+
 # 43 Better for Concept #
 - FORMULA1 is better for CONCEPT than FORMULA2
 - concept = entity / system
 ## examples ##
 - **Brexit** would be **better for** **the young folks** than **staying in the EU**
+- fishermen would profit more from relaxed restrictions than worker right protection in the EU
+- higher CO2 costs would be more effective for climate protection than general speed limits
 ## counter examples ##
 - I see IndyScot as a chance to improve for the majority (#8)
+
 # 44 Good #
 - FORMULA is universally (=for all) good
 ## examples ##
 - nation states are good
+
 # 45 Bad #
 - FORMULA is universally (=for all) bad
 ## examples ##
