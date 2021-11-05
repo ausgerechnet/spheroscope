@@ -1,4 +1,7 @@
 - in general, we only annotate *clear* positives
+- every slot has to be realised; any exceptions are given in the specifications for respective patterns
+- we currently *do* annotate patterns embedded within questions, negations etc. as positives
+
 # 0 Quotation #
 - ENTITY says FORMULA
 - according to ENTITY: FORMULA
@@ -14,9 +17,7 @@
 - URLs
 
 ## confusions ##
-- #3: sb. shouted "Britain First"
 - #10: I'm like "… blurb …"
-- #38: threats / warnings
 
 # 2 Causal Implication #
 - if FORMULA then FORMULA
@@ -45,7 +46,7 @@
 - ENTITY wants FORMULA
 - desire (*want*, *wish*) of a particular outcome or event,
 - affiliation (*support*, *back*, *say yes to*),
-- the entity making the statement should be explicitly marked - an exception applies for ellipsis (i.e. when the subject is not realised in the surface form). The 'wanter' in an elliptical expression is understood to be the author of the message.
+- the ENTITY should be explicitly marked - an exception applies for ellipsis (i.e. when the subject is not realised in the surface form). Here, the ENTITY is the author of the message.
 
 ## examples ##
 - ... says The Times, endorsing Brexit
@@ -57,7 +58,7 @@
 
 ## counter examples ##
 - One-sided preference without explicit marking of desire: SF have issues with EU but *see it as better* for NI to remain [because they might not actually want to remain, despite seeing this as the rationally best decision]
-- the 'wanter' is implicit in a non-elliptical sentence (*democracy should be protected* pattern 4)
+- the 'wanter' is implicit in a non-elliptical sentence (*democracy should be protected* pattern #4)
 - the desire can only be inferred from an action (he *voted* remain might be interpreted as him /remain/ to be made true, but we do not consider such actions a sufficiently clear expression of desire)
 - it would be nice if ..
 - ... the figures were REMAIN 45% ...
@@ -181,9 +182,7 @@
 
 # 16 Expressed Preference #
 - ENTITY prefers FORMULA over FORMULA
-- like in pattern 3, the entity can be left implicit if it is clearly the author of the message, e.g. in elliptical constructions
-- a portion of the hits will overlap with pattern 3, as often statements that something should be realised go along with a preference of one outcome over another.
-- change in reasoning (he was leave, but has *switched* to remain)
+- like in pattern #3, the ENTITY can be left out by ellipsis
 
 ## examples ##
 - a lot fo tories would gladly trade Scotland for Brexit
@@ -191,10 +190,12 @@
 - we go for quality rather than quantity
 
 ## counter examples ##
-- in addition, "pure" preference statements that do not indicate a necessary desire for either formula (*direct democracy is better than representative democracy*), #42
+- "pure" evaluative comparisons that do not indicate an ENTITY's necessary desire for either formula (*direct democracy is better than representative democracy*), #42
 - one of the options is implicit (*I prefer brexit*), which is then #3
 - general preferability of a concept over another without ascribing the preference to any entity:
   + *It is better to leave than to remain*: user who posted the tweet prefers leaving over remaining
+- he was leave, but has *switched* to remain: not a hit because 1) preference can only be inferred  2) "was leave" is treated as group membership
+- it should be real ale, not some gassy lager: missing ENTITY; no explicit preference
 
 ## confusions ##
 - #3: see above
@@ -417,6 +418,7 @@
 - Brexit is still better than being in the EU
 ## counter examples ##
 - is there anything worse than a missed flight (pragmatically: #45)
+- it should be real ale, not some gassy lager: too implicit
 
 # 43 Better for Concept #
 - FORMULA1 is better for CONCEPT than FORMULA2
@@ -427,18 +429,32 @@
 - higher CO2 costs would be more effective for climate protection than general speed limits
 ## counter examples ##
 - I see IndyScot as a chance to improve for the majority (#8)
+- 40+ years ago this country was in a poor state, we're nowhere near as bad now. (not clear enough what exactly was/ is better)
+-  Brexit might have a positive effect on the EU: discontents exit, resulting in a closer-knit and better-functioning EU-eurozone." (FORMULA2 not expressed)
+- I feel ashamed of our Gov. Worse to have others feel sorry for us
 
 # 44 Good #
 - FORMULA is universally (=for all) good
 ## examples ##
 - nation states are good
+- so the ideal will be Indy in EU with rUK still a member
+
+## counter-examples ##
+- Democracy is also often taken for granted
 
 # 45 Bad #
 - FORMULA is universally (=for all) bad
+- It is enough for the FORMULA to be bad in some aspects, regardless of whether it has positive characteristics as well
+
 ## examples ##
 - nation states are evil
+- the problem is that ...
+- the system is flawed (= the system is bad, at least in some ways)
+- Leave's arguments just don't add up.
 ## counter examples ##
 - the #UN - a unit of the globalist conspiracy (#21)
+- its illegal immigrants that are entering through the EU on false documents or nothing at all that worries me. (no explicit universal evaluation)
+- I feel that if we Brexit, the rest of the world will view us as racist, bigoted and narrow-minded"
 ## problematic ##
 - so what exactly is wrong with an EU army
 
@@ -446,7 +462,8 @@
 - ENTITY is part of a GROUP who desires FORMULA
 ## examples ##
 - **as a son of immigrants** **I** am for **Brexit**
-
+- **the Left T.U. in me** says **No to leave** but **the #Motorbikes side of me** says **Yes vote to leave**
+- 
 # Categories #
 - entities vs entity groups
 - binders / operators / junctors
