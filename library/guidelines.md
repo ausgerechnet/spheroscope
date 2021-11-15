@@ -379,20 +379,15 @@
 
 # 38 Warning #
 - ENTITY warns of FORMULA
-- the pattern matches instances of an entity 0 warning about formula 1 being bad.
-- negative connotations may be directly encoded in the verb, e.g. 'warn'
-- example: *Juncker warns about the outcome of Brexit*
-- alternatively, a more neutral communication verb (e.g. say) can be used if formula 1 is clearly inherently negative:
-- example: *He said that #brexit will wreck the job market*
-- includes ratings of entities i.e. stating that agroup of people are the worst
+- the pattern matches instances of an entity 0 warning about formula 1 being universally bad (= for everyone)
 
 ## examples ##
 - Boris Johnson as PM would be ‘ horror scenario , ’ warns top Juncker aide
-- Hilary Benn has warned that Britain 's exit from the EU would make the country ' poorer ' and ' less influential'
 - Cameron warns against Brexit in patriotic speech
 
 ## counter examples ##
-- neither the verb nor formula 1 show an unambiguously negative evaluation (e.g. *the IMF said that brexit will prolong austerity*)
+- neither the verb nor formula 1 have an unambiguously negative evaluation (e.g. *the IMF said that brexit will prolong austerity*)
+- Hilary Benn has warned that Britain 's exit from the EU would make the country ' poorer ' and ' less influential' [49: bad consequences for some]
 
 # 39 Some [!] #
 
@@ -409,7 +404,6 @@
 - indirect version of p38 where something is claimed to be bad by consequence
 
 ## examples ##
-- Brexit could lead to downgrades for other EU countries -Fitch
 - Brexit ' could extend austerity': IFS
 
 # 42 Better #
@@ -463,7 +457,22 @@
 ## examples ##
 - **as a son of immigrants** **I** am for **Brexit**
 - **the Left T.U. in me** says **No to leave** but **the #Motorbikes side of me** says **Yes vote to leave**
-- 
+-
+
+# 48 Warning for some #
+- ENTITY1 says that FORMULA is/will be/ would be bad for ENTITY2
+
+## examples ##
+- Brexit will destroy the EU
+
+# 49 warning of bad consequences for some #
+- ENTITY1 says that FORMULA has/ will have/ would have BAD CONSEQUENCES for ENTITY2
+
+##examples##
+- Hilary Benn has warned that Britain 's exit from the EU would make the country ' poorer ' and ' less influential'
+- Brexit could lead to downgrades for other EU countries -Fitch
+
+
 # Categories #
 - entities vs entity groups
 - binders / operators / junctors
