@@ -3,9 +3,8 @@ aspiration
 commitment
 desire
 determination
-goal
 intention
-objective
-purpose
 want
+will
+willingness
 wish
