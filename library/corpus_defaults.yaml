@@ -3,7 +3,8 @@ resources:
 query:
   context: null
   match_strategy: longest
-  s_context: tweet
+  context_break: tweet
+  s_query: tweet
 display:
   s_show:
   - tweet_id
