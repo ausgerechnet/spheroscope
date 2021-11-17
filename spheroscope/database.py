@@ -271,8 +271,7 @@ class Query(db.Model):
                 'writing query "%s" to "%s"' % (self.name, self.path)
             )
             os.makedirs(os.path.dirname(self.path), exist_ok=True)
-            with open(self.path, "wt") as f:
-                f.write(cqpy_dump(self.serialize()))
+            cqpy_dump(self.serialize(), self.path)
 
     def delete(self, delete_file=True):
         """ deletes query from database and path """

@@ -7,7 +7,8 @@ import sys
 from ccc.cqpy import run_query
 
 from flask import (
-    Blueprint, Response, redirect, render_template, request, url_for, current_app, g, session, jsonify
+    Blueprint, Response, redirect, render_template, request, url_for,
+    current_app, g, session, jsonify
 )
 
 from flask.cli import with_appcontext
@@ -38,14 +39,11 @@ def query_corpus(query, cwb_id):
 
     # load query and display parameters
     query['query'] = dict(corpus_config['query'])
-    if 'context' not in query['query'].keys():
-        query['query']['context'] = None
     query['display'] = dict(corpus_config['display'])
 
     # make sure anchors are int
     corrections_int = dict()
-    for k in query['anchors']['corrections'].keys():
-        c = query['anchors']['corrections'][k]
+    for k, c in query['anchors']['corrections'].items():
         corrections_int[int(k)] = c
     query['anchors']['corrections'] = corrections_int
 
@@ -55,6 +53,8 @@ def query_corpus(query, cwb_id):
     # run query
     current_app.logger.info('running query')
     lines = run_query(corpus, query)
+
+    # TODO take care of p_slots, p_text
 
     return lines
 
@@ -210,7 +210,12 @@ def run_cmd(id):
 
     patterns = Pattern.query.order_by(Pattern.id).all()
     # FIXME this conversion should go when the new database is in
-    patterndict = [{"id": abs(p.id), "template": p.template, "explanation": p.explanation, "retired": p.id < 0} for p in patterns]
+    patterndict = [{
+        "id": abs(p.id),
+        "template": p.template,
+        "explanation": p.explanation,
+        "retired": p.id < 0
+    } for p in patterns]
 
     if not beta:
         if request.method == 'POST':
@@ -230,11 +235,9 @@ def run_cmd(id):
                 )
             )
             newresult = query_corpus(newquery, cwb_id)
-            oldresult = oldresult
             result = patch_query_results(
                 newresult.merge(oldresult, how='outer', on='tweet_id', indicator=True)
             )
-
             return render_template('queries/result_table.html',
                                    result=result,
                                    patterns=patterndict)
@@ -243,7 +246,8 @@ def run_cmd(id):
             oldresult[display_columns].to_csv(),
             mimetype='text/csv',
             headers={"Content-disposition":
-                     f"attachment; filename={id}-results.csv"})
+                     f"attachment; filename={id}-results.csv"}
+        )
 
     else:
 
