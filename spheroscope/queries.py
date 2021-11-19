@@ -110,7 +110,13 @@ def create():
 
     patterns = Pattern.query.order_by(Pattern.id).all()
     # FIXME this conversion should go when the new database is in
-    patterndict = [{"id": abs(p.id), "template": p.template, "explanation": p.explanation, "retired": p.id < 0} for p in patterns]
+    patterndict = [{
+        "id": abs(p.id),
+        "template": p.template,
+        "explanation": p.explanation,
+        "retired": p.id < 0
+    } for p in patterns]
+
     return render_template('queries/create.html',
                            patterns=patterndict)
 
@@ -142,7 +148,13 @@ def update(id):
 
     patterns = Pattern.query.order_by(Pattern.id).all()
     # FIXME this conversion should go when the new database is in
-    patterndict = [{"id": abs(p.id), "template": p.template, "explanation": p.explanation, "retired": p.id < 0} for p in patterns]
+    patterndict = [{
+        "id": abs(p.id),
+        "template": p.template,
+        "explanation": p.explanation,
+        "retired": p.id < 0
+    } for p in patterns]
+
     return render_template('queries/update.html',
                            query=query,
                            patterns=patterndict)
@@ -156,8 +168,9 @@ def delete_cmd(id):
     return redirect(url_for('queries.index'))
 
 
-def patch_query_results(results):
-    newresults = results.rename(columns={
+def patch_query_results(result):
+    print(result)
+    newresult = result.rename(columns={
         "word": "whole_word",
         "word_x": "whole_word_x",
         "word_y": "whole_word_y",
@@ -166,8 +179,10 @@ def patch_query_results(results):
         "lemma_y": "whole_lemma_y",
         "_merge": "merge"
     })
-    newresults.columns = newresults.columns.str.split('_', 2, expand=True)
-    return newresults
+    print(newresult)
+    # newresult.columns = newresult.columns.str.split('_', 2, expand=True)
+    print(newresult)
+    return newresult
 
 
 @bp.route('/<int:id>/run', methods=('GET', 'POST'))
@@ -235,9 +250,10 @@ def run_cmd(id):
                 )
             )
             newresult = query_corpus(newquery, cwb_id)
-            result = patch_query_results(
-                newresult.merge(oldresult, how='outer', on='tweet_id', indicator=True)
+            result = newresult.merge(
+                oldresult, how='outer', on='tweet_id', indicator=True
             )
+            result = patch_query_results(result)
             return render_template('queries/result_table.html',
                                    result=result,
                                    patterns=patterndict)
