@@ -406,6 +406,9 @@
 ## examples ##
 - Brexit ' could extend austerity': IFS
 
+## counter examples ##
+- Brexit has brought out the bigots and racists [is matched by the logical formula = something has bad consequences, but is not a warning of bad consequences because warning's don't make sense for things that have already happened] 
+
 # 42 Better #
 - FORMULA1 is universally (=for all) better than FORMULA2
 ## examples ##
