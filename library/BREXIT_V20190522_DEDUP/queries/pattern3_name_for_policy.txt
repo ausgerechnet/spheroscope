@@ -1,0 +1,16 @@
+# --- # CQPY query file
+# anchors:
+#   corrections:
+#     '1': -1
+#   slots:
+#     '0':
+#     - 0
+#     - 1
+#     '1': 2
+# meta:
+#   comment: null
+#   name: pattern3_name_for_policy
+#   pattern: 3
+# ---
+
+@0[::] [pos_ark="[Z@]"]+ @1:"for|against" @2:[lemma=$nouns_values | lemma = $nouns_policies]
