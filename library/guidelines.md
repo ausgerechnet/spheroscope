@@ -1,4 +1,7 @@
 - in general, we only annotate *clear* positives
+- every slot has to be realised; any exceptions are given in the specifications for respective patterns
+- we currently *do* annotate patterns embedded within questions, negations etc. as positives
+
 # 0 Quotation #
 - ENTITY says FORMULA
 - according to ENTITY: FORMULA
@@ -14,9 +17,7 @@
 - URLs
 
 ## confusions ##
-- #3: sb. shouted "Britain First"
 - #10: I'm like "… blurb …"
-- #38: threats / warnings
 
 # 2 Causal Implication #
 - if FORMULA then FORMULA
@@ -45,31 +46,29 @@
 - ENTITY wants FORMULA
 - desire (*want*, *wish*) of a particular outcome or event,
 - affiliation (*support*, *back*, *say yes to*),
-- the entity making the statement should be explicitly marked - an exception applies for ellipsis (i.e. when the subject is not realised in the surface form) and for imperatives. In both of the latter cases, the 'wanter' is understood to be the author of the message
+- the ENTITY should be explicitly marked - an exception applies for ellipsis (i.e. when the subject is not realised in the surface form). Here, the ENTITY is the author of the message.
 
 ## examples ##
 - ... says The Times, endorsing Brexit
-- I believe in votes at 16
+- I believe in votes at 16ot
 - ... 50% in favour of ...
-- he is against it (negation on the inside)
+- he is against it (we read this as 'he wants for it to not be true')
 - George is for Brexit
+- Hoping for a successful outcome .
 
 ## counter examples ##
-- One-sided preference without explicit marking of desire: SF have issues with EU but *see it as better* for NI to remain
-- the 'wanter' is implicit in a non-elliptical sentence (*democracy should be protected* pattern 4)
+- One-sided preference without explicit marking of desire: SF have issues with EU but *see it as better* for NI to remain [because they might not actually want to remain, despite seeing this as the rationally best decision]
+- the 'wanter' is implicit in a non-elliptical sentence (*democracy should be protected* pattern #4)
 - the desire can only be inferred from an action (he *voted* remain might be interpreted as him /remain/ to be made true, but we do not consider such actions a sufficiently clear expression of desire)
 - it would be nice if ..
 - ... the figures were REMAIN 45% ...
 - I'm Brexit -> group membership
-- rhetorical questions: you want to talk misleading?
+- rhetorical questions and idiomatic expressions: you want to talk misleading?
 - he's got Brexit as his next agenda item
-- conscious decision or reasoning (Johnson's *reason* to remain, her *case* for leave),
+- the desire can only be inferred from an expression of conscious decision or reasoning (Johnson's *reason* to remain, her *case* for leave),
 - the technocrats fighting hard for Britain to remain
-- you seem to like that
-
-## specifications ##
-- #1 + desire
-
+- positive regard without desire: you seem to like that
+  
 # 4 Ought #
 - ... should / ought ...
 - imperatives
@@ -102,26 +101,28 @@
 - #36
 
 # 6 Bad for Concept #
-- FORMULA is / would be bad for ENTITY
+- FORMULA is / would be bad for CONCEPT
+- concept can be entity (e.g. person) or system (e.g. economy, environment)
 
 ## examples ##
-- pain would be at least medium term not short
+- I'm not saying **it** would break **us** but **pain** would be at least medium term not short
 - #RemainCosThePoorAreGonnaBeHitTheHardest
-- pensionists stand to lose from Brexit
-- Brexit may seem like the West's biggest problem
-- Brexit is bad for us
+- **pensionists** stand to **lose** from **Brexit**
+- **Brexit** may seem like the **West's** **biggest problem**
+- **Brexit** is **bad** for **us**
 
 ## counter examples ##
 - Johnson is a bad person
 
 # 8 Good for Concept #
-- FORMULA is / would be good for ENTITY
+- FORMULA is / would be good for CONCEPT
+- concept can be entity (e.g. person) or system (e.g. economy, environment)
 
 ## examples ##
-- the UK will be better of out of the EU
-- Brexit might have a positive effect on the EU
-- Brexit will only improve things for the minority
-- I am ... ejoying following your comments on brexit
+- the **UK** will be **better of** **out of the EU**
+- **Brexit** might have a **positive effect** on **the EU**
+- **Brexit** will only **improve** things for **the minority**
+- **I** am ... **enjoying** **following your comments on brexit**
 
 ## counter examples ##
 - Johnson is a good person
@@ -181,10 +182,7 @@
 
 # 16 Expressed Preference #
 - ENTITY prefers FORMULA over FORMULA
-- Like in pattern 3, the entity can be left implicit if it is clearly the author of the message, e.g. in elliptical constructions
-- a portion of the hits will overlap with pattern 3, as often statements that something should be realised go along with a preference of one outcome over another.
-- in addition, 'pure' preference statements that do not indicate a necessary desire for either formula (*direct democracy is better than representative democracy*)
-- change in reasoning (he was leave, but has *switched* to remain)
+- like in pattern #3, the ENTITY can be left out by ellipsis
 
 ## examples ##
 - a lot fo tories would gladly trade Scotland for Brexit
@@ -192,11 +190,15 @@
 - we go for quality rather than quantity
 
 ## counter examples ##
-- one of the options is implicit (*I prefer brexit*) which is then p3
-- the 'formula' part is realised by an entity reference (*I trust men who X, not men who Y*)
-- general preferability of a concept over another without ascribing the preference to any entity (*It is better to leave than to remain*: user who posted the tweet prefers leaving over remaining)
+- "pure" evaluative comparisons that do not indicate an ENTITY's necessary desire for either formula (*direct democracy is better than representative democracy*), #42
+- one of the options is implicit (*I prefer brexit*), which is then #3
+- general preferability of a concept over another without ascribing the preference to any entity:
+  + *It is better to leave than to remain*: user who posted the tweet prefers leaving over remaining
+- he was leave, but has *switched* to remain: not a hit because 1) preference can only be inferred  2) "was leave" is treated as group membership
+- it should be real ale, not some gassy lager: missing ENTITY; no explicit preference
 
 ## confusions ##
+- #3: see above
 - #43: Brexit would be better for the young folks than staying in the EU
 
 # 19 Entity's Obligation #
@@ -218,12 +220,11 @@
 
 # 20 Lying #
 - ENTITY lies about FORMULA
-- ENTITY says FORMULA; FORMULA is not true
-- ENTITY is not honest about FORMULA
-- an entity is accused of lying about a topic or the truth of a formula; the lie can be about:
+- ENTITY says FORMULA but believes FORMULA is not true
+- an ENTITY is claimed to be lying (by the author of the text or someone referred to in the text) about a topic or the truth of a FORMULA; the lie can be about:
   - a topic (*And believe* **this man** *who told lies* **about Iraq**)
-  - a claim that is not elaborated upon in the given message, but clearly concerns a particular lie (*@JunckerEU says* **Boris** **making up stories**)
   - a particular claim (*For anyone who still believes the enduring* **Brexit** *lie* **that the EU is undemocratic**)
+  - a claim that is not elaborated upon in the given message, but clearly concerns a particular lie (*@JunckerEU says* **Boris** **making up stories**)
 
 ## examples ##
 - this lie that young people can't travel, it's another stay lie
@@ -233,7 +234,8 @@
 ## counter examples ##
 - the entity is accused of being generally dishonest, without specification of what they were lying about
 - the entity is accused of being unsincere in some other way, e.g. hypocritical, scaremongering...
-- the entity is accused of saying something that is untrue -- it has to be clear from the context that they are deliberately saying something incorrect (e.g. *X is talking BS* is a negative example)
+- the entity is accused of saying something that is untrue -- it has to be clear from the context that they are deliberately saying something incorrect 
+  + **X is talking BS** is a negative example
 
 ## confusions ##
 - #21: more bullshit from the in camp , next they'll be claiming that Brexit ' could ' cause Mars to crash in to Venus lol
@@ -377,20 +379,15 @@
 
 # 38 Warning #
 - ENTITY warns of FORMULA
-- the pattern matches instances of an entity 0 warning about formula 1 being bad.
-- negative connotations may be directly encoded in the verb, e.g. 'warn'
-- example: *Juncker warns about the outcome of Brexit*
-- alternatively, a more neutral communication verb (e.g. say) can be used if formula 1 is clearly inherently negative:
-- example: *He said that #brexit will wreck the job market*
-- includes ratings of entities i.e. stating that agroup of people are the worst
+- the pattern matches instances of an entity 0 warning about formula 1 being universally bad (= for everyone)
 
 ## examples ##
 - Boris Johnson as PM would be ‘ horror scenario , ’ warns top Juncker aide
-- Hilary Benn has warned that Britain 's exit from the EU would make the country ' poorer ' and ' less influential'
 - Cameron warns against Brexit in patriotic speech
 
 ## counter examples ##
-- neither the verb nor formula 1 show an unambiguously negative evaluation (e.g. *the IMF said that brexit will prolong austerity*)
+- neither the verb nor formula 1 have an unambiguously negative evaluation (e.g. *the IMF said that brexit will prolong austerity*)
+- Hilary Benn has warned that Britain 's exit from the EU would make the country ' poorer ' and ' less influential' [49: bad consequences for some]
 
 # 39 Some [!] #
 
@@ -407,24 +404,77 @@
 - indirect version of p38 where something is claimed to be bad by consequence
 
 ## examples ##
-- Brexit could lead to downgrades for other EU countries -Fitch
 - Brexit ' could extend austerity': IFS
 
-# 42 Better #
+## counter examples ##
+- Brexit has brought out the bigots and racists [is matched by the logical formula = something has bad consequences, but is not a warning of bad consequences because warning's don't make sense for things that have already happened] 
 
+# 42 Better #
+- FORMULA1 is universally (=for all) better than FORMULA2
 ## examples ##
 - Brexit is still better than being in the EU
+## counter examples ##
+- is there anything worse than a missed flight (pragmatically: #45)
+- it should be real ale, not some gassy lager: too implicit
 
 # 43 Better for Concept #
-
+- FORMULA1 is better for CONCEPT than FORMULA2
+- concept = entity / system
 ## examples ##
-- Brexit would be better for the young folks than staying in the EU
+- **Brexit** would be **better for** **the young folks** than **staying in the EU**
+- fishermen would profit more from relaxed restrictions than worker right protection in the EU
+- higher CO2 costs would be more effective for climate protection than general speed limits
+## counter examples ##
+- I see IndyScot as a chance to improve for the majority (#8)
+- 40+ years ago this country was in a poor state, we're nowhere near as bad now. (not clear enough what exactly was/ is better)
+-  Brexit might have a positive effect on the EU: discontents exit, resulting in a closer-knit and better-functioning EU-eurozone." (FORMULA2 not expressed)
+- I feel ashamed of our Gov. Worse to have others feel sorry for us
 
 # 44 Good #
-    
+- FORMULA is universally (=for all) good
+## examples ##
+- nation states are good
+- so the ideal will be Indy in EU with rUK still a member
+
+## counter-examples ##
+- Democracy is also often taken for granted
+
 # 45 Bad #
+- FORMULA is universally (=for all) bad
+- It is enough for the FORMULA to be bad in some aspects, regardless of whether it has positive characteristics as well
+
+## examples ##
+- nation states are evil
+- the problem is that ...
+- the system is flawed (= the system is bad, at least in some ways)
+- Leave's arguments just don't add up.
+## counter examples ##
+- the #UN - a unit of the globalist conspiracy (#21)
+- its illegal immigrants that are entering through the EU on false documents or nothing at all that worries me. (no explicit universal evaluation)
+- I feel that if we Brexit, the rest of the world will view us as racist, bigoted and narrow-minded"
+## problematic ##
+- so what exactly is wrong with an EU army
 
 # 46 Qualified Desire #
+- ENTITY is part of a GROUP who desires FORMULA
+## examples ##
+- **as a son of immigrants** **I** am for **Brexit**
+- **the Left T.U. in me** says **No to leave** but **the #Motorbikes side of me** says **Yes vote to leave**
+-
+
+# 48 Warning for some #
+- ENTITY1 says that FORMULA is/will be/ would be bad for ENTITY2
+
+## examples ##
+- Brexit will destroy the EU
+
+# 49 warning of bad consequences for some #
+- ENTITY1 says that FORMULA has/ will have/ would have BAD CONSEQUENCES for ENTITY2
+
+##examples##
+- Hilary Benn has warned that Britain 's exit from the EU would make the country ' poorer ' and ' less influential'
+- Brexit could lead to downgrades for other EU countries -Fitch
+
 
 # Categories #
 - entities vs entity groups

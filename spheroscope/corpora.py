@@ -133,7 +133,7 @@ def corpus_config(cwb_id):
         corpus_config['query'] = {
             'match_strategy': request.form['match_strategy'],
             's_query': request.form['s_query'],
-            's_context': request.form['s_context']
+            'context_break': request.form['context_break']
         }
         corpus_config['display'] = {
             's_show': request.form.getlist('s_show'),

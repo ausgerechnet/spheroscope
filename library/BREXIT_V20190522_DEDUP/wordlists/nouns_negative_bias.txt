@@ -1,4 +1,3 @@
-
 #?remaniac
 [a-z]+ism
 [a-z]+phile
