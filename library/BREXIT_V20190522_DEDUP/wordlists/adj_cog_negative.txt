@@ -1,4 +1,3 @@
-
 [a-z]+mongering
 abrasive
 absurd

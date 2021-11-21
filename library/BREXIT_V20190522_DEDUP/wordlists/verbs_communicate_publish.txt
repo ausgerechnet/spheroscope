@@ -4,7 +4,7 @@ promote
 publicise
 publicize
 publish
-tell
 share
 spread
+tell
 write

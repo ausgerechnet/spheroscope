@@ -20,7 +20,7 @@ def get_frequencies(cwb_id, macro):
     corpus = init_corpus(corpus_config)
 
     current_app.logger.info('getting frequency info for macro')
-    dump = corpus.query("/" + macro.name + "()")
+    dump = corpus.query("/" + macro.name + "()", context=0)
     freq = dump.breakdown()
 
     return freq
@@ -155,7 +155,7 @@ def frequencies(id):
     freq = get_frequencies(
         cwb_id,
         macro
-    )
+    )[['freq']].head(1000)
 
     return render_template(
         'macros/frequencies.html',
