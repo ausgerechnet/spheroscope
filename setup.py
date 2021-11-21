@@ -35,15 +35,7 @@ setuptools.setup(
         "flask-expects-json>=1.5.0,<1.6",
         "gevent>=1.4.0,<20.12",
         "pymagnitude>=0.1.120,<0.2",
-        "cwb-ccc>=0.9.16,<0.10",
-        # cwb-ccc dependencies
-        "cwb-python>=0.3.0,<0.4",
-        "association-measures>=0.1.5,<0.2",
-        "pandas>=1.2.0,<1.3",
-        "numexpr>=2.7.1,<2.8",
-        "Bottleneck>=1.3.2,<1.4",
-        "unidecode>=1.1.1,<1.3",
-        "pyyaml>=5.4.1,<5.5"
+        "cwb-ccc>=0.10.0,<0.11"
     ],
     classifiers=[
         "Development Status :: 3 - Alpha",
