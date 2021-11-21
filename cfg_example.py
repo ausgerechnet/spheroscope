@@ -8,7 +8,7 @@ class DevConfig:
     DB_USERNAME = "admin"
     DB_PASSWORD = "0000"
 
-    SESSION_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = False
 
     REGISTRY_PATH = "/usr/local/share/cwb/registry/"
     CACHE_PATH = "/tmp/spheroscope-cache"
