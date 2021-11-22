@@ -1,0 +1,1 @@
+("Hoping|Hope" | [lemma="[\.\?\!;,-]+"] "hoping|hope") [word="for|that|to"]? @2:[::] [word!="[\.,\?\!]" & word !="http.+"]* @3:[::]
