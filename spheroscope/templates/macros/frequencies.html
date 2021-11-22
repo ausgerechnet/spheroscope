@@ -22,7 +22,7 @@
   <tbody>
   {% for k,freq in frequencies.iterrows() %}
   <tr>
-    <th>{{ freq["name"][0] }}</th>
+    <th>{{ freq["name"] }}</th>
     <td>{{ freq["freq"] }}</td>
   </tr>
   {% endfor %}
