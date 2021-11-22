@@ -10,105 +10,103 @@
 
 {% block content %}
 <div class="content">
-<h3>Properties</h3>
-<dl>
-  <dt>CWB ID</dt><dd><code>{{resources['cwb_id']}}</code></dd>
-  <dt>Library</dt> <dd><code>{{resources['lib_path']}}</code></dd>
-  <dt>Embeddings</dt> <dd><code>{{resources['embeddings']}}</code></dd>
-</dl>
+  <h3>Properties</h3>
+  <dl>
+    <dt>CWB ID</dt><dd><code>{{resources['cwb_id']}}</code></dd>
+    <dt>Library</dt> <dd><code>{{resources['lib_path']}}</code></dd>
+    <dt>Embeddings</dt> <dd><code>{{resources['embeddings']}}</code></dd>
+  </dl>
 
-<form method="post" class="form">
- <h2>Settings</h2>
- {% call c.block("Query Parameters") %}
- {% call f.labelled_field("CQP matching strategy") %}
- <div class="select">
-	<select class="form-control" id="match_strategy" name="match_strategy">
-	  {% for s in "shortest","standard","longest"%}
-	  <option value="{{ s }}"{% if s==query['match_strategy'] %} selected{% endif %}>
-	    {{ s }}
-	  </option>
-	  {% endfor %}
-	</select>
-    </div>
- {% endcall %}
- {% call f.labelled_field("Query confinement") %}
-	where to confine queries ("within" statement):
+  <form method="post" class="form">
+    <h3>Settings</h3>
+    {% call c.block("Query Parameters") %}
+    {% call f.labelled_field("CQP matching strategy") %}
     <div class="select">
-	<select class="form-control" id="s_query" name="s_query">
-	  {% for s_att in s_atts_none %}
-	  <option value="{{ s_att }}"{% if s_att==query['s_query'] %} selected{% endif %}>
-	    {{ s_att }}
-	  </option>
-	  {% endfor %}
-	  
-	</select>
+      <select class="form-control" id="match_strategy" name="match_strategy">
+        {% for s in "longest", "shortest", "standard", "traditional" %}
+        <option value="{{ s }}"{% if s==query['match_strategy'] %} selected{% endif %}>
+          {{ s }}
+        </option>
+        {% endfor %}
+      </select>
     </div>
     {% endcall %}
-    {% call f.labelled_field("Context breaking") %}
-	where to break context:
+    {% call f.labelled_field("Query confinement ('within' statement)") %}
     <div class="select">
-	<select class="form-control" id="s_context" name="s_context">
-	  {% for s_att in s_atts_none %}
-	  <option value="{{ s_att }}"{% if s_att==query['s_context'] %} selected{% endif %}>
-	    {{ s_att }}
-	  </option>
-	  {% endfor %}
-	</select>
+      <select class="form-control" id="s_query" name="s_query">
+        {% for s_att in s_atts_none %}
+        <option value="{{ s_att }}"{% if s_att==query['s_query'] %} selected{% endif %}>
+          {{ s_att }}
+        </option>
+        {% endfor %}
+      </select>
+    </div>
+    {% endcall %}
+    {% call f.labelled_field("Context confinement") %}
+    <div class="select">
+      <select class="form-control" id="context_break" name="context_break">
+        {% for s_att in s_atts_none %}
+        <option value="{{ s_att }}"{% if s_att==query['context_break'] %} selected{% endif %}>
+          {{ s_att }}
+        </option>
+        {% endfor %}
+      </select>
     </div>
     {% endcall %}
     {% endcall %}
+
     {% call c.block("Display Parameters") %}
-    {% call f.labelled_field("Actual text", true) %}
+    {% call f.labelled_field("Actual text") %}
     <div class="select">
-	<select class="form-control" id="p_text" name="p_text">
-	  {% for p_att in p_atts %}
-	  <option value="{{ p_att }}"{% if p_att==display['p_text'] %} selected{% endif %}>
-	    {{ p_att }}
-	  </option>
-	  {% endfor %}
-	</select>
+      <select class="form-control" id="p_text" name="p_text">
+        {% for p_att in p_atts %}
+        <option value="{{ p_att }}"{% if p_att==display['p_text'] %} selected{% endif %}>
+          {{ p_att }}
+        </option>
+        {% endfor %}
+      </select>
     </div>
-     {% endcall %}
-    {% call f.labelled_field("Slots", true) %}
-    <div class="select">
-	<select id="p_slots" name="p_slots">
-	  {% for p_att in p_atts %}
-	  <option value="{{ p_att }}"{% if p_att==display['p_slots'] %} selected{% endif %}>
-	    {{ p_att }}
-	  </option>
-	  {% endfor %}
-	</select>
-    </div>
- {% endcall %}
-    {% call f.labelled_field("p-Attributes") %}
-	p-attributes to show in extended concordancing:<br/>
-    <div class="select is-multiple">
-	<select id="p_show" name="p_show" multiple>
-	  {% for p_att in p_atts %}
-	  <option value="{{ p_att }}" {% if p_att in display['p_show'] %} selected{% endif %}>
-	    {{ p_att }}
-	  </option>
-	  {% endfor %}
-	</select>
-    </div>
-     {% endcall %}
-    {% call f.labelled_field("s-Attributes") %}
-    <div class="select is-multiple">
-	<select class="form-control" id="s_show" name="s_show" multiple>
-	  {% for s_att in s_atts_anno %}
-	  <option value="{{ s_att }}"{% if s_att in display['s_show'] %} selected{% endif %}>
-	    {{ s_att }}
-	  </option>
-	  {% endfor %}
-	</select>
-    </div>
-     {% endcall %}
     {% endcall %}
+    {% call f.labelled_field("Slots") %}
+    <div class="select">
+       <select id="p_slots" name="p_slots">
+         {% for p_att in p_atts %}
+         <option value="{{ p_att }}"{% if p_att==display['p_slots'] %} selected{% endif %}>
+           {{ p_att }}
+         </option>
+         {% endfor %}
+       </select>
+    </div>
+    {% endcall %}
+    {% call f.labelled_field("Positional attributes") %}
+    <div class="select is-multiple">
+      <select id="p_show" name="p_show" multiple>
+        {% for p_att in p_atts %}
+        <option value="{{ p_att }}" {% if p_att in display['p_show'] %} selected{% endif %}>
+          {{ p_att }}
+        </option>
+        {% endfor %}
+      </select>
+    </div>
+    {% endcall %}
+    {% call f.labelled_field("Structural attributes") %}
+    <div class="select is-multiple">
+      <select class="form-control" id="s_show" name="s_show" multiple>
+        {% for s_att in s_atts_anno %}
+        <option value="{{ s_att }}"{% if s_att in display['s_show'] %} selected{% endif %}>
+          {{ s_att }}
+        </option>
+        {% endfor %}
+      </select>
+    </div>
+    {% endcall %}
+    {% endcall %}
+
     <div class="field">
       <div clas="control">
-         <button class="button is-link" type="submit"><span class="icon"><i class="fas fa-save" aria-hidden="true"></i></span><span>Save</span></button>
+        <button class="button is-link" type="submit"><span class="icon"><i class="fas fa-save" aria-hidden="true"></i></span><span>Save</span></button>
       </div>
     </div>
-</form>
+  </form>
 </div>
 {% endblock %}

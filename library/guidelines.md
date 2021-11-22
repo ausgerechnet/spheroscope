@@ -68,7 +68,8 @@
 - the desire can only be inferred from an expression of conscious decision or reasoning (Johnson's *reason* to remain, her *case* for leave),
 - the technocrats fighting hard for Britain to remain
 - positive regard without desire: you seem to like that
-  
+- the technocrats in the Eu fighting for Britain to remain (effort does not necessarily equal desire)
+
 # 4 Ought #
 - ... should / ought ...
 - imperatives
@@ -102,7 +103,7 @@
 
 # 6 Bad for Concept #
 - FORMULA is / would be bad for CONCEPT
-- concept can be entity (e.g. person) or system (e.g. economy, environment)
+- concept can be an entity (e.g. person) or system (e.g. economy, environment)
 
 ## examples ##
 - I'm not saying **it** would break **us** but **pain** would be at least medium term not short
@@ -112,7 +113,10 @@
 - **Brexit** is **bad** for **us**
 
 ## counter examples ##
-- Johnson is a bad person
+- Johnson is a bad person (pattern 21)
+- if we Brexit, the rest of the world will view us as racist, bigoted and narrow- minded (too implicit -- while being viewed as racist etc. is a bad thing, the speaker has not stated that they care what people think)
+- @UKIP can take votes from Labour (too implicit -- taking votes is damaging according to world knowledge, but taking something away is not unambiguously bad)
+- its illegal immigrants that are entering through the EU on false documents or nothing at all that worries me.  (being worried is unpleasant, but not necessarily damaging)
 
 # 8 Good for Concept #
 - FORMULA is / would be good for CONCEPT
@@ -123,9 +127,11 @@
 - **Brexit** might have a **positive effect** on **the EU**
 - **Brexit** will only **improve** things for **the minority**
 - **I** am ... **enjoying** **following your comments on brexit**
+- **vote #remain** to keep **Greece** safe!
 
 ## counter examples ##
 - Johnson is a good person
+- @Nissan is the biggest private sector employer in the North East - massive investor in Britain, job + car creator (too implicit -- investing / employing not inherently positive)
 
 # 10 Belief #
 - ENTITY believes / thinks FORMULA
@@ -378,12 +384,13 @@
 - #19 + #0 + #25
 
 # 38 Warning #
-- ENTITY warns of FORMULA
+- ENTITY warns of FORMULA being universally bad
 - the pattern matches instances of an entity 0 warning about formula 1 being universally bad (= for everyone)
 
 ## examples ##
 - Boris Johnson as PM would be ‘ horror scenario , ’ warns top Juncker aide
 - Cameron warns against Brexit in patriotic speech
+- Scientists including Stephen Hawking say a vote for Brexit in this month's EU referendum would be a disaster
 
 ## counter examples ##
 - neither the verb nor formula 1 have an unambiguously negative evaluation (e.g. *the IMF said that brexit will prolong austerity*)
@@ -404,23 +411,34 @@
 - indirect version of p38 where something is claimed to be bad by consequence
 
 ## examples ##
-- Brexit ' could extend austerity': IFS
+- **Richard Haass**' claim that **Brexit** could 'trigger **NI violence**'
+- **Experts** warn that **brexit** could cause the **pound to fall**
+
+## counter examples ##
+- Brexit has brought out the bigots and racists [is matched by the logical formula = something has bad consequences, but is not a warning of bad consequences because warning's don't make sense for things that have already happened] 
 
 # 42 Better #
 - FORMULA1 is universally (=for all) better than FORMULA2
 ## examples ##
 - Brexit is still better than being in the EU
+- We are better than this
+
 ## counter examples ##
 - is there anything worse than a missed flight (pragmatically: #45)
 - it should be real ale, not some gassy lager: too implicit
+- your guess is as good as mine (idiom = 'I don't know')
+- Brexit -carefully managed by cool headed diplomats - cd be better but Remain can't see it (missing FORMULA2)
 
-# 43 Better for Concept #
+## 43 Better for Concept ##
 - FORMULA1 is better for CONCEPT than FORMULA2
 - concept = entity / system
+
 ## examples ##
 - **Brexit** would be **better for** **the young folks** than **staying in the EU**
 - fishermen would profit more from relaxed restrictions than worker right protection in the EU
 - higher CO2 costs would be more effective for climate protection than general speed limits
+- **Brexit** would be better for **the young folks** than **staying in the EU**
+
 ## counter examples ##
 - I see IndyScot as a chance to improve for the majority (#8)
 - 40+ years ago this country was in a poor state, we're nowhere near as bad now. (not clear enough what exactly was/ is better)
@@ -439,12 +457,15 @@
 # 45 Bad #
 - FORMULA is universally (=for all) bad
 - It is enough for the FORMULA to be bad in some aspects, regardless of whether it has positive characteristics as well
+- Boris is the worst prime minister ever
 
 ## examples ##
 - nation states are evil
 - the problem is that ...
 - the system is flawed (= the system is bad, at least in some ways)
 - Leave's arguments just don't add up.
+- Bigoted bloody bunch (#21 because this is a negative evaluation of somebody's character rather than e.g. their overall 'suitability' as in the prime minister example)
+
 ## counter examples ##
 - the #UN - a unit of the globalist conspiracy (#21)
 - its illegal immigrants that are entering through the EU on false documents or nothing at all that worries me. (no explicit universal evaluation)
@@ -457,13 +478,14 @@
 ## examples ##
 - **as a son of immigrants** **I** am for **Brexit**
 - **the Left T.U. in me** says **No to leave** but **the #Motorbikes side of me** says **Yes vote to leave**
--
+
 
 # 48 Warning for some #
 - ENTITY1 says that FORMULA is/will be/ would be bad for ENTITY2
 
 ## examples ##
-- Brexit will destroy the EU
+- Correspondents: **Brexit** will batter **the comedy industry**, says **Stephen Grant**
+- **Brexit** would hit **poor** hardest, says **David Cameron**
 
 # 49 warning of bad consequences for some #
 - ENTITY1 says that FORMULA has/ will have/ would have BAD CONSEQUENCES for ENTITY2

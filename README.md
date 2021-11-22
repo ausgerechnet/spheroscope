@@ -9,18 +9,22 @@ You will need a working installation of the [IMS Open Corpus Workbench (CWB)](ht
 
 ## Setup ##
 
-You can simply
+The recommended way is to use (pipenv)[https://pipenv.pypa.io/en/latest/]:
 
-    make install
+    python -m pip install pipenv
+    pipenv install --dev
 
-which uses pipenv to create a virtual environment and install all required packages.
+which creates a virtual environment and installs all required packages. The [Pipfile](Pipfile) is set to require Python3.9, you can change this e.g. via
 
-Alternatively, you can use [setup.py](setup.py) or the [classic requirements file](requirements-classic.txt). Make sure to install [cwb-ccc v0.9.16](https://github.com/ausgerechnet/cwb-ccc/tree/v0.9.16), which depends on [cwb-python v0.3.0](https://github.com/fau-klue/cwb-python).
+    pipenv install --dev --python 3.8
+
+Alternatively, you can use [setup.py](setup.py) or the [classic requirements file](requirements-classic.txt).
+
 
 ## Configuration ##
 Configure the app via `cfg.py` in the app folder. You can find an [example config file](cfg_example.py) in the repository.
 
-Set the `REGISTRY_PATH` to your CWB registry and `CACHE_PATH` to some directory where you have appropriate rights.
+Set the `REGISTRY_PATH` to your CWB registry and `CACHE_PATH` to some directory where you have write access.
 
 You can then
 
@@ -28,7 +32,7 @@ You can then
 	
 to populate your local instance with all queries, macros, and wordlists from the [library](library/).
 
-You can now start the flask server via
+You can now start the development flask server via
 
     make run
 

@@ -40,6 +40,7 @@ def get_similar_ones(cwb_id, words, p_att, number):
 
     # marginals
     freq_similar = get_frequencies(cwb_id, similar_ones, p_att=p_att)
+    freq_similar = freq_similar[['freq']]
     freq_similar.columns = ["frequency"]
 
     # attach similarity score
@@ -182,7 +183,7 @@ def similar(id, number=200):
         number
     )
 
-    freq = freq.reset_index()[['lemma', 'frequency', 'similarity']]
+    freq = freq.reset_index()[['item', 'frequency', 'similarity']]
     freq.columns = [c.capitalize() for c in freq.columns]
 
     # render result
