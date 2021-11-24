@@ -220,15 +220,19 @@ class Query(db.Model):
         """ loads query from specified path """
 
         current_app.logger.info('loading query file "%s".' % path)
+
+        # deal with missing and faulty files
         if not os.path.isfile(path):
             current_app.logger.error('query file "%s" does not exist.' % path)
-
-        query = cqpy_load(path)
-
+            return None
+        try:
+            query = cqpy_load(path)
+        except ValueError:
+            current_app.logger.error('query file "%s" not a valid cqpy file' % path)
+            os.rename(path, path + ".bak")
+            return None
         if query is None:
-            current_app.logger.error(
-                "could not load query in path %s" % path
-            )
+            current_app.logger.error("could not load query in path %s" % path)
             return None
 
         return Query(
@@ -404,9 +408,10 @@ def import_library():
     paths = glob(os.path.join("library", "**", "queries", "*.cqpy"), recursive=True)
     for p in paths:
         query = Query().load(p)
-        query.path = query.path.replace("library", "instance")
-        query.user_id = 1       # admin
-        query.write()
+        if query:
+            query.path = query.path.replace("library", "instance")
+            query.user_id = 1   # admin
+            query.write()
 
     # patterns
     path = os.path.join("library", "patterns.csv")

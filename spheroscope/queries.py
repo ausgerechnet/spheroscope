@@ -159,7 +159,6 @@ def update(id):
 @login_required
 def delete_cmd(id):
     query = Query.query.filter_by(id=id).first()
-    # TODO: delete instead instead of rename?
     os.rename(query.path, query.path + ".bak")
     query.delete()
     return redirect(url_for('queries.index'))
