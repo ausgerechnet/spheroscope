@@ -1,16 +1,16 @@
 # spheroscope #
 
 [![DOI](https://zenodo.org/badge/291022407.svg)](https://zenodo.org/badge/latestdoi/291022407)
-[![Imports: cwb-ccc](https://img.shields.io/badge/imports-cwb--ccc-%231674b1?style=flat&labelColor=gray)](https://pycqa.github.io/cwb-ccc/)
+[![Imports: cwb-ccc](https://img.shields.io/badge/imports-cwb--ccc-%231674b1?style=flat&labelColor=gray)](https://github.com/ausgerechnet/cwb-ccc/)
 
-**spheroscope** is a web app designated to argumentation mining. The backend is based on [cwb-ccc](https://pypi.org/project/cwb-ccc/), which runs multiply anchored CQP queries.
+**spheroscope** is a web app designated to argumentation mining. The backend is based on [cwb-ccc](https://github.com/ausgerechnet/cwb-ccc/), which runs multiply anchored CQP queries.
 
 ## Prerequisites ##
 You will need a working installation of the [IMS Open Corpus Workbench (CWB)](http://cwb.sourceforge.net/), a CWB-indexed corpus, as well as word embeddings for most of what this app offers.  The python3 dependencies will be installed automatically if you follow the setup guide below.
 
 ## Setup ##
 
-The recommended way is to use [https://pipenv.pypa.io/en/latest/](pipenv):
+The recommended way is to use [pipenv](https://pipenv.pypa.io/en/latest/):
 
     python -m pip install pipenv
     pipenv install --dev
