@@ -3,12 +3,11 @@
 
 import os
 
-from flask import (
-    Blueprint, redirect, render_template, request, url_for, current_app, g, session
-)
+from flask import (Blueprint, current_app, g, redirect, render_template,
+                   request, session, url_for)
 
 from .auth import login_required
-from .corpora import read_config, init_corpus
+from .corpora import init_corpus, read_config
 from .database import Macro
 
 bp = Blueprint('macros', __name__, url_prefix='/macros')

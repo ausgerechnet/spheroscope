@@ -1,27 +1,22 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import json
 import os
+import re
 import sys
+from collections import defaultdict
 
-from ccc.cqpy import run_query
-
-from flask import (
-    Blueprint, Response, redirect, render_template, request, url_for,
-    current_app, g, session, jsonify
-)
-
-from flask.cli import with_appcontext
 import click
+from ccc.cqpy import run_query
+from flask import (Blueprint, Response, current_app, g, jsonify, redirect,
+                   render_template, request, session, url_for)
+from flask.cli import with_appcontext
+from pandas import DataFrame
 
 from .auth import login_required
-from .corpora import read_config, init_corpus
-from .database import Query, Pattern
-
-import re
-import json
-from pandas import DataFrame
-from collections import defaultdict
+from .corpora import init_corpus, read_config
+from .database import Pattern, Query
 
 bp = Blueprint('queries', __name__, url_prefix='/queries')
 

@@ -1,18 +1,17 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os
 import json
-from glob import glob
-from pandas import read_csv
+import os
 from datetime import datetime
+from glob import glob
 
-from ccc.cqpy import cqpy_load, cqpy_dump
-
+import click
+from ccc.cqpy import cqpy_dump, cqpy_load
 from flask import current_app
 from flask.cli import with_appcontext
+from pandas import read_csv
 from werkzeug.security import generate_password_hash
-import click
 
 from . import db
 
