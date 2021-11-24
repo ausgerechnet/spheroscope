@@ -15,9 +15,10 @@
   {{ h.query_form(name=query.name,pattern=query.pattern_id, patterns=patterns,content=query.cqp,slots=query.slots,corrections=query.corrections) }}
   <div class="field is-grouped">
     <input type="button" class="button is-link is-light" onclick="sendForm('{{ url_for('queries.update', id=query.id) }}',this);" value="Save">
-    <form action="{{ url_for('queries.delete_cmd', id=query.id) }}" method="post">
-      <input class="button is-danger is-light" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
-    </form>
+    <!-- <form action="{{ url_for('queries.delete_cmd', id=query.id) }}" method="post"> -->
+    <!--   <input class="button is-danger is-light" type="submit" value="Delete" onclick="return confirm('Are you sure?');"> -->
+      <!-- </form> -->
+    <input class="button is-danger is-light" type="button" value="Delete" onclick="sendForm('{{ url_for('queries.delete_cmd', id=query.id) }}',this);">
     <input class="button is-info is-light" type="button" onclick="runButton('{{ url_for('queries.run_cmd', id=query.id) }}',this,$(this.form).serializeArray(), res => $('#results').html(res));" value="Run">
   </div>
 </form>
