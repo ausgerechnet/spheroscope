@@ -13,10 +13,10 @@
 <form>
   {{ h.macro_form(name=macro.name,macro=macro.macro) }}
   <div class="field is-grouped">
-  <input type="button" class="button is-link is-light" onclick="sendForm('{{ url_for('macros.update', id=macro.id) }}',this);" value="Save">
+    <input type="button" class="button is-link is-light" onclick="sendForm('{{ url_for('macros.update', id=macro.id) }}',this);" value="Save">
   </div>
 </form>
 <form action="{{ url_for('macros.delete_cmd', id=macro.id) }}" method="post">
-      <input class="button is-danger is-light" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
+  <input class="button is-danger is-light" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
 </form>
 {% endblock %}
