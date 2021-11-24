@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from flask import Blueprint, render_template, jsonify
+from flask import Blueprint, jsonify, render_template
 
 from .auth import login_required
 from .database import Pattern, Query
