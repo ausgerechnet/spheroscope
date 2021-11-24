@@ -100,7 +100,7 @@ def create():
             ),
             path=os.path.join(
                 current_app.instance_path, cwb_id, 'queries',
-                request.form['name'] + ".txt"
+                request.form['name'] + ".cqpy"
             ),
             user_id=g.user.id
         )
@@ -164,6 +164,8 @@ def update(id):
 @login_required
 def delete_cmd(id):
     query = Query.query.filter_by(id=id).first()
+    # TODO: delete instead instead of rename?
+    os.rename(query.path, query.path + ".bak")
     query.delete()
     return redirect(url_for('queries.index'))
 
