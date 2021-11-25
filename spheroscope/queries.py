@@ -177,7 +177,7 @@ def patch_query_results(result):
         "_merge": "merge"
     })
     print(newresult)
-    # newresult.columns = newresult.columns.str.split('_', 2, expand=True)
+    newresult.columns = newresult.columns.str.split('_', 2, expand=True)
     print(newresult)
     return newresult
 
