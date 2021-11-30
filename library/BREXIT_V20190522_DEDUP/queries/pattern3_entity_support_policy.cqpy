@@ -1,0 +1,17 @@
+# --- # CQPY query file
+# anchors:
+#   corrections:
+#     '1': -1
+#     '3': -1
+#   slots:
+#     '0':
+#     - 0
+#     - 1
+#     '1': 2
+# meta:
+#   comment: null
+#   name: pattern3_entity_support_policy
+#   pattern: 3
+# ---
+
+@0:[::] [pos_ark = "[@OZN#^]" & lemma != "it"]+ @1[::] [pos_ark="R"]* [pos_ark="V"]? [lemma=$verbs_prefer] [pos_ark="A|R"]* @2:[lemma=$nouns_policies | lemma=$nouns_values]
