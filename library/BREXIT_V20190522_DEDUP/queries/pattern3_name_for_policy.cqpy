@@ -13,4 +13,4 @@
 #   pattern: 3
 # ---
 
-@0[::] [pos_ark="[Z@]"]+ @1:"for|against" @2:[lemma=$nouns_values | lemma = $nouns_policies]
+@0[::] [pos_ark="[Z^@]"]+ @1:"for|against" @2:[lemma=$nouns_values | lemma = $nouns_policies]

@@ -16,4 +16,4 @@
 #   pattern: 3
 # ---
 
-@0:[::] [lemma = $nouns_person_common | lemma = $nouns_person_origin | lemma = $nouns_person_negative | lemma = $nouns_person_profession | lemma = $nouns_person_support |(pos_ark = "[@ONZ#^]")]+ @1[::] [lemma="be|have|will"]? [lemma="come"] "out" "for|against" @2:[::] [word!="[\.,\?\!]" & word !="http.+"]* @3:[::]
+@0:[::] [pos_ark = "[@ONZ#^]"]+ @1[::] [lemma="be|have|will"]? [lemma="come"] [lemma="out"] [lemma="for|against"] @2:[::] [word!="[\.,\?\!]" & word !="http.+"]+ @3:[::]
