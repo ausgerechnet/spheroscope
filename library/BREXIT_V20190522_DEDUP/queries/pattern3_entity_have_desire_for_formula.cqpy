@@ -16,4 +16,5 @@
 #   pattern: 3
 # ---
 
-@0:[::] [pos_ark = "[@OZN#^]" & lemma != "it"]+ @1[::] [lemma="experience|have|feel|with"] [pos_ark="D" & lemma != "no|any"]? [pos_ark="J"]? [lemma=$nouns_desire] [word="for|to" | pos_ark="D"] @2:[::] [word!="[\.,\?\!]" & word !="http.+"]+ @3:[::]
+@0:[::] [pos_ark = "[@ONZ#^]"]+ @1[::] [lemma="experience|have|feel|with"] [pos_ark="D" & lemma != "no|any"]? [pos_ark="J"]? [lemma=$nouns_desire] [word="for|to" | pos_ark="D"] @2:[::] [word!="[\.,\?\!]" & word !="http.+"]+ @3:[::]
+

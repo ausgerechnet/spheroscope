@@ -16,4 +16,4 @@
 #   pattern: 3
 # ---
 
-@0:[::] [lemma = $nouns_person_common | lemma = $nouns_person_origin | lemma = $nouns_person_negative | lemma = $nouns_person_profession | lemma = $nouns_person_support |pos_ark = "[@ONZ#^]" & lemma != "it"]+ @1[::]  [lemma="say" | pos_ner="PRP$" | word = "'?s"] [lemma="yes|no"] "to" @2[::] [word!="[\.,\?\!]"]+ @3[::]
+@0:[::] (/region[np] | [pos_ark = "[@ONZ#^]" & lemma != "it"]+) @1[::]  [lemma="say" | pos_ner="PRP$" | word = "'?s"] [lemma="yes|no"] "to" @2[::] [word!="[\.,\?\!]"]+ @3[::]

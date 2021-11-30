@@ -34,14 +34,18 @@ cleverness
 contentment
 curiosity
 democracy
+development
 dignity
 diversity
 equality
+exploration
 freedom
 fulfillment
 gratitude
 happiness
 independence
+innovation
+integration
 joy
 justice
 kindness
@@ -59,6 +63,7 @@ security
 self-determination
 sovereignty
 success
+sustainability
 thankfulness
 tolerance
 well-being
