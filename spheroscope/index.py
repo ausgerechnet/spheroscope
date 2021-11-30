@@ -1,11 +1,10 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from flask import Blueprint, render_template
-from flask import session, flash
+from flask import Blueprint, flash, render_template, session
 
-from .corpora import read_config
 from .auth import login_required
+from .corpora import read_config
 
 bp = Blueprint('index', __name__)
 

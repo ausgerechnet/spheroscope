@@ -19,3 +19,5 @@ build/
 *~
 
 cfg.py
+
+Pipfile.lock

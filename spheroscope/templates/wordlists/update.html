@@ -12,13 +12,12 @@ last modified: <em>{{ wordlist['modified'] }}</em><br/>
 
 <form>
   {{ h.wordlist_form(name=wordlist.name,p_att=wordlist.p_att,words=wordlist.words, corpus=corpus) }}
-   <div class="field is-grouped">
-  <input type="button" class="button is-link is-light" onclick="sendForm('{{ url_for('wordlists.update', id=wordlist.id) }}',this);" value="Save">
-  <form action="{{ url_for('wordlists.delete_cmd', id=wordlist.id) }}" method="post">
-      <input class="button is-danger is-light" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
-  </form>
+  <div class="field is-grouped">
+    <input type="button" class="button is-link is-light" onclick="sendForm('{{ url_for('wordlists.update', id=wordlist.id) }}',this);" value="Save">
   </div>
 </form>
-
+<form action="{{ url_for('wordlists.delete_cmd', id=wordlist.id) }}" method="post">
+  <input class="button is-danger is-light" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
+</form>
 
 {% endblock %}
