@@ -3,15 +3,13 @@
 
 import os
 
+from flask import (Blueprint, current_app, g, redirect, render_template,
+                   request, session, url_for)
 from pymagnitude import Magnitude
 
-from flask import (
-    Blueprint, redirect, render_template, request, url_for, current_app, g, session
-)
-
 from .auth import login_required
-from .database import WordList
 from .corpora import init_corpus, read_config
+from .database import WordList
 
 bp = Blueprint('wordlists', __name__, url_prefix='/wordlists')
 

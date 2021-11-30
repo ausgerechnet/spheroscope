@@ -2,13 +2,11 @@
 # -*- coding: utf-8 -*-
 
 import os
+
 import yaml
-
-from ccc.cwb import Corpus, Corpora
-
-from flask import (
-    Blueprint, render_template, current_app, redirect, request, flash, session
-)
+from ccc.cwb import Corpora, Corpus
+from flask import (Blueprint, current_app, flash, redirect, render_template,
+                   request, session)
 
 from .auth import login_required
 
