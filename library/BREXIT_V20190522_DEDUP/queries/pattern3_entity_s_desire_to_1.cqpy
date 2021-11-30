@@ -16,4 +16,4 @@
 #   pattern: 3
 # ---
 
-(@0:[lemma = $nouns_person_common | lemma = $nouns_person_origin | lemma = $nouns_person_negative | lemma = $nouns_person_profession | lemma = $nouns_person_support |pos_ark = "[D@JONZ$#^]" & lemma != "it"]+ "'?s"| @0:[pos_ner="PRP$"]) @1:[lemma=$nouns_desire] [word="for|to"] @2:[pos_ark="V"] [word!="[\.,\?\!]" & word !="http.+"]* @3:[::]
+(@0:[pos_ark = "[D@JONZ$#^]" & lemma != "it"]+ "'?s"| @0:[pos_ner="PRP$"] ) @1:[lemma=$nouns_desire] [word="for|to"] @2:[pos_ark="V"] [word!="[\.,\?\!]" & word !="http.+"]* @3:[::]

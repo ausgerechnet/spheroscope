@@ -16,4 +16,4 @@
 #   pattern: 3
 # ---
 
-@0[::] (/region[np] | [pos_ark="[NZ^#O@]"]) @1:[lemma="be"] [pos_ark="R"]* [lemma = $verbs_prefer] "by" @2:[::] [lemma = $nouns_person_common | lemma = $nouns_person_origin | lemma = $nouns_person_negative | lemma = $nouns_person_profession | lemma = $nouns_person_support |pos_ark = "[D@JONZ$#^]" & lemma != "it"]+ @3[::]
+@0[::] ([lemma=$nouns_values | lemma = $nouns_policies | pos_ark="[Z^#O@]"]) @1:[lemma="be"] [pos_ark="R"]* [lemma = $verbs_prefer] "by" @2:[::] [lemma = $nouns_person_common | lemma = $nouns_person_origin | lemma = $nouns_person_negative | lemma = $nouns_person_profession | lemma = $nouns_person_support |pos_ark = "[D@JONZ$#^]" & lemma != "it"]+ @3[::]

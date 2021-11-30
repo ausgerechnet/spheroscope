@@ -1,0 +1,19 @@
+# --- # CQPY query file
+# anchors:
+#   corrections:
+#     '1': -1
+#     '3': -1
+#   slots:
+#     '0':
+#     - 0
+#     - 1
+#     '1':
+#     - 2
+#     - 3
+# meta:
+#   comment: null
+#   name: pattern3_entity_wants_more_concept
+#   pattern: 3
+# ---
+
+@0:[::] [pos_ark="[@NOZ^]"]+ @1:[lemma=$verbs_prefer] @2:[::] [pos_ark="R"]? "less|more" [pos_ark="[NZ^]"] [word!="[\.,\?\!]"]+ @3[::]

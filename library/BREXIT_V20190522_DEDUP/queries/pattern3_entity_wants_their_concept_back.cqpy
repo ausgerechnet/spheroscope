@@ -1,0 +1,18 @@
+# --- # CQPY query file
+# anchors:
+#   corrections:
+#     '1': -1
+#   slots:
+#     '0':
+#     - 0
+#     - 1
+#     '1':
+#     - 2
+#     - 3
+# meta:
+#   comment: null
+#   name: pattern3_entity_wants_their_concept_back
+#   pattern: 3
+# ---
+
+@0:[::] [pos_ark="[@NOZ^]"]+ @1[::] [lemma=$verbs_prefer] ("to" "have|get")? @2[::] [pos_ark="[AD]"]* [pos_ark="[@NOZ#^]"]+ @3:"back"

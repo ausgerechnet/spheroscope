@@ -1,0 +1,15 @@
+# --- # CQPY query file
+# anchors:
+#   corrections:
+#     '3': -1
+#   slots:
+#     '1':
+#     - 2
+#     - 3
+# meta:
+#   comment: null
+#   name: pattern3_ellipsis_hoping_concept
+#   pattern: 3
+# ---
+
+("Hoping|Hope" | [lemma="[\.\?\!;,-]+"] "hoping|hope") [word="for|that|to"]? @2:[::] [word!="[\.,\?\!]" & word !="http.+"]* @3:[::]
