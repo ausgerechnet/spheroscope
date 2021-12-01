@@ -66,14 +66,6 @@ def index():
                            queries=(queries.filter_by(pattern_id=pattern).all() if pattern else queries.all()))
 
 
-@bp.route('/index2')
-@login_required
-def index2():
-    queries = Query.query.order_by(Query.name).all()
-    return render_template('queries/index2.html',
-                           queries=queries)
-
-
 @bp.route('/create', methods=('GET', 'POST'))
 @login_required
 def create():
