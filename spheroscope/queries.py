@@ -3,7 +3,6 @@
 
 import json
 import os
-import re
 from collections import defaultdict
 
 
@@ -223,9 +222,6 @@ def run_cmd(id):
     # get corpus from settings
     cwb_id = session['corpus']['resources']['cwb_id']
 
-    # switch to Yuliya's implementation?
-    beta = request.args.get('beta', False)
-
     # run the old query
     query = Query.query.filter_by(id=id).first().serialize()
     oldresult = query_corpus(query, cwb_id)
@@ -247,119 +243,46 @@ def run_cmd(id):
         "retired": p.id < 0
     } for p in patterns]
 
-    if not beta:
-        if request.method == 'POST':
-            newquery = dict(
-                cqp=request.form['query'],
-                meta=dict(
-                    name=request.form['name'],
-                    pattern_id=request.form['pattern'],
-                ),
-                anchors=dict(
-                    corrections=json.loads(request.form['corrections'].replace(
-                        "None", "null"
-                    )),
-                    slots=json.loads(request.form['slots'].replace(
-                        "None", "null"
-                    ))
-                )
+    if request.method == 'POST':
+        newquery = dict(
+            cqp=request.form['query'],
+            meta=dict(
+                name=request.form['name'],
+                pattern_id=request.form['pattern'],
+            ),
+            anchors=dict(
+                corrections=json.loads(request.form['corrections'].replace(
+                    "None", "null"
+                )),
+                slots=json.loads(request.form['slots'].replace(
+                    "None", "null"
+                ))
             )
-            newresult = query_corpus(newquery, cwb_id)
-            result = newresult.merge(
-                oldresult, how='outer', on='tweet_id', indicator=True
-            )
-            result = add_gold(result, pattern=query['meta']['pattern'])
-            tps = result['TP'].value_counts().to_dict()
-            tps['TP'] = tps.pop(True, 0)
-            tps['FP'] = tps.pop(False, 0)
-            tps['prec'] = tps['TP'] / (tps['FP'] + tps['TP'])
-            result = patch_query_results(result)
-            return render_template('queries/result_table.html',
-                                   result=result,
-                                   patterns=patterndict,
-                                   tps=tps)
-
-        return Response(
-            oldresult[display_columns].to_csv(),
-            mimetype='text/csv',
-            headers={"Content-disposition":
-                     f"attachment; filename={id}-results.csv"}
         )
+        newresult = query_corpus(newquery, cwb_id)
+        result = newresult.merge(
+            oldresult, how='outer', on='tweet_id', indicator=True
+        )
+        result = add_gold(result, pattern=query['meta']['pattern'])
+        tps = result['TP'].value_counts().to_dict()
+        tps['TP'] = tps.pop(True, 0)
+        tps['FP'] = tps.pop(False, 0)
+        try:
+            tps['prec'] = tps['TP'] / (tps['FP'] + tps['TP'])
+        except ZeroDivisionError:
+            tps['prec'] = 'nan'
+        result = patch_query_results(result)
+        return render_template('queries/result_table.html',
+                               result=result,
+                               patterns=patterndict,
+                               tps=tps)
 
-    else:
-
-        tojson = oldresult.to_json()
-        tbl = json.loads(tojson)
-
-        for idx in tbl["text"]:
-
-            regions = []
-
-            for col in tbl:
-                if re.findall(r'\d\_\w+', col):
-                    regions.append(col)
-
-            # txt = (tbl["text"][idx]).lower()  # <- pure Tweet
-            cpos_dict = tbl["df"][idx]["word"]
-            match_dict = tbl["df"][idx]["match"]
-            matchend_dict = tbl["df"][idx]["matchend"]
-
-            # temporary list
-            tmp_2 = []
-            # all of the possible anchors for this query
-            anchor_points = []
-
-            for i in tbl["df"][idx]:
-                if re.findall(r'\b\d+\b', i):
-                    anchor_points.append(["a" + str(i)])
-
-            tupl = []
-
-            for k in cpos_dict:
-
-                word = cpos_dict[k]
-                w_pos = k
-
-                is_matchbeg = match_dict[k]
-                is_matchend = matchend_dict[k]
-
-                anchor_points_in = [
-                    ai[0] for ai in anchor_points if tbl["df"][idx][str(ai[0])[-1]][w_pos]
-                ]
-
-                tupl = [word, w_pos, is_matchbeg, is_matchend, anchor_points_in]
-
-                if is_matchbeg:
-                    tupl.insert(0, '<span class="match-highlight">')
-                elif is_matchend:
-                    tupl.insert(5, '</span>')
-
-                for i in anchor_points_in:
-
-                    if int(i[-1]) % 2 == 0:
-                        tupl.insert(tupl.index(word), '<sub class="anchor">{s}</sub>'.format(s=i[-1]))
-                        if len(regions) > 0:
-                            tupl.insert(tupl.index(word), '<span class="anchor-highlight">')
-                    elif int(i[-1]) % 2 != 0:
-                        if len(regions) > 0:
-                            tupl.insert(tupl.index(word) + 1, '</span>')
-                        tupl.insert(tupl.index(word) + 1, '<sub class="anchor">{s}</sub>'.format(s=i[-1]))
-
-                tupl.remove(w_pos)
-                tupl.remove(is_matchbeg)
-                tupl.remove(is_matchend)
-                tupl.remove(anchor_points_in)
-
-                for i in tupl:
-                    tmp_2.append(i)
-
-            res = ' '.join(tmp_2)
-
-            tbl["text"][idx] = res
-
-        df = DataFrame.from_dict(tbl)
-        display_columns = ['tweet_id', 'text']
-        return df[display_columns].to_html(escape=False, table_id="query-results")
+    return Response(
+        oldresult[display_columns].to_csv(),
+        mimetype='text/csv',
+        headers={"Content-disposition":
+                 f"attachment; filename={id}-results.csv"}
+    )
 
 
 @click.command('query')
