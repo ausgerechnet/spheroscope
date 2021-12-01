@@ -15,11 +15,20 @@ run:
 	export FLASK_ENV=development && \
 	pipenv run flask run
 
-
 query:
 	export FLASK_APP=spheroscope && \
 	export FLASK_ENV=development && \
 	pipenv run flask query "instance/query-results"
+
+patterns:
+	export FLASK_APP=spheroscope && \
+	export FLASK_ENV=development && \
+	pipenv run flask update-patterns
+
+gold:
+	export FLASK_APP=spheroscope && \
+	export FLASK_ENV=development && \
+	pipenv run flask update-gold
 
 clean:
 	rm -rf *.egg-info build/ dist/
