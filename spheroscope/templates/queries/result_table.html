@@ -1,5 +1,14 @@
+<h4>Summary</h4>
+<ul>
+  <li>Number of Matches: {{ result.shape[0] }}
+  <li>True Positives: {{ tps['TP'] }}
+  <li>False Positives: {{ tps['FP'] }}
+  <li>Precision: {{ tps['prec'] }}
+</ul>
+
+<h4>Results</h4>
 <div class="table-container" style="overflow: auto;">
-<table class="table is-striped is-hoverable is-narrow sortable">
+  <table class="table is-striped is-hoverable is-narrow sortable">
   <thead>
     <tr>
       <th>Index</th>
