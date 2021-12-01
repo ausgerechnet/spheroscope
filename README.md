@@ -25,7 +25,9 @@ Alternatively, you can use [setup.py](setup.py) or the [classic requirements fil
 ## Configuration ##
 Configure the app via `cfg.py` in the app folder. You can find an [example config file](cfg_example.py) in the repository.
 
-Set the `REGISTRY_PATH` to your CWB registry and `CACHE_PATH` to some directory where you have write access.
+- set `REGISTRY_PATH` to your CWB registry
+- set `CACHE_PATH` to some directory where you have write access
+- set `REMOTE_USERNAME` and `REMOTE_PASSWORD` if you have access to the remote database (galois.informatik.uni-erlangen.de)
 
 You can then
 
@@ -40,7 +42,7 @@ You can now start the development flask server via
 and navigate to [http://127.0.0.1:5000/](http://127.0.0.1:5000/) to access the interface.
 
 ## Corpus Settings ##
-After starting the app, you will find [default corpus settings](instance/corpus_defaults.yaml) in your instance folder. You can change the defaults to your liking, taking into consideration the most common p- and s-attributes of your system corpora.
+After starting the app, you will find [default corpus settings](library/corpus_defaults.yaml) in your instance folder. You can change the defaults to your liking, taking into consideration the most common p- and s-attributes of your system corpora.
 
 When selecting one of your corpora for the first time through the interface, a new folder and config file will be created for this corpus in your instance folder; the config file will be populated with the corpus defaults. Most settings, such as the `query` and `display` parameters, can be changed through the interface (http://127.0.0.1:5000/corpora/).
 

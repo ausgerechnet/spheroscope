@@ -325,11 +325,6 @@ class Pattern(db.Model):
         queries = Query.query.filter_by(pattern_id=self.id).all()
         return len(queries)
 
-    # @property
-    # def preamble(self):
-    #     preamble = self.query.filter_by(id=-9999).first()
-    #     return preamble.template
-
     def __repr__(self):
         return 'pattern %d with %d queries' % (self.id, self.nr_queries)
 
@@ -369,7 +364,7 @@ def init_db():
 def read_patterns(path):
 
     # read all the patterns in the csv
-    df_patterns = read_csv(path, index_col=0)
+    df_patterns = read_csv(path, index_col=0, sep="\t")
     for p in df_patterns.iterrows():
         pattern = Pattern(
             id=int(p[0]),
@@ -414,7 +409,7 @@ def import_library():
             query.write()
 
     # patterns
-    path = os.path.join("library", "patterns.csv")
+    path = os.path.join("library", "patterns.tsv")
     read_patterns(path)
 
 

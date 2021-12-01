@@ -4,15 +4,15 @@
 import json
 import os
 import re
-import sys
 from collections import defaultdict
+
 
 import click
 from ccc.cqpy import run_query
 from flask import (Blueprint, Response, current_app, g, jsonify, redirect,
                    render_template, request, session, url_for)
 from flask.cli import with_appcontext
-from pandas import DataFrame
+from pandas import DataFrame, read_csv
 
 from .auth import login_required
 from .corpora import init_corpus, read_config
@@ -47,8 +47,9 @@ def query_corpus(query, cwb_id):
 
     # run query
     current_app.logger.info('running query')
-    lines = run_query(corpus, query)
 
+    lines = run_query(corpus, query)
+    # TODO error handling
     # TODO take care of p_slots, p_text
 
     return lines
@@ -165,7 +166,6 @@ def delete_cmd(id):
 
 
 def patch_query_results(result):
-    print(result)
     newresult = result.rename(columns={
         "word": "whole_word",
         "word_x": "whole_word_x",
@@ -175,10 +175,35 @@ def patch_query_results(result):
         "lemma_y": "whole_lemma_y",
         "_merge": "merge"
     })
-    print(newresult)
     newresult.columns = newresult.columns.str.split('_', 2, expand=True)
-    print(newresult)
     return newresult
+
+
+def add_gold(result, pattern=None):
+
+    # get gold
+    gold = read_csv(
+        os.path.join("library", "gold.tsv"), sep="\t", index_col=0
+    )
+    if pattern is not None:
+        gold = gold.loc[gold['pattern'] == pattern]
+    gold = gold.loc[gold['tweet'].isin(list(result['tweet_id']))].rename(
+        {'tweet': 'tweet_id'}, axis=1
+    )
+
+    # join explicit TPs and FPs
+    pos = gold.loc[gold['annotation']].rename(
+        {'annotation': 'TP'}, axis=1
+    ).set_index('tweet_id')
+    neg = gold.loc[~gold['annotation']].rename(
+        {'annotation': 'FP'}, axis=1
+    ).set_index('tweet_id')
+    result = result.set_index('tweet_id')
+    result = result.join(pos[['TP']], how='left')
+    result = result.join(neg[['FP']], how='left')
+    result = result.reset_index()
+
+    return result
 
 
 @bp.route('/<int:id>/run', methods=('GET', 'POST'))
@@ -249,6 +274,7 @@ def run_cmd(id):
             result = newresult.merge(
                 oldresult, how='outer', on='tweet_id', indicator=True
             )
+            result = add_gold(result, pattern=query['meta']['pattern'])
             result = patch_query_results(result)
             return render_template('queries/result_table.html',
                                    result=result,
@@ -340,8 +366,9 @@ def run_cmd(id):
 @click.command('query')
 @click.argument('dir_out')
 @click.argument('pattern', default=None, required=False)
+@click.argument('cwb_id', default="BREXIT_V20190522_DEDUP")
 @with_appcontext
-def query_command(pattern, dir_out):
+def query_command(pattern, dir_out, cwb_id):
 
     os.makedirs(dir_out, exist_ok=True)
 
@@ -370,14 +397,10 @@ def query_command(pattern, dir_out):
 
         error = ""
         try:
-            query = Query.query.filter_by(id=query.id).first().serialize()
-            cwb_id = session['corpus']['resources']['cwb_id']
-            lines = query_corpus(query, cwb_id)
+            query = Query.query.filter_by(id=query.id).first()
+            lines = query_corpus(query.serialize(), cwb_id)
         except KeyboardInterrupt:
             return
-        except:
-            error = sys.exc_info()[0]
-            lines = None
 
         if lines is not None:
             p_out = os.path.join(dir_out, query.name + '.tsv')
