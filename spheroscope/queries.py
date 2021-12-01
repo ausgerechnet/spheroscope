@@ -192,15 +192,9 @@ def add_gold(result, pattern=None):
     )
 
     # join explicit TPs and FPs
-    pos = gold.loc[gold['annotation']].rename(
-        {'annotation': 'TP'}, axis=1
-    ).set_index('tweet_id')
-    neg = gold.loc[~gold['annotation']].rename(
-        {'annotation': 'FP'}, axis=1
-    ).set_index('tweet_id')
+    tps = gold.rename({'annotation': 'TP'}, axis=1).set_index('tweet_id')
     result = result.set_index('tweet_id')
-    result = result.join(pos[['TP']], how='left')
-    result = result.join(neg[['FP']], how='left')
+    result = result.join(tps[['TP']], how='left')
     result = result.reset_index()
 
     return result
@@ -275,10 +269,15 @@ def run_cmd(id):
                 oldresult, how='outer', on='tweet_id', indicator=True
             )
             result = add_gold(result, pattern=query['meta']['pattern'])
+            tps = result['TP'].value_counts().to_dict()
+            tps['TP'] = tps.pop(True, 0)
+            tps['FP'] = tps.pop(False, 0)
+            tps['prec'] = tps['TP'] / (tps['FP'] + tps['TP'])
             result = patch_query_results(result)
             return render_template('queries/result_table.html',
                                    result=result,
-                                   patterns=patterndict)
+                                   patterns=patterndict,
+                                   tps=tps)
 
         return Response(
             oldresult[display_columns].to_csv(),
