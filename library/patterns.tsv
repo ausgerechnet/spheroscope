@@ -1,0 +1,55 @@
+idx	name	template	explanation	retired
+0	quotation	Q_{{?0 : entity}}({?1 : formula})	entity 0 claims that formula 1 is true	False
+2	causal implication	({?0 : formula}) \cfac ({?1 : formula})	truth of formula 0 leads to truth of formula 1	False
+3	desire	D_{{?0 : entity}} ({?1 : formula})	truth of formula 1 is desirable for entity 0	False
+4	ought	O ({?0 : formula})	formula 0 should be made true	False
+5	possibility	\diamond ({?0 : formula})	formula 0 could be true	False
+6	bad for concept	badFor({?0 : concept}, {?1 : formula})	formula 1 is/would be bad for concept 0	False
+8	good for concept	goodFor({?0 : concept}, {?1 : formula})	formula 1 is/would be good for concept 0	False
+10	belief	B_{{?0 : entity}}({?1 : formula})	entity 0 believes that formula 1 is true	False
+11	option	A_{{?0 : entity}}({?1 : action})	entity 0 has the option to perform action 1	False
+12	default implication	({?0 : formula}) \dimplies ({?1 : formula})	when formula 0 is true, formula 1 usually is also true	False
+15	similarity	({?0 : concept}) \sim ({?1 : concept})	concept 0 is similar to concept 1	False
+16	expressed preference	Q_{{?1 : entity}}(({?0 : formula}) \leq ({?2 : formula}))	entity 1 prefers formula 2 over formula 0	False
+19	entity's obligation	O ({?0 : entity}) stit ({?1 : formula})	entity 0 should make formula 1 true	False
+20	lying	Q_{{?0 : entity}} ({?1 : formula}) \land \neg B_{{?0}} ({?1})	entity 0 lies about formula 1	False
+21	ad-hominem	\neg moral({?0 : entity})	entity 0 is morally bad and should be condemned	False
+22	necessary condition	(neg {?0 : formula}) \mcauses (\neg {?1 : formula})	formula 0 is necessary for formula 1	False
+23	implication	({?0 : formula}) \implies ({?1 : formula})	if formula 0 then formula 1 	False
+24	membership	{?0 : entity} \implies {?1 : entity}	entity 0 is part of entity 1	False
+25	universal	({?0 : entity})\implies \downarrow x.\,({?1 : formula \text{ mentioning } x})	all entities in entity 0 have property 1	False
+26	position to know	({?0 : entity})\implies \downarrow x.,K_x ({?1 : formula}); K_{{?2 : entity}}(?1)); (?2) \implies (?0)	entity 2 is part of entity 0 whose members know formula 1	False
+27	negation	\neg {?0 : formula}	formula 0 is false	False
+30	action execution	E_{?0 : entity}({?1 : action})	entity 0 executed action 1	False
+32	weak universal	({?0 : entity})\dimplies \downarrow x.,({?1 : formula\text{ mentioning }x})	most entities in entity 0 have property 1	False
+34	knowledge	K_{{?0 : entity}} ({?1 : formula})	entity 0 knows that formula 1 is true	False
+35	necessary truth	\top \cfac {?0 : formula}	formula 0 is necessarily true	False
+36	permission	P ({?0 : formula})	formula 0 would be morally acceptable	False
+37	quotation of entity's obligation	Q_{{?0 : entity}} ({?1 : entity} \implies \downarrow x.,O (x stit ({?2 : formula}))	entity 0 states that everybody in entity 1 should make formula 2 true	False
+38	warning	Q_{{?0 : entity}} bad({?1 : formula})	entity 0 warns of formula 1 being bad	False
+39	some	\neg(({?0 : entity} \implies \downarrow x.,\neg {?1 : formula\text{ mentioning }x}) \lor ({0} \dimplies \downarrow x\,, {1}))	some entities in 0 have property 1	False
+40	nobody	\neg({?0 : entity} \implies \downarrow x.\,{?1 : formula\text{ mentioning }x})	nobody in 0 has property 1	False
+41	warning of bad consequence	Q_{{?0 : entity}}(bad({?2 : formula}) \land {?1 : formula} \cfac {?2})	entity 0 warns that formula 1 has negative consequence formula 2	False
+42	better	({?0 : formula}) \leq ({?1 : formula})	1 is/would be at least as good as 0	False
+43	better for concept	({?0 : formula}) \leq_{{?2 : concept}} ({?1 : formula})	1 is/would be at least as good for concept 2 as 0	False
+44	good	good({?0 : formula})	0 is/would be genereally good	False
+45	bad	bad({?0 : formula})	0 is/would be generally bad	False
+46	qualified desire	({?0 : entity})\implies \downarrow x.\,D_x ({?1 : formula}); D_{{?2 : entity}}(?1)); (?2) \implies (?0)	entity 2 is part of entity 0 whose members want formula 1	False
+48	warning some	Q_{{?0 : entity}} badFor({?1 : concept}, {?2 : formula})	entity 0 warns that formula 2 is/would be bad for entity 1	False
+49	warning of bad consequences for some	Q_{{?0 : entity}} ({?1 : formula} \mcauses {?2 : formula} \land badFor({?3 : entity},{?2})	entity 0 warns that formula 1 would cause formula 2 which would be bad for entity 3	False
+50	cause of evil	{{?0 : formula}} \mcauses {{?1 : formula}}; bad({?1})	formula 0 has/would have consequence formula 1 that is/would be bad	False
+51	cause of evil for some	{{?0 : formula}} \mcauses {{?1 : formula}}; badFor({?2 : concept}{?1})	formula 0 has/would have consequence formula 1 that is/would be bad for entity/concept 2	False
+-9999	preamble	\newcommand{\mcauses}{\Box\kern-.5em{\implies}} \newcommand{\dimplies}{\overset{d}{\implies}} \newcommand{\cfac}{\overset{c}{\implies}}	the preamble (for exporting)	True
+1	explanation	({?0 : formula}) \mcauses ({?1 : formula})	0 is the reason why 1 is true; note that 0 and 1 could be formulas talking about the past stating that something was the reason why something was the case at some point in time	True
+7	 	({?1 : formula}) \mcauses Q_{{?0 : entity}} bad	1 is bad for entity 0	True
+9	 	({?1 : formula}) \mcauses Q_{{?0 : entity}} good	1 is good for entity 0	True
+13	situation	@_{{?0 : situation}}({?1 : formula})	in situation/point in time 0 1 was/is/would be the case; e.g. 'in the industrial revolution {1}'; so named points in time together with something that was or will be the case there	True
+14	situation similarity	({?0 : situation}) \sim ({?1 : situation})	situations 0 and 1 are similar	True
+17	bias	biased({?0 : entity})	entity 0 is accused of being biased	True
+18	unqualification	unqualified({?0 : entity})	entity 0 is accused of being somehow unqualified to make meaningful contributions to the dialogue; e.g. 'idiot'	True
+28	honesty	Q_{{?0 : entity}}({?1 : formula}) \implies B_{{?0}} ({?1})	entity 0 is claimed to be honest w.r.t. formula 1 in the sense that they say what they believe	True
+29	eventual result	[{?0 : action}]F({?1 : formula})	by executing action 0 truth of 1 would be eventually achieved	True
+31	DES	[{?0 : entities};{{?1 : \text{list of lists of }actions}} : {?2 : entities}]({?3 : formula})	the entities 0 can collaborate to enforce truth of 3 as long as entities 2 execute one of the (joint) actions from 1	True
+33	possible causation claim	Q_{{?0 : entity}} \diamond (({?1 : formula}) \mcauses ({?2 : formula}))	entity 0 claims that 1 might cause 2 to be true	True
+47	unary preference	D_{{?0 : entity}} ({?1 : formula})	entity 0 prefers formula 1 being true over it being false	True
+9999	unknown	\top	uncategorized queries	True

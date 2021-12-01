@@ -44,17 +44,21 @@ def create_app(test_config=None):
     if not os.path.isfile(corpus_cfg_path):
         shutil.copy(corpus_cfg_default, corpus_cfg_path)
 
-    # initialize database
-    from . import database
-    db.init_app(app)
-    # add database CLI commands
-    app.cli.add_command(database.init_db_command)
-    app.cli.add_command(database.import_lib_command)
-
     # say hello
     @app.route('/hello')
     def hello():
         return 'Hello back there!'
+
+    # initialize database and register CLI commands
+    from . import database
+    db.init_app(app)
+    app.cli.add_command(database.init_db_command)
+    app.cli.add_command(database.import_lib_command)
+
+    # remote database commands
+    from . import remote_db
+    app.cli.add_command(remote_db.update_patterns)
+    app.cli.add_command(remote_db.update_gold)
 
     # authentication
     from . import auth
@@ -77,10 +81,9 @@ def create_app(test_config=None):
     from . import macros
     app.register_blueprint(macros.bp)
 
-    # queries
+    # queries and register CLI commands
     from . import queries
     app.register_blueprint(queries.bp)
-    # add queries CLI commands
     app.cli.add_command(queries.query_command)
 
     # patterns
