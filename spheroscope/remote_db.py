@@ -1,6 +1,7 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import os
 from urllib.parse import quote_plus
 
 import click
@@ -78,16 +79,21 @@ def update_patterns():
     con = connect()
     if con is not None:
         patterns = get_patterns(con).sort_values(by=["retired", "idx"])
-        patterns.to_csv("library/patterns.tsv", sep="\t")
+        patterns.to_csv(
+            os.path.join("library", "patterns.tsv"), sep="\t"
+        )
 
 
 @click.command('update-gold')
+@click.argument('cwb_id', default="BREXIT_V20190522_DEDUP")
 @with_appcontext
-def update_gold():
+def update_gold(cwb_id):
     con = connect()
     if con is not None:
         gold = get_gold(con)
         gold['tweet'] = gold['tweet'].apply(lambda x: 't' + str(x))
         # last_adjudication = gold['adjudication'].max()
         # .replace(" ", "_").replace(":", "-")
-        gold.to_csv("library/gold.tsv", sep="\t")
+        gold.to_csv(
+            os.path.join("library", cwb_id, "gold", "adjudicated.tsv"), sep="\t"
+        )
