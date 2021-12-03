@@ -64,7 +64,8 @@ def index():
     pattern = request.args.get('pattern')
     queries = Query.query.order_by(Query.name)
     return render_template('queries/index.html',
-                           queries=(queries.filter_by(pattern_id=pattern).all() if pattern else queries.all()))
+                           queries=(queries.filter_by(pattern_id=pattern).all()
+                                    if pattern else queries.all()))
 
 
 @bp.route('/create', methods=('GET', 'POST'))

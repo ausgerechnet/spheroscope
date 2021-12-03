@@ -16,23 +16,22 @@ bp = Blueprint('patterns', __name__, url_prefix='/patterns')
 @login_required
 def index():
     patterns = Pattern.query.filter(Pattern.id >= 0).order_by(Pattern.id).all()
-    # preamble = Pattern.query.filter_by(id=-9999).first().template
+    print(patterns)
     return render_template('patterns/index.html',
                            patterns=patterns)
-
-
-# @bp.route('/preamble')
-# @login_required
-# def preamble():
-#     preamble = Pattern.query.filter_by(id=-9999).first().template
-#     return jsonify(preamble)
 
 
 @bp.route('/api')
 @login_required
 def patterns():
     patterns = Pattern.query.order_by(Pattern.id).all()
-    patterndict = [{"id": abs(p.id), "template": p.template, "explanation": p.explanation, "retired": p.id < 0} for p in patterns]
+    # FIXME this conversion should go when the new database is in
+    patterndict = [{
+        "id": abs(p.id),
+        "template": p.template,
+        "explanation": p.explanation,
+        "retired": p.id < 0
+    } for p in patterns]
     return jsonify(patterndict)
 
 
