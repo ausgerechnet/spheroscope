@@ -18,7 +18,7 @@ run:
 query:
 	export FLASK_APP=spheroscope && \
 	export FLASK_ENV=development && \
-	pipenv run flask query "instance/query-results"
+	pipenv run flask query
 
 patterns:
 	export FLASK_APP=spheroscope && \

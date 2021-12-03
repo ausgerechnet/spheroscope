@@ -40,6 +40,7 @@ def query_corpus(query, cwb_id):
     for k, c in query['anchors']['corrections'].items():
         corrections_int[int(k)] = c
     query['anchors']['corrections'] = corrections_int
+    query['anchors']['slots']['match..matchend'] = ('match', 'matchend')
 
     # init corpus
     corpus = init_corpus(corpus_config)
@@ -170,23 +171,26 @@ def patch_query_results(result):
     return newresult
 
 
-def add_gold(result, pattern=None):
+def add_gold(result, cwb_id, pattern):
 
-    # get gold
-    gold = read_csv(
-        os.path.join("library", "gold.tsv"), sep="\t", index_col=0
-    )
-    if pattern is not None:
+    try:
+        gold = read_csv(
+            os.path.join("library", cwb_id, "gold", "adjudicated.tsv"),
+            sep="\t", index_col=0
+        )
+    except FileNotFoundError:
+        result['TP'] = None
+    else:
+        # pre-process gold
         gold = gold.loc[gold['pattern'] == pattern]
-    gold = gold.loc[gold['tweet'].isin(list(result['tweet_id']))].rename(
-        {'tweet': 'tweet_id'}, axis=1
-    )
-
-    # join explicit TPs and FPs
-    tps = gold.rename({'annotation': 'TP'}, axis=1).set_index('tweet_id')
-    result = result.set_index('tweet_id')
-    result = result.join(tps[['TP']], how='left')
-    result = result.reset_index()
+        gold = gold.loc[gold['tweet'].isin(list(result['tweet_id']))].rename(
+            {'tweet': 'tweet_id'}, axis=1
+        )
+        tps = gold.rename({'annotation': 'TP'}, axis=1).set_index('tweet_id')
+        # join explicit TPs and FPs
+        result = result.set_index('tweet_id')
+        result = result.join(tps[['TP']], how='left')
+        result = result.reset_index()
 
     return result
 
@@ -236,6 +240,8 @@ def run_cmd(id):
     } for p in patterns]
 
     if request.method == 'POST':
+
+        # create new query
         newquery = dict(
             cqp=request.form['query'],
             meta=dict(
@@ -251,11 +257,19 @@ def run_cmd(id):
                 ))
             )
         )
+
+        # get new result and merge to old result
         newresult = query_corpus(newquery, cwb_id)
         result = newresult.merge(
-            oldresult, how='outer', on='tweet_id', indicator=True
+            oldresult, how='outer', on=['tweet_id', 'match..matchend_word'],
+            indicator=True
         )
-        result = add_gold(result, pattern=query['meta']['pattern'])
+        result = result.drop(
+            [x for x in result.columns if x.startswith('match..matchend_')], axis=1
+        )
+        result = add_gold(result, cwb_id, pattern=query['meta']['pattern'])
+
+        # get TPs, FPs, precision
         tps = result['TP'].value_counts().to_dict()
         tps['TP'] = tps.pop(True, 0)
         tps['FP'] = tps.pop(False, 0)
@@ -263,6 +277,8 @@ def run_cmd(id):
             tps['prec'] = tps['TP'] / (tps['FP'] + tps['TP'])
         except ZeroDivisionError:
             tps['prec'] = 'nan'
+
+        # render result
         result = patch_query_results(result)
         return render_template('queries/result_table.html',
                                result=result,
@@ -278,19 +294,24 @@ def run_cmd(id):
 
 
 @click.command('query')
-@click.argument('dir_out')
-@click.argument('pattern', default=None, required=False)
+@click.argument('pattern', required=False)
+@click.argument('dir_out', required=False)
 @click.argument('cwb_id', default="BREXIT_V20190522_DEDUP")
 @with_appcontext
 def query_command(pattern, dir_out, cwb_id):
 
+    # output directory
+    if dir_out is None:
+        dir_out = os.path.join(
+            current_app.instance_path, cwb_id, "results"
+        )
     os.makedirs(dir_out, exist_ok=True)
 
     # get all queries belonging to the pattern
     if pattern is None:
         queries = Query.query.all()
         current_app.logger.info(
-            "%d queries" % len(queries)
+            "all patterns: %d queries" % len(queries)
         )
         path_summary = os.path.join(dir_out, "summary.tsv")
     else:
@@ -300,6 +321,7 @@ def query_command(pattern, dir_out, cwb_id):
         )
         path_summary = os.path.join(dir_out, str(pattern) + "-summary.tsv")
 
+    # loop through queries
     summary = defaultdict(list)
     for query in queries:
 
@@ -334,5 +356,5 @@ def query_command(pattern, dir_out, cwb_id):
         summary['path'].append(p_out)
         summary['error'].append(error)
 
-    summary = DataFrame(summary)
+    summary = DataFrame(summary).set_index('query')
     summary.to_csv(path_summary, sep="\t")
