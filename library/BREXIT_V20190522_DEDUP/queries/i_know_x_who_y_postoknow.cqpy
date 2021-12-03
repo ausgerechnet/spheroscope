@@ -6,7 +6,7 @@
 # meta:
 #   comment: null
 #   name: i_know_x_who_y_postoknow
-#   pattern: -1
+#   pattern: 9999
 # ---
 
 @0:[lemma = "i"] [lemma = "have|know|meet"] <np>[]* [lemma=$wordlist_quantifiers] @1[::][]* [(lemma = $nouns_common_people | lemma = $nouns_person_negative | lemma = $nouns_profession_people) & pos_ner = "NNP|NNS"] @2:[]*</np> [word = "that|that\'s|who|whose|who\'s"] @3[::](<vp>[]*</vp> | <np>[]*</np> | <pp>[]*</pp>)+@4[::]

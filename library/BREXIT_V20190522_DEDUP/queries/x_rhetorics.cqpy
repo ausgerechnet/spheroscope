@@ -6,7 +6,7 @@
 # meta:
 #   comment: null
 #   name: x_rhetorics
-#   pattern: -1
+#   pattern: 9999
 # ---
 
 <np>[]* @0:[lemma = $adj_cog_negative & lemma != "bad"]+ @1:[lemma = $nouns_news_media]</np> <vp>@2:[]* @3:[]</vp> (<vp>[]*</vp> | <np>[]*</np>)+ @4:[::]

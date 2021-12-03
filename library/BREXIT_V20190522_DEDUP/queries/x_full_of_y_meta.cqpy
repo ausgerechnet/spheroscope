@@ -5,7 +5,7 @@
 # meta:
 #   comment: null
 #   name: x_full_of_y_meta
-#   pattern: -1
+#   pattern: 9999
 # ---
 
 <np>[]* @0:[lemma = $nouns_news_media]+ @1:[]*</np> [lemma ="be"] [word = "full"] [word = "of"] <np>[]* @2:[lemma = $adj_cog_negative]* @3:[lemma =$nouns_cog_negative]+ []*</np>

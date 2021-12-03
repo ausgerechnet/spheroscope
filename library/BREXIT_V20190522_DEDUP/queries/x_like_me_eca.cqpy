@@ -7,7 +7,7 @@
 # meta:
 #   comment: null
 #   name: x_like_me_eca
-#   pattern: -1
+#   pattern: 9999
 # ---
 
 <np> []* @0:[::][lemma = $nouns_person_common | lemma = $nouns_person_profession | lemma = $person_origin | lemma = $person_support] []* </np> "like" "I|me|myself" <vp>@1:[::][]*</vp>@2:[::] (<np>[]*</np> | <vp>[]*</vp> | <pp>[]*</pp> | [pos_simple="R"] | /ap[])*@3:[::]

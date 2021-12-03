@@ -5,7 +5,7 @@
 # meta:
 #   comment: null
 #   name: nobody_x_a_y
-#   pattern: -1
+#   pattern: 9999
 # ---
 
 /nobody[] <vp>[]*@0:[lemma = $verbs_cog_positive] []* @1:[]</vp> <np>@2:[::][]* [lemma = $adj_cog_negative]* [lemma = $nouns_person_negative][]* @3:[]</np>

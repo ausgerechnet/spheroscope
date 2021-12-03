@@ -6,7 +6,7 @@
 # meta:
 #   comment: null
 #   name: as_x_i_y_eca
-#   pattern: -1
+#   pattern: 9999
 # ---
 
 [lemma = "as"] <np>[]* @0[lemma = $anders | lemma = $person_profession | lemma = $person_origin | lemma = $person_support] []*</np> [lemma = "i"] <vp>[]* @1[pos_simple="V"] @2[]*</vp> (<vp> []* </vp> | <np>[]* [pos_simple="N|Z"] []*</np> | /be_ap[] | <pp>[]* [pos_simple ="N|Z"] []*</pp> | [pos_simple="R"] |[word != "\."]*)+ @3:[::]
