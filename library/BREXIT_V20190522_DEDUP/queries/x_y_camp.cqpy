@@ -7,7 +7,7 @@
 # meta:
 #   comment: null
 #   name: x_y_camp
-#   pattern: -1
+#   pattern: 9999
 # ---
 
 <np> []* @0:[lemma = $adj_cog_negative]+ []* [lemma = $nouns_person_negative] @1:[::][]* </np> @2:[::]<vp>[]*</vp>@3:[::] (<vp>[]*</vp> | <np> []* </np>)+ @4:[::]

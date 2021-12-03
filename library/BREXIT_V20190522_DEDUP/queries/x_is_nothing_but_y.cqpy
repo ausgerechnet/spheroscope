@@ -5,7 +5,7 @@
 # meta:
 #   comment: null
 #   name: x_is_nothing_but_y
-#   pattern: -1
+#   pattern: 9999
 # ---
 
 <np>@0:[::][]* @1:[]</np> [lemma = "be"]? <vp>[]*</vp> "nothing" "but" <np>@2:[::][]* [lemma = $nouns_person_negative] @3:[]* </np>
