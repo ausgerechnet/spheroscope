@@ -40,6 +40,8 @@ def query_corpus(query, cwb_id):
     for k, c in query['anchors']['corrections'].items():
         corrections_int[int(k)] = c
     query['anchors']['corrections'] = corrections_int
+
+    # also retrieve full match..matchend
     query['anchors']['slots']['match..matchend'] = ('match', 'matchend')
 
     # init corpus
@@ -47,10 +49,7 @@ def query_corpus(query, cwb_id):
 
     # run query
     current_app.logger.info('running query')
-
     lines = run_query(corpus, query)
-    # TODO error handling
-    # TODO take care of p_slots, p_text
 
     return lines
 
@@ -262,7 +261,7 @@ def run_cmd(id):
         # get new result and merge to old result
         newresult = query_corpus(newquery, cwb_id)
         result = newresult.merge(
-            oldresult, how='outer', on=['tweet_id', 'match..matchend_word'],
+            oldresult, how='outer', on=['tweet_id', 'match..matchend_lemma'],
             indicator=True
         )
         result = result.drop(
