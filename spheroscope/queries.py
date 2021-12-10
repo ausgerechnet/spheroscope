@@ -5,7 +5,6 @@ import json
 import os
 from collections import defaultdict
 
-
 import click
 from ccc.cqpy import run_query
 from flask import (Blueprint, Response, current_app, g, jsonify, redirect,
@@ -50,6 +49,7 @@ def query_corpus(query, cwb_id):
     # run query
     current_app.logger.info('running query')
     lines = run_query(corpus, query)
+    current_app.logger.info('done')
 
     return lines
 
