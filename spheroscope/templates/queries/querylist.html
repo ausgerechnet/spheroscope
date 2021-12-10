@@ -21,7 +21,7 @@
         {{ c.edit_button(action=url_for('queries.update', id=query.id)) }}
       </p>
       <p class="control">
-        {{ c.run_button(action=url_for('queries.run_cmd', id=query.id),text="Results",download=true) }}
+        {{ c.run_button(action=url_for('queries.run_cmd', id=query.id),text="Download",download=true) }}
       </p>
     </td>
   </tr>
