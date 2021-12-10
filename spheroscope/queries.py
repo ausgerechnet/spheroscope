@@ -331,14 +331,14 @@ def query_command(pattern, dir_out, cwb_id):
         n_hits = None
         n_unique = None
 
-        error = ""
+        # error = ""
         try:
             query = Query.query.filter_by(id=query.id).first()
             lines = query_corpus(query.serialize(), cwb_id)
         except KeyboardInterrupt:
             return
 
-        if lines is not None:
+        if lines is not None and len(lines) > 0:
             p_out = os.path.join(dir_out, query.name + '.tsv')
             lines.to_csv(p_out, sep="\t")
             n_hits = len(lines)
@@ -354,7 +354,7 @@ def query_command(pattern, dir_out, cwb_id):
         summary['n_hits'].append(n_hits)
         summary['n_unique'].append(n_unique)
         summary['path'].append(p_out)
-        summary['error'].append(error)
+        # summary['error'].append(error)
 
     summary = DataFrame(summary).set_index('query')
     summary.to_csv(path_summary, sep="\t")
