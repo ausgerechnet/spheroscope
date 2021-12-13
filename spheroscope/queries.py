@@ -5,7 +5,6 @@ import json
 import os
 from collections import defaultdict
 
-
 import click
 from ccc.cqpy import run_query
 from flask import (Blueprint, Response, current_app, g, jsonify, redirect,
@@ -40,6 +39,8 @@ def query_corpus(query, cwb_id):
     for k, c in query['anchors']['corrections'].items():
         corrections_int[int(k)] = c
     query['anchors']['corrections'] = corrections_int
+
+    # also retrieve full match..matchend
     query['anchors']['slots']['match..matchend'] = ('match', 'matchend')
 
     # init corpus
@@ -47,10 +48,8 @@ def query_corpus(query, cwb_id):
 
     # run query
     current_app.logger.info('running query')
-
     lines = run_query(corpus, query)
-    # TODO error handling
-    # TODO take care of p_slots, p_text
+    current_app.logger.info('done')
 
     return lines
 
@@ -262,7 +261,7 @@ def run_cmd(id):
         # get new result and merge to old result
         newresult = query_corpus(newquery, cwb_id)
         result = newresult.merge(
-            oldresult, how='outer', on=['tweet_id', 'match..matchend_word'],
+            oldresult, how='outer', on=['tweet_id', 'match..matchend_lemma'],
             indicator=True
         )
         result = result.drop(
@@ -332,14 +331,14 @@ def query_command(pattern, dir_out, cwb_id):
         n_hits = None
         n_unique = None
 
-        error = ""
+        # error = ""
         try:
             query = Query.query.filter_by(id=query.id).first()
             lines = query_corpus(query.serialize(), cwb_id)
         except KeyboardInterrupt:
             return
 
-        if lines is not None:
+        if lines is not None and len(lines) > 0:
             p_out = os.path.join(dir_out, query.name + '.tsv')
             lines.to_csv(p_out, sep="\t")
             n_hits = len(lines)
@@ -355,7 +354,7 @@ def query_command(pattern, dir_out, cwb_id):
         summary['n_hits'].append(n_hits)
         summary['n_unique'].append(n_unique)
         summary['path'].append(p_out)
-        summary['error'].append(error)
+        # summary['error'].append(error)
 
     summary = DataFrame(summary).set_index('query')
     summary.to_csv(path_summary, sep="\t")
