@@ -9,9 +9,8 @@ verify_ssl = true
 name = "pypi"
 
 [dev-packages]
-pytest = "==4.1.1"
+pytest = ">=5.2.0"
 pytest-cov = "==2.6.1"
-attrs = "==19.1.0"
 setuptools = "*"
 wheel = "*"
 twine = "*"
