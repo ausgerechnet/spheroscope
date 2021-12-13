@@ -9,11 +9,11 @@
 #     - 1
 #     '1':
 #     - 2
-#     - 3
+#     - matchend
 # meta:
 #   comment: null
 #   name: pattern3_why_does_entity_want_concept
 #   pattern: 3
 # ---
 
-[lemma="why"] [lemma="do"] @0:[::] [pos_ark="[@DANOZ^]"]+ @1[::] [lemma=$verbs_prefer | lemma="wanna"] "to"? @2:[::] [word!="[\.,\?\!]" & word !="http.+"]* @3:[::]
+[lemma="why"] [lemma="do"] @0:[::] [pos_ark="[@DANOZ^]"]+ @1:[lemma=$verbs_prefer | lemma="wanna"] "to"? @2:[::] [word!="[\.,\?\!]" & word !="http.+"]* @3:[::]
