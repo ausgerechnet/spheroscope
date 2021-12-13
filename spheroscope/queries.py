@@ -225,7 +225,7 @@ def run_cmd(id):
     if oldresult is None:
         return 'query does not have any matches'
 
-    # pass to frontend
+    # select columns
     display_columns = [x for x in oldresult.columns if x not in [
         'context_id', 'context', 'contextend'
     ]]
