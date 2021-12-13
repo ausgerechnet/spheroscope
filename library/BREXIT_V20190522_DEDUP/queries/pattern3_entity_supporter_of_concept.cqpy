@@ -5,16 +5,16 @@
 #     '3': -1
 #   slots:
 #     '0':
-#     - 0
+#     - match
 #     - 1
 #     '1':
 #     - 2
-#     - 3
+#     - matchend
 # meta:
 #   comment: null
 #   name: pattern3_entity_supporter_of_concept
 #   pattern: 3
 # ---
 
-@0[::] (/region[np] | [pos_ark="[ZN^#L@]"]+ | [pos_ner="PRP"]) @1:[::] [lemma="be|,"]  [pos_ark="[DAR]"]* [lemma="backer|fan|supporter"] [lemma="of"] @2:[::] [word!="[\.,\?\!]" & word !="http.+"]* @3:[::]
+@0[::] (/region[np] | [pos_ark="[ZN^#L@]"]+ | [pos_ner="PRP"]) @1:[lemma="be|,"]  [pos_ark="[DAR]"]* [lemma="backer|fan|supporter"] [lemma="of"] @2:[::] [word!="[\.,\?\!]" & word !="http.+"]* @3:[::]
 
