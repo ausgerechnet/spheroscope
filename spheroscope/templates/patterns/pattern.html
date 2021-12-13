@@ -29,6 +29,6 @@
 
 {% call c.block("Queries") %}
 {{ q.querylist(pattern.queries) }}
+{{ c.add_button(action=url_for('queries.create'), text='New Query') }}
 {% endcall %}
 {% endblock %}
-

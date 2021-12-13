@@ -1,6 +1,9 @@
 {% extends 'patterns/base.html' %}
 
+{% import 'helpers/controls.html' as c %}
+
 {% block content %}
+{{ c.add_button(action=url_for('queries.create'), text='New Query') }}
 <table class="table is-striped is-hoverable sortable">
   <thead>
     <tr>

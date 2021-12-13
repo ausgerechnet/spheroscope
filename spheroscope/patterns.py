@@ -16,7 +16,6 @@ bp = Blueprint('patterns', __name__, url_prefix='/patterns')
 @login_required
 def index():
     patterns = Pattern.query.filter(Pattern.id >= 0).order_by(Pattern.id).all()
-    print(patterns)
     return render_template('patterns/index.html',
                            patterns=patterns)
 
