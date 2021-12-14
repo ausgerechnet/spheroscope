@@ -5,11 +5,11 @@
 #     '3': -1
 #   slots:
 #     '0':
-#     - 0
+#     - match
 #     - 1
 #     '1':
 #     - 2
-#     - 3
+#     - matchend
 # meta:
 #   comment: null
 #   name: pattern3_entity_in_favour_of_concept
