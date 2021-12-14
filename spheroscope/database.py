@@ -245,6 +245,13 @@ class Query(db.Model):
         )
 
     def serialize(self):
+
+        # ensure anchors in corrections are integer
+        corrections = json.loads(self.corrections)
+        corrections_int = dict()
+        for k, c in corrections.items():
+            corrections_int[int(k)] = c
+
         return {
             'meta': {
                 'name': self.name,
@@ -253,7 +260,7 @@ class Query(db.Model):
             },
             'cqp': self.cqp,
             'anchors': {
-                'corrections': json.loads(self.corrections),
+                'corrections': corrections_int,
                 'slots': json.loads(self.slots)
             }
         }
