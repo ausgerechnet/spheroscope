@@ -204,8 +204,6 @@ class Query(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     pattern_id = db.Column(db.Integer, db.ForeignKey('pattern.id'))
 
-    path = db.Column(db.Unicode, nullable=False)
-
     name = db.Column(db.Unicode(255), nullable=False)
     corrections = db.Column(db.Unicode)
     slots = db.Column(db.Unicode)
@@ -235,13 +233,21 @@ class Query(db.Model):
             current_app.logger.error("could not load query in path %s" % path)
             return None
 
+        if query['meta'].get('name') is None:
+            query['meta']['name'] = path.split("/")[-1].split(".cqpy")[0]
+
         return Query(
             name=query['meta']['name'],
             pattern_id=query['meta']['pattern'],
             cqp=query['cqp'],
             corrections=json.dumps(query['anchors']['corrections']),
-            slots=json.dumps(query['anchors']['slots']),
-            path=path
+            slots=json.dumps(query['anchors']['slots'])
+        )
+
+    @property
+    def path(self):
+        return os.path.join(
+            "instance", "queries", self.name + ".cqpy"
         )
 
     def serialize(self):
@@ -276,7 +282,7 @@ class Query(db.Model):
             os.makedirs(os.path.dirname(self.path), exist_ok=True)
             cqpy_dump(self.serialize(), self.path)
 
-    def delete(self, delete_file=True):
+    def delete(self, delete_file=True, backup=True):
         """ deletes query from database and path """
 
         # delete record from database
@@ -292,7 +298,10 @@ class Query(db.Model):
                 'deleting query file "%s"' % self.path
             )
             if os.path.isfile(self.path):
-                os.remove(self.path)
+                if backup:
+                    os.rename(self.path, self.path + ".bak")
+                else:
+                    os.remove(self.path)
             else:
                 current_app.logger.warning(
                     "file does not exist, skipping delete request"
@@ -400,11 +409,10 @@ def import_library():
         macro.write()
 
     # queries
-    paths = glob(os.path.join("library", "**", "queries", "*.cqpy"), recursive=True)
+    paths = glob(os.path.join("library", "queries", "*.cqpy"))
     for p in paths:
         query = Query().load(p)
         if query:
-            query.path = query.path.replace("library", "instance")
             query.user_id = 1   # admin
             query.write()
 
