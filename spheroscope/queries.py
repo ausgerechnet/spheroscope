@@ -19,6 +19,31 @@ from .database import Pattern, Query
 bp = Blueprint('queries', __name__, url_prefix='/queries')
 
 
+# queries:
+
+# IMPORT
+# - {lpath}=library/queries/{name}.cqpy
+# - {query} = load(path)
+# - {query}['meta']['name'] :=
+#   1. {query}['meta']['name'] %>% namecheck()
+#   2. {lpath}.split("/")[-1].split(".cqpy")[0]
+# - @property path:=
+#   instance/queries/{query}['meta']['name'].cqpy
+# - write()
+
+# NEW
+# - {query} = request.form()
+# - write(database, file)
+
+# UPDATE
+# - mv file to {path}.bak
+# - write(database, file)
+
+# DELETE
+# - mv file to {path}.bak
+# - rm(database)
+
+
 def query_corpus(query, cwb_id):
     """execute a query in a corpus. this function makes sure that the
     query is valid input as expected by cwb-ccc's cqpy.run_query
@@ -71,9 +96,6 @@ def index():
 @login_required
 def create():
 
-    # get corpus info (path)
-    cwb_id = session['corpus']['resources']['cwb_id']
-
     if request.method == 'POST':
 
         query = Query(
@@ -85,10 +107,6 @@ def create():
             ),
             corrections=request.form['corrections'].replace(
                 "None", "null"
-            ),
-            path=os.path.join(
-                current_app.instance_path, cwb_id, 'queries',
-                request.form['name'] + ".cqpy"
             ),
             user_id=g.user.id
         )
@@ -114,7 +132,7 @@ def create():
 def update(id):
     query = Query.query.filter_by(id=id).first()
     if request.method == 'POST':
-
+        query.delete()
         query = Query(
             id=id,
             user_id=g.user.id,
@@ -126,11 +144,8 @@ def update(id):
             ),
             corrections=request.form['corrections'].replace(
                 "None", "null"
-            ),
-            path=query.path
+            )
         )
-
-        query.delete()
         query.write()
         return jsonify(success=True)
 
@@ -152,7 +167,6 @@ def update(id):
 @login_required
 def delete_cmd(id):
     query = Query.query.filter_by(id=id).first()
-    os.rename(query.path, query.path + ".bak")
     query.delete()
     return redirect(url_for('queries.index'))
 
