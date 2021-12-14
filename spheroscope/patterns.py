@@ -63,33 +63,31 @@ def run_subquery(id):
     slot.1
     """
 
+    # process request parameters
     cwb_id = session['corpus']['resources']['cwb_id']
     base_queries = Query.query.filter_by(pattern_id=id).order_by(Query.name).all()
     slot = request.args.get('slot')
     slot_pattern = request.args.get('slot_pattern')
+    slot_queries = Query.query.filter_by(pattern_id=slot_pattern).all()
+
+    # load corpus
+    corpus_config = read_config(cwb_id)
+    corpus = init_corpus(corpus_config)
 
     # run all queries belonging to base pattern
     dfs = list()
+    concs = list()
     for query in base_queries:
 
+        current_app.logger.info("query: %s", query.name)
         query = query.serialize()
-        current_app.logger.info("query: %s", query['meta']['name'])
-
-        # load corpus
-        corpus_config = read_config(cwb_id)
-        corpus = init_corpus(corpus_config)
-
-        # check corrections
-        corrections_int = dict()
-        for k, c in query['anchors']['corrections'].items():
-            corrections_int[int(k)] = c
 
         # get dump
         dump = corpus.query(
             cqp_query=query['cqp'],
             context=corpus_config['query']['context'],
             context_break=corpus_config['query']['context_break'],
-            corrections=corrections_int,
+            corrections=query['anchors']['corrections'],
             match_strategy=corpus_config['query']['match_strategy']
         )
 
@@ -101,6 +99,8 @@ def run_subquery(id):
                 "undefined slot in query %s" % query['meta']['name']
             )
         else:
+
+            # for subcorpus creation
             df = dump.df[columns]
             if isinstance(df, Series):
                 df = DataFrame(df)
@@ -110,8 +110,16 @@ def run_subquery(id):
                 df['end'] = df['start']
             elif df.shape[1] == 2:
                 df.columns = ['start', 'end']
-
             dfs.append(df)
+
+            # for concordance
+            concs.append(dump.concordance(
+                form='slots',
+                p_show=dict(corpus_config['display'])['p_show'],
+                s_show=dict(corpus_config['display'])['s_show'],
+                cut_off=None,
+                slots=query['anchors']['slots']
+            ))
 
     # create subcorpus
     df = concat(dfs)
@@ -119,14 +127,59 @@ def run_subquery(id):
     df = df[df.start != -1]
     df = df.sort_values(by='start')
     df = df.drop_duplicates()
-    df = df[df['start'] <= df['end']]
-    df = df.set_index(['start', 'end'])
-    df.index.name = ('match', 'matchend')
+    df['end'][df['start'] <= df['end']] = df['start'][df['start'] <= df['end']]
+    df = df.rename(columns={'start': 'match', 'end': 'matchend'}).set_index(
+        ['match', 'matchend']
+    )
     name = "Pattern%dSlot%s" % (id, slot)
+
+    # create full concordance
+    conc = concat(concs).reset_index().set_index(
+        dict(corpus_config['display'])['s_show'][0]
+    )
 
     # activate NQR
     corpus.activate_subcorpus(name, df)
 
     # run all queries belonging to slot pattern on subcorpus
+    concs = list()
+    for query in slot_queries:
 
-    return jsonify(None)
+        current_app.logger.info(query.name)
+        query = query.serialize()
+        dump = corpus.query(
+            cqp_query=query['cqp'],
+            context=corpus_config['query']['context'],
+            context_break=corpus_config['query']['context_break'],
+            corrections=query['anchors']['corrections'],
+            match_strategy=corpus_config['query']['match_strategy']
+        )
+        concs.append(dump.concordance(
+            form='slots',
+            p_show=dict(corpus_config['display'])['p_show'],
+            s_show=dict(corpus_config['display'])['s_show'],
+            cut_off=None,
+            slots=query['anchors']['slots']
+        ))
+
+    # join
+    conc_slot = concat(concs).reset_index()
+    if len(conc_slot) > 0:
+        d = conc_slot[
+            ["_".join([s, p]) for p in corpus_config['display']['p_show']
+             for s in query['anchors']['slots']] +
+            dict(corpus_config['display'])['s_show']
+        ]
+        renames = dict([
+            ["_".join([s, p]), "_".join([str(slot), s, p])]
+            for p in corpus_config['display']['p_show']
+            for s in query['anchors']['slots']
+        ])
+        d = d.rename(columns=renames).set_index(
+            dict(corpus_config['display'])['s_show'][0]
+        )
+        result = conc.join(d)
+    else:
+        result = conc
+
+    return result.to_html()
