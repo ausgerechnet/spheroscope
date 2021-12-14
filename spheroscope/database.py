@@ -409,7 +409,7 @@ def import_library():
         macro.write()
 
     # queries
-    paths = glob(os.path.join("library", "**", "queries", "*.cqpy"), recursive=True)
+    paths = glob(os.path.join("library", "queries", "*.cqpy"))
     for p in paths:
         query = Query().load(p)
         if query:
