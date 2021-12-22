@@ -181,6 +181,7 @@ def add_gold(result, cwb_id, pattern):
     except FileNotFoundError:
         result['TP'] = None
     else:
+        # use implicit annotations for prec, not for rec
         # pre-process gold
         gold = gold.loc[gold['pattern'] == pattern]
         gold = gold.loc[gold['tweet'].isin(list(result['tweet_id']))].rename(

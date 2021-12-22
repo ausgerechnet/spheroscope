@@ -127,7 +127,7 @@ def run_subquery(id):
     df = df[df.start != -1]
     df = df.sort_values(by='start')
     df = df.drop_duplicates()
-    df['end'][df['start'] <= df['end']] = df['start'][df['start'] <= df['end']]
+    df['end'][df['start'] > df['end']] = df['start'][df['start'] <= df['end']]
     df = df.rename(columns={'start': 'match', 'end': 'matchend'}).set_index(
         ['match', 'matchend']
     )
@@ -178,8 +178,12 @@ def run_subquery(id):
         d = d.rename(columns=renames).set_index(
             dict(corpus_config['display'])['s_show'][0]
         )
-        result = conc.join(d)
+        result = conc.join(d, how='inner')
     else:
         result = conc
 
-    return result.to_html()
+    tps = {'TP': "nan", 'FP': "nan", 'prec': "nan", 'rec': "nan"}
+
+    return render_template('queries/result_table.html',
+                           result=result,
+                           tps=tps)
