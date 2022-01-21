@@ -1,6 +1,6 @@
-- in general, we only annotate *clear* positives
+- in general, we only annotate *clear* positives that don't need additional inference steps
 - every slot has to be realised; any exceptions are given in the specifications for respective patterns
-- we currently *do* annotate patterns embedded within questions, negations etc. as positives
+- we currently *do* annotate patterns embedded within questions, negations, relative phrases etc. as positives
 
 # 0 Quotation #
 - ENTITY says FORMULA
@@ -10,11 +10,12 @@
 - I told you …
 - the #UN says that most of them are NOT ' refugees ' at all
 - Donald Trump is coming to the UK on June 25th according to this New York Times story
+- Man yelled 'Britain first!'
 
 ## counter examples ##
 - most of them are not refugees
   + missing entity
-- URLs
+- URLs: Cameron confirmed on Monday that [URL]
 
 ## confusions ##
 - #10: I'm like "… blurb …"
@@ -47,6 +48,7 @@
 - desire (*want*, *wish*) of a particular outcome or event,
 - affiliation (*support*, *back*, *say yes to*),
 - the ENTITY should be explicitly marked - an exception applies for ellipsis (i.e. when the subject is not realised in the surface form). Here, the ENTITY is the author of the message.
+- FORMULA cannot be just an entity (ENTITY backs CAMERON != ENTITY desires CAMERON)
 
 ## examples ##
 - ... says The Times, endorsing Brexit
@@ -55,6 +57,8 @@
 - he is against it (we read this as 'he wants for it to not be true')
 - George is for Brexit
 - Hoping for a successful outcome .
+- I am interested in participating
+- We're really looking forward to this
 
 ## counter examples ##
 - One-sided preference without explicit marking of desire: SF have issues with EU but *see it as better* for NI to remain [because they might not actually want to remain, despite seeing this as the rationally best decision]
@@ -297,9 +301,15 @@
 - three parties that want to be in the EU but not in the UK
 - star economist Thomas Pickety
 - he's a leaver
+- "this billionaire brexit supporter"
+- "billionaire brexit supporter Max Smith"
+- "Stuart Rose has switched sides to #Leave"
+- "Brits are too much cowards to vote" (24 + 25)
+- "this doesn't sway me from Brexit"
 
 ### counter examples ###
-- he supports leave
+- he supports leave: pattern 3
+- "a billionaire brexit supporter" (ENTITY must be concrete; this statement only expresses that some abstract group member exists)
 
 # 25 Universal Quantification [!] #
 - ENTITY is / does something
@@ -384,8 +394,10 @@
 - #19 + #0 + #25
 
 # 38 Warning #
-- ENTITY warns of FORMULA being universally bad
-- the pattern matches instances of an entity 0 warning about formula 1 being universally bad (= for everyone)
+- ENTITY warns of FORMULA being generally bad (i.e. not just bad for any particular entity or group)
+- The warning can be encoded in the speech act (e.g. warning), or in the quoted speech itself (e.g. saying that something would be terrible)
+- This pattern differs from warnings of bad consequences (p 41/49 depending on whether consequences are bad for some or in general)
+- expressions not relating directly to damage/danger but to changes in size/amount are not considered here, but understood as (negative) consequences
 
 ## examples ##
 - Boris Johnson as PM would be ‘ horror scenario , ’ warns top Juncker aide
@@ -393,8 +405,10 @@
 - Scientists including Stephen Hawking say a vote for Brexit in this month's EU referendum would be a disaster
 
 ## counter examples ##
-- neither the verb nor formula 1 have an unambiguously negative evaluation (e.g. *the IMF said that brexit will prolong austerity*)
+- neither the verb nor formula 1 have an unambiguously negative evaluation (e.g. *the IMF said that brexit will prolong austerity*: austerity may be negative for many people, but not necessarily for everyone)
 - Hilary Benn has warned that Britain 's exit from the EU would make the country ' poorer ' and ' less influential' [49: bad consequences for some]
+- He predicted that Brexit would cause the pound to fall [41: bad consequence -- decrease in value vs. explicit damage]
+- She has threatened to vote out (threats are not considered general warnings)
 
 # 39 Some [!] #
 
@@ -407,7 +421,7 @@
 - #25 + #27
 
 # 41 Warning of Bad Consequence #
-- FORMULA would lead to bad FORMULA, says ENTITY
+- ENTITY says that FORMULA would lead to bad FORMULA
 - indirect version of p38 where something is claimed to be bad by consequence
 
 ## examples ##
