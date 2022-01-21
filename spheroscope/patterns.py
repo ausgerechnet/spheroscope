@@ -247,12 +247,65 @@ def subquery(id):
         description: id of pattern to fill slot
 
     """
+    # process request parameters
+    cwb_id = session['corpus']['resources']['cwb_id']
+    slot = request.args.get('slot')
+    result = subquery_helper(id, slot, request.args.get('slot_pattern'))
+
+    # evaluate matches on slot
+    result = add_gold(result, cwb_id, slot)
+    tps = evaluate(result['TP'])
+
+    return render_template('queries/result_table.html',
+                           result=result,
+                           tps=tps)
+
+
+@bp.route('/<int(signed=True):p1>/subqueryOn/<int:slot>/<int:p2>', methods=('GET', 'POST'))
+@login_required
+def subquery2(p1, slot, p2):
+
+     # process request parameters
+    cwb_id = session['corpus']['resources']['cwb_id']
+    result = subquery_helper(p1, slot, p2)
+
+    # evaluate matches on slot
+    result = add_gold(result, cwb_id, slot)
+    tps = evaluate(result['TP'])
+
+    return render_template('queries/result_table.html',
+                           result=result,
+                           tps=tps)
+
+
+def subquery_helper(p1, slot, p2):
+    """execute a hierarchical query: retrieve matches of all queries
+    belonging to a _base_ pattern, then run all queries belonging to
+    _slot_ pattern on one slot defined in the base pattern.
+    ---
+
+    parameters:
+      - name: id
+        in: path
+        type: int
+        required: true
+        description: base pattern id
+      - name: slot
+        in: query
+        type: int
+        required: true
+        description: name of the slot
+      - name: slot_pattern
+        in: query
+        type: int
+        description: id of pattern to fill slot
+
+    """
 
     # process request parameters
     cwb_id = session['corpus']['resources']['cwb_id']
-    base_queries = Query.query.filter_by(pattern_id=id).order_by(Query.name).all()
-    slot = request.args.get('slot')
-    slot_pattern = request.args.get('slot_pattern')
+    base_queries = Query.query.filter_by(pattern_id=p1).order_by(Query.name).all()
+    slot_pattern = p2
     slot_queries = Query.query.filter_by(pattern_id=slot_pattern).all()
 
     # run all queries belonging to base pattern
@@ -313,10 +366,4 @@ def subquery(id):
     else:
         result = matches
 
-    # evaluate matches on slot
-    result = add_gold(result, cwb_id, slot)
-    tps = evaluate(result['TP'])
-
-    return render_template('queries/result_table.html',
-                           result=result,
-                           tps=tps)
+    return result
