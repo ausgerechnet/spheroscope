@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+import re
 
 from flask import Blueprint, jsonify, render_template, request, session, current_app
 
@@ -197,9 +198,13 @@ def patterns():
 @login_required
 def pattern(id):
     pattern = Pattern.query.filter_by(id=id).first()
+    patterns = Pattern.query.all()
     pattern.queries = Query.query.filter_by(pattern_id=id).order_by(Query.name).all()
+    slotfinder = re.compile("\d+")
+    pattern.slots = set(slotfinder.findall(pattern.template))
     return render_template('patterns/pattern.html',
-                           pattern=pattern)
+                           pattern=pattern,
+                           patterns=patterns)
 
 
 @bp.route('/<int(signed=True):id>/matches', methods=('GET', 'POST'))
