@@ -14,13 +14,13 @@
       const pid = self.value;
       const temp = $(self).find(":selected").attr('temp');
       const slots = temp.match(/\d+/g);
-      console.log(temp);
-      console.log(slots);
+      // console.log(temp);
+      // console.log(slots);
       $.ajax({
           url: "{{ url_for('patterns.matches', id='-1337')}}".replace("-1337", pid),
           type: 'post',
           success: result => {
-              console.log(`${url} succeeded`);
+              // console.log(`${url} succeeded`);
               $('#results').html(result);
           }
       });
@@ -32,7 +32,7 @@
       const p1 = $('#pattern1').val();
       const slot = $('#slot').val();
       const p2 = $('#pattern2').val();
-      window.location.replace("{{ url_for('patterns.subquery2', p1='-1337', slot='-1338', p2='-1339')}}".replace("-1337", p1).replace("-1338", slot).replace("-1339", slot));
+      window.location.replace("{{ url_for('patterns.subquery2', p1='-1337', slot='-1338', p2='-1339') }}".replace("-1337", p1).replace("-1338", slot).replace("-1339", p2));
   }
 </script>
 <div class="field">
