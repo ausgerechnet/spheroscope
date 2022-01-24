@@ -265,7 +265,7 @@ def subquery(id):
 @login_required
 def subquery2(p1, slot, p2):
 
-     # process request parameters
+    # process request parameters
     cwb_id = session['corpus']['resources']['cwb_id']
     result = subquery_helper(p1, slot, p2)
 
@@ -301,6 +301,9 @@ def subquery_helper(p1, slot, p2):
         description: id of pattern to fill slot
 
     """
+
+    id = p1
+    slot = str(slot)
 
     # process request parameters
     cwb_id = session['corpus']['resources']['cwb_id']
