@@ -152,11 +152,11 @@ def create_subcorpus(df, slot):
     dump = dump.sort_values(by=column_start)
     dump = dump.drop_duplicates()
 
-    # post-proc: behaviour when start > end
+    # post-proc: behaviour when start > end: start = end
     dump[column_end][
         dump[column_start] > dump[column_end]
     ] = dump[column_start][
-        dump[column_start] <= dump[column_end]
+        dump[column_start] > dump[column_end]
     ]
 
     # rename, convert to int, set index
@@ -165,6 +165,8 @@ def create_subcorpus(df, slot):
     ).set_index(
         ['match', 'matchend']
     )
+
+    print(dump)
 
     return dump
 
@@ -200,7 +202,7 @@ def pattern(id):
     pattern = Pattern.query.filter_by(id=id).first()
     patterns = Pattern.query.all()
     pattern.queries = Query.query.filter_by(pattern_id=id).order_by(Query.name).all()
-    slotfinder = re.compile("\d+")
+    slotfinder = re.compile(r"\d+")
     pattern.slots = set(slotfinder.findall(pattern.template))
     return render_template('patterns/pattern.html',
                            pattern=pattern,
