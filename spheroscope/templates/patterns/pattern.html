@@ -52,7 +52,7 @@
   </div>
 </div>
 <div class="field">
-  <label class="label">Pattern 2</label>
+  <label class="label">Slot Pattern</label>
   <div class="field has-addons">
     <div class="control">
       <div class="select">
@@ -75,7 +75,7 @@
 {% endcall %}
 
 {% call c.block("Matches")%}
-<iframe id='matches' src='{{ url_for("patterns.matches", id=pattern.id)}}' width='100%'></iframe>
+<iframe id='matches' src='{{ url_for("patterns.matches", id=pattern.id) }}' width='100%'></iframe>
 {% endcall %}
 
 {% endblock %}

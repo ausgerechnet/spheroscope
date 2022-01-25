@@ -4,7 +4,7 @@
 import os
 import re
 
-from flask import Blueprint, jsonify, render_template, request, session, current_app
+from flask import Blueprint, jsonify, render_template, request, session, current_app, redirect, url_for
 
 from .auth import login_required
 from .database import Pattern, Query
@@ -166,150 +166,22 @@ def create_subcorpus(df, slot):
         ['match', 'matchend']
     )
 
-    print(dump)
-
     return dump
 
 
-######################################################
-# ROUTING ############################################
-######################################################
-@bp.route('/')
-@login_required
-def index():
-    patterns = Pattern.query.filter(Pattern.id >= 0).order_by(Pattern.id).all()
-    return render_template('patterns/index.html',
-                           patterns=patterns)
-
-
-@bp.route('/api')
-@login_required
-def patterns():
-    patterns = Pattern.query.order_by(Pattern.id).all()
-    # FIXME this conversion should go when the new database is in
-    patterndict = [{
-        "id": abs(p.id),
-        "template": p.template,
-        "explanation": p.explanation,
-        "retired": p.id < 0
-    } for p in patterns]
-    return jsonify(patterndict)
-
-
-@bp.route('/<int(signed=True):id>', methods=('GET', 'POST'))
-@login_required
-def pattern(id):
-    pattern = Pattern.query.filter_by(id=id).first()
-    patterns = Pattern.query.all()
-    pattern.queries = Query.query.filter_by(pattern_id=id).order_by(Query.name).all()
-    slotfinder = re.compile(r"\d+")
-    pattern.slots = set(slotfinder.findall(pattern.template))
-    return render_template('patterns/pattern.html',
-                           pattern=pattern,
-                           patterns=patterns)
-
-
-@bp.route('/<int(signed=True):id>/matches', methods=('GET', 'POST'))
-@login_required
-def matches(id):
-    """retrieve matches of all queries belonging to one pattern"""
-
-    cut_off = int(request.args.get('cut_off', 1000))
-
-    cwb_id = session['corpus']['resources']['cwb_id']
-    queries = Query.query.filter_by(pattern_id=id).order_by(Query.name).all()
-    matches = run_queries(queries, cwb_id)
-
-    matches = add_gold(matches, cwb_id, id)
-    tps = evaluate(matches['TP'])
-    matches = matches.sample(cut_off)
-
-    return render_template('queries/result_table.html',
-                           result=matches,
-                           tps=tps)
-
-
-@bp.route('/<int(signed=True):id>/matches/subquery', methods=('GET', 'POST'))
-@login_required
-def subquery(id):
+def hierarchical_query(p1, slot, p2):
     """execute a hierarchical query: retrieve matches of all queries
     belonging to a _base_ pattern, then run all queries belonging to
     _slot_ pattern on one slot defined in the base pattern.
     ---
 
-    parameters:
-      - name: id
-        in: path
-        type: int
-        required: true
-        description: base pattern id
-      - name: slot
-        in: query
-        type: int
-        required: true
-        description: name of the slot
-      - name: slot_pattern
-        in: query
-        type: int
-        description: id of pattern to fill slot
-
-    """
-    # process request parameters
-    cwb_id = session['corpus']['resources']['cwb_id']
-    slot = request.args.get('slot')
-    result = subquery_helper(id, slot, request.args.get('slot_pattern'))
-
-    # evaluate matches on slot
-    result = add_gold(result, cwb_id, slot)
-    tps = evaluate(result['TP'])
-
-    return render_template('queries/result_table.html',
-                           result=result,
-                           tps=tps)
-
-
-@bp.route('/<int(signed=True):p1>/subqueryOn/<int:slot>/<int:p2>', methods=('GET', 'POST'))
-@login_required
-def subquery2(p1, slot, p2):
-
-    # process request parameters
-    cwb_id = session['corpus']['resources']['cwb_id']
-    result = subquery_helper(p1, slot, p2)
-
-    # evaluate matches on slot
-    result = add_gold(result, cwb_id, slot)
-    tps = evaluate(result['TP'])
-
-    return render_template('queries/result_table.html',
-                           result=result,
-                           tps=tps)
-
-
-def subquery_helper(p1, slot, p2):
-    """execute a hierarchical query: retrieve matches of all queries
-    belonging to a _base_ pattern, then run all queries belonging to
-    _slot_ pattern on one slot defined in the base pattern.
-    ---
-
-    parameters:
-      - name: id
-        in: path
-        type: int
-        required: true
-        description: base pattern id
-      - name: slot
-        in: query
-        type: int
-        required: true
-        description: name of the slot
-      - name: slot_pattern
-        in: query
-        type: int
-        description: id of pattern to fill slot
+    :param int p1: base pattern number
+    :param str slot: slot name
+    :param int p2: slot pattern
 
     """
 
-    id = p1
+    # make sure slot is a string
     slot = str(slot)
 
     # process request parameters
@@ -329,7 +201,7 @@ def subquery_helper(p1, slot, p2):
     df_dump = create_subcorpus(matches, slot)
     corpus_config = read_config(cwb_id)
     corpus = init_corpus(corpus_config)
-    name = "Pattern%dSlot%s" % (id, slot)
+    name = "Pattern%dSlot%s" % (p1, slot)
     corpus.activate_subcorpus(name, df_dump)
 
     # run all queries belonging to slot pattern on activated NQR
@@ -377,3 +249,117 @@ def subquery_helper(p1, slot, p2):
         result = matches
 
     return result
+
+
+######################################################
+# ROUTING ############################################
+######################################################
+@bp.route('/')
+@login_required
+def index():
+    patterns = Pattern.query.filter(Pattern.id >= 0).order_by(Pattern.id).all()
+    return render_template('patterns/index.html',
+                           patterns=patterns)
+
+
+@bp.route('/api')
+@login_required
+def patterns():
+    patterns = Pattern.query.order_by(Pattern.id).all()
+    # FIXME this conversion should go when the new database is in
+    patterndict = [{
+        "id": abs(p.id),
+        "template": p.template,
+        "explanation": p.explanation,
+        "retired": p.id < 0
+    } for p in patterns]
+    return jsonify(patterndict)
+
+
+@bp.route('/<int(signed=True):id>', methods=('GET', 'POST'))
+@login_required
+def pattern(id):
+    pattern = Pattern.query.filter_by(id=id).first()
+    patterns = Pattern.query.all()
+    pattern.queries = Query.query.filter_by(pattern_id=id).order_by(Query.name).all()
+    slotfinder = re.compile(r"\d+")
+    pattern.slots = set(slotfinder.findall(pattern.template))
+    return render_template('patterns/pattern.html',
+                           pattern=pattern,
+                           patterns=patterns)
+
+
+@bp.route('/<int(signed=True):id>/matches', methods=('GET', 'POST'))
+@login_required
+def matches(id):
+    """retrieve matches of all queries belonging to one pattern"""
+
+    cwb_id = session['corpus']['resources']['cwb_id']
+    queries = Query.query.filter_by(pattern_id=id).order_by(Query.name).all()
+    matches = run_queries(queries, cwb_id)
+
+    matches = add_gold(matches, cwb_id, id)
+    tps = evaluate(matches['TP'])
+
+    # cut_off
+    matches = matches.sample(int(request.args.get('cut_off', 100)))
+
+    return render_template('queries/result_table.html',
+                           result=matches,
+                           tps=tps)
+
+
+@bp.route('/<int(signed=True):p1>/matches/subquery', methods=('GET', 'POST'))
+@login_required
+def subquery(p1):
+    """execute a hierarchical query: retrieve matches of all queries
+    belonging to a _base_ pattern, then run all queries belonging to
+    _slot_ pattern on one slot defined in the base pattern.
+    ---
+
+    parameters:
+      - name: id
+        in: path
+        type: int
+        required: true
+        description: base pattern id
+      - name: slot
+        in: query
+        type: int
+        required: true
+        description: name of the slot
+      - name: slot_pattern
+        in: query
+        type: int
+        description: id of pattern to fill slot
+
+    """
+
+    # process request parameters
+    cwb_id = session['corpus']['resources']['cwb_id']
+    slot = request.args.get('slot')
+    p2 = request.args.get('slot_pattern')
+
+    # get matches
+    result = hierarchical_query(p1, slot, p2)
+
+    # evaluate matches
+    result = add_gold(result, cwb_id, slot)
+    tps = evaluate(result['TP'])
+
+    return render_template('queries/result_table.html',
+                           result=result,
+                           tps=tps)
+
+
+@bp.route('/<int(signed=True):p1>/subqueryOn/<slot>/<int:p2>',
+          methods=('GET', 'POST'))
+@login_required
+def subquery2(p1, slot, p2):
+    """redirects to subquery(), accepts path parameters
+
+    """
+
+    return redirect(
+        url_for('patterns.subquery', p1=p1, slot=slot, slot_pattern=p2)
+    )
