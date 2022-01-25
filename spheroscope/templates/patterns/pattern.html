@@ -34,7 +34,7 @@
   function subquery() {
       const slot = $('#slot').val();
       const p2 = $('#pattern2').val();
-      window.location.replace("{{ url_for('patterns.subquery2', p1=pattern.id, slot='-1338', p2='-1339') }}".replace("-1338", slot).replace("-1339", p2));
+      window.location.replace("{{ url_for('patterns.subquery', p1=pattern.id, slot='-1338', p2='-1339') }}".replace("-1338", slot).replace("-1339", p2));
   }
 </script>
 <div class="field">
