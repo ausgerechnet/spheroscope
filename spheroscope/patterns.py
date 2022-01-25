@@ -9,6 +9,7 @@ from flask import Blueprint, jsonify, render_template, request, session, current
 from .auth import login_required
 from .database import Pattern, Query
 from .corpora import read_config, init_corpus
+from .queries import patch_query_results
 
 from pandas import concat, read_csv
 
@@ -237,7 +238,7 @@ def hierarchical_query(p1, slot, p2):
             dict(corpus_config['display'])['s_show']
         ]
         renames = dict([
-            ["_".join([s, p]), "_".join([str(slot), s, p])]
+            ("_".join([s, p]), ".".join([str(slot), "_".join([ s, p])]))
             for p in corpus_config['display']['p_show']
             for s in query['anchors']['slots']
         ])
@@ -304,8 +305,8 @@ def matches(id):
     # cut_off
     matches = matches.sample(int(request.args.get('cut_off', 100)))
 
-    return render_template('queries/result_table.html',
-                           result=matches,
+    return render_template('queries/standalone_result_table.html',
+                           result=patch_query_results(matches),
                            tps=tps)
 
 
@@ -347,19 +348,6 @@ def subquery(p1):
     result = add_gold(result, cwb_id, slot)
     tps = evaluate(result['TP'])
 
-    return render_template('queries/result_table.html',
-                           result=result,
+    return render_template('queries/standalone_result_table.html',
+                           result=patch_query_results(result),
                            tps=tps)
-
-
-@bp.route('/<int(signed=True):p1>/subqueryOn/<slot>/<int:p2>',
-          methods=('GET', 'POST'))
-@login_required
-def subquery2(p1, slot, p2):
-    """redirects to subquery(), accepts path parameters
-
-    """
-
-    return redirect(
-        url_for('patterns.subquery', p1=p1, slot=slot, slot_pattern=p2)
-    )
