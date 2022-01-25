@@ -1,0 +1,16 @@
+# --- # CQPY query file
+# anchors:
+#   corrections:
+#     '2': -1
+#   slots:
+#     '0': 0
+#     '1':
+#     - 2
+#     - 3
+# meta:
+#   comment: null
+#   name: pattern6_policy_would_damage_entity
+#   pattern: 6
+# ---
+
+@0:[lemma=$nouns_policies] [pos_ner="MD"] [pos_ark="R"]* [lemma=$verbs_destruction] @1:[::] [word!="[\.,\?\!]" & word !="http.+"]* @2:[::]
