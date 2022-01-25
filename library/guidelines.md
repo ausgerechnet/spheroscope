@@ -293,6 +293,9 @@
 
 # 24 Membership #
 - ENTITY is part of ENTITY GROUP
+- Our understanding of ENTITY GROUP is very broad and includes, but is not limited to, professions (e.g. *Politician* Joe Smith), nationality (she is *Icelandic*), or membership in political parties.
+- being in a group is often expressed through a form of *be*, noun phrase modification, or by saying that ENTITY has taken a particular side
+- We also cound ad-hoc groups that might be unlikely to contain any other members (cf. first example)
 
 ## examples ##
 - The clintons are fat cats who are owned by the multinationals
