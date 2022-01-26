@@ -1,5 +1,6 @@
 - in general, we only annotate *clear* positives that don't need additional inference steps
 - every slot has to be realised; any exceptions are given in the specifications for respective patterns
+- as a general exception, ENTITY slots that are not present because of syntactic ellipsis count as filled iff the entity can safely be assumed to be the author of the tweet
 - we currently *do* annotate patterns embedded within questions, negations, relative phrases etc. as positives
 
 # 0 Quotation #
@@ -51,14 +52,14 @@
 - FORMULA cannot be just an entity (ENTITY backs CAMERON != ENTITY desires CAMERON)
 
 ## examples ##
-- ... says The Times, endorsing Brexit
-- I believe in votes at 16ot
-- ... 50% in favour of ...
-- he is against it (we read this as 'he wants for it to not be true')
-- George is for Brexit
-- Hoping for a successful outcome .
-- I am interested in participating
-- We're really looking forward to this
+- ... says **The Times**, endorsing **Brexit**
+- **I** believe in **votes at 16 and no GRP for transgender people**
+- **50%** in favour of **Brexit**
+- **he** is against **it** (we read this as 'he wants for it to not be true')
+- **George** is for **Brexit**
+- Hoping for **a successful outcome** .
+- **I** am interested in **participating**
+- **We** are really looking forward to **this**
 
 ## counter examples ##
 - One-sided preference without explicit marking of desire: SF have issues with EU but *see it as better* for NI to remain [because they might not actually want to remain, despite seeing this as the rationally best decision]
@@ -293,6 +294,9 @@
 
 # 24 Membership #
 - ENTITY is part of ENTITY GROUP
+- Groups are defined widely, with prototypical cases including e.g. professions, parties/organisations or nationalities
+- We also annotate ad-hoc groups (cf. first example)
+- Special case: remaining/staying in a group is generally understood as membership (continuing the status quo of being a member), while leaving is not 'negative' membership, but rather an action that changes membership status only by implication
 
 ## examples ##
 - The clintons are fat cats who are owned by the multinationals
@@ -306,10 +310,13 @@
 - "Stuart Rose has switched sides to #Leave"
 - "Brits are too much cowards to vote" (24 + 25)
 - "this doesn't sway me from Brexit"
+- we're on the side of leave
+- **Scotland** should remain in **EU**
 
 ### counter examples ###
 - he supports leave: pattern 3
 - "a billionaire brexit supporter" (ENTITY must be concrete; this statement only expresses that some abstract group member exists)
+- **The UK** will leave **the EU**
 
 # 25 Universal Quantification [!] #
 - ENTITY is / does something
@@ -423,7 +430,7 @@
 # 41 Warning of Bad Consequence #
 - ENTITY says that FORMULA would lead to bad FORMULA
 - indirect version of p38 where something is claimed to be bad by consequence
-
+- bad consequences include changes in size/amount etc. that are considered bad by general consensus
 ## examples ##
 - **Richard Haass**' claim that **Brexit** could 'trigger **NI violence**'
 - **Experts** warn that **brexit** could cause the **pound to fall**
@@ -460,7 +467,7 @@
 - I feel ashamed of our Gov. Worse to have others feel sorry for us
 
 # 44 Good #
-- FORMULA is universally (=for all) good
+- FORMULA is universally good (i.e. the scope is not explicitly limited to specific entities)
 ## examples ##
 - nation states are good
 - so the ideal will be Indy in EU with rUK still a member
@@ -469,21 +476,23 @@
 - Democracy is also often taken for granted
 
 # 45 Bad #
-- FORMULA is universally (=for all) bad
-- It is enough for the FORMULA to be bad in some aspects, regardless of whether it has positive characteristics as well
-- Boris is the worst prime minister ever
+- FORMULA is universally bad (i.e. the scope is not explicitly limited to specific entities)
+- It is enough for the FORMULA to be bad in only some aspects, regardless of whether it has positive characteristics as well
+- expressions not relating directly to damage/danger but to changes in size/amount are not considered here, but understood as (negative) consequences
 
 ## examples ##
 - nation states are evil
-- the problem is that ...
+- Boris is the worst prime minister ever
+- the problem is that he never complied
 - the system is flawed (= the system is bad, at least in some ways)
 - Leave's arguments just don't add up.
-- Bigoted bloody bunch (#21 because this is a negative evaluation of somebody's character rather than e.g. their overall 'suitability' as in the prime minister example)
 
 ## counter examples ##
 - the #UN - a unit of the globalist conspiracy (#21)
 - its illegal immigrants that are entering through the EU on false documents or nothing at all that worries me. (no explicit universal evaluation)
 - I feel that if we Brexit, the rest of the world will view us as racist, bigoted and narrow-minded"
+- Bigoted bloody bunch (#21 because this is a negative evaluation of somebody's character rather than e.g. their overall 'suitability' as in the prime minister example)
+
 ## problematic ##
 - so what exactly is wrong with an EU army
 
