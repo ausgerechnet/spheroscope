@@ -312,11 +312,15 @@
 - "this doesn't sway me from Brexit"
 - we're on the side of leave
 - **Scotland** should remain in **EU**
+- **we** are all **stupid people**
+- the EU slave nations Germany and France
 
 ### counter examples ###
 - he supports leave: pattern 3
 - "a billionaire brexit supporter" (ENTITY must be concrete; this statement only expresses that some abstract group member exists)
 - **The UK** will leave **the EU**
+- we are all stupid (property rather than group definition)
+- Brexit will help other EU slave nations (group specification, but missing entity).
 
 # 25 Universal Quantification [!] #
 - ENTITY is / does something
