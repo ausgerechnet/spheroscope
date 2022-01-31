@@ -1,9 +1,11 @@
-{% extends 'queries/base.html' %}
+<!doctype html>
+<html>
 
-{% block header %}
+  {% include 'header.html' %}
 
-{% endblock %}
+  <body>
 
-{% block content %}
-{% include 'queries/result_table.html' %}
-{% endblock %}
+    {% include 'queries/result_table.html' %}
+
+  </body>
+</html>

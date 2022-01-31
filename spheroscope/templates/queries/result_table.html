@@ -8,6 +8,41 @@
 
 <h4>Results</h4>
 <script src="{{ url_for('static', filename='sorttable.js') }}" type="text/javascript"></script>
+<script>
+     function diffInto(newval, oldval, target) {
+        const  color = '';
+        
+        let span = null;
+        
+        const diff = Diff.diffWords(newval, oldval),
+              display = target,
+              fragment = document.createDocumentFragment();
+        
+        diff.forEach((part) => {
+          span = document.createElement('span');
+          if (part.removed) {
+            span.classList.add("removed");
+          }
+          if (part.added) {
+            span.classList.add("added");
+          }
+          span.appendChild(document.createTextNode(part.value));
+          fragment.appendChild(span);
+        });
+        
+        display.appendChild(fragment);
+        return fragment;
+      }
+      
+      $(document).ready(function() {
+        // Check for click events on the navbar burger icon
+        $(".navbar-burger").click(function() {
+          // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+          $(".navbar-burger").toggleClass("is-active");
+          $(".navbar-menu").toggleClass("is-active");
+        });
+      });
+ </script>
 <div class="table-container" style="overflow: auto;">
   <table class="table is-striped is-hoverable is-narrow sortable">
   <thead>
