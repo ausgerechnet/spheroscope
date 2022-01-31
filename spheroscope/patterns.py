@@ -4,14 +4,14 @@
 import os
 import re
 
-from flask import Blueprint, jsonify, render_template, request, session, current_app, redirect, url_for
+from flask import (Blueprint, current_app, jsonify, render_template, request,
+                   session)
+from pandas import concat, read_csv
 
 from .auth import login_required
+from .corpora import init_corpus, read_config
 from .database import Pattern, Query
-from .corpora import read_config, init_corpus
 from .queries import patch_query_results
-
-from pandas import concat, read_csv
 
 bp = Blueprint('patterns', __name__, url_prefix='/patterns')
 
@@ -228,17 +228,17 @@ def hierarchical_query(p1, slot, p2):
         conc['name'] = query['meta']['name']
         concs.append(conc)
 
-    # join
-    conc_slot = concat(concs).reset_index()
     # post-process
-    if len(conc_slot) > 0:
+    if len(concs) > 0:
+        conc_slot = concat(concs)
+        conc_slot = conc_slot.reset_index()
         d = conc_slot[
             ["_".join([s, p]) for p in corpus_config['display']['p_show']
              for s in query['anchors']['slots']] +
             dict(corpus_config['display'])['s_show']
         ]
         renames = dict([
-            ("_".join([s, p]), ".".join([str(slot), "_".join([ s, p])]))
+            ("_".join([s, p]), ".".join([str(slot), "_".join([s, p])]))
             for p in corpus_config['display']['p_show']
             for s in query['anchors']['slots']
         ])
@@ -247,7 +247,7 @@ def hierarchical_query(p1, slot, p2):
         )
         result = matches.join(d, how='inner')
     else:
-        result = matches
+        result = None
 
     return result
 
@@ -329,7 +329,7 @@ def subquery(p1):
         type: int
         required: true
         description: name of the slot
-      - name: slot_pattern
+      - name: p2
         in: query
         type: int
         description: id of pattern to fill slot
@@ -339,7 +339,7 @@ def subquery(p1):
     # process request parameters
     cwb_id = session['corpus']['resources']['cwb_id']
     slot = request.args.get('slot')
-    p2 = request.args.get('slot_pattern')
+    p2 = request.args.get('p2')
 
     # get matches
     result = hierarchical_query(p1, slot, p2)
