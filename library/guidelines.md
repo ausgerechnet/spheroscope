@@ -53,13 +53,13 @@
 
 ## examples ##
 - ... says **The Times**, endorsing **Brexit**
-- **I** believe in **votes at 16 and no GRP for transgender people**
 - **50%** in favour of **Brexit**
 - **he** is against **it** (we read this as 'he wants for it to not be true')
 - **George** is for **Brexit**
 - Hoping for **a successful outcome** .
 - **I** am interested in **participating**
 - **We** are really looking forward to **this**
+- **they** endorse **Brexit**
 
 ## counter examples ##
 - One-sided preference without explicit marking of desire: SF have issues with EU but *see it as better* for NI to remain [because they might not actually want to remain, despite seeing this as the rationally best decision]
@@ -74,6 +74,8 @@
 - the technocrats fighting hard for Britain to remain
 - positive regard without desire: you seem to like that
 - the technocrats in the Eu fighting for Britain to remain (effort does not necessarily equal desire)
+- I believe in votes at 16 and no GRP for transgender people
+- I'm endorsing my point from yesterday (the point is being reinforced, not desired)
 
 # 4 Ought #
 - ... should / ought ...
@@ -146,6 +148,7 @@
 - I'm certain it will break up or change dramatically
 - I don't think people realise the severity of the consequences of voting to leave
 - I believe they will
+- i agree the sooner we leave the better
 
 ## confusions
 - #0
