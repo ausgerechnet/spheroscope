@@ -141,14 +141,21 @@
 - @Nissan is the biggest private sector employer in the North East - massive investor in Britain, job + car creator (too implicit -- investing / employing not inherently positive)
 
 # 10 Belief #
-- ENTITY believes / thinks FORMULA
-- ENTITY is certain / sure that FORMULA
+- ENTITY believes / thinks that FORMULA is true
+- ENTITY is certain / sure that FORMULA is true
+- Can be difficult to separate from knowledge (pattern 34) based on cue words
 
 ## examples ##
 - I'm certain it will break up or change dramatically
-- I don't think people realise the severity of the consequences of voting to leave
+- I **don't think** people realise the severity of the consequences of voting to leave
 - I believe they will
 - i agree the sooner we leave the better
+- I believe in votes at 16 and no GRP for transgender people (= I believe this ought to be made true)
+- I think this could work
+
+## counter-examples ##
+- I agree with her about Brexit (there is reference to belief here, but it is unclear who believes what; we only learn that 'I' and 'her' believe different things w.r.t. Brexit)
+- I'm thinking of a solution (= thinking as a general cognitive process vs. thinking as belief)
 
 ## confusions
 - #0
@@ -372,12 +379,18 @@
 - most of them are NOT ' refugees ' at all
 
 # 34 Knowledge #
-- ENTITY knows FORMULA
+- ENTITY knows FORMULA is true
+- Knowledge is considered from the entity's point of view; i.e. regardless of whether FORMULA is **actually** true 
 
 ## examples ##
 - I know that Nigel Farage didn't murder that MP
 - Even this Norwegian minister knows that this would not be good for UK
 - The pro-EU campaign knows that people don't trust Dodgy Dave
+- You know you're in when Warren Buffet starts selling cherry coke
+
+## counter-examples ##
+- You know, this was really a stupid idea ('you know' as a discourse marker)
+- Cameron should know about Brexit (know about a topic != know the  truth of a particular statement)
 
 ## confusions ##
 - #10: ENTITY is certain that FORMULA
