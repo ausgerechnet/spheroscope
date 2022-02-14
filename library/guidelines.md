@@ -60,6 +60,8 @@
 - **I** am interested in **participating**
 - **We** are really looking forward to **this**
 - **they** endorse **Brexit**
+- a key Brexit supporter claims ... (pathological/ not query-able: entity defined via desire)
+- the pro brexit campaigners are using this strategy (pathological / not query-able)
 
 ## counter examples ##
 - One-sided preference without explicit marking of desire: SF have issues with EU but *see it as better* for NI to remain [because they might not actually want to remain, despite seeing this as the rationally best decision]
@@ -67,7 +69,6 @@
 - the desire can only be inferred from an action (he *voted* remain might be interpreted as him /remain/ to be made true, but we do not consider such actions a sufficiently clear expression of desire)
 - it would be nice if ..
 - ... the figures were REMAIN 45% ...
-- I'm Brexit -> group membership
 - rhetorical questions and idiomatic expressions: you want to talk misleading?
 - he's got Brexit as his next agenda item
 - the desire can only be inferred from an expression of conscious decision or reasoning (Johnson's *reason* to remain, her *case* for leave),
@@ -142,11 +143,10 @@
 
 # 10 Belief #
 - ENTITY believes / thinks that FORMULA is true
-- ENTITY is certain / sure that FORMULA is true
+- ENTITY is sure that FORMULA is true
 - Can be difficult to separate from knowledge (pattern 34) based on cue words
 
 ## examples ##
-- I'm certain it will break up or change dramatically
 - I **don't think** people realise the severity of the consequences of voting to leave
 - I believe they will
 - i agree the sooner we leave the better
@@ -387,13 +387,15 @@
 - Even this Norwegian minister knows that this would not be good for UK
 - The pro-EU campaign knows that people don't trust Dodgy Dave
 - You know you're in when Warren Buffet starts selling cherry coke
+- I'm certain it will break up or change dramatically
+- **The president** understands that **this is true**
 
 ## counter-examples ##
 - You know, this was really a stupid idea ('you know' as a discourse marker)
 - Cameron should know about Brexit (know about a topic != know the  truth of a particular statement)
 
 ## confusions ##
-- #10: ENTITY is certain that FORMULA
+p10: belief
 
 # 35 Necessary Truth #
 - FORMULA will always be the case
