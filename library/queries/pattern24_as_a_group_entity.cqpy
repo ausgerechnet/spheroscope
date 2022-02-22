@@ -1,0 +1,19 @@
+# --- # CQPY query file
+# anchors:
+#   corrections:
+#     '1': -1
+#     '3': -1
+#   slots:
+#     '0':
+#     - 2
+#     - 3
+#     '1':
+#     - 0
+#     - 1
+# meta:
+#   comment: null
+#   name: pattern24_as_a_group_entity
+#   pattern: 24
+# ---
+
+[lemma="as|being"] @0:[::] [pos_ark="D"] [pos_ark = "[DA@ONZ#^]"]+ @1[::] ","  @2[::][pos_ark = "[@Z#^]" | pos_ner="PRP.?"]+ @3[pos_ark="V"]
