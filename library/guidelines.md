@@ -539,6 +539,22 @@ p10: belief
 - Hilary Benn has warned that Britain 's exit from the EU would make the country ' poorer ' and ' less influential'
 - Brexit could lead to downgrades for other EU countries -Fitch
 
+# 52 intention #
+deprecated
+
+# 53 intention to do #
+- ENTITY intends to do ACTION
+- Usually, statements expressing a future action without referencing intentions, plans etc. are interpreted as intention if subject = author (I will do X vs. She will do X)
+
+## examples ##
+- **1000 officials** travel to Strasbourg monthly **to vote** at a cost of €130m per annum
+- **French** to **brick up channel tunnel** in event of #BREXIT! (read as: are set / committed to brick up the tunnel)
+- **Stuart Rose** has probably switched sides to #Leave but agreed to stay quite to **save his blushes**
+
+## counter-examples ##
+- Brexit vote set to fuel more referendums (prediction statement; no agency)
+- things will go up in price EVERYTHING WILL COST MORE!
+- But Trump is no mug &amp; he will trade with the UK despite Cameron
 
 # Categories #
 - entities vs entity groups
