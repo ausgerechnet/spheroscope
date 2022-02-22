@@ -2,6 +2,8 @@
 
 {% import 'queries/querylist.html' as q %}
 {% import 'helpers/controls.html' as c %}
+{% import 'patterns/pattern_options.html' as p %}
+
 {% block title %}
 {{ super() }}
 <li><a>{{ pattern.id }}</a></li>
@@ -27,8 +29,53 @@
 </table>
 {% endcall %}
 
+{% call c.block("Subquery") %}
+<script>
+  function subquery() {
+      const slot = $('#slot').val();
+      const p2 = $('#pattern2').val();
+      window.location.replace("{{ url_for('patterns.subquery', p1=pattern.id, slot='-1338', p2='-1339') | safe }}".replace("-1338", slot).replace("-1339", p2));
+  }
+</script>
+<div class="field">
+  <label class="label">Slot</label>
+  <div class="field has-addons">
+    <div class="control">
+      <div class="select">
+        <select id="slot" name="slot">
+          {% for slot in pattern.slots %}
+          <option value="{{ slot }}">{{ slot }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="field">
+  <label class="label">Slot Pattern</label>
+  <div class="field has-addons">
+    <div class="control">
+      <div class="select">
+        <select id="pattern2" name="pattern2">
+          {% for pattern in patterns | sort(attribute='id') %}
+          <option value="{{ pattern.id }}" {% if pattern.retired %} disabled {% endif %}>{{ pattern.id }} <a class="button is-static">\( {{ pattern.template }} \)</a></option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+<button class='button is-light is-success' onclick='subquery()'>Run</button>
+{% endcall %}
+
+
 {% call c.block("Queries") %}
 {{ q.querylist(pattern.queries) }}
 {{ c.add_button(action=url_for('queries.create'), text='New Query') }}
 {% endcall %}
+
+{% call c.block("Matches")%}
+<iframe id='matches' src='{{ url_for("patterns.matches", id=pattern.id) }}' width='100%'></iframe>
+{% endcall %}
+
 {% endblock %}

@@ -19,15 +19,15 @@ def app():
         "DB_NAME": "test.sqlite",
         "DB_USERNAME": "admin",
         "DB_PASSWORD": "0000",
+        "SECRET_KEY": "testing",
         "REGISTRY_PATH": "/home/ausgerechnet/corpora/cwb/registry/",
-        "CACHE_PATH": "/tmp/spheroscope-test"
+        "CACHE_PATH": "/tmp/spheroscope-cache/"
     })
 
     # create the database and load test data
     with app.app_context():
         init_db()
         import_library()
-
     yield app
 
     # close and remove the temporary database
@@ -48,10 +48,11 @@ def runner(app):
 
 
 class AuthActions(object):
+
     def __init__(self, client):
         self._client = client
 
-    def login(self, username="test", password="test"):
+    def login(self, username="admin", password="0000"):
         return self._client.post(
             "/auth/login", data={"username": username, "password": password}
         )
@@ -62,4 +63,5 @@ class AuthActions(object):
 
 @pytest.fixture
 def auth(client):
+
     return AuthActions(client)

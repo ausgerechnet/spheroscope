@@ -91,6 +91,13 @@ def index():
                            queries=(queries.filter_by(pattern_id=pattern).all()
                                     if pattern else queries.all()))
 
+@bp.route('/hierarchical')
+@login_required
+def subindex():
+    patterns = Pattern.query.order_by(Pattern.name)
+    return render_template('queries/subindex.html',
+                           patterns=patterns)
+
 
 @bp.route('/create', methods=('GET', 'POST'))
 @login_required
@@ -185,7 +192,7 @@ def patch_query_results(result):
     return newresult
 
 
-def add_gold(result, cwb_id, pattern):
+def add_gold(result, cwb_id, pattern, s_annotation='tweet_id', s_database='tweet'):
 
     try:
         gold = read_csv(
@@ -195,14 +202,15 @@ def add_gold(result, cwb_id, pattern):
     except FileNotFoundError:
         result['TP'] = None
     else:
+        # TODO use implicit annotations for prec, not for rec
         # pre-process gold
         gold = gold.loc[gold['pattern'] == pattern]
-        gold = gold.loc[gold['tweet'].isin(list(result['tweet_id']))].rename(
-            {'tweet': 'tweet_id'}, axis=1
+        gold = gold.loc[gold[s_database].isin(list(result[s_annotation]))].rename(
+            {s_database: s_annotation}, axis=1
         )
-        tps = gold.rename({'annotation': 'TP'}, axis=1).set_index('tweet_id')
+        tps = gold.rename({'annotation': 'TP'}, axis=1).set_index(s_annotation)
         # join explicit TPs and FPs
-        result = result.set_index('tweet_id')
+        result = result.set_index(s_annotation)
         result = result.join(tps[['TP']], how='left')
         result = result.reset_index()
 
@@ -239,7 +247,7 @@ def run_cmd(id):
     if oldresult is None:
         return 'query does not have any matches'
 
-    # pass to frontend
+    # select columns
     display_columns = [x for x in oldresult.columns if x not in [
         'context_id', 'context', 'contextend'
     ]]
@@ -291,6 +299,7 @@ def run_cmd(id):
             tps['prec'] = tps['TP'] / (tps['FP'] + tps['TP'])
         except ZeroDivisionError:
             tps['prec'] = 'nan'
+        tps['N'] = len(result)
 
         # render result
         result = patch_query_results(result)
