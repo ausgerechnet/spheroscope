@@ -5,15 +5,15 @@
 #     '3': -1
 #   slots:
 #     '0':
-#     - 0
-#     - 1
-#     '1':
 #     - 2
 #     - 3
+#     '1':
+#     - 0
+#     - 1
 # meta:
 #   comment: null
 #   name: pattern6_concept_is_risk_to_entity
-#   pattern: 0
+#   pattern: 6
 # ---
 
-@0:[::] ([pos_ark = "[DA]"]* [pos_ark = "[@NZ#^]"]+  | [pos_ner ="PRP"]) @1:[lemma="as|be|equal|mean|pose|raise" | lemma = $verbs_cause & lemma !="make"] [pos_ark="DAR"]* [lemma=$nouns_danger] [pos_ark="P" & lemma !="with"]  @2:[::]([pos_ark = "[DAR@ONZV^\&]"]+)@3:[::] 
+@0:[::] ([pos_ark = "[DA]"]* [pos_ark = "[@NZ#^]"]+  | [pos_ner ="PRP"]) @1:[lemma="as|be|equal|mean|pose|raise" | lemma = $verbs_cause & lemma !="make"] [pos_ark="[DAR]"]* [lemma=$nouns_danger | lemma = $nouns_problem & pos_ark="N" | lemma = "blow"] [lemma="against|for|to"]  @2:[::]([pos_ark = "[DAR@ONZV^\&]"]+)@3:[::] 
