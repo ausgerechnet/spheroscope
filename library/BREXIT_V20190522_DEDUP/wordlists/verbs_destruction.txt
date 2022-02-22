@@ -41,7 +41,6 @@ hijack
 hurt
 implode
 inflame
-invade
 jettison
 kill
 melt
