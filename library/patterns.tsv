@@ -39,6 +39,8 @@ idx	name	template	explanation	retired
 49	warning of bad consequences for some	Q_{{?0 : entity}} ({?1 : formula} \mcauses {?2 : formula} \land badFor({?3 : entity},{?2})	entity 0 warns that formula 1 would cause formula 2 which would be bad for entity 3	False
 50	cause of evil	{{?0 : formula}} \mcauses {{?1 : formula}}; bad({?1})	formula 0 has/would have consequence formula 1 that is/would be bad	False
 51	cause of evil for some	{{?0 : formula}} \mcauses {{?1 : formula}}; badFor({?2 : concept}{?1})	formula 0 has/would have consequence formula 1 that is/would be bad for entity/concept 2	False
+52	intention	I_{{?0 : entity}} {?1 : formula}	entity 0 is committed to make formula 1 true	False
+53	intention to do	I_{{?0 : entity}} E_{{?0}} {?1 : action}	entity 0 intends to execute action 1	False
 -9999	preamble	\newcommand{\mcauses}{\Box\kern-.5em{\implies}} \newcommand{\dimplies}{\overset{d}{\implies}} \newcommand{\cfac}{\overset{c}{\implies}}	the preamble (for exporting)	True
 1	explanation	({?0 : formula}) \mcauses ({?1 : formula})	0 is the reason why 1 is true; note that 0 and 1 could be formulas talking about the past stating that something was the reason why something was the case at some point in time	True
 7	 	({?1 : formula}) \mcauses Q_{{?0 : entity}} bad	1 is bad for entity 0	True
