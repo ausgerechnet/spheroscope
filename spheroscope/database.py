@@ -79,17 +79,17 @@ class WordList(db.Model):
         """ writes wordlist to database and appropriate path """
 
         # write record to database
-        current_app.logger.info(
-            'writing wordlist "%s" to database' % self.name
-        )
+        # current_app.logger.info(
+        #     'writing wordlist "%s" to database' % self.name
+        # )
         db.session.add(self)
         db.session.commit()
 
         # write file
         if write_file:
-            current_app.logger.info(
-                'writing wordlist "%s" to "%s"' % (self.name, self.path)
-            )
+            # current_app.logger.info(
+            #     'writing wordlist "%s" to "%s"' % (self.name, self.path)
+            # )
             os.makedirs(os.path.dirname(self.path), exist_ok=True)
             with open(self.path, "wt") as f:
                 f.write(self.words)
@@ -156,17 +156,17 @@ class Macro(db.Model):
         """ writes macro to database and appropriate path """
 
         # write record to database
-        current_app.logger.info(
-            'writing macro "%s" to database' % self.name
-        )
+        # current_app.logger.info(
+        #     'writing macro "%s" to database' % self.name
+        # )
         db.session.add(self)
         db.session.commit()
 
         # write file
         if write_file:
-            current_app.logger.info(
-                'writing macro "%s" to "%s"' % (self.name, self.path)
-            )
+            # current_app.logger.info(
+            #     'writing macro "%s" to "%s"' % (self.name, self.path)
+            # )
             os.makedirs(os.path.dirname(self.path), exist_ok=True)
             with open(self.path, "wt") as f:
                 f.write(self.macro)
@@ -217,7 +217,7 @@ class Query(db.Model):
     def load(self, path):
         """ loads query from specified path """
 
-        current_app.logger.info('loading query file "%s".' % path)
+        # current_app.logger.info('loading query file "%s".' % path)
 
         # deal with missing and faulty files
         if not os.path.isfile(path):
@@ -251,6 +251,13 @@ class Query(db.Model):
         )
 
     def serialize(self):
+
+        # ensure anchors in corrections are integer
+        corrections = json.loads(self.corrections)
+        corrections_int = dict()
+        for k, c in corrections.items():
+            corrections_int[int(k)] = c
+
         return {
             'meta': {
                 'name': self.name,
@@ -259,7 +266,7 @@ class Query(db.Model):
             },
             'cqp': self.cqp,
             'anchors': {
-                'corrections': json.loads(self.corrections),
+                'corrections': corrections_int,
                 'slots': json.loads(self.slots)
             }
         }
@@ -268,17 +275,17 @@ class Query(db.Model):
         """ writes query to database and appropriate path """
 
         # write record to database
-        current_app.logger.info(
-            'writing query "%s" to database' % self.name
-        )
+        # current_app.logger.info(
+        #     'writing query "%s" to database' % self.name
+        # )
         db.session.add(self)
         db.session.commit()
 
         # write file
         if write_file:
-            current_app.logger.info(
-                'writing query "%s" to "%s"' % (self.name, self.path)
-            )
+            # current_app.logger.info(
+            #     'writing query "%s" to "%s"' % (self.name, self.path)
+            # )
             os.makedirs(os.path.dirname(self.path), exist_ok=True)
             cqpy_dump(self.serialize(), self.path)
 
@@ -383,9 +390,9 @@ def read_patterns(path):
             retired=p[1]['retired'],
             name=p[1]['name']
         )
-        current_app.logger.info(
-            'writing pattern %d to database' % pattern.id
-        )
+        # current_app.logger.info(
+        #     'writing pattern %d to database' % pattern.id
+        # )
         db.session.add(pattern)
         db.session.commit()
 

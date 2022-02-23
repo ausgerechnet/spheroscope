@@ -1,5 +1,6 @@
 - in general, we only annotate *clear* positives that don't need additional inference steps
 - every slot has to be realised; any exceptions are given in the specifications for respective patterns
+- as a general exception, ENTITY slots that are not present because of syntactic ellipsis count as filled iff the entity can safely be assumed to be the author of the tweet
 - we currently *do* annotate patterns embedded within questions, negations, relative phrases etc. as positives
 
 # 0 Quotation #
@@ -51,14 +52,16 @@
 - FORMULA cannot be just an entity (ENTITY backs CAMERON != ENTITY desires CAMERON)
 
 ## examples ##
-- ... says The Times, endorsing Brexit
-- I believe in votes at 16ot
-- ... 50% in favour of ...
-- he is against it (we read this as 'he wants for it to not be true')
-- George is for Brexit
-- Hoping for a successful outcome .
-- I am interested in participating
-- We're really looking forward to this
+- ... says **The Times**, endorsing **Brexit**
+- **50%** in favour of **Brexit**
+- **he** is against **it** (we read this as 'he wants for it to not be true')
+- **George** is for **Brexit**
+- Hoping for **a successful outcome** .
+- **I** am interested in **participating**
+- **We** are really looking forward to **this**
+- **they** endorse **Brexit**
+- a key Brexit supporter claims ... (pathological/ not query-able: entity defined via desire)
+- the pro brexit campaigners are using this strategy (pathological / not query-able)
 
 ## counter examples ##
 - One-sided preference without explicit marking of desire: SF have issues with EU but *see it as better* for NI to remain [because they might not actually want to remain, despite seeing this as the rationally best decision]
@@ -66,13 +69,14 @@
 - the desire can only be inferred from an action (he *voted* remain might be interpreted as him /remain/ to be made true, but we do not consider such actions a sufficiently clear expression of desire)
 - it would be nice if ..
 - ... the figures were REMAIN 45% ...
-- I'm Brexit -> group membership
 - rhetorical questions and idiomatic expressions: you want to talk misleading?
 - he's got Brexit as his next agenda item
 - the desire can only be inferred from an expression of conscious decision or reasoning (Johnson's *reason* to remain, her *case* for leave),
 - the technocrats fighting hard for Britain to remain
 - positive regard without desire: you seem to like that
 - the technocrats in the Eu fighting for Britain to remain (effort does not necessarily equal desire)
+- I believe in votes at 16 and no GRP for transgender people
+- I'm endorsing my point from yesterday (the point is being reinforced, not desired)
 
 # 4 Ought #
 - ... should / ought ...
@@ -138,13 +142,20 @@
 - @Nissan is the biggest private sector employer in the North East - massive investor in Britain, job + car creator (too implicit -- investing / employing not inherently positive)
 
 # 10 Belief #
-- ENTITY believes / thinks FORMULA
-- ENTITY is certain / sure that FORMULA
+- ENTITY believes / thinks that FORMULA is true
+- ENTITY is sure that FORMULA is true
+- Can be difficult to separate from knowledge (pattern 34) based on cue words
 
 ## examples ##
-- I'm certain it will break up or change dramatically
-- I don't think people realise the severity of the consequences of voting to leave
+- I **don't think** people realise the severity of the consequences of voting to leave
 - I believe they will
+- i agree the sooner we leave the better
+- I believe in votes at 16 and no GRP for transgender people (= I believe this ought to be made true)
+- I think this could work
+
+## counter-examples ##
+- I agree with her about Brexit (there is reference to belief here, but it is unclear who believes what; we only learn that 'I' and 'her' believe different things w.r.t. Brexit)
+- I'm thinking of a solution (= thinking as a general cognitive process vs. thinking as belief)
 
 ## confusions
 - #0
@@ -293,9 +304,9 @@
 
 # 24 Membership #
 - ENTITY is part of ENTITY GROUP
-- Our understanding of ENTITY GROUP is very broad and includes, but is not limited to, professions (e.g. *Politician* Joe Smith), nationality (she is *Icelandic*), or membership in political parties.
-- being in a group is often expressed through a form of *be*, noun phrase modification, or by saying that ENTITY has taken a particular side
-- We also cound ad-hoc groups that might be unlikely to contain any other members (cf. first example)
+- Groups are defined widely, with prototypical cases including e.g. professions, parties/organisations or nationalities
+- We also annotate ad-hoc groups (cf. first example)
+- Special case: remaining/staying in a group is generally understood as membership (continuing the status quo of being a member), while leaving is not 'negative' membership, but rather an action that changes membership status only by implication
 
 ## examples ##
 - The clintons are fat cats who are owned by the multinationals
@@ -309,10 +320,17 @@
 - "Stuart Rose has switched sides to #Leave"
 - "Brits are too much cowards to vote" (24 + 25)
 - "this doesn't sway me from Brexit"
+- we're on the side of leave
+- **Scotland** should remain in **EU**
+- **we** are all **stupid people**
+- the EU slave nations Germany and France
 
 ### counter examples ###
 - he supports leave: pattern 3
 - "a billionaire brexit supporter" (ENTITY must be concrete; this statement only expresses that some abstract group member exists)
+- **The UK** will leave **the EU**
+- we are all stupid (property rather than group definition)
+- Brexit will help other EU slave nations (group specification, but missing entity).
 
 # 25 Universal Quantification [!] #
 - ENTITY is / does something
@@ -361,15 +379,23 @@
 - most of them are NOT ' refugees ' at all
 
 # 34 Knowledge #
-- ENTITY knows FORMULA
+- ENTITY knows FORMULA is true
+- Knowledge is considered from the entity's point of view; i.e. regardless of whether FORMULA is **actually** true 
 
 ## examples ##
 - I know that Nigel Farage didn't murder that MP
 - Even this Norwegian minister knows that this would not be good for UK
 - The pro-EU campaign knows that people don't trust Dodgy Dave
+- You know you're in when Warren Buffet starts selling cherry coke
+- I'm certain it will break up or change dramatically
+- **The president** understands that **this is true**
+
+## counter-examples ##
+- You know, this was really a stupid idea ('you know' as a discourse marker)
+- Cameron should know about Brexit (know about a topic != know the  truth of a particular statement)
 
 ## confusions ##
-- #10: ENTITY is certain that FORMULA
+p10: belief
 
 # 35 Necessary Truth #
 - FORMULA will always be the case
@@ -426,7 +452,7 @@
 # 41 Warning of Bad Consequence #
 - ENTITY says that FORMULA would lead to bad FORMULA
 - indirect version of p38 where something is claimed to be bad by consequence
-
+- bad consequences include changes in size/amount etc. that are considered bad by general consensus
 ## examples ##
 - **Richard Haass**' claim that **Brexit** could 'trigger **NI violence**'
 - **Experts** warn that **brexit** could cause the **pound to fall**
@@ -463,7 +489,7 @@
 - I feel ashamed of our Gov. Worse to have others feel sorry for us
 
 # 44 Good #
-- FORMULA is universally (=for all) good
+- FORMULA is universally good (i.e. the scope is not explicitly limited to specific entities)
 ## examples ##
 - nation states are good
 - so the ideal will be Indy in EU with rUK still a member
@@ -472,21 +498,23 @@
 - Democracy is also often taken for granted
 
 # 45 Bad #
-- FORMULA is universally (=for all) bad
-- It is enough for the FORMULA to be bad in some aspects, regardless of whether it has positive characteristics as well
-- Boris is the worst prime minister ever
+- FORMULA is universally bad (i.e. the scope is not explicitly limited to specific entities)
+- It is enough for the FORMULA to be bad in only some aspects, regardless of whether it has positive characteristics as well
+- expressions not relating directly to damage/danger but to changes in size/amount are not considered here, but understood as (negative) consequences
 
 ## examples ##
 - nation states are evil
-- the problem is that ...
+- Boris is the worst prime minister ever
+- the problem is that he never complied
 - the system is flawed (= the system is bad, at least in some ways)
 - Leave's arguments just don't add up.
-- Bigoted bloody bunch (#21 because this is a negative evaluation of somebody's character rather than e.g. their overall 'suitability' as in the prime minister example)
 
 ## counter examples ##
 - the #UN - a unit of the globalist conspiracy (#21)
 - its illegal immigrants that are entering through the EU on false documents or nothing at all that worries me. (no explicit universal evaluation)
 - I feel that if we Brexit, the rest of the world will view us as racist, bigoted and narrow-minded"
+- Bigoted bloody bunch (#21 because this is a negative evaluation of somebody's character rather than e.g. their overall 'suitability' as in the prime minister example)
+
 ## problematic ##
 - so what exactly is wrong with an EU army
 
@@ -511,6 +539,22 @@
 - Hilary Benn has warned that Britain 's exit from the EU would make the country ' poorer ' and ' less influential'
 - Brexit could lead to downgrades for other EU countries -Fitch
 
+# 52 intention #
+deprecated
+
+# 53 intention to do #
+- ENTITY intends to do ACTION
+- Usually, statements expressing a future action without referencing intentions, plans etc. are interpreted as intention if subject = author (I will do X vs. She will do X)
+
+## examples ##
+- **1000 officials** travel to Strasbourg monthly **to vote** at a cost of €130m per annum
+- **French** to **brick up channel tunnel** in event of #BREXIT! (read as: are set / committed to brick up the tunnel)
+- **Stuart Rose** has probably switched sides to #Leave but agreed to stay quite to **save his blushes**
+
+## counter-examples ##
+- Brexit vote set to fuel more referendums (prediction statement; no agency)
+- things will go up in price EVERYTHING WILL COST MORE!
+- But Trump is no mug &amp; he will trade with the UK despite Cameron
 
 # Categories #
 - entities vs entity groups
