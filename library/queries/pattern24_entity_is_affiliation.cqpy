@@ -1,0 +1,16 @@
+# --- # CQPY query file
+# anchors:
+#   corrections:
+#     '1': -1
+#   slots:
+#     '0':
+#     - match
+#     - 1
+#     '1': 2
+# meta:
+#   comment: null
+#   name: pattern24_entity_is_affiliation
+#   pattern: 24
+# ---
+
+@0[::][pos_ark="[DANZ#@^]"]+ @1:[lemma="be"] @2[lemma=$nouns_person_origin | lemma=$nouns_person_support] [pos_ark!="[DANZ#@^]"]
