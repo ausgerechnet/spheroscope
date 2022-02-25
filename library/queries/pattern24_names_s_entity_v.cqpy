@@ -1,0 +1,19 @@
+# --- # CQPY query file
+# anchors:
+#   corrections:
+#     '1': -1
+#     '3': -1
+#   slots:
+#     '0':
+#     - 0
+#     - 1
+#     '1':
+#     - 2
+#     - 3
+# meta:
+#   comment: null
+#   name: pattern24_names_s_entity_v
+#   pattern: 24
+# ---
+
+@0[::][pos_ark="[G#Z@\^]" | word="[A-Z]{2,}"]+ @1:"'?s" @2[::] [pos_ark="[Z@]"]+ @3:[pos_ark="V"]

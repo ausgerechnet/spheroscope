@@ -1,0 +1,16 @@
+# --- # CQPY query file
+# anchors:
+#   corrections:
+#     '2': -1
+#   slots:
+#     '0': 0
+#     '1':
+#     - 1
+#     - 2
+# meta:
+#   comment: null
+#   name: pattern24_mostly_group_entitiy
+#   pattern: 24
+# ---
+
+[pos_ark="R"] @0[lemma=$nouns_person_origin | lemma=$nouns_person_support] @1[::][pos_ark="[DAZ^N@#]"]+ @2[::]

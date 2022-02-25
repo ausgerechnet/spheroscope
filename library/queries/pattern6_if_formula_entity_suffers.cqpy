@@ -1,0 +1,19 @@
+# --- # CQPY query file
+# anchors:
+#   corrections:
+#     '1': -1
+#     '3': -1
+#   slots:
+#     '0':
+#     - 2
+#     - 3
+#     '1':
+#     - 0
+#     - 1
+# meta:
+#   comment: null
+#   name: pattern6_if_formula_entity_suffers
+#   pattern: 6
+# ---
+
+[lemma="if"] @0[::] ([pos_ark = "[DAR\&P]"]* [pos_ark = "[@ONPZ#V^]"]){2,} @1[::] "," @2[::] ([pos_ark = "[DAR]"]* [pos_ark = "[@NPZ#^]" | pos_ner="PRP"]+) @3[::] [pos_ark="V"]+([lemma=$verbs_damage_direct_subj] | [lemma="be"] [lemma=$verbs_destruction]) [pos_ark!="[PT]"]

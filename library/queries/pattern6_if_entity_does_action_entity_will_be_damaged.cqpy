@@ -1,0 +1,19 @@
+# --- # CQPY query file
+# anchors:
+#   corrections:
+#     '1': -1
+#     '3': -1
+#   slots:
+#     '0':
+#     - 0
+#     - 1
+#     '1':
+#     - 2
+#     - 3
+# meta:
+#   comment: null
+#   name: pattern6_if_entity_does_action_entity_will_be_damaged
+#   pattern: 6
+# ---
+
+[lemma="if"] @0:[::] ([pos_ark = "[DA@NZ#^]"]+ | [pos_ner ="PRP"]) [pos_ark="[V#L]"] [pos_ark="[NZV#PO]"]* @1:[::]","? @2:[::][pos_ark = "[DAR@ONZ^\&]"]+@3:[::] [pos_ark="V"] [lemma="be"]? [(lemma=$verbs_attack | lemma = $verbs_crashing | lemma = $verbs_destruction) & word=".+ed"]
