@@ -1,0 +1,19 @@
+# --- # CQPY query file
+# anchors:
+#   corrections:
+#     '1': -1
+#     '3': -1
+#   slots:
+#     '0':
+#     - match
+#     - 1
+#     '1':
+#     - 2
+#     - 3
+# meta:
+#   comment: null
+#   name: pattern24_name_joins_group
+#   pattern: 24
+# ---
+
+@0[::] [pos_ark="[#ZG@^]"]+ (@1:[lemma="join"] | @1:[lemma="sign"] "up" "for" | @1:[lemma="participate"] "in") @2[::] [pos_ark="[#G^]"]+ @3:[pos_ark!="[NP]"]
