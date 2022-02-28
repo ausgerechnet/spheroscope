@@ -91,6 +91,7 @@ def index():
                            queries=(queries.filter_by(pattern_id=pattern).all()
                                     if pattern else queries.all()))
 
+
 @bp.route('/hierarchical')
 @login_required
 def subindex():
