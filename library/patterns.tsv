@@ -10,7 +10,7 @@ idx	name	template	explanation	retired
 11	option	A_{{?0 : entity}}({?1 : action})	entity 0 has the option to perform action 1	False
 12	default implication	({?0 : formula}) \dimplies ({?1 : formula})	when formula 0 is true, formula 1 usually is also true	False
 15	similarity	({?0 : concept}) \sim ({?1 : concept})	concept 0 is similar to concept 1	False
-16	expressed preference	Q_{{?1 : entity}}(({?0 : formula}) \leq ({?2 : formula}))	entity 1 prefers formula 2 over formula 0	False
+16	expressed better	Q_{{?1 : entity}}(({?0 : formula}) \leq ({?2 : formula}))	entity 1 expressed preference of formula 2 over formula 0	False
 19	entity's obligation	O ({?0 : entity}) stit ({?1 : formula})	entity 0 should make formula 1 true	False
 20	lying	Q_{{?0 : entity}} ({?1 : formula}) \land \neg B_{{?0}} ({?1})	entity 0 lies about formula 1	False
 21	ad-hominem	\neg moral({?0 : entity})	entity 0 is morally bad and should be condemned	False
@@ -18,7 +18,7 @@ idx	name	template	explanation	retired
 23	implication	({?0 : formula}) \implies ({?1 : formula})	if formula 0 then formula 1 	False
 24	membership	{?0 : entity} \implies {?1 : entity}	entity 0 is part of entity 1	False
 25	universal	({?0 : entity})\implies \downarrow x.\,({?1 : formula \text{ mentioning } x})	all entities in entity 0 have property 1	False
-26	position to know	({?0 : entity})\implies \downarrow x.,K_x ({?1 : formula}); K_{{?2 : entity}}(?1)); (?2) \implies (?0)	entity 2 is part of entity 0 whose members know formula 1	False
+26	position to know	K_{{?0 : entity}} ({?1 : formula}); K_{{?2 : entity}}(?1)); (?2) \implies (?0)	entity 2 is part of entity 0 whose members know formula 1	False
 27	negation	\neg {?0 : formula}	formula 0 is false	False
 30	action execution	E_{?0 : entity}({?1 : action})	entity 0 executed action 1	False
 32	weak universal	({?0 : entity})\dimplies \downarrow x.,({?1 : formula\text{ mentioning }x})	most entities in entity 0 have property 1	False
@@ -34,13 +34,13 @@ idx	name	template	explanation	retired
 43	better for concept	({?0 : formula}) \leq_{{?2 : concept}} ({?1 : formula})	1 is/would be at least as good for concept 2 as 0	False
 44	good	good({?0 : formula})	0 is/would be genereally good	False
 45	bad	bad({?0 : formula})	0 is/would be generally bad	False
-46	qualified desire	({?0 : entity})\implies \downarrow x.\,D_x ({?1 : formula}); D_{{?2 : entity}}(?1)); (?2) \implies (?0)	entity 2 is part of entity 0 whose members want formula 1	False
+46	qualified desire	D_{{?0 : entity}} ({?1 : formula}); D_{{?2 : entity}}(?1)); (?2) \implies (?0)	entity 2 is part of entity 0 whose members want formula 1	False
 48	warning some	Q_{{?0 : entity}} badFor({?1 : concept}, {?2 : formula})	entity 0 warns that formula 2 is/would be bad for entity 1	False
 49	warning of bad consequences for some	Q_{{?0 : entity}} ({?1 : formula} \mcauses {?2 : formula} \land badFor({?3 : entity},{?2})	entity 0 warns that formula 1 would cause formula 2 which would be bad for entity 3	False
 50	cause of evil	{{?0 : formula}} \mcauses {{?1 : formula}}; bad({?1})	formula 0 has/would have consequence formula 1 that is/would be bad	False
 51	cause of evil for some	{{?0 : formula}} \mcauses {{?1 : formula}}; badFor({?2 : concept}{?1})	formula 0 has/would have consequence formula 1 that is/would be bad for entity/concept 2	False
-52	intention	I_{{?0 : entity}} {?1 : formula}	entity 0 is committed to make formula 1 true	False
 53	intention to do	I_{{?0 : entity}} E_{{?0}} {?1 : action}	entity 0 intends to execute action 1	False
+54	believe better	B_{{?0 : entity}} {?1 : formula} \leq {?2 : formula}	entity 0 thinks formula 2 is preferrable over formula 1 	False
 -9999	preamble	\newcommand{\mcauses}{\Box\kern-.5em{\implies}} \newcommand{\dimplies}{\overset{d}{\implies}} \newcommand{\cfac}{\overset{c}{\implies}}	the preamble (for exporting)	True
 1	explanation	({?0 : formula}) \mcauses ({?1 : formula})	0 is the reason why 1 is true; note that 0 and 1 could be formulas talking about the past stating that something was the reason why something was the case at some point in time	True
 7	 	({?1 : formula}) \mcauses Q_{{?0 : entity}} bad	1 is bad for entity 0	True
@@ -54,4 +54,5 @@ idx	name	template	explanation	retired
 31	DES	[{?0 : entities};{{?1 : \text{list of lists of }actions}} : {?2 : entities}]({?3 : formula})	the entities 0 can collaborate to enforce truth of 3 as long as entities 2 execute one of the (joint) actions from 1	True
 33	possible causation claim	Q_{{?0 : entity}} \diamond (({?1 : formula}) \mcauses ({?2 : formula}))	entity 0 claims that 1 might cause 2 to be true	True
 47	unary preference	D_{{?0 : entity}} ({?1 : formula})	entity 0 prefers formula 1 being true over it being false	True
+52	intention	I_{{?0 : entity}} {?1 : formula}	entity 0 is committed to make formula 1 true	True
 9999	unknown	\top	uncategorized queries	True
