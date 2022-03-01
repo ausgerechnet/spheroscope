@@ -9,7 +9,6 @@ no text
 ## internal use
 - adjudicated.tsv: internal adjudication
 - pattern38-bits.tsv: internal classification of pattern38
-- pattern3_{query}.tsv: matches for each query
 
 ## published
 - query-matches.tsv: gold standard v0.4

@@ -16,4 +16,4 @@
 #   pattern: 24
 # ---
 
-@0:[pos_ner="(JJ|NNP)"|pos_ark="[AZ^]"]* [lemma=$nouns_person_profession | lemma =$nouns_person_support] @1:[::] @2:[::]([pos_ark="@"|pos_ner="USR"] | [pos_ark="Z"|pos_ner="NNP" & word="[A-Za-z+\.]"]{2,}) @3:[::]
+@0:[pos_ner="(JJ|NNP)"|pos_simple="[JZ]"]* [lemma=$nouns_person_profession | lemma =$nouns_person_support] @1:[::] @2:[::]([pos_simple="@"|pos_ner="USR"] | [pos_simple="Z"|pos_ner="NNP" & word="[A-Za-z+\.]"]{2,}) @3:[::]
