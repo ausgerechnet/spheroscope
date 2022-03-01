@@ -20,7 +20,7 @@ def get_frequencies(cwb_id, words, p_att):
     corpus = init_corpus(corpus_config)
 
     current_app.logger.info('getting frequency info for %d items' % (len(words)))
-    freq = corpus.marginals(words, p_att=p_att)
+    freq = corpus.marginals(words, p_atts=[p_att])
 
     return freq
 

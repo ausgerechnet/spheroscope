@@ -16,4 +16,4 @@
 #   pattern: 24
 # ---
 
-@0[::] [pos_ark="[#ZG@^L]"]+ (@1:[lemma="enter|head|join|remain|stay|switch"] "in|to"? | @1:[lemma="sign"] "up" "for" | @1:[lemma="participate"] "in") @2[::] [pos_ark="[#G^]"]+ @3:[pos_ark!="[NP]"]
+@0[::] [pos_ark="[#ZG@^]"]+ (@1:[lemma="join"] | @1:[lemma="sign"] "up" "for" | @1:[lemma="participate"] "in") @2[::] [pos_ark="[#G^]"]+ @3:[pos_ark!="[NP]"]
