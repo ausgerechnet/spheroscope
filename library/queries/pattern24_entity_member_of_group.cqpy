@@ -6,10 +6,13 @@
 #     '0':
 #     - 0
 #     - 1
+#     '1':
+#     - 2
+#     - 3
 # meta:
 #   comment: null
 #   name: pattern24_entity_member_of_group
 #   pattern: 24
 # ---
 
-@0:[::][pos_ark="[NOZ^@#]"]+ @1:[::]"to"? [lemma="be"] [pos_ark="[DA]"]* [lemma="member|part"] "of" @2[::][pos_ark="[DA]"]* @3:[pos_ark="[NOZ^@#]"]
+@0:[::][pos_ark="[NODAZ^@#]"]+ @1:[::]"to"? [lemma="be|become|form|remain|stay"] [pos_ark="R"]* [pos_ark="[DA]"]* [lemma="chair|citizen|example|form|inhabitant|kind|member|part|type"] "of" @2[::][pos_ark="[DA]"]* @3:[pos_ark="[NOZ^V@#]"]+
