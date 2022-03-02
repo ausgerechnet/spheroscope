@@ -539,8 +539,6 @@ p10: belief
 - Hilary Benn has warned that Britain 's exit from the EU would make the country ' poorer ' and ' less influential'
 - Brexit could lead to downgrades for other EU countries -Fitch
 
-# 52 intention #
-deprecated
 
 # 53 intention to do #
 - ENTITY intends to do ACTION
@@ -550,11 +548,19 @@ deprecated
 - **1000 officials** travel to Strasbourg monthly **to vote** at a cost of €130m per annum
 - **French** to **brick up channel tunnel** in event of #BREXIT! (read as: are set / committed to brick up the tunnel)
 - **Stuart Rose** has probably switched sides to #Leave but agreed to stay quite to **save his blushes**
+- **I'm** **voting #Remain** with reservations, but pensioners stand to lose from #Brexit
+- Why does Brexit say "that's rubbish" and "**we'll** **negotiate to keep**" every time @LabourRemain point out something we'll lose
+- **Rich Audi drivers**, will **stay to avoid losing their 'richness'** (this is not just a future prediction because it contains a reason why they will stay)
+- $DIA You know **Warren Buffet** will drink his daily Cherry $KO and pull out his shopping bag **to buy buy buy** following the Brexit vote. $SPY (drink his daily Cherry $KO: prediction; pull out his shopping bag to buy: intention to do)
+- "It's **this damn Brexit** tryin'a **lure us into an ambush**"
+- Why do you think **Trump** chose to **visit UK day after the referendum**? (chose to -> deliberate action)
 
 ## counter-examples ##
 - Brexit vote set to fuel more referendums (prediction statement; no agency)
 - things will go up in price EVERYTHING WILL COST MORE!
 - But Trump is no mug &amp; he will trade with the UK despite Cameron
+- things will go up in price 
+- We're holding an English referendum next to decide whether we'll allow Scotland to stay (exception to the speaker + future construction -> intention rule: here, 'we' is understood as the government, i.e. the speaker presumably has no agency in what is happening, so the statement does not reflect their intention)
 
 # Categories #
 - entities vs entity groups
