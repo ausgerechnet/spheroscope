@@ -2,48 +2,21 @@
 # -*- coding: utf-8 -*-
 
 import os
-from collections import defaultdict
 
-import click
 from flask import (Blueprint, Response, current_app, g, jsonify, redirect,
                    render_template, request, session, url_for)
-from flask.cli import with_appcontext
-from pandas import DataFrame, concat, read_csv
+from pandas import concat, read_csv
 
 from .auth import login_required
 from .corpora import init_corpus, read_config
-from .database import Pattern, Query, get_patterns
+from .database import Query, get_patterns
 
 bp = Blueprint('queries', __name__, url_prefix='/queries')
 
 
-# queries:
-
-# IMPORT
-# - {lpath}=library/queries/{name}.cqpy
-# - {query} = load(path)
-# - {query}['meta']['name'] :=
-#   1. {query}['meta']['name'] %>% namecheck()
-#   2. {lpath}.split("/")[-1].split(".cqpy")[0]
-# - @property path:=
-#   instance/queries/{query}['meta']['name'].cqpy
-# - write()
-
-# NEW
-# - {query} = request.form()
-# - write(database, file)
-
-# UPDATE
-# - mv file to {path}.bak
-# - write(database, file)
-
-# DELETE
-# - mv file to {path}.bak
-# - rm(database)
-
-
 def run_queries(queries, cwb_id):
     """collect matches of queries as dataframe.
+    ---
 
     index:
     - <str> query_name: name of the query
@@ -127,6 +100,7 @@ def run_queries(queries, cwb_id):
 def add_gold(result, cwb_id, pattern, s_cwb, s_gold):
     """add gold annotation to result of run_queries() on a textual basis
     (disregarding actual match and matchend).
+    ---
 
     """
 
@@ -154,8 +128,7 @@ def add_gold(result, cwb_id, pattern, s_cwb, s_gold):
 
 def evaluate(matches, s, tp_column='TP'):
     """evaluate result of add_gold(run_queries()) on a textual basis
-
-    :param pd.Series tps: column with True / False annotations
+    ---
 
     """
 
@@ -178,6 +151,11 @@ def evaluate(matches, s, tp_column='TP'):
 
 
 def patch_query_results(result):
+    """transform column names in MultiIndex
+    ---
+
+    """
+
     newresult = result.rename(columns={
         "word": "whole_word",
         "word_x": "whole_word_x",
@@ -188,12 +166,14 @@ def patch_query_results(result):
         "_merge": "merge"
     })
     newresult.columns = newresult.columns.str.split('_', 2, expand=True)
+
     return newresult
 
 
 def create_subcorpus(df, slot):
     """transform one slot of result of run_queries() into a valid dump
     (empty dataframe multi-indexed by match and matchend)
+    ---
 
     """
 
@@ -231,6 +211,16 @@ def create_subcorpus(df, slot):
 @bp.route('/')
 @login_required
 def index():
+    """
+    list all queries
+    ---
+    parameters:
+      - name: pattern
+        in: query
+        required: False
+        description: only list queries belonging to one pattern
+
+    """
     pattern = request.args.get('pattern')
     queries = Query.query.order_by(Query.name)
     return render_template('queries/index.html',
@@ -238,17 +228,25 @@ def index():
                                     if pattern else queries.all()))
 
 
-@bp.route('/hierarchical')
-@login_required
-def subindex():
-    patterns = Pattern.query.order_by(Pattern.name)
-    return render_template('queries/subindex.html',
-                           patterns=patterns)
-
-
 @bp.route('/create', methods=('GET', 'POST'))
 @login_required
 def create():
+    """
+    create a query
+    ---
+    parameters:
+      - name: query
+        in: query
+      - name: name
+        in: query
+      - name: pattern
+        in: query
+      - name: slots
+        in: query
+      - name: corrections
+        in: query
+
+    """
 
     if request.method == 'POST':
 
@@ -272,10 +270,23 @@ def create():
                            patterns=get_patterns())
 
 
-@bp.route('/<int:id>/update', methods=('GET', 'POST'))
+@bp.route('/<int(signed=True):id>/update', methods=('GET', 'POST'))
 @login_required
 def update(id):
+    """
+    update a query
+    ---
+    parameters:
+      - name: id
+        in: path
+        type: int
+        required: true
+        description: query id
+
+    """
+
     query = Query.query.filter_by(id=id).first()
+
     if request.method == 'POST':
         query.delete()
         query = Query(
@@ -299,15 +310,28 @@ def update(id):
                            patterns=get_patterns())
 
 
-@bp.route('/<int:id>/delete', methods=('POST',))
+@bp.route('/<int(signed=True):id>/delete', methods=('POST',))
 @login_required
 def delete_cmd(id):
+    """
+    delete a query
+    ---
+    parameters:
+      - name: id
+        in: path
+        type: int
+        required: true
+        description: query id
+
+    """
+
     query = Query.query.filter_by(id=id).first()
     query.delete()
+
     return redirect(url_for('queries.index'))
 
 
-@bp.route('/<int:id>/matches', methods=('GET', 'POST'))
+@bp.route('/<int(signed=True):id>/matches', methods=('GET', 'POST'))
 @login_required
 def matches(id):
     """
@@ -318,7 +342,7 @@ def matches(id):
         in: path
         type: int
         required: true
-        description: CWB-id of the corpus
+        description: query id
 
     """
 
@@ -331,13 +355,13 @@ def matches(id):
 
     # run the old query
     query = Query.query.filter_by(id=id).first()
-    oldresult = run_queries([query], cwb_id)
+    old_matches = run_queries([query], cwb_id)
 
-    if oldresult is None:
+    if old_matches is None:
         return 'query does not have any matches'
 
     # select columns
-    display_columns = [x for x in oldresult.columns if x not in [
+    display_columns = [x for x in old_matches.columns if x not in [
         'context_id', 'context', 'contextend'
     ]]
 
@@ -358,96 +382,29 @@ def matches(id):
             user_id=g.user.id
         )
 
-        # get new result and merge to old result
-        newresult = run_queries([newquery], cwb_id)
+        # get new matches and merge to old matches
+        new_matches = run_queries([newquery], cwb_id)
         # index = ['query', 'match', 'matchend']
-        result = newresult.reset_index().merge(
-            oldresult.reset_index(), how='outer', indicator=True
+        matches = new_matches.reset_index().merge(
+            old_matches.reset_index(), how='outer', indicator=True
         ).set_index(['query', 'match', 'matchend'])
         # NB: index will contain duplicates if match and matchend didn't change but anchors or slots did
 
         # add gold, evaluate
-        matches = add_gold(result, cwb_id, query.pattern_id, s_cwb, s_gold)
+        matches = add_gold(matches, cwb_id, query.pattern_id, s_cwb, s_gold)
         tps = evaluate(matches, s_cwb)
 
         # render result
-        result = patch_query_results(result)
+        result = patch_query_results(matches)
+
         return render_template('queries/result_table.html',
                                result=result,
                                tps=tps)
 
     # download button @ /queries/
     return Response(
-        oldresult[display_columns].to_csv(),
+        old_matches[display_columns].to_csv(),
         mimetype='text/csv',
         headers={"Content-disposition":
                  f"attachment; filename={id}-results.csv"}
     )
-
-
-@click.command('query')
-@click.argument('pattern', required=False)
-@click.argument('dir_out', required=False)
-@click.argument('cwb_id', default="BREXIT_V20190522_DEDUP")
-@with_appcontext
-def query_command(pattern, dir_out, cwb_id):
-
-    # output directory
-    if dir_out is None:
-        dir_out = os.path.join(
-            current_app.instance_path, cwb_id, "results"
-        )
-    os.makedirs(dir_out, exist_ok=True)
-
-    # get all queries belonging to the pattern
-    if pattern is None:
-        queries = Query.query.all()
-        current_app.logger.info(
-            "all patterns: %d queries" % len(queries)
-        )
-        path_summary = os.path.join(dir_out, "summary.tsv")
-    else:
-        queries = Query.query.filter_by(pattern_id=pattern).all()
-        current_app.logger.info(
-            "pattern %s: %d queries" % (str(pattern), len(queries))
-        )
-        path_summary = os.path.join(dir_out, str(pattern) + "-summary.tsv")
-
-    # loop through queries
-    # TODO use run_queries
-    summary = defaultdict(list)
-    for query in queries:
-
-        current_app.logger.info(query.name)
-
-        p_out = None
-        n_hits = None
-        n_unique = None
-
-        # error = ""
-        try:
-            query = Query.query.filter_by(id=query.id).first()
-            lines = run_queries([query], cwb_id)
-        except KeyboardInterrupt:
-            return
-
-        if lines is not None and len(lines) > 0:
-            p_out = os.path.join(dir_out, query.name + '.tsv')
-            lines.to_csv(p_out, sep="\t")
-            n_hits = len(lines)
-            n_unique = len(lines.tweet_id.value_counts())
-        else:
-            n_hits = 0
-            n_unique = 0
-
-        query_pattern = "None" if query.pattern is None else query.pattern.id
-
-        summary['query'].append(query.name)
-        summary['pattern'].append(query_pattern)
-        summary['n_hits'].append(n_hits)
-        summary['n_unique'].append(n_unique)
-        summary['path'].append(p_out)
-        # summary['error'].append(error)
-
-    summary = DataFrame(summary).set_index('query')
-    summary.to_csv(path_summary, sep="\t")
