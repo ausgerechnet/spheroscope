@@ -1,11 +1,15 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import os
 import re
+from collections import defaultdict
 
+import click
 from flask import (Blueprint, current_app, jsonify, render_template, request,
                    session)
-from pandas import concat
+from flask.cli import with_appcontext
+from pandas import DataFrame, concat
 
 from .auth import login_required
 from .corpora import init_corpus, read_config
@@ -104,7 +108,13 @@ def hierarchical_query(p1, slot, p2):
 @bp.route('/')
 @login_required
 def index():
+    """
+    list all patterns that are not deprecated
+    ---
+
+    """
     patterns = Pattern.query.filter(Pattern.id >= 0).order_by(Pattern.id).all()
+
     return render_template('patterns/index.html',
                            patterns=patterns)
 
@@ -112,18 +122,35 @@ def index():
 @bp.route('/api')
 @login_required
 def patterns():
+    """
+    get all patterns as json
+    ---
+
+    """
+
     patterndict = get_patterns()
+
     return jsonify(patterndict)
 
 
 @bp.route('/<int(signed=True):id>', methods=('GET', 'POST'))
 @login_required
 def pattern(id):
+    """
+    get one pattern
+    ---
+    parameters:
+      - name: id
+        in: path
+
+    """
+
     pattern = Pattern.query.filter_by(id=id).first()
     patterns = Pattern.query.all()
     pattern.queries = Query.query.filter_by(pattern_id=id).order_by(Query.name).all()
     slotfinder = re.compile(r"\d+")
     pattern.slots = set(slotfinder.findall(pattern.template))
+
     return render_template('patterns/pattern.html',
                            pattern=pattern,
                            patterns=patterns)
@@ -132,7 +159,13 @@ def pattern(id):
 @bp.route('/<int(signed=True):id>/matches', methods=('GET', 'POST'))
 @login_required
 def matches(id):
-    """retrieve matches of all queries belonging to one pattern"""
+    """retrieve matches of all queries belonging to one pattern
+    ---
+    parameters:
+      - name: id
+        in: path
+
+    """
 
     # mapping of s-att that contains gold annotation
     s_cwb = 'tweet_id'
@@ -147,14 +180,11 @@ def matches(id):
     matches = add_gold(matches, cwb_id, id, s_cwb, s_gold)
     tps = evaluate(matches, s_cwb)
 
-    # cut_off
-    matches = matches.sample(int(request.args.get('cut_off', 100)))
-
     # patch for frontend
-    matches = patch_query_results(matches)
+    result = patch_query_results(matches)
 
     return render_template('queries/standalone_result_table.html',
-                           result=matches,
+                           result=result,
                            tps=tps)
 
 
@@ -165,7 +195,6 @@ def subquery(p1):
     belonging to a _base_ pattern, then run all queries belonging to
     _slot_ pattern on one slot defined in the base pattern.
     ---
-
     parameters:
       - name: id
         in: path
@@ -184,18 +213,104 @@ def subquery(p1):
 
     """
 
+    # mapping of s-att that contains gold annotation
+    s_cwb = 'tweet_id'
+    s_gold = 'tweet'
+
     # process request parameters
     cwb_id = session['corpus']['resources']['cwb_id']
     slot = request.args.get('slot')
     p2 = request.args.get('p2')
 
     # get matches
-    result = hierarchical_query(p1, slot, p2)
+    matches = hierarchical_query(p1, slot, p2)
 
-    # evaluate matches
-    result = add_gold(result, cwb_id, slot)
-    tps = evaluate(result['TP'])
+    # add gold
+    matches = add_gold(matches, cwb_id, slot, s_cwb, s_gold)
+    tps = evaluate(matches, s_cwb)
 
-    return render_template('queries/standalone_result_table.html',
-                           result=patch_query_results(result),
+    # patch for frontend
+    result = patch_query_results(matches)
+
+    return render_template('queries/result_table.html',
+                           result=result,
                            tps=tps)
+
+
+#######
+# CLI #
+#######
+@click.command('query')
+@click.argument('pattern', required=False)
+@click.argument('dir_out', required=False)
+@click.argument('cwb_id', default="BREXIT_V20190522_DEDUP")
+@with_appcontext
+def query_command(pattern, dir_out, cwb_id):
+    """
+    CLI command for running all queries belonging to one pattern
+    ---
+
+    TODO improve using run_queries()
+    """
+
+    s_cwb = 'tweet_id'
+
+    # output directory
+    if dir_out is None:
+        dir_out = os.path.join(
+            current_app.instance_path, cwb_id, "results"
+        )
+    os.makedirs(dir_out, exist_ok=True)
+
+    # get all queries belonging to the pattern
+    if pattern is None:
+        queries = Query.query.all()
+        current_app.logger.info(
+            "all patterns: %d queries" % len(queries)
+        )
+        path_summary = os.path.join(dir_out, "summary.tsv")
+    else:
+        queries = Query.query.filter_by(pattern_id=pattern).all()
+        current_app.logger.info(
+            "pattern %s: %d queries" % (str(pattern), len(queries))
+        )
+        path_summary = os.path.join(dir_out, str(pattern) + "-summary.tsv")
+
+    # loop through queries
+    # TODO use run_queries
+    summary = defaultdict(list)
+    for query in queries:
+
+        current_app.logger.info(query.name)
+
+        p_out = None
+        n_hits = None
+        n_unique = None
+
+        # error = ""
+        try:
+            query = Query.query.filter_by(id=query.id).first()
+            lines = run_queries([query], cwb_id)
+        except KeyboardInterrupt:
+            return
+
+        if lines is not None and len(lines) > 0:
+            p_out = os.path.join(dir_out, query.name + '.tsv')
+            lines.to_csv(p_out, sep="\t")
+            n_hits = len(lines)
+            n_unique = len(lines[s_cwb].value_counts())
+        else:
+            n_hits = 0
+            n_unique = 0
+
+        query_pattern = "None" if query.pattern is None else query.pattern.id
+
+        summary['query'].append(query.name)
+        summary['pattern'].append(query_pattern)
+        summary['n_hits'].append(n_hits)
+        summary['n_unique'].append(n_unique)
+        summary['path'].append(p_out)
+        # summary['error'].append(error)
+
+    summary = DataFrame(summary).set_index('query')
+    summary.to_csv(path_summary, sep="\t")
