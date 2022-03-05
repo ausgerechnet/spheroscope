@@ -1,7 +1,6 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import json
 import os
 from collections import defaultdict
 
@@ -9,7 +8,7 @@ import click
 from flask import (Blueprint, Response, current_app, g, jsonify, redirect,
                    render_template, request, session, url_for)
 from flask.cli import with_appcontext
-from pandas import DataFrame, read_csv, concat
+from pandas import DataFrame, concat, read_csv
 
 from .auth import login_required
 from .corpora import init_corpus, read_config
