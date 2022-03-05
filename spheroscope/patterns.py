@@ -10,7 +10,8 @@ from pandas import concat
 from .auth import login_required
 from .corpora import init_corpus, read_config
 from .database import Pattern, Query, get_patterns
-from .queries import run_queries, create_subcorpus, add_gold, evaluate, patch_query_results
+from .queries import (add_gold, create_subcorpus, evaluate,
+                      patch_query_results, run_queries)
 
 bp = Blueprint('patterns', __name__, url_prefix='/patterns')
 
