@@ -16,6 +16,18 @@ from werkzeug.security import generate_password_hash
 from . import db
 
 
+def get_patterns():
+    # FIXME this conversion should go when the new database is in
+    patterns = Pattern.query.order_by(Pattern.id).all()
+    patterndict = [{
+        "id": abs(p.id),
+        "template": p.template,
+        "explanation": p.explanation,
+        "retired": p.id < 0
+    } for p in patterns]
+    return patterndict
+
+
 class User(db.Model):
 
     __tablename__ = 'user'
