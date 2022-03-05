@@ -70,15 +70,24 @@ def run_queries(queries, cwb_id):
 
         # translate anchors points in slot_START and slot_END for all slots
         for slot in query['anchors']['slots']:
+
+            df = dump.df.reset_index()
+            df.index = dump.df.index
+
+            # select relevant columns
             columns = query['anchors']['slots'][slot]
             columns = [columns] if isinstance(columns, int) else columns
-            df = dump.df[list(columns)].copy()
+            df = df[columns]
+
             if df.shape[1] == 1:
+                # only one column: start and end are the same
                 df.columns = ["_".join([str(slot), 'START'])]
                 df["_".join([str(slot), 'END'])] = df["_".join([str(slot), 'START'])]
             elif df.shape[1] == 2:
-                df.columns = ["_".join([str(slot), 'START']),
-                              "_".join([str(slot), 'END'])]
+                # two columns (start and end)
+                df.columns = ["_".join([str(slot), 'START']), "_".join([str(slot), 'END'])]
+
+            # join slots to matches dataframe
             matches = matches.join(df)
 
         # append to result list
