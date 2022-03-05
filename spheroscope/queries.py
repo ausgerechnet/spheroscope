@@ -53,6 +53,8 @@ def run_queries(queries, cwb_id):
             corrections=query['anchors']['corrections'],
             match_strategy=corpus_config['query']['match_strategy']
         )
+        if len(dump.df) == 0:
+            continue
 
         # retreive concordance
         matches = dump.concordance(
@@ -98,7 +100,10 @@ def run_queries(queries, cwb_id):
         matches_list.append(matches.reset_index())
 
     # create output dataframe
-    result = concat(matches_list).set_index(['query', 'match', 'matchend'])
+    if len(matches_list) > 0:
+        result = concat(matches_list).set_index(['query', 'match', 'matchend'])
+    else:
+        result = None
 
     return result
 
@@ -342,6 +347,7 @@ def delete_cmd(id):
 def matches(id):
     """
     run a query
+    if POSTing: create diff between old and new matches
     ---
     parameters:
       - name: id
@@ -390,6 +396,8 @@ def matches(id):
 
         # get new matches and merge to old matches
         new_matches = run_queries([newquery], cwb_id)
+        if new_matches is None:
+            return 'new query does not have any matches'
         # index = ['query', 'match', 'matchend']
         matches = new_matches.reset_index().merge(
             old_matches.reset_index(), how='outer', indicator=True
