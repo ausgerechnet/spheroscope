@@ -66,7 +66,7 @@ def run_queries(queries, cwb_id):
         # add name
         matches['query'] = query['meta']['name']
 
-        # translate anchors points in slot_START and slot_END for all slots
+        # translate anchor points in slot_START and slot_END for all slots
         for slot in query['anchors']['slots']:
 
             df = dump.df.reset_index()
@@ -75,6 +75,12 @@ def run_queries(queries, cwb_id):
             # select relevant columns
             columns = query['anchors']['slots'][slot]
             columns = [columns] if isinstance(columns, int) else columns
+            for c in columns:
+                if c not in df.columns:
+                    current_app.logger.warning(
+                        'anchor point %s not defined in query "%s"' % (str(c), query['meta']['name'])
+                    )
+                    df[c] = -1
             df = df[columns]
 
             if df.shape[1] == 1:
