@@ -54,15 +54,19 @@
     </tr>
   </thead>
   <tbody>
-  {% for k,res in result.iterrows() %}
-  <tr >
+  {% for k, res in result.iterrows() %}
+  <tr>
     <th {% if 'merge' in res.columns and res['merge'][0] == 'right_only' %} class="is-danger is-light" {% elif 'merge' in res.columns and res['merge'][0] == 'left_only' %} class="is-success is-light" {% endif %}>{{ k }}</th>
     {{ res.columns }}
     {% for c,v in res.groupby(level=0, sort=False) if not c == "merge" %}
     {% if v.size == 1 %}
     <td><span>{{ v[0] }}</span></td>
     {% elif v.size == 2 %}
+    {% if c == 'whole' %}
     <td><span title="{{ v[(c,'lemma')] }}">{{ v[(c, 'word')] }}</span></td>
+    {% else %}
+    <td><span title="{{ v[(c,'lemma')] }}">{{ v[(c, 'lemma')] }}</span></td>    
+    {% endif %}
     {% else %}
     <td id="{{ k }}-{{ c }}">
       <script>
