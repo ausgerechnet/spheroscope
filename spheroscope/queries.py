@@ -6,15 +6,14 @@ import os
 from collections import defaultdict
 
 import click
-from ccc.cqpy import run_query
 from flask import (Blueprint, Response, current_app, g, jsonify, redirect,
                    render_template, request, session, url_for)
 from flask.cli import with_appcontext
-from pandas import DataFrame, read_csv
+from pandas import DataFrame, read_csv, concat
 
 from .auth import login_required
 from .corpora import init_corpus, read_config
-from .database import Pattern, Query
+from .database import Pattern, Query, get_patterns
 
 bp = Blueprint('queries', __name__, url_prefix='/queries')
 
@@ -44,39 +43,187 @@ bp = Blueprint('queries', __name__, url_prefix='/queries')
 # - rm(database)
 
 
-def query_corpus(query, cwb_id):
-    """execute a query in a corpus. this function makes sure that the
-    query is valid input as expected by cwb-ccc's cqpy.run_query
+def run_queries(queries, cwb_id):
+    """collect matches of queries as dataframe.
 
-    :param dict query: query as dictionary
-    :param str cwb_id: CWB registry ID of the corpus
+    index:
+    - <str> query_name: name of the query
+    - <int> match: match position of query
+    - <int> matchend: matchend position of query
+
+    columns:
+    - corpus_config['display']['p_show']: p-attribute realization sequences of context
+    - corpus_config['display']['s_show']: s-attribute realizations at match
+    - for each slot in query['anchors']['slots']:
+       - slot_START: start position of slot
+       - slot_END: end position of slot
+       for each p-att:
+         - slot_p-att: p-attribute realization sequence of slot
+
     """
 
-    # get corpus config
-    corpus_config = read_config(cwb_id)
-
-    # load query and display parameters
-    query['query'] = dict(corpus_config['query'])
-    query['display'] = dict(corpus_config['display'])
-
-    # make sure anchors are int
-    corrections_int = dict()
-    for k, c in query['anchors']['corrections'].items():
-        corrections_int[int(k)] = c
-    query['anchors']['corrections'] = corrections_int
-
-    # also retrieve full match..matchend
-    query['anchors']['slots']['match..matchend'] = ('match', 'matchend')
-
     # init corpus
+    corpus_config = read_config(cwb_id)
     corpus = init_corpus(corpus_config)
 
-    # run query
-    current_app.logger.info('running query')
-    lines = run_query(corpus, query)
-    current_app.logger.info('done')
+    # run all queries
+    matches_list = list()
+    for query in queries:
 
-    return lines
+        current_app.logger.info("query: %s", query.name)
+        query = query.serialize()
+
+        # get dump
+        dump = corpus.query(
+            cqp_query=query['cqp'],
+            context=corpus_config['query']['context'],
+            context_break=corpus_config['query']['context_break'],
+            corrections=query['anchors']['corrections'],
+            match_strategy=corpus_config['query']['match_strategy']
+        )
+
+        # retreive concordance
+        matches = dump.concordance(
+            form='slots',
+            p_show=dict(corpus_config['display'])['p_show'],
+            s_show=dict(corpus_config['display'])['s_show'],
+            cut_off=None,
+            slots=query['anchors']['slots']
+        )
+
+        # add name
+        matches['query'] = query['meta']['name']
+
+        # translate anchors points in slot_START and slot_END for all slots
+        for slot in query['anchors']['slots']:
+
+            df = dump.df.reset_index()
+            df.index = dump.df.index
+
+            # select relevant columns
+            columns = query['anchors']['slots'][slot]
+            columns = [columns] if isinstance(columns, int) else columns
+            df = df[columns]
+
+            if df.shape[1] == 1:
+                # only one column: start and end are the same
+                df.columns = ["_".join([str(slot), 'START'])]
+                df["_".join([str(slot), 'END'])] = df["_".join([str(slot), 'START'])]
+            elif df.shape[1] == 2:
+                # two columns (start and end)
+                df.columns = ["_".join([str(slot), 'START']), "_".join([str(slot), 'END'])]
+
+            # join slots to matches dataframe
+            matches = matches.join(df)
+
+        # append to result list
+        matches_list.append(matches.reset_index())
+
+    # create output dataframe
+    result = concat(matches_list).set_index(['query', 'match', 'matchend'])
+
+    return result
+
+
+def add_gold(result, cwb_id, pattern, s_cwb, s_gold):
+    """add gold annotation to result of run_queries() on a textual basis
+    (disregarding actual match and matchend).
+
+    """
+
+    # result is indexed by ['query', 'match', 'matchend']
+    result = result.reset_index()
+
+    try:
+        # get and pre-process gold
+        gold = read_csv(
+            os.path.join("library", cwb_id, "gold", "adjudicated.tsv"),
+            sep="\t", index_col=0
+        )
+        gold = gold.loc[gold['pattern'] == pattern].rename(
+            {s_gold: s_cwb, 'annotation': 'TP'}, axis=1
+        )
+    except FileNotFoundError:
+        result['TP'] = None
+    else:
+        result = result.merge(gold[[s_cwb, "TP"]], on=s_cwb, how='left')
+
+    result = result.set_index(['query', 'match', 'matchend'])
+
+    return result
+
+
+def evaluate(matches, s, tp_column='TP'):
+    """evaluate result of add_gold(run_queries()) on a textual basis
+
+    :param pd.Series tps: column with True / False annotations
+
+    """
+
+    matches = matches.drop_duplicates(subset=[s])
+    tps = matches[tp_column]
+
+    # get TPs, FPs, precision
+    N = len(tps)
+    tps = tps.value_counts().to_dict()
+    tps['TP'] = tps.pop(True, 0)
+    tps['FP'] = tps.pop(False, 0)
+    tps['N'] = N
+
+    try:
+        tps['prec'] = tps['TP'] / (tps['FP'] + tps['TP'])
+    except ZeroDivisionError:
+        tps['prec'] = 'nan'
+
+    return tps
+
+
+def patch_query_results(result):
+    newresult = result.rename(columns={
+        "word": "whole_word",
+        "word_x": "whole_word_x",
+        "word_y": "whole_word_y",
+        "lemma": "whole_lemma",
+        "lemma_x": "whole_lemma_x",
+        "lemma_y": "whole_lemma_y",
+        "_merge": "merge"
+    })
+    newresult.columns = newresult.columns.str.split('_', 2, expand=True)
+    return newresult
+
+
+def create_subcorpus(df, slot):
+    """transform one slot of result of run_queries() into a valid dump
+    (empty dataframe multi-indexed by match and matchend)
+
+    """
+
+    # select appropriate columns
+    column_start = "_".join([str(slot), "START"])
+    column_end = "_".join([str(slot), "END"])
+    dump = df.reset_index(drop=True)[[column_start, column_end]]
+
+    # only take rows where there's a match, sort ascending and deduplicate
+    dump = dump.fillna(-1, downcast='infer')
+    dump = dump[dump[column_start] != -1]
+    dump = dump.sort_values(by=column_start)
+    dump = dump.drop_duplicates()
+
+    # post-proc: behaviour when start > end: start = end
+    dump[column_end][
+        dump[column_start] > dump[column_end]
+    ] = dump[column_start][
+        dump[column_start] > dump[column_end]
+    ]
+
+    # rename, convert to int, set index
+    dump = dump.rename(
+        columns={column_start: 'match', column_end: 'matchend'}
+    ).set_index(
+        ['match', 'matchend']
+    )
+
+    return dump
 
 
 ######################################################
@@ -122,17 +269,8 @@ def create():
 
         return redirect(url_for('queries.index'))
 
-    patterns = Pattern.query.order_by(Pattern.id).all()
-    # FIXME this conversion should go when the new database is in
-    patterndict = [{
-        "id": abs(p.id),
-        "template": p.template,
-        "explanation": p.explanation,
-        "retired": p.id < 0
-    } for p in patterns]
-
     return render_template('queries/create.html',
-                           patterns=patterndict)
+                           patterns=get_patterns())
 
 
 @bp.route('/<int:id>/update', methods=('GET', 'POST'))
@@ -157,18 +295,9 @@ def update(id):
         query.write()
         return jsonify(success=True)
 
-    patterns = Pattern.query.order_by(Pattern.id).all()
-    # FIXME this conversion should go when the new database is in
-    patterndict = [{
-        "id": abs(p.id),
-        "template": p.template,
-        "explanation": p.explanation,
-        "retired": p.id < 0
-    } for p in patterns]
-
     return render_template('queries/update.html',
                            query=query,
-                           patterns=patterndict)
+                           patterns=get_patterns())
 
 
 @bp.route('/<int:id>/delete', methods=('POST',))
@@ -179,48 +308,9 @@ def delete_cmd(id):
     return redirect(url_for('queries.index'))
 
 
-def patch_query_results(result):
-    newresult = result.rename(columns={
-        "word": "whole_word",
-        "word_x": "whole_word_x",
-        "word_y": "whole_word_y",
-        "lemma": "whole_lemma",
-        "lemma_x": "whole_lemma_x",
-        "lemma_y": "whole_lemma_y",
-        "_merge": "merge"
-    })
-    newresult.columns = newresult.columns.str.split('_', 2, expand=True)
-    return newresult
-
-
-def add_gold(result, cwb_id, pattern, s_annotation='tweet_id', s_database='tweet'):
-
-    try:
-        gold = read_csv(
-            os.path.join("library", cwb_id, "gold", "adjudicated.tsv"),
-            sep="\t", index_col=0
-        )
-    except FileNotFoundError:
-        result['TP'] = None
-    else:
-        # TODO use implicit annotations for prec, not for rec
-        # pre-process gold
-        gold = gold.loc[gold['pattern'] == pattern]
-        gold = gold.loc[gold[s_database].isin(list(result[s_annotation]))].rename(
-            {s_database: s_annotation}, axis=1
-        )
-        tps = gold.rename({'annotation': 'TP'}, axis=1).set_index(s_annotation)
-        # join explicit TPs and FPs
-        result = result.set_index(s_annotation)
-        result = result.join(tps[['TP']], how='left')
-        result = result.reset_index()
-
-    return result
-
-
-@bp.route('/<int:id>/run', methods=('GET', 'POST'))
+@bp.route('/<int:id>/matches', methods=('GET', 'POST'))
 @login_required
-def run_cmd(id):
+def matches(id):
     """
     run a query
     ---
@@ -230,20 +320,19 @@ def run_cmd(id):
         type: int
         required: true
         description: CWB-id of the corpus
-      - name: beta
-        in: query
-        type: bool
-        required: false
-        default: false
-        description: (deprecated) whether to switch to Yuliya's visualization
+
     """
+
+    # mapping of s-att that contains gold annotation
+    s_cwb = 'tweet_id'
+    s_gold = 'tweet'
 
     # get corpus from settings
     cwb_id = session['corpus']['resources']['cwb_id']
 
     # run the old query
-    query = Query.query.filter_by(id=id).first().serialize()
-    oldresult = query_corpus(query, cwb_id)
+    query = Query.query.filter_by(id=id).first()
+    oldresult = run_queries([query], cwb_id)
 
     if oldresult is None:
         return 'query does not have any matches'
@@ -253,62 +342,42 @@ def run_cmd(id):
         'context_id', 'context', 'contextend'
     ]]
 
-    patterns = Pattern.query.order_by(Pattern.id).all()
-    # FIXME this conversion should go when the new database is in
-    patterndict = [{
-        "id": abs(p.id),
-        "template": p.template,
-        "explanation": p.explanation,
-        "retired": p.id < 0
-    } for p in patterns]
-
+    # run button @ /queries/<id>/update
     if request.method == 'POST':
 
-        # create new query
-        newquery = dict(
+        # create new query for diffing
+        newquery = Query(
             cqp=request.form['query'],
-            meta=dict(
-                name=request.form['name'],
-                pattern_id=request.form['pattern'],
+            name=request.form['name'],
+            pattern_id=request.form['pattern'],
+            slots=request.form['slots'].replace(
+                "None", "null"
             ),
-            anchors=dict(
-                corrections=json.loads(request.form['corrections'].replace(
-                    "None", "null"
-                )),
-                slots=json.loads(request.form['slots'].replace(
-                    "None", "null"
-                ))
-            )
+            corrections=request.form['corrections'].replace(
+                "None", "null"
+            ),
+            user_id=g.user.id
         )
 
         # get new result and merge to old result
-        newresult = query_corpus(newquery, cwb_id)
-        result = newresult.merge(
-            oldresult, how='outer', on=['tweet_id', 'match..matchend_lemma'],
-            indicator=True
-        )
-        result = result.drop(
-            [x for x in result.columns if x.startswith('match..matchend_')], axis=1
-        )
-        result = add_gold(result, cwb_id, pattern=query['meta']['pattern'])
+        newresult = run_queries([newquery], cwb_id)
+        # index = ['query', 'match', 'matchend']
+        result = newresult.reset_index().merge(
+            oldresult.reset_index(), how='outer', indicator=True
+        ).set_index(['query', 'match', 'matchend'])
+        # NB: index will contain duplicates if match and matchend didn't change but anchors or slots did
 
-        # get TPs, FPs, precision
-        tps = result['TP'].value_counts().to_dict()
-        tps['TP'] = tps.pop(True, 0)
-        tps['FP'] = tps.pop(False, 0)
-        try:
-            tps['prec'] = tps['TP'] / (tps['FP'] + tps['TP'])
-        except ZeroDivisionError:
-            tps['prec'] = 'nan'
-        tps['N'] = len(result)
+        # add gold, evaluate
+        matches = add_gold(result, cwb_id, query.pattern_id, s_cwb, s_gold)
+        tps = evaluate(matches, s_cwb)
 
         # render result
         result = patch_query_results(result)
         return render_template('queries/result_table.html',
                                result=result,
-                               patterns=patterndict,
                                tps=tps)
 
+    # download button @ /queries/
     return Response(
         oldresult[display_columns].to_csv(),
         mimetype='text/csv',
@@ -346,6 +415,7 @@ def query_command(pattern, dir_out, cwb_id):
         path_summary = os.path.join(dir_out, str(pattern) + "-summary.tsv")
 
     # loop through queries
+    # TODO use run_queries
     summary = defaultdict(list)
     for query in queries:
 
@@ -358,7 +428,7 @@ def query_command(pattern, dir_out, cwb_id):
         # error = ""
         try:
             query = Query.query.filter_by(id=query.id).first()
-            lines = query_corpus(query.serialize(), cwb_id)
+            lines = run_queries([query], cwb_id)
         except KeyboardInterrupt:
             return
 
