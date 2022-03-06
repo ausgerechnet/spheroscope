@@ -183,6 +183,11 @@ def matches(id):
     # patch for frontend
     result = patch_query_results(matches)
 
+    # cut off
+    matches = matches.sample(int(request.args.get('cut_off', 1000)))
+
+    current_app.logger.info("rendering result")
+
     return render_template('queries/standalone_result_table.html',
                            result=result,
                            tps=tps)
@@ -232,7 +237,8 @@ def subquery(p1):
     # patch for frontend
     result = patch_query_results(matches)
 
-    return render_template('queries/result_table.html',
+    current_app.logger.info("rendering result table")
+    return render_template('queries/standalone_result_table.html',
                            result=result,
                            tps=tps)
 
