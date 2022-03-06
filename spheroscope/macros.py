@@ -29,11 +29,7 @@ def get_defined_macros(cwb_id):
 
     corpus_config = read_config(cwb_id)
     corpus = init_corpus(corpus_config)
-
-    current_app.logger.info('getting defined macros')
-    cqp = corpus.start_cqp()
-    defined_macros = cqp.Exec("show macro;").split("\n")
-    cqp.__kill__()
+    defined_macros = corpus._macros_available()
 
     return defined_macros
 
