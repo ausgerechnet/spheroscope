@@ -7,7 +7,7 @@
 
 ## Setup ##
 
-## Prerequisites ##
+### Prerequisites ###
 You will need a working installation of the [IMS Open Corpus Workbench (CWB)](http://cwb.sourceforge.net/), a CWB-indexed corpus, as well as word embeddings for most of what this app offers.  The Python3 dependencies will be installed automatically if you follow the setup guide below.
 
 ### Installation ###
