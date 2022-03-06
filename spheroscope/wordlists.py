@@ -49,15 +49,37 @@ def get_similar_ones(cwb_id, words, p_att, number):
     return freq_similar
 
 
+def get_defined_wordlists(cwb_id):
+
+    corpus_config = read_config(cwb_id)
+    corpus = init_corpus(corpus_config)
+    defined_wordlists = corpus._wordlists_available()
+
+    return defined_wordlists
+
+
 ######################################################
 # ROUTING ############################################
 ######################################################
 @bp.route('/')
 @login_required
 def index():
+
     wordlists = WordList.query.order_by(WordList.name).all()
+
+    if 'corpus' in session:
+        cwb_id = session['corpus']['resources']['cwb_id']
+    else:
+        cwb_id = None
+
+    corpus = {
+        'wordlists': get_defined_wordlists(cwb_id),
+        'cwb_id': cwb_id
+    }
+
     return render_template('wordlists/index.html',
-                           wordlists=wordlists)
+                           wordlists=wordlists,
+                           corpus=corpus)
 
 
 @bp.route('/<int:id>/delete', methods=('POST',))
