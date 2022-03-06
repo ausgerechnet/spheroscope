@@ -15,7 +15,7 @@
   {{ h.query_form(name=query.name,pattern=query.pattern_id, patterns=patterns,content=query.cqp,slots=query.slots,corrections=query.corrections) }}
   <div class="field is-grouped">
     <input type="button" class="button is-link is-light" onclick="sendForm('{{ url_for('queries.update', id=query.id) }}',this);" value="Save">
-    <input class="button is-info is-light" type="button" onclick="runButton('{{ url_for('queries.run_cmd', id=query.id) }}',this,$(this.form).serializeArray(), res => $('#results').html(res));" value="Run">
+    <input class="button is-info is-light" type="button" onclick="runButton('{{ url_for('queries.matches', id=query.id) }}',this,$(this.form).serializeArray(), res => $('#results').html(res));" value="Run">
   </div>
 </form>
 <div class="field is-grouped">

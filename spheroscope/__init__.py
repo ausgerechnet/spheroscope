@@ -84,10 +84,10 @@ def create_app(test_config=None):
     # queries and register CLI commands
     from . import queries
     app.register_blueprint(queries.bp)
-    app.cli.add_command(queries.query_command)
 
     # patterns
     from . import patterns
     app.register_blueprint(patterns.bp)
+    app.cli.add_command(patterns.query_command)
 
     return app
