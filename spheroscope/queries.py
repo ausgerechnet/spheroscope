@@ -102,6 +102,7 @@ def run_queries(queries, cwb_id):
 
     # create output dataframe
     if len(matches_list) > 0:
+        current_app.logger.info("concatenating")
         result = concat(matches_list).set_index(['query', 'match', 'matchend'])
     else:
         result = None
@@ -134,6 +135,7 @@ def add_gold(result, cwb_id, pattern, s_cwb, s_gold):
         result = result.merge(gold[[s_cwb, "TP"]], on=s_cwb, how='left')
 
     result = result.set_index(['query', 'match', 'matchend'])
+    result['TP'] = result['TP'].fillna('?')
 
     return result
 
@@ -157,7 +159,7 @@ def evaluate(matches, s, tp_column='TP'):
     try:
         tps['prec'] = tps['TP'] / (tps['FP'] + tps['TP'])
     except ZeroDivisionError:
-        tps['prec'] = 'nan'
+        tps['prec'] = '?'
 
     return tps
 
@@ -167,6 +169,7 @@ def patch_query_results(result):
     ---
 
     """
+    result = result[[c for c in result.columns if not (c.endswith("_START") or c.endswith("_END"))]]
 
     newresult = result.rename(columns={
         "word": "whole_word",
