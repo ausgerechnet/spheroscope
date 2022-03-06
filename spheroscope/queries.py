@@ -418,6 +418,11 @@ def matches(id):
         # render result
         result = patch_query_results(matches)
 
+        # cut off
+        cut_off = min(int(request.args.get('cut_off', 1000)), len(result))
+        result = result.sample(cut_off)
+
+        current_app.logger.info("rendering result table")
         return render_template('queries/result_table.html',
                                result=result,
                                tps=tps)
