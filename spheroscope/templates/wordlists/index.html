@@ -9,6 +9,7 @@
 {% endblock %}
 
 {% block content %}
+{% call c.block("Definitions") %}
 <table class="table is-striped is-hoverable sortable">
   <thead>
     <tr>
@@ -39,4 +40,14 @@
   {% endfor %}
   </tbody>
 </table>
+{% endcall %}
+{% call c.block("Active in " + corpus['cwb_id']) %}
+<ul class="is-flex is-flex-wrap-wrap">
+  {% for wordlist in corpus['wordlists'] %}
+  <li class="button is-static m-1">
+    {{ wordlist }}
+  </li>
+  {% endfor %}
+</ul>
+{% endcall %}
 {% endblock %}
