@@ -26,7 +26,8 @@ setuptools.setup(
         "Flask>=2.0,<2.1",
         "Flask-SQLAlchemy>=2.5,<2.6",
         "pymagnitude>=0.1.140,<0.2",
-        "cwb-ccc==0.10.2"
+        "cwb-ccc==0.10.2",
+        "psycopg2-binary>=2.9,<3"
     ],
     classifiers=[
         "Development Status :: 3 - Alpha",
