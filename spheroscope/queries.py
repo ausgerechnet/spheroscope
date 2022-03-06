@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+import json
 
 from flask import (Blueprint, Response, current_app, g, jsonify, redirect,
                    render_template, request, session, url_for)
@@ -273,7 +274,10 @@ def create():
             ),
             user_id=g.user.id
         )
-        query.write()
+        try:
+            query.write()
+        except json.JSONDecodeError:
+            return "wrong input format in JSON strings"
 
         return redirect(url_for('queries.index'))
 

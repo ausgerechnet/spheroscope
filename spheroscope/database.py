@@ -167,21 +167,17 @@ class Macro(db.Model):
     def write(self, write_file=True):
         """ writes macro to database and appropriate path """
 
-        # write record to database
-        # current_app.logger.info(
-        #     'writing macro "%s" to database' % self.name
-        # )
-        db.session.add(self)
-        db.session.commit()
-
         # write file
         if write_file:
-            # current_app.logger.info(
-            #     'writing macro "%s" to "%s"' % (self.name, self.path)
-            # )
             os.makedirs(os.path.dirname(self.path), exist_ok=True)
             with open(self.path, "wt") as f:
                 f.write(self.macro)
+        else:
+            pass            # TODO: check input
+
+        # add to database
+        db.session.add(self)
+        db.session.commit()
 
     def delete(self, delete_file=True):
         """ deletes macro from database and path """
@@ -286,20 +282,16 @@ class Query(db.Model):
     def write(self, write_file=True):
         """ writes query to database and appropriate path """
 
-        # write record to database
-        # current_app.logger.info(
-        #     'writing query "%s" to database' % self.name
-        # )
-        db.session.add(self)
-        db.session.commit()
-
         # write file
         if write_file:
-            # current_app.logger.info(
-            #     'writing query "%s" to "%s"' % (self.name, self.path)
-            # )
             os.makedirs(os.path.dirname(self.path), exist_ok=True)
             cqpy_dump(self.serialize(), self.path)
+        else:
+            pass            # TODO: check input
+
+        # add to database
+        db.session.add(self)
+        db.session.commit()
 
     def delete(self, delete_file=True, backup=True):
         """ deletes query from database and path """
