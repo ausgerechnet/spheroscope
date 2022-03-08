@@ -320,7 +320,11 @@ def update(id):
                 "None", "null"
             )
         )
-        query.write()
+        try:
+            query.write()
+        except json.JSONDecodeError:
+            return "wrong input format in JSON strings"
+
         return jsonify(success=True)
 
     return render_template('queries/update.html',
@@ -418,9 +422,10 @@ def matches(id):
         # render result
         result = patch_query_results(matches)
 
+        # this is counter-productive for diffing, obviously ...
         # cut off
-        cut_off = min(int(request.args.get('cut_off', 1000)), len(result))
-        result = result.sample(cut_off)
+        # cut_off = min(int(request.args.get('cut_off', 1000)), len(result))
+        # result = result.sample(cut_off)
 
         current_app.logger.info("rendering result table")
         return render_template('queries/result_table.html',
