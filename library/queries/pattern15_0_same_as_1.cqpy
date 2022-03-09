@@ -16,4 +16,4 @@
 #   pattern: 15
 # ---
 
-@0:[pos_ark="[NZ^]" | pos_ner ="PRP"] ".+ing|that|who" []+ @1:"is|are" ("the" "same" "as"? | [pos_ark="R" & word!="not"] "like") @2[::] ("ones|that|who" | [pos_ark="[NZ^]" | pos_ner ="PRP"])+ [word !="[\.,\?\!]|http.+|t\.co.+" & pos_ark !="[#@]"]+ @3:[::] within tweet
+@0:[pos_ark="[NZ^]" | pos_ner ="PRP"] ".+ing|that|who" []+ @1:"is|are" ("the" "same" "as"? | [pos_ark="R" & word!="not"] "like") @2[::] ("ones|that|who" | [pos_ark="[NZ^]" | pos_ner ="PRP"])+ [word !="[\.,\?\!]|http.+|t\.co.+" & pos_ark !="[#@]"]+ @3:[::]
