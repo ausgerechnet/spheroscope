@@ -75,7 +75,7 @@ def hierarchical_query(p1, slot, p2):
             cut_off=None,
             slots=query['anchors']['slots']
         )
-        conc['name'] = query['meta']['name']
+        conc['slot-query'] = query['meta']['name']
         concs.append(conc)
 
     # post-process
@@ -83,8 +83,8 @@ def hierarchical_query(p1, slot, p2):
         conc_slot = concat(concs)
         conc_slot = conc_slot.reset_index()
         d = conc_slot[
-            ["_".join([s, p]) for p in corpus_config['display']['p_show']
-             for s in query['anchors']['slots']] +
+            ['slot-query'] +
+            ["_".join([s, p]) for p in corpus_config['display']['p_show'] for s in query['anchors']['slots']] +
             dict(corpus_config['display'])['s_show']
         ]
         renames = dict([

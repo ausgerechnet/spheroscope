@@ -117,7 +117,7 @@ def add_gold(result, cwb_id, pattern, s_cwb, s_gold):
 
     """
 
-    # result is indexed by ['query', 'match', 'matchend']
+    # result should be indexed by ['query', 'match', 'matchend']
     result = result.reset_index()
 
     try:
@@ -134,7 +134,11 @@ def add_gold(result, cwb_id, pattern, s_cwb, s_gold):
     else:
         result = result.merge(gold[[s_cwb, "TP"]], on=s_cwb, how='left')
 
-    result = result.set_index(['query', 'match', 'matchend'])
+    if 'slot-query' in result.columns:
+        index_cols = ['query', 'slot-query', 'match', 'matchend']
+    else:
+        index_cols = ['query', 'match', 'matchend']
+    result = result.set_index(index_cols)
     result['TP'] = result['TP'].fillna('?')
 
     return result
