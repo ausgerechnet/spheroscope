@@ -16,4 +16,4 @@
 #   pattern: 28
 # ---
 
-("can|should"%c |[lemma="i"] | "ought"%c "to" | [lemma = $adv_high_degree]) [pos_ark="R" & word != "not"]* [lemma=$verbs_believe] [pos_ark="R" & word != "not"]* [pos_ark="P"]? @0[::] [word="the"]?  [lemma = $nouns_person_common | lemma = $nouns_person_origin | lemma = $nouns_person_negative | lemma = $nouns_person_profession | lemma = $nouns_person_support |pos_ark = "[@ZN#^]" & lemma != "it" | pos_ner="PRP" & lemma != "it"]+ @1:[::] "about|concerning|on|regarding|that" @2[::] [word!="[\.,\?\!]"]+ @3:[::]within tweet
+("can|should"%c |[lemma="i"] | "ought"%c "to" | [lemma = $adv_high_degree]) [pos_ark="R" & word != "not"]* [lemma=$verbs_believe] [pos_ark="R" & word != "not"]* [pos_ark="P"]? @0[::] [word="the"]?  [lemma = $nouns_person_common | lemma = $nouns_person_origin | lemma = $nouns_person_negative | lemma = $nouns_person_profession | lemma = $nouns_person_support |pos_ark = "[@ZN#^]" & lemma != "it" | pos_ner="PRP" & lemma != "it"]+ @1:[::] "about|concerning|on|regarding|that" @2[::] [word!="[\.,\?\!]"]+ @3:[::]
