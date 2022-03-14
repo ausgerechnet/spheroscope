@@ -1,16 +1,19 @@
 # --- # CQPY query file
 # anchors:
 #   corrections:
-#     '1': -1
+#     1: -1
+#     3: -1
 #   slots:
 #     '0':
-#     - 0
+#     - match
 #     - 1
-#     '1': 2
+#     '1':
+#     - 2
+#     - 3
 # meta:
 #   comment: null
 #   name: pattern3_entity_is_for_agenda
-#   pattern: 3
+#   pattern: '3'
 # ---
 
-@0:[::] [lemma = $nouns_person_common | lemma = $nouns_person_origin | lemma = $nouns_person_negative | lemma = $nouns_person_profession | lemma = $nouns_person_support |pos_ark = "[@ONZ#^]" & lemma != "it"]+ @1:[lemma = "be"] (/region[advp])* "against|for" @2:[lemma=$nouns_values | lemma = $nouns_policies]
+@0:[::] [pos_ark="[DA]"]* [lemma = $person_any |pos_ark = "[@Z#]" | pos_ner="PRP"& lemma != "it"]+  @1:[::][pos_ner="MD|RB"]* [lemma = "be"] [pos_ark="R"]* "against|for" @2:[::][pos_ark="[DAV]"]* @2:[lemma=$nouns_values | lemma = $nouns_policies | pos_ark="[#@^Z]"]+ [pos_ark="[PNZ^]"]* @3[::]

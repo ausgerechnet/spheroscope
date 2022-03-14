@@ -1,8 +1,8 @@
 # --- # CQPY query file
 # anchors:
 #   corrections:
-#     '1': -1
-#     '3': -1
+#     1: -1
+#     3: -1
 #   slots:
 #     '0':
 #     - 0
@@ -13,7 +13,7 @@
 # meta:
 #   comment: null
 #   name: pattern24_entity_s_membership_in_group
-#   pattern: 24
+#   pattern: '24'
 # ---
 
-(@0:[pos_ark = "[D@ANZ#^]" & lemma != "it"]+ "'?s"| @0:[pos_ner="PRP$"] ) @1:[::] [lemma="entry|membership|participation"] [pos_ark="P"] @2:[::] [pos_ark="[D@ANZ#^]"]+ @3:[::]
+(@0:[pos_ark = "[A@D#NGZ^]" & lemma != "it"]+ "'?s"| @0:[pos_ner="PRP$"] ) @1:[::] [pos_ark="A"]* [lemma="entry|membership|participation"] [pos_ark="P"] @2:[::] [pos_ark="[D@ANZ#^]"]+ @3:[::]

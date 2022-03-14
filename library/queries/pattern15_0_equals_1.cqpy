@@ -1,17 +1,13 @@
 # --- # CQPY query file
 # anchors:
-#   corrections:
-#     '1': -1
-#     '3': -1
+#   corrections: {}
 #   slots:
-#     '0':
-#     - 0
-#     '1':
-#     - 1
+#     '0': 0
+#     '1': 1
 # meta:
 #   comment: null
 #   name: pattern15_0_equals_1
-#   pattern: 15
+#   pattern: '15'
 # ---
 
-@0:[lemma = $nouns_values | lemma = $nouns_agenda_p3 | lemma = $nouns_policies] "=" [lemma = $nouns_policies|lemma = $nouns_agenda_p3 | lemma = $nouns_values]
+@0:[lemma = $nouns_values | lemma = $nouns_agenda_p3 | lemma = $nouns_policies] [word="=" | lemma ="be|equal"] @1:[lemma = $nouns_policies|lemma = $nouns_agenda_p3 | lemma = $nouns_values]

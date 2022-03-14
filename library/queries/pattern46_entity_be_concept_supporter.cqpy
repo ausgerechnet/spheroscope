@@ -1,0 +1,19 @@
+# --- # CQPY query file
+# anchors:
+#   corrections:
+#     1: -1
+#     3: -1
+#   slots:
+#     '0':
+#     - 0
+#     - 1
+#     '1':
+#     - 2
+#     - 3
+# meta:
+#   comment: null
+#   name: pattern46_entity_be_concept_supporter
+#   pattern: 46
+# ---
+
+@0[::] ([pos_ark="[DAZN^#L@]"]+ | [pos_ner="PRP"]) @1:[::] [pos_ner="MD"]* [lemma="as|be"] [pos_ark="[DAR]"]+ @2:[::] [pos_ark="[NZO^#]"]+ @3:"backer|fan|supporter" ([pos_ark!="[ZND^OL@]"]);
