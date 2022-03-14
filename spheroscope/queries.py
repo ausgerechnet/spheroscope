@@ -107,6 +107,11 @@ def run_queries(queries, cwb_id):
     else:
         result = None
 
+    # make sure missing cpos are indicated as -1 and columns are integer
+    for c in result.columns:
+        if c.endswith("_START") or c.endswith("_END"):
+            result[c] = result[c].fillna(-1, downcast='infer')
+
     return result
 
 
