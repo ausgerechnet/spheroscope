@@ -21,3 +21,4 @@ build/
 cfg.py
 
 Pipfile.lock
+.Rproj.user
