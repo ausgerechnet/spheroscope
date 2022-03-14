@@ -16,4 +16,4 @@
 #   pattern: '24'
 # ---
 
-@0:[::](([pos_ark="[DA]"]* [pos_ark="[Z^]" & word="[A-Z][a-z\-]+"]{2,}) | [pos_ark="@"]) @1:[word="is"] @2[::][lemma="a|the" | pos_ark="[Z^NA]"]+ [lemma=$person_any] @3[::] 
+@0:[::](([pos_ark="[DA]"]* [pos_ark="[Z^]" & word="[A-Z][a-z\-]+"]{2,}) | [pos_ark="@"]) @1:[word="is"] @2[::][lemma="a|the" | pos_ark="[Z^NA]"]+ [lemma=$person_any] @3[::]
