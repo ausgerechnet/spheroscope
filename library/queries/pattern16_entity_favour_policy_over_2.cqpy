@@ -16,4 +16,4 @@
 #   pattern: 16
 # ---
 
-<np>@0[] @1[]*</np> <vp>[]* [pos_ner="VB[GPZ]" & lemma = $verbs_prefer & lemma != "want"] []*</vp> "more"? @2[::] [lemma=$nouns_policies | lemma = $nouns_values]+ ("and" "less" | "over"|"instead" "of" | "rather|more" "than") @3:[::][word!="[,\.\!|\?]"]+ @4[::] within tweet
+<np>@0[] @1[]*</np> <vp>[]* [pos_ner="VB[GPZ]" & lemma = $verbs_prefer & lemma != "want"] []*</vp> "more"? @2[::] [lemma=$nouns_policies | lemma = $nouns_values]+ ("and" "less" | "over"|"instead" "of" | "rather|more" "than") @3:[::][word!="[,\.\!|\?]"]+ @4[::]
