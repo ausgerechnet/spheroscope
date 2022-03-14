@@ -33,7 +33,7 @@ class User(db.Model):
     __tablename__ = 'user'
 
     id = db.Column(db.Integer, primary_key=True)
-    created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    created = db.Column(db.DateTime, nullable=False, default=datetime.now())
 
     username = db.Column(db.Unicode(255), nullable=False, unique=True)
     password = db.Column(db.Unicode(255), nullable=False)
@@ -44,7 +44,7 @@ class WordList(db.Model):
     __tablename__ = 'wordlist'
 
     id = db.Column(db.Integer, primary_key=True)
-    modified = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    modified = db.Column(db.DateTime, nullable=False, default=datetime.now())
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
@@ -134,7 +134,7 @@ class Macro(db.Model):
     __tablename__ = 'macro'
 
     id = db.Column(db.Integer, primary_key=True)
-    modified = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    modified = db.Column(db.DateTime, nullable=False, default=datetime.now())
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
@@ -207,7 +207,7 @@ class Query(db.Model):
     __tablename__ = 'query'
 
     id = db.Column(db.Integer, primary_key=True)
-    modified = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    modified = db.Column(db.DateTime, nullable=False, default=datetime.now())
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     pattern_id = db.Column(db.Integer, db.ForeignKey('pattern.id'))
@@ -328,7 +328,7 @@ class Pattern(db.Model):
     __tablename__ = 'pattern'
 
     id = db.Column(db.Integer, primary_key=True)
-    modified = db.Column(db.DateTime, nullable=False, default=datetime.now)
+    modified = db.Column(db.DateTime, nullable=False, default=datetime.now())
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
