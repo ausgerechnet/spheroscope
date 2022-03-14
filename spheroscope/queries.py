@@ -117,7 +117,7 @@ def add_gold(result, cwb_id, pattern, s_cwb, s_gold):
 
     """
 
-    # result is indexed by ['query', 'match', 'matchend']
+    # result should be indexed by ['query', 'match', 'matchend']
     result = result.reset_index()
 
     try:
@@ -134,7 +134,11 @@ def add_gold(result, cwb_id, pattern, s_cwb, s_gold):
     else:
         result = result.merge(gold[[s_cwb, "TP"]], on=s_cwb, how='left')
 
-    result = result.set_index(['query', 'match', 'matchend'])
+    if 'slot-query' in result.columns:
+        index_cols = ['query', 'slot-query', 'match', 'matchend']
+    else:
+        index_cols = ['query', 'match', 'matchend']
+    result = result.set_index(index_cols)
     result['TP'] = result['TP'].fillna('?')
 
     return result
@@ -320,7 +324,11 @@ def update(id):
                 "None", "null"
             )
         )
-        query.write()
+        try:
+            query.write()
+        except json.JSONDecodeError:
+            return "wrong input format in JSON strings"
+
         return jsonify(success=True)
 
     return render_template('queries/update.html',
@@ -418,9 +426,10 @@ def matches(id):
         # render result
         result = patch_query_results(matches)
 
+        # this is counter-productive for diffing, obviously ...
         # cut off
-        cut_off = min(int(request.args.get('cut_off', 1000)), len(result))
-        result = result.sample(cut_off)
+        # cut_off = min(int(request.args.get('cut_off', 1000)), len(result))
+        # result = result.sample(cut_off)
 
         current_app.logger.info("rendering result table")
         return render_template('queries/result_table.html',
