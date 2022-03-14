@@ -1,8 +1,8 @@
 # --- # CQPY query file
 # anchors:
 #   corrections:
-#     '1': -1
-#     '3': -1
+#     1: -1
+#     3: -1
 #   slots:
 #     '0':
 #     - 0
@@ -16,4 +16,4 @@
 #   pattern: 3
 # ---
 
-@0:[::] [pos_ark = "[@ONZ#^]"]+ @1[::] [lemma="be|have|will"]? [lemma="come"] [lemma="out"] [lemma="for|against"] @2:[::] [word!="[\.,\?\!]" & word !="http.+"]+ @3:[::]
+@0:[::] [pos_ark = "[DA@ONZ#^]"]+ ([lemma="and|\&|,"]? [pos_ark = "[DA@ONZ#^]"]+)*@1[::] [lemma="be|have|will" | pos_ner="MD"]* [lemma="come"] [lemma="out"] ([lemma="for|against"] | [lemma="in"] [lemma="favou?r|support"] [lemma="of"]) @2:[::] [word!="[-\.,\?\!]" & word !="http.+"]+ @3:[::]

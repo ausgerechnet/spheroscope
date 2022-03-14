@@ -1,8 +1,8 @@
 # --- # CQPY query file
 # anchors:
 #   corrections:
-#     '1': -1
-#     '3': -1
+#     1: -1
+#     3: -1
 #   slots:
 #     '0':
 #     - 0
@@ -13,8 +13,7 @@
 # meta:
 #   comment: null
 #   name: pattern3_entity_have_desire_for_formula
-#   pattern: 3
+#   pattern: '3'
 # ---
 
-@0:[::] [pos_ark = "[@ONZ#^]"]+ @1[::] [lemma="experience|have|feel|with"] [pos_ark="D" & lemma != "no|any"]? [pos_ark="A"]? [lemma=$nouns_desire] [word="for|to" | pos_ark="D"] @2:[::] [word!="[\.,\?\!]" & word !="http.+"]+ @3:[::]
-
+@0:[::] [pos_ark = "[DA@ONZ#^]"]+ @1[::] [pos_ark="R"]* [pos_ner="MD" | lemma="experience|have|feel|share|with"]+ [pos_ark="[DAO]"]+ [lemma=$nouns_desire & pos_ark!="V" ] [lemma="for|to" | pos_ark="D"]? @2:[::] [word!="[\.,\?\!]" & word !="http.+"]+ @3:[::]
