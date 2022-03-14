@@ -73,6 +73,26 @@ def get_patterns(con):
     return patterns
 
 
+def set_query_results(con):
+
+    # - Die Queries betrachtet die DB als Annotatoren: query matches sin einträge in der classification Tabelle.
+    # - Was die "echten" Annotationen unterscheidet ist, dass das  'manual' Feld bei denen true ist.
+    # - Insofern musst du nur ein Insert machen mit
+    # tweet = tweet_id
+    # pattern = pattern_id
+    # annotator = query_name
+    # manual = False
+    # annotation = True
+
+    # Je nachdem was wir wollen sollte man vorher alle Annotationen
+    # der zugehörigen Query löschen dass nur noch die aktuellen drin
+    # sind. Dannach muss dann noch die Materialized View
+    # virtual_tweet_sets refreshed werden und die zieht dann
+    # automatisch die Samples und so.
+
+    pass
+
+
 @click.command('update-patterns')
 @with_appcontext
 def update_patterns():
