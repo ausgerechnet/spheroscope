@@ -1,8 +1,8 @@
 # --- # CQPY query file
 # anchors:
 #   corrections:
-#     '1': -1
-#     '3': -1
+#     1: -1
+#     3: -1
 #   slots:
 #     '0':
 #     - 0
@@ -13,7 +13,7 @@
 # meta:
 #   comment: null
 #   name: pattern3_entity_s_desire_to_1
-#   pattern: 3
+#   pattern: '3'
 # ---
 
-(@0:[pos_ark = "[D@AONZ$#^]" & lemma != "it"]+ "'?s"| @0:[pos_ner="PRP$"] ) @1:[lemma=$nouns_desire] [word="for|to"] @2:[pos_ark="V"] [word!="[\.,\?\!]" & word !="http.+"]* @3:[::]
+(@0:[pos_ark = "[D@AONZ$#^]" & lemma != "it"]+ "'?s" | @0:[word =".+'s"]| @0:[pos_ner="PRP$"] ) @1:[::] [lemma="have"]? @2[::] [pos_ark="[DA]"]* [lemma=$nouns_desire] [word="for|to"] @2:[::][pos_ark="[DAR]"]* [pos_ark="V" | lemma=$nouns_policies | lemma=$nouns_values] [word!="[\.,\?\!]" & word !="http.+"]* @3:[::]

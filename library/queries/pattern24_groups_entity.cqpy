@@ -1,19 +1,19 @@
 # --- # CQPY query file
 # anchors:
 #   corrections:
-#     '1': -1
-#     '3': -1
+#     1: -1
+#     3: -1
 #   slots:
 #     '0':
-#     - match
-#     - 1
-#     '1':
 #     - 2
 #     - 3
+#     '1':
+#     - match
+#     - 1
 # meta:
 #   comment: null
 #   name: pattern24_groups_entity
-#   pattern: 24
+#   pattern: '24'
 # ---
 
-[pos_ark="[NODAZ^@#]"]+ @1"'?s" "very"? "own"? @2[::] [pos_ark="[Z@]"]+ @3[::]
+@0:[::] [pos_ark="[NODAZ^@#]"]+ @1"'?s" "very"? "own"? [lemma="chair|citizen|inhabitant|member|part"]? @2[::] (([pos_ark="[DA]"]* [pos_ark="[Z^]" & word="[A-Z][a-z\-]+"]{2,}) | [pos_ark="@"])  @3[::]

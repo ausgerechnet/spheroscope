@@ -1,8 +1,8 @@
 # --- # CQPY query file
 # anchors:
 #   corrections:
-#     '1': -1
-#     '3': -1
+#     1: -1
+#     3: -1
 #   slots:
 #     '0':
 #     - match
@@ -13,7 +13,7 @@
 # meta:
 #   comment: null
 #   name: pattern24_group_bunch_of_group
-#   pattern: 24
+#   pattern: '24'
 # ---
 
-(@0:[::][pos_ark="[NODAZ^@#]" & lemma!="it"]+ @1:[lemma="be|'s"] | [pos_ark="L" & lemma!="it.?s?|there.*|.+ve*"]@1[lemma="be|'s"]?) [pos_ner="RB" & lemma !="there|not"]? "a" [lemma="load|bunch|hoard"] "of" @2[::] [word!="[\.,\?\!]"]+ @3:[::]
+(@0:[::][pos_ark="[NODAZ^@#]" & lemma!="it"]+ @1:[lemma="be|'s"] | [pos_ark="L" & lemma!="it.?s?|there.*|.+ve*"]@1[lemma="be|'s"]?) [pos_ner="RB" & lemma !="there|not"]? "a" [pos_ark="A"]* [lemma=$nouns_large_number] "of" @2[::] [word!="[\.,\?\!]"]+ @3:[::]

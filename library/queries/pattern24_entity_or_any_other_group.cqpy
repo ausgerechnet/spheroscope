@@ -1,8 +1,8 @@
 # --- # CQPY query file
 # anchors:
 #   corrections:
-#     '1': -1
-#     '3': -1
+#     1: -1
+#     3: -1
 #   slots:
 #     '0':
 #     - match
@@ -13,7 +13,7 @@
 # meta:
 #   comment: null
 #   name: pattern24_entity_or_any_other_group
-#   pattern: 24
+#   pattern: '24'
 # ---
 
-@0[::][pos_ark = "[D@AONZ$#^]" | lemma="\,"]+ @1[pos_ark="\&"] [lemma="any"] ("of" [pos_ark="D"])? [lemma="other"] @2[::][pos_ark = "[D@AONZ$#^,]"]+ @3[::]
+@0[::] [pos_ark="[DA]"]* [pos_ark="[A@O#NGZ^]"]+  @1[pos_ark="\&"] [lemma="any"] ("of" [pos_ark="D"])? [lemma="other"] @2[::][pos_ark = "[D@AONZ$#^,]"]+ @3[::]
