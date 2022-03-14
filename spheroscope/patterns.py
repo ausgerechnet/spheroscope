@@ -3,13 +3,12 @@
 
 import os
 import re
-from collections import defaultdict
 
 import click
 from flask import (Blueprint, current_app, jsonify, render_template, request,
                    session)
 from flask.cli import with_appcontext
-from pandas import DataFrame, concat
+from pandas import concat
 
 from .auth import login_required
 from .corpora import init_corpus, read_config
@@ -32,6 +31,8 @@ def hierarchical_query(p1, slot, p2):
 
     """
 
+    s_cwb = 'tweet_id'
+
     # make sure slot is a string
     slot = str(slot)
 
@@ -44,9 +45,7 @@ def hierarchical_query(p1, slot, p2):
     # run all queries belonging to base pattern
     matches = run_queries(base_queries, cwb_id)
     corpus_config = read_config(cwb_id)
-    matches = matches.reset_index().set_index(
-        dict(corpus_config['display'])['s_show'][0]
-    )
+    matches = matches.reset_index().set_index(s_cwb)
 
     # activate NQR
     df_dump = create_subcorpus(matches, slot)
@@ -260,67 +259,20 @@ def query_command(pattern, dir_out, cwb_id):
     CLI command for running all queries belonging to one pattern
     ---
 
-    TODO improve using run_queries()
     """
-
-    s_cwb = 'tweet_id'
 
     # output directory
     if dir_out is None:
-        dir_out = os.path.join(
-            current_app.instance_path, cwb_id, "results"
-        )
+        dir_out = os.path.join(current_app.instance_path, cwb_id, "results")
     os.makedirs(dir_out, exist_ok=True)
 
-    # get all queries belonging to the pattern
-    if pattern is None:
-        queries = Query.query.all()
-        current_app.logger.info(
-            "all patterns: %d queries" % len(queries)
-        )
-        path_summary = os.path.join(dir_out, "summary.tsv")
-    else:
-        queries = Query.query.filter_by(pattern_id=pattern).all()
-        current_app.logger.info(
-            "pattern %s: %d queries" % (str(pattern), len(queries))
-        )
-        path_summary = os.path.join(dir_out, str(pattern) + "-summary.tsv")
+    # restrict to given patterns
+    patterns = Pattern.query.all() if pattern is None else Pattern.query.filter_by(id=pattern)
 
-    # loop through queries
-    # TODO use run_queries
-    summary = defaultdict(list)
-    for query in queries:
-
-        current_app.logger.info(query.name)
-
-        p_out = None
-        n_hits = None
-        n_unique = None
-
-        # error = ""
-        try:
-            query = Query.query.filter_by(id=query.id).first()
-            lines = run_queries([query], cwb_id)
-        except KeyboardInterrupt:
-            return
-
-        if lines is not None and len(lines) > 0:
-            p_out = os.path.join(dir_out, query.name + '.tsv')
-            lines.to_csv(p_out, sep="\t")
-            n_hits = len(lines)
-            n_unique = len(lines[s_cwb].value_counts())
-        else:
-            n_hits = 0
-            n_unique = 0
-
-        query_pattern = "None" if query.pattern is None else query.pattern.id
-
-        summary['query'].append(query.name)
-        summary['pattern'].append(query_pattern)
-        summary['n_hits'].append(n_hits)
-        summary['n_unique'].append(n_unique)
-        summary['path'].append(p_out)
-        # summary['error'].append(error)
-
-    summary = DataFrame(summary).set_index('query')
-    summary.to_csv(path_summary, sep="\t")
+    for pattern in patterns:
+        queries = Query.query.filter_by(pattern_id=pattern.id).all()
+        current_app.logger.info("pattern %d: %d queries" % (pattern.id, len(queries)))
+        path_out = os.path.join(dir_out, "pattern-%d.tsv.gz" % pattern.id)
+        if len(queries) > 0:
+            matches = run_queries(queries, cwb_id)
+            matches.to_csv(path_out, sep="\t", compression="gzip")
