@@ -19,6 +19,7 @@
 
   <form method="post" class="form">
     <h3>Settings</h3>
+
     {% call c.block("Query Parameters") %}
     {% call f.labelled_field("CQP matching strategy") %}
     <div class="select">
@@ -51,6 +52,25 @@
         </option>
         {% endfor %}
       </select>
+    </div>
+    {% endcall %}
+    {% endcall %}
+
+    {% call c.block("Meta Parameters") %}
+    {% call f.labelled_field("s-attribute with ID in CWB") %}
+    <div class="select">
+      <select class="form-control" id="s_cwb" name="s_cwb">
+        {% for s_att in s_atts_anno %}
+        <option value="{{ s_att }}"{% if s_att==meta['s_cwb'] %} selected{% endif %}>
+          {{ s_att }}
+        </option>
+        {% endfor %}
+      </select>
+    </div>
+    {% endcall %}
+    {% call f.labelled_field("name of this attribute in remote database") %}
+    <div>
+      <input type="text" name="s_gold" value={{meta['s_gold']}} />
     </div>
     {% endcall %}
     {% endcall %}

@@ -31,43 +31,37 @@ def read_config(cwb_id=None, init=False):
     if init:
 
         # load defaults
-        corpus_config = load_default()
+        default = load_default()
 
         # get default cwb_id if necessary
-        if cwb_id is None:
-            cwb_id = corpus_config['resources']['cwb_id']
+        cwb_id = default['resources']['cwb_id'] if cwb_id is None else cwb_id
 
         # init corpus specific data directory if necessary
-        corpus_dir = os.path.join(
-            current_app.instance_path, cwb_id
-        )
-        if not os.path.isdir(corpus_dir):
-            os.makedirs(corpus_dir)
+        corpus_dir = os.path.join(current_app.instance_path, cwb_id)
+        os.makedirs(corpus_dir, exist_ok=True)
 
+        # load or create corpus config
         cfg_path = os.path.join(corpus_dir, cwb_id + '.yaml')
         if os.path.isfile(cfg_path):
-            corpus_config = yaml.load(
-                open(cfg_path, "rt").read(), Loader=yaml.FullLoader
-            )
+            corpus_config = yaml.load(open(cfg_path, "rt").read(), Loader=yaml.FullLoader)
         else:
             # set defaults
+            corpus_config = default
             corpus_config['resources']['cwb_id'] = cwb_id
             corpus_config['resources']['lib_path'] = corpus_dir
             corpus_config['resources']['embeddings'] = None
-            # save defaults to appropriate place
+            # save to appropriate place
             with open(cfg_path, "wt") as f:
                 yaml.dump(corpus_config, f)
 
     else:
-        corpus_dir = os.path.join(
-            current_app.instance_path, cwb_id
-        )
+        # init corpus specific data directory if necessary
+        corpus_dir = os.path.join(current_app.instance_path, cwb_id)
         cfg_path = os.path.join(corpus_dir, cwb_id + '.yaml')
+
         # read or init settings
         if os.path.isfile(cfg_path):
-            corpus_config = yaml.load(
-                open(cfg_path, "rt").read(), Loader=yaml.FullLoader
-            )
+            corpus_config = yaml.load(open(cfg_path, "rt").read(), Loader=yaml.FullLoader)
         else:
             # load default and save to appropriate place
             corpus_config = read_config(cwb_id=cwb_id, init=True)
@@ -129,15 +123,20 @@ def corpus_config(cwb_id):
 
     if request.method == 'POST':
         corpus_config['query'] = {
+            'context': request.form.get('context', None),
+            'context_break': request.form['context_break'],
             'match_strategy': request.form['match_strategy'],
-            's_query': request.form['s_query'],
-            'context_break': request.form['context_break']
+            's_query': request.form['s_query']
         }
         corpus_config['display'] = {
-            's_show': request.form.getlist('s_show'),
-            'p_text': request.form['p_text'],
+            'p_show': request.form.getlist('p_show'),
             'p_slots': request.form['p_slots'],
-            'p_show': request.form.getlist('p_show')
+            'p_text': request.form['p_text'],
+            's_show': request.form.getlist('s_show')
+        }
+        corpus_config['meta'] = {
+            's_cwb': request.form['s_cwb'],
+            's_gold': request.form['s_gold'],
         }
         session['corpus'] = corpus_config
 
@@ -148,9 +147,7 @@ def corpus_config(cwb_id):
         return redirect("/")
 
     # get available corpora
-    corpora = Corpora(
-        registry_path=current_app.config['REGISTRY_PATH']
-    ).show()
+    corpora = Corpora(registry_path=current_app.config['REGISTRY_PATH']).show()
 
     # get current corpus attributes
     corpus = init_corpus(corpus_config)
@@ -172,5 +169,6 @@ def corpus_config(cwb_id):
         resources=corpus_config['resources'],
         query=corpus_config['query'],
         display=corpus_config['display'],
+        meta=corpus_config['meta'],
         corpora=corpora
     )

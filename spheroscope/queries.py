@@ -122,7 +122,8 @@ def add_gold(result, cwb_id, pattern, s_cwb, s_gold):
 
     """
 
-    # result should be indexed by ['query', 'match', 'matchend']
+    # result from queries.run_queries(): indexed by ['query', 'match', 'matchend']
+    # result from patterns.hierarchical_query(): indexed by ['query', 'slot-query', 'match', 'matchend']
     result = result.reset_index()
 
     try:
@@ -138,13 +139,14 @@ def add_gold(result, cwb_id, pattern, s_cwb, s_gold):
         result['TP'] = None
     else:
         result = result.merge(gold[[s_cwb, "TP"]], on=s_cwb, how='left')
+    result['TP'] = result['TP'].fillna('?')
 
+    # reset index
     if 'slot-query' in result.columns:
         index_cols = ['query', 'slot-query', 'match', 'matchend']
     else:
         index_cols = ['query', 'match', 'matchend']
     result = result.set_index(index_cols)
-    result['TP'] = result['TP'].fillna('?')
 
     return result
 
@@ -379,8 +381,8 @@ def matches(id):
     """
 
     # mapping of s-att that contains gold annotation
-    s_cwb = 'tweet_id'
-    s_gold = 'tweet'
+    s_cwb = session['corpus']['meta']['s_cwb']
+    s_gold = session['corpus']['meta']['s_gold']
 
     # get corpus from settings
     cwb_id = session['corpus']['resources']['cwb_id']

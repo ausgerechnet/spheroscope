@@ -19,7 +19,7 @@ from .queries import (add_gold, create_subcorpus, evaluate,
 bp = Blueprint('patterns', __name__, url_prefix='/patterns')
 
 
-def hierarchical_query(p1, slot, p2):
+def hierarchical_query(p1, slot, p2, s_cwb):
     """execute a hierarchical query: retrieve matches of all queries
     belonging to a _base_ pattern, then run all queries belonging to
     _slot_ pattern on one slot defined in the base pattern.
@@ -28,10 +28,9 @@ def hierarchical_query(p1, slot, p2):
     :param int p1: base pattern number
     :param str slot: slot name
     :param int p2: slot pattern
+    :param str s_cwb: s-attribute used for indexing
 
     """
-
-    s_cwb = 'tweet_id'
 
     # make sure slot is a string
     slot = str(slot)
@@ -167,8 +166,8 @@ def matches(id):
     """
 
     # mapping of s-att that contains gold annotation
-    s_cwb = 'tweet_id'
-    s_gold = 'tweet'
+    s_cwb = session['corpus']['meta']['s_cwb']
+    s_gold = session['corpus']['meta']['s_gold']
 
     # get matches
     cwb_id = session['corpus']['resources']['cwb_id']
@@ -218,8 +217,8 @@ def subquery(p1):
     """
 
     # mapping of s-att that contains gold annotation
-    s_cwb = 'tweet_id'
-    s_gold = 'tweet'
+    s_cwb = session['corpus']['meta']['s_cwb']
+    s_gold = session['corpus']['meta']['s_gold']
 
     # process request parameters
     cwb_id = session['corpus']['resources']['cwb_id']
@@ -227,7 +226,7 @@ def subquery(p1):
     p2 = request.args.get('p2')
 
     # get matches
-    matches = hierarchical_query(p1, slot, p2)
+    matches = hierarchical_query(p1, slot, p2, s_cwb)
 
     # add gold
     matches = add_gold(matches, cwb_id, slot, s_cwb, s_gold)
