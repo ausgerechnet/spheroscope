@@ -1,15 +1,18 @@
-resources:
-  cwb_id: BREXIT_V20190522_DEDUP
-query:
-  context: null
-  match_strategy: longest
-  context_break: tweet
-  s_query: tweet
 display:
-  s_show:
-  - tweet_id
-  p_text: word
-  p_slots: lemma
   p_show:
   - word
   - lemma
+  p_slots: lemma
+  p_text: word
+  s_show:
+  - tweet_id
+meta:
+  s_cwb: tweet_id
+  s_gold: tweet
+query:
+  context: null
+  context_break: tweet
+  match_strategy: longest
+  s_query: tweet
+resources:
+  cwb_id: BREXIT_V20190522_DEDUP
