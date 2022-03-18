@@ -1,8 +1,8 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os
 import json
+import os
 
 from flask import (Blueprint, Response, current_app, g, jsonify, redirect,
                    render_template, request, session, url_for)
