@@ -262,7 +262,7 @@ def query_command(pattern, dir_out, cwb_id):
 
     # output directory
     if dir_out is None:
-        dir_out = os.path.join(current_app.instance_path, cwb_id, "results")
+        dir_out = os.path.join(current_app.instance_path, cwb_id, "query-results")
     os.makedirs(dir_out, exist_ok=True)
 
     # restrict to given patterns
@@ -271,7 +271,7 @@ def query_command(pattern, dir_out, cwb_id):
     for pattern in patterns:
         queries = Query.query.filter_by(pattern_id=pattern.id).all()
         current_app.logger.info("pattern %d: %d queries" % (pattern.id, len(queries)))
-        path_out = os.path.join(dir_out, "pattern-%d.tsv.gz" % pattern.id)
+        path_out = os.path.join(dir_out, "pattern%d.tsv.gz" % pattern.id)
         if len(queries) > 0:
             matches = run_queries(queries, cwb_id)
             matches.to_csv(path_out, sep="\t", compression="gzip")
