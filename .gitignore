@@ -20,5 +20,7 @@ build/
 
 cfg.py
 
+*.Rproj
+*.Rhistory
 Pipfile.lock
 .Rproj.user
