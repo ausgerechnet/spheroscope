@@ -256,8 +256,8 @@ slot &lt;- read_tsv(&quot;../instance/BREXIT_V20190522_DEDUP/query-results/patte
 <pre class="r"><code>ids_both &lt;- intersect(base$tweet_id, slot$tweet_id)</code></pre>
 <ul>
 <li>base: 83632 matches (73390 unique tweets)</li>
-<li>slot: 44408 matches (39202 unique tweets)</li>
-<li>co-occurrences: 1888</li>
+<li>slot: 44423 matches (39217 unique tweets)</li>
+<li>co-occurrences: 1889</li>
 </ul>
 </div>
 <div id="post-process-and-combine" class="section level2">
@@ -434,7 +434,7 @@ both &lt;- base.tmp %&gt;% inner_join(slot.tmp, by = &quot;tweet_id&quot;, suffi
 ## 1 exact0      96
 ## 2 within0      5
 ## 3 overlap0   247
-## 4 outside0  2149</code></pre>
+## 4 outside0  2150</code></pre>
 </div>
 <div id="slot-0-of-slot-query" class="section level4">
 <h4>slot 0 of slot query</h4>
@@ -448,7 +448,7 @@ both &lt;- base.tmp %&gt;% inner_join(slot.tmp, by = &quot;tweet_id&quot;, suffi
 ## 1 exact0_0     147
 ## 2 within0_0    117
 ## 3 overlap0_0    12
-## 4 outside0_0  2149</code></pre>
+## 4 outside0_0  2150</code></pre>
 </div>
 <div id="slot-1-of-slot-query" class="section level4">
 <h4>slot 1 of slot query</h4>
@@ -462,7 +462,7 @@ both &lt;- base.tmp %&gt;% inner_join(slot.tmp, by = &quot;tweet_id&quot;, suffi
 ## 1 exact0_1     147
 ## 2 within0_1    219
 ## 3 overlap0_1    56
-## 4 outside0_1  2075</code></pre>
+## 4 outside0_1  2076</code></pre>
 </div>
 </div>
 <div id="slot-1-of-base-query" class="section level3">
@@ -479,7 +479,7 @@ both &lt;- base.tmp %&gt;% inner_join(slot.tmp, by = &quot;tweet_id&quot;, suffi
 ## 1 exact1     128
 ## 2 within1    461
 ## 3 overlap1   187
-## 4 outside1  1721</code></pre>
+## 4 outside1  1722</code></pre>
 </div>
 <div id="slot-0-of-slot-query-1" class="section level4">
 <h4>slot 0 of slot query</h4>
@@ -493,7 +493,7 @@ both &lt;- base.tmp %&gt;% inner_join(slot.tmp, by = &quot;tweet_id&quot;, suffi
 ## 1 exact1_0      12
 ## 2 within1_0    652
 ## 3 overlap1_0    18
-## 4 outside1_0  1815</code></pre>
+## 4 outside1_0  1816</code></pre>
 </div>
 <div id="slot-1-of-slot-query-1" class="section level4">
 <h4>slot 1 of slot query</h4>
@@ -507,7 +507,7 @@ both &lt;- base.tmp %&gt;% inner_join(slot.tmp, by = &quot;tweet_id&quot;, suffi
 ## 1 exact1_1       1
 ## 2 within1_1    643
 ## 3 overlap1_1    97
-## 4 outside1_1  1756</code></pre>
+## 4 outside1_1  1757</code></pre>
 <pre class="r"><code>View(both)</code></pre>
 </div>
 </div>
