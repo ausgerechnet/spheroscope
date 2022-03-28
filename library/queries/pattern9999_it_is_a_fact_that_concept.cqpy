@@ -12,8 +12,8 @@
 #     - 1
 # meta:
 #   comment: null
-#   name: pattern24_it_is_a_fact_that_concept
-#   pattern: '24'
+#   name: pattern9999_it_is_a_fact_that_concept
+#   pattern: '9999'
 # ---
 
 ([lemma="it"] [lemma="be"] | [lemma="it'?s"]) @0[::]([pos_ark="[DA]"]+ [pos_ark="[NAZ^]"]* ("to" [pos_ark="V"])?| [pos_ark="[AR]"]+ "to" [pos_ark="V"]) @1:"that" @2[::] [pos_ark = "[DA@OZN#^]" & lemma != "it"]+ [pos_ark="V"] [word!="[\.,\?\!]"]+ @3[::]
