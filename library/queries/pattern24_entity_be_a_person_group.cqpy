@@ -1,7 +1,7 @@
 # --- # CQPY query file
 # anchors:
 #   corrections:
-#     '1': -1
+#     1: -1
 #   slots:
 #     '0':
 #     - 0
@@ -11,7 +11,7 @@
 # meta:
 #   comment: null
 #   name: pattern24_entity_be_a_person_group
-#   pattern: 24
+#   pattern: '24'
 # ---
 
-@0[::] [pos_ark="[DA]"]* [pos_ark="[@#NZ^]"]+ @1:[lemma="be"] [pos_ark="[DA]"]* @2:[lemma = $nouns_person_common | lemma = $nouns_person_negative | lemma = $nouns_person_origin | lemma = $nouns_person_profession | lemma = $nouns_person_support]
+@0[::] ([pos_ark="[DA]"]*  [lemma=$person_any | pos_ark="[Z^]"]+ | [pos_ark="[#@]" | pos_ner="PRP" & lemma!="it"]) @1:[lemma="be"] [pos_ark="[DA]"]* @2:[lemma = $nouns_person_common | lemma = $nouns_person_negative | lemma = $nouns_person_origin | lemma = $nouns_person_profession | lemma = $nouns_person_support]
