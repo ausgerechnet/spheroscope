@@ -15,6 +15,11 @@ run:
 	export FLASK_ENV=development && \
 	pipenv run flask run
 
+subquery:
+	export FLASK_APP=spheroscope && \
+	export FLASK_ENV=development && \
+	pipenv run flask subquery 3 1 24
+
 query:
 	export FLASK_APP=spheroscope && \
 	export FLASK_ENV=development && \
