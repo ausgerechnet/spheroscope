@@ -25,3 +25,4 @@ cfg.py
 Pipfile.lock
 .Rproj.user
 *.RData
+*.html
