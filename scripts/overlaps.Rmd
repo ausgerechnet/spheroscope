@@ -18,6 +18,8 @@ base <- read_tsv("../instance/BREXIT_V20190522_DEDUP/query-results/pattern3.tsv.
                  show_col_types = FALSE)
 slot <- read_tsv("../instance/BREXIT_V20190522_DEDUP/query-results/pattern24.tsv.gz",
                  show_col_types = FALSE)
+
+hierarchical <- read_tsv("../instance/BREXIT_V20190522_DEDUP/query-results/pattern3-slot1-pattern24.tsv.gz")
 ```
 
 ## read matches
@@ -43,7 +45,9 @@ base.tmp <- base %>% select(
   "0_START",
   "0_END",
   "1_START",
-  "1_END"
+  "1_END",
+  "0_word",
+  "1_word"
 )
 
 # missing start or end
@@ -61,7 +65,9 @@ slot.tmp <- slot %>% select(
   "0_START",
   "0_END",
   "1_START",
-  "1_END"
+  "1_END",
+  "0_word",
+  "1_word"
 )
 
 slot.tmp[slot.tmp[, "0_START"] == -1, "0_START"] <- slot.tmp[slot.tmp[, "0_START"] == -1, "0_END"]
@@ -246,5 +252,23 @@ tibble(
 ```
 
 ```{r}
-View(both)
+d <- full_join(both, hierarchical[, c("tweet_id", "match", "matchend", "query")], by = c("tweet_id", "match", "matchend"),
+               suffix = c("", "_hierarchical"))
 ```
+
+
+
+```{r}
+# library(DataEditR)
+d %>% select(
+  tweet_id, match, matchend, query, query_slot, query_hierarchical, 
+  word,`0_word`, `1_word`, `0_word_slot`, `1_word_slot`,
+  exact0, within0, overlap0, outside0,
+  exact0_0, exact0_1, within0_0, within0_1, overlap0_0, overlap0_1, outside0_0, outside0_1,
+  exact1, within1, overlap1, outside1,
+  exact1_0, exact1_1, within1_0, within1_1, overlap1_0, overlap1_1, outside1_0, outside1_1
+) %>% filter(is.na(query_hierarchical)) %>% filter(within1) %>% View
+  # write_tsv("pattern3-slot1-pattern24-annotate.tsv", quote = "all")
+# data_edit(viewer = "browser")
+```
+

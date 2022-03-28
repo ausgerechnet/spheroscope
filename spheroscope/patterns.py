@@ -19,7 +19,7 @@ from .queries import (add_gold, create_subcorpus, evaluate,
 bp = Blueprint('patterns', __name__, url_prefix='/patterns')
 
 
-def hierarchical_query(p1, slot, p2, s_cwb):
+def hierarchical_query(p1, slot, p2, s_cwb, cwb_id):
     """execute a hierarchical query: retrieve matches of all queries
     belonging to a _base_ pattern, then run all queries belonging to
     _slot_ pattern on one slot defined in the base pattern.
@@ -36,7 +36,6 @@ def hierarchical_query(p1, slot, p2, s_cwb):
     slot = str(slot)
 
     # process request parameters
-    cwb_id = session['corpus']['resources']['cwb_id']
     base_queries = Query.query.filter_by(pattern_id=p1).order_by(Query.name).all()
     slot_pattern = p2
     slot_queries = Query.query.filter_by(pattern_id=slot_pattern).all()
@@ -226,7 +225,7 @@ def subquery(p1):
     p2 = request.args.get('p2')
 
     # get matches
-    matches = hierarchical_query(p1, slot, p2, s_cwb)
+    matches = hierarchical_query(p1, slot, p2, s_cwb, cwb_id)
 
     # add gold
     matches = add_gold(matches, cwb_id, slot, s_cwb, s_gold)
@@ -275,3 +274,33 @@ def query_command(pattern, dir_out, cwb_id):
         if len(queries) > 0:
             matches = run_queries(queries, cwb_id)
             matches.to_csv(path_out, sep="\t", compression="gzip")
+
+
+@click.command('subquery')
+@click.argument('base_pattern')
+@click.argument('slot')
+@click.argument('slot_pattern')
+@click.argument('dir_out', required=False)
+@click.argument('s_cwb', default='tweet_id')
+@click.argument('cwb_id', default="BREXIT_V20190522_DEDUP")
+@with_appcontext
+def subquery_command(base_pattern, slot, slot_pattern, dir_out, s_cwb, cwb_id):
+    """
+    CLI command for running hierarchical queries
+    ---
+
+    """
+
+    base_pattern = int(base_pattern)
+    slot = str(slot)
+    slot_pattern = int(slot_pattern)
+
+    # output directory
+    if dir_out is None:
+        dir_out = os.path.join(current_app.instance_path, cwb_id, "query-results")
+    os.makedirs(dir_out, exist_ok=True)
+    path_out = os.path.join(dir_out, "pattern%d-slot%s-pattern%d.tsv.gz" % (base_pattern, slot, slot_pattern))
+
+    # get matches
+    matches = hierarchical_query(base_pattern, slot, slot_pattern, s_cwb, cwb_id)
+    matches.to_csv(path_out, sep="\t", compression="gzip")
