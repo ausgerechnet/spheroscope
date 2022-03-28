@@ -24,3 +24,4 @@ cfg.py
 *.Rhistory
 Pipfile.lock
 .Rproj.user
+*.RData
