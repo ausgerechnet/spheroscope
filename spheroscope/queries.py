@@ -72,29 +72,7 @@ def run_queries(queries, cwb_id):
         # translate anchor points in slot_START and slot_END for all slots
         for slot in query['anchors']['slots']:
 
-            df = dump.df.reset_index()
-            df.index = dump.df.index
-
-            # select relevant columns
-            columns = query['anchors']['slots'][slot]
-            columns = [columns] if isinstance(columns, int) else columns
-            for c in columns:
-                if c not in df.columns:
-                    current_app.logger.warning(
-                        'anchor point %s not defined in query "%s"' % (str(c), query['meta']['name'])
-                    )
-                    df[c] = -1
-            df = df[columns]
-
-            if df.shape[1] == 1:
-                # only one column: start and end are the same
-                df.columns = ["_".join([str(slot), 'START'])]
-                df["_".join([str(slot), 'END'])] = df["_".join([str(slot), 'START'])]
-            elif df.shape[1] == 2:
-                # two columns (start and end)
-                df.columns = ["_".join([str(slot), 'START']), "_".join([str(slot), 'END'])]
-
-            # join slots to matches dataframe
+            df = format_slot(dump, query, slot)
             matches = matches.join(df)
 
         # append to result list
@@ -113,6 +91,33 @@ def run_queries(queries, cwb_id):
             result[c] = result[c].fillna(-1, downcast='infer')
 
     return result
+
+
+def format_slot(dump, query, slot):
+
+    df = dump.df.reset_index()
+    df.index = dump.df.index
+
+    # select relevant columns
+    columns = query['anchors']['slots'][slot]
+    columns = [columns] if isinstance(columns, int) else columns
+    for c in columns:
+        if c not in df.columns:
+            current_app.logger.warning(
+                'anchor point %s not defined in query "%s"' % (str(c), query['meta']['name'])
+            )
+            df[c] = -1
+    df = df[columns]
+
+    if df.shape[1] == 1:
+        # only one column: start and end are the same
+        df.columns = ["_".join([str(slot), 'START'])]
+        df["_".join([str(slot), 'END'])] = df["_".join([str(slot), 'START'])]
+    elif df.shape[1] == 2:
+        # two columns (start and end)
+        df.columns = ["_".join([str(slot), 'START']), "_".join([str(slot), 'END'])]
+
+    return df
 
 
 def add_gold(result, cwb_id, pattern, s_cwb, s_gold):
