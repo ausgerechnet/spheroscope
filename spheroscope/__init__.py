@@ -89,5 +89,6 @@ def create_app(test_config=None):
     from . import patterns
     app.register_blueprint(patterns.bp)
     app.cli.add_command(patterns.query_command)
+    app.cli.add_command(patterns.subquery_command)
 
     return app
