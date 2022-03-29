@@ -16,4 +16,4 @@
 #   pattern: '24'
 # ---
 
-(@0:[pos_ark = "[A@D#NGZ^]" & lemma != "it"]+ "'?s"| @0:[pos_ner="PRP$"] ) @1:[::] [pos_ark="A"]* [lemma="entry|membership|participation"] [pos_ark="P"] @2:[::] [pos_ark="[D@ANZ#^]"]+ @3:[::]
+(@0[::] [pos_ark="[DA]"]*  [lemma=$person_any | pos_ark="[Z^]"]+ @1"'?s" |@0 [pos_ark="[#@]"|pos_ner="PRP$"]@1:[::])  [pos_ark="A"]* [lemma="entry|membership|participation"] [pos_ark="P"] @2:[::] [pos_ark="[D@ANZ#^]"]+ @3:[::]
