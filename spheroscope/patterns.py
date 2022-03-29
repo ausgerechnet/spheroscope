@@ -244,6 +244,96 @@ def subquery(p1):
                            tps=tps)
 
 
+@bp.route('/<int(signed=True):p1>/matches/mock', methods=('GET', 'POST'))
+def mock(p1):
+
+    # request parameters
+    slot = int(request.args.get('slot'))
+    p2 = int(request.args.get('p2'))
+
+    # read
+    from pandas import read_csv
+    path = "scripts/pattern%d-slot%d-pattern%d-annotate.tsv" % (p1, slot, p2)
+    table = read_csv(path, sep="\t")
+
+    # format
+    table['word'] = table.apply(highlight_slots, axis=1)
+
+    # select columns
+    firsts = ['word', 'query', 'query_slot', 'query_hierarchical', 'query_slot_hierarchical', 'tweet_id']
+    pos = [c for c in table.columns if c.startswith("exact")]
+    pos += [c for c in table.columns if c.startswith("within")]
+    pos += [c for c in table.columns if c.startswith("overlap")]
+    pos += [c for c in table.columns if c.startswith("outside")]
+
+    # format
+    table = table[firsts + pos]
+    table.columns = ["-" * 100 + "word" + "-" * 100] + list(table.columns[1:])
+
+    # return
+    return render_template(
+        'patterns/mock.html',
+        table=table.to_html(
+            escape=False,
+            index=False,
+            justify='left',
+            classes=['table', 'is-hoverable', 'is-narrow', 'is-striped', 'sortable']
+        )
+    )
+
+
+def add_role_of_slot(roles, context_start, slot_start, slot_end, role):
+
+    try:
+        start = slot_start - context_start
+        end = slot_end - context_start + 1
+        for i in range(start, end):
+            roles[i].append(role)
+    except IndexError:
+        pass
+
+    return roles
+
+
+def highlight_slots(row):
+
+    tokens = row['word'].split(" ")
+    roles = [list() for i in range(len(tokens))]
+    roles = add_role_of_slot(roles, row['context'], row["0_START"], row["0_END"], "0")
+    roles = add_role_of_slot(roles, row['context'], row["1_START"], row["1_END"], "1")
+    roles = add_role_of_slot(roles, row['context'], row["0_START_slot"], row["0_END_slot"], "0_slot")
+    roles = add_role_of_slot(roles, row['context'], row["1_START_slot"], row["1_END_slot"], "1_slot")
+    roles = add_role_of_slot(roles, row['context'], row["match"], row["matchend"], "match")
+    roles = add_role_of_slot(roles, row['context'], row["match_slot"], row["matchend_slot"], "match_slot")
+    # roles = [[a for a in set(r) if a is not None] for r in list(zip(*roles))]
+
+    formatted = list()
+    for t, r in zip(tokens, roles):
+
+        style = list()
+
+        if ("match" in r) and ("match_slot" in r):
+            style.append("background-color:orange")
+        elif "match" in r:
+            style.append("background-color:salmon")
+        elif "match_slot" in r:
+            style.append("background-color:yellow")
+
+        if "0" in r or "1" in r:
+            style.append("font-weight:bold")
+        if "0_slot" in r or "1_slot" in r:
+            style.append("font-style:italic")
+
+        if len(style) > 0:
+            f = '<span style="' + ";".join(style) + ';">' + t + " </span>"
+        else:
+            f = t + " "
+
+        formatted.append(f)
+
+    return "".join(formatted)
+
+
 #######
 # CLI #
 #######
