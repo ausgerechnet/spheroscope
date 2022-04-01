@@ -16,4 +16,4 @@
 #   pattern: '24'
 # ---
 
-@0[::]  ([pos_ark="[DA]"]*  [lemma=$person_any | pos_ark="[Z^]"]+ | [pos_ark="[#@]" | pos_ner="PRP" & lemma!="it"]) @1:[lemma="be|become|form|remain|stay"] [pos_ark="D"] [pos_ark="A" & word=".+st"]+ "ever|.+ble"?@2[::] [pos_ark="[NODVAZ^@#P]"]+ @3:[::]
+@0[::]  ([pos_ark="[DA]"]*  [lemma=$person_any | pos_ark="[Z^]"]+ | [pos_ark="[#@]" | pos_ner="PRP" & lemma!="it"]) @1:[lemma="be|become|form|remain|stay" | lemma=$verbs_stay] [pos_ark="D"] @2[::][pos_ark="A" & word=".+st"]+ ("ever|.+ble"|"of" "all")?  [pos_ark="[ODVAZ^@#P]"]* [lemma=$person_any|lemma=$nouns_entities|pos_ark="[Z^]"]+ @3:[::]

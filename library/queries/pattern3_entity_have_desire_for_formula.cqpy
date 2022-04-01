@@ -16,4 +16,4 @@
 #   pattern: '3'
 # ---
 
-@0:[::] [pos_ark = "[DA@ONZ#^]"]+ @1[::] [pos_ark="R"]* [pos_ner="MD" | lemma="experience|have|feel|share|with"]+ [pos_ark="[DAO]"]+ [lemma=$nouns_desire & pos_ark!="V" ] [lemma="for|to" | pos_ark="D"]? @2:[::] [word!="[\.,\?\!]" & word !="http.+"]+ @3:[::]
+@0:[::] ([pos_ark="[DA]"]*  [lemma=$person_any | pos_ark="[Z^]"]+ | [pos_ark="[#@]" | pos_ner="PRP" & lemma!="it"]) @1[::] [pos_ark="R"]* [pos_ner="MD" | lemma="experience|have|feel|share|with"]+ [pos_ark="[DAO]"]+ [lemma=$nouns_desire & pos_ark!="V" ] [lemma="for|to" | pos_ark="D"]? @2:[::] [pos_ark!="[UEG,#@]"]+ @3:[::]

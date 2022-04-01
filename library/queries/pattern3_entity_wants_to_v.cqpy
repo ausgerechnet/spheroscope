@@ -1,0 +1,19 @@
+# --- # CQPY query file
+# anchors:
+#   corrections:
+#     1: -1
+#     3: -1
+#   slots:
+#     '0':
+#     - match
+#     - 1
+#     '1':
+#     - 2
+#     - 3
+# meta:
+#   comment: null
+#   name: pattern3_entity_wants_to_v
+#   pattern: '3'
+# ---
+
+@0:[::] ([pos_ark="[DA]"]*  [lemma=$person_any | pos_ark="[Z^]"]+ | [pos_ark="[#@L]" | pos_ner="PRP" & lemma!="it"]) @1[::] [pos_ark="R"]* [pos_ner="MD"]? [pos_ark="R"]* [lemma=$verbs_prefer & pos_ark="V"] [pos_ark="A|R"]* @2:[::] [pos_ark="[DVNARTP]"]* [pos_ner="VB.?"]+ [pos_ark!="[GUE,]"]* @3[::]
