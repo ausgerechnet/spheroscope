@@ -1,0 +1,19 @@
+# --- # CQPY query file
+# anchors:
+#   corrections:
+#     1: -1
+#     3: -1
+#   slots:
+#     '0':
+#     - 0
+#     - 1
+#     '1':
+#     - 2
+#     - 3
+# meta:
+#   comment: null
+#   name: pattern0_quotation_from_entity_that_concept
+#   pattern: '0'
+# ---
+
+[lemma=$nouns_quotation] [lemma="from|by"] @0:[::]([pos_ark="[DA]"]*  [lemma=$person_any | pos_ark="[Z^]"]+ | [pos_ark="[#@]" | pos_ner="PRP"]) ([lemma=$person_any | lemma=","])* @1:[::] [pos_ark="[VORA]"]* ([lemma="that"|lemma=$verbs_communication|lemma="[\-:]"] | /quotation_mark[])+ @2:[::] [pos_ark!="[EU#,]"]+ @3:[::]

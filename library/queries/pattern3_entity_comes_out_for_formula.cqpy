@@ -13,7 +13,7 @@
 # meta:
 #   comment: null
 #   name: pattern3_entity_comes_out_for_formula
-#   pattern: 3
+#   pattern: '3'
 # ---
 
-@0:[::] [pos_ark = "[DA@ONZ#^]"]+ ([lemma="and|\&|,"]? [pos_ark = "[DA@ONZ#^]"]+)*@1[::] [lemma="be|have|will" | pos_ner="MD"]* [lemma="come"] [lemma="out"] ([lemma="for|against"] | [lemma="in"] [lemma="favou?r|support"] [lemma="of"]) @2:[::] [word!="[-\.,\?\!]" & word !="http.+"]+ @3:[::]
+@0:[::] ([pos_ark="[DA]"]*  [lemma=$person_any | pos_ark="[Z^]"]+ | [pos_ark="[#@]" | pos_ner="PRP" & lemma!="it"]) ([lemma="and|\&|,"] [pos_ark="[DA]"]*  [lemma=$person_any | pos_ark="[Z^]"]+ | [pos_ark="[#@]" | pos_ner="PRP" & lemma!="it"])*@1[::] [lemma="be|have|will" | pos_ner="MD"|pos_ark="R"]* [lemma="come"] [lemma="out"] ([lemma="for|against"] | [lemma="in"] [pos_ark="A"]* [lemma="favou?r|support"] [lemma="of"]) @2:[::] [lemma!="[,]" & pos_ark!="[EUG]"]+ @3:[::]
