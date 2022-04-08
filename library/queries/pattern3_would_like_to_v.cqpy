@@ -1,0 +1,19 @@
+# --- # CQPY query file
+# anchors:
+#   corrections:
+#     1: -1
+#     3: -1
+#   slots:
+#     '0':
+#     - match
+#     - 1
+#     '1':
+#     - 2
+#     - 3
+# meta:
+#   comment: null
+#   name: pattern3_would_like_to_v
+#   pattern: '3'
+# ---
+
+@0:[::] (/actor_np_all[]) @1[::] [pos_ark="R"]* [lemma="'d|would"] [pos_ark="[AR]"]* "like" @2:[::] (/region[np)? "to"  [pos_ark="[DVNARTP]"]* [pos_ner="VB.?"]+ [pos_ark!="[UGE,#@\&]"]*@3[::]
