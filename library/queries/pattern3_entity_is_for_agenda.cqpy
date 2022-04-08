@@ -16,4 +16,4 @@
 #   pattern: '3'
 # ---
 
-@0:[::] [pos_ark="[DA]"]* [lemma = $person_any | lemma = $nouns_experts | lemma =  $nouns_large_number | lemma ="majority|minority"|pos_ark = "[@Z#]" | pos_ner="PRP"& lemma != "it"]+  @1:[::][pos_ner="MD|RB"]* [lemma = "be"] [lemma=$adv_high_degree]? "against|for" @2:[::][pos_ark="[DVNARTP]"]* [pos_ark="[VA]" | lemma=$nouns_policies | lemma = $nouns_values]+ @3[::]
+@0:[::] (/actor_np_all[])  @1:[::][pos_ner="MD|RB"|lemma="have"]* [lemma = "be"] [lemma=$adv_high_degree]* [pos_ark="R"]? "against|for" @2:[::][pos_ark="[DVNARTP]"]* [pos_ark="[VA]" | lemma=$nouns_policies | lemma = $nouns_values]+ [pos_ark!="[UGE,\&#@P]"]* @3[::]

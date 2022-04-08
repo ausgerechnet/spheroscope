@@ -16,4 +16,4 @@
 #   pattern: '24'
 # ---
 
-@0[::] ([pos_ark="[DA]"]*  [lemma=$person_any | pos_ark="[Z^]"]+ | [pos_ark="[#@]" | pos_ner="PRP" & lemma!="it"]) @1:[::][pos_ark="R"|pos_ner="MD"]* [(lemma="be" | lemma=$verbs_stay)&word="[a-z]+"] @2[::] [lemma="a|the"|pos_ark="[RA]"]+ [lemma = $person_any & pos_ark="[NZ#^]" | pos_ark="[Z^]"]+ [pos_ark="N"]? @3[::]
+@0[::] (/actor_np_all[]) @1:[::][pos_ark="R"|pos_ner="MD"]* [(lemma="be" | lemma=$verbs_stay)&word="[a-z]+"] @2[::] [lemma="a|the"|pos_ark="[RANZ^]"]+ /actor_group[] [pos_ark="[NZ^]"]? @3[::]
