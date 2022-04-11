@@ -16,4 +16,4 @@
 #   pattern: '24'
 # ---
 
-[lemma="as" | word="[Bb]eing"] @0:[::] [pos_ark="D"] [pos_ark = "[AD@PONZ#^]"]+ @1[::] ","  @2[::][pos_ark="[DA]"]* [pos_ark = "[@Z#^]" | pos_ner="PRP.?"]+ @3[pos_ark="V" | pos_ner="PRP."]
+[lemma="as" | word="[Bb]eing"] @0:[::] [pos_ark="D"] (/actor_group[]) @1[::] ","?  @2[::] (/actor_np_all[]) @3[pos_ark="[,ZOVR]"]

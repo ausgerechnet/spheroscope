@@ -1,9 +1,9 @@
 case
 category
 example
-institution
-issue
-something
-stuff
-system
+form
+kind
 type
+variant
+variation
+version
