@@ -1,8 +1,8 @@
 # --- # CQPY query file
 # anchors:
 #   corrections:
-#     '1': -1
-#     '3': -1
+#     1: -1
+#     3: -1
 #   slots:
 #     '0':
 #     - 0
@@ -13,7 +13,7 @@
 # meta:
 #   comment: null
 #   name: pattern3_why_does_entity_want_concept
-#   pattern: 3
+#   pattern: '3'
 # ---
 
-[lemma="why"] [lemma="do"] @0:[::] [pos_ark="[@DANOZ^]"]+ @1:[lemma=$verbs_prefer | lemma="wanna"] "to"? @2:[::] [word!="[\.,\?\!]" & word !="http.+"]* @3:[::]
+[lemma="why"] [lemma="do"] @0:[::] (/actor_np_all[]) @1:[::][pos_ner="RB|MD"]* [lemma=$verbs_prefer | lemma="wanna"] "to"? @2:[::] [pos_ark!="[UGE,#@\&]"]+ @3:[::]

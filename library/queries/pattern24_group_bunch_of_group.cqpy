@@ -16,4 +16,4 @@
 #   pattern: '24'
 # ---
 
-(@0:[::]([pos_ark="[DA]"]*  [lemma=$person_any | pos_ark="[Z^]"]+ | [pos_ark="[#@]" | pos_ner="PRP" & lemma!="it"]) @1:[lemma="be|'s"] | [pos_ark="L" & lemma!="it.?s?|there.*|.+ve*"]@1[lemma="be|'s"]?) [pos_ner="RB" & lemma !="there|not"]? "a" [pos_ark="A"]* [lemma=$nouns_large_number] "of" @2[::] [word!="[\.,\?\!]"]+ @3:[::]
+@0:[::] /actor_np_all[] @1:[::][pos_ner="RB|MD"|lemma="have"]* [lemma="be|'s"] [pos_ner="RB" & lemma !="there|not"]? "a" [pos_ark="[ARNZ^]"]* [lemma=$nouns_large_number | lemma=$nouns_group | lemma = $nouns_political_entities | lemma=$nouns_corporate_entities | lemma=$nouns_experts] "of" @2[::][pos_ark="[DANZ^]"]* (/actor_np_all[]) [pos_ark="[DVANZ^]"]* @3:[::]

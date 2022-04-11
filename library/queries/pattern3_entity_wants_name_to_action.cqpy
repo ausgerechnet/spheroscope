@@ -16,4 +16,4 @@
 #   pattern: '3'
 # ---
 
-@0:[::] ([pos_ark="[DA]"]*  [lemma=$person_any | pos_ark="[Z^]"]+ | [pos_ark="[#O@]"]) @1[::] [pos_ark="[RV]"]* [lemma=$verbs_prefer] [lemma="for"]? @2[::] [pos_ark="[@DANO#Z^]"]+ [pos_ner="MD" | lemma="to"] [pos_ark="V"] [word!="[\.,\?\!]" & word !="http.+"]* @3:[::]
+@0:[::] (/actor_np_all[]) @1[::] [pos_ark="[RV]"]* [lemma=$verbs_prefer] [lemma="for"]? @2[::] (/actor_np_all[]) [pos_ner="RB|MD" | lemma="to"]+ [pos_ark="V"] [pos_ark!="[UGE,#@\&]"]* @3:[::]
