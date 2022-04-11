@@ -1,0 +1,19 @@
+# --- # CQPY query file
+# anchors:
+#   corrections:
+#     1: -1
+#     3: -1
+#   slots:
+#     '0':
+#     - 0
+#     - 1
+#     '1':
+#     - 2
+#     - 3
+# meta:
+#   comment: null
+#   name: pattern10_entity_be_sure_that_prop
+#   pattern: '10'
+# ---
+
+@0[::]([pos_ark="[DA]"]*  [lemma=$person_any | pos_ark="[Z^]"]+ | [pos_ark="[#@L]" | pos_ner="PRP"]) @1[::] [lemma = "be" | lemma = $verbs_stay | lemma="appear|seem"] ([pos_ark="R" & lemma != "not"])? [lemma=$adj_belief] "of|that"? @2:[::] [pos_ark="[DA]"]* [pos_ark = "[ONZ@#^]" | pos_ark="V" & word=".+ing"]+[word!="[-\.,\?\!]" & word !="http.+" & pos_ark!="[UE#@]"]+ @3:[::]

@@ -1,0 +1,18 @@
+# --- # CQPY query file
+# anchors:
+#   corrections:
+#     3: -1
+#   slots:
+#     '0':
+#     - 2
+#     - 3
+#     '1':
+#     - 0
+#     - 1
+# meta:
+#   comment: null
+#   name: pattern8_concept_do_entity_favour
+#   pattern: '8'
+# ---
+
+@0:[::] [pos_ark="[DA]"]* @1[pos_ark = "[AONZP#^]" | pos_ark="V" & word=".+ing"]+  [pos_ark="[VR]"]* [pos_ark="T"]? [lemma="do"] @2[::][pos_ark = "[DA@ONZ#^]"]+ ([lemma="and|\&|,"]? [pos_ark = "[DA@ONZ#^]"]+)* @3[::] [pos_ark="[DAR]"]+ [lemma="favou?r|service"]
