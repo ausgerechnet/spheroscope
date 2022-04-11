@@ -9,7 +9,7 @@
 # meta:
 #   comment: null
 #   name: pattern3_ellipsis_hoping_concept
-#   pattern: 3
+#   pattern: '3'
 # ---
 
-("Hoping|Hope|Wishing|Wish" | [lemma="[\.\?\!;,-]+"] "hoping|hope|wishing|wish") [lemma="for|that|to"]? @2:[::] [word!="[\.,\?\-\!]" & word !="http.+"]* @3:[::]
+([word="Hoping|Hope|Wishing|Wish" &pos_ark="V"] | [lemma="[\.\?\!;,-]+"] [word="hoping|hope|wishing|wish" & pos_ark="V"]) [lemma="for|that|to"]? @2:[::] [pos_ark!="[GUE,]"]+ @3:[::]

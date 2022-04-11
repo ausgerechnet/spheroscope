@@ -16,4 +16,4 @@
 #   pattern: '3'
 # ---
 
-@0:[::][pos_ark="[DA]"]* [pos_ark = "[@NZ#^]" | pos_ner="PRP" & lemma != "it"]+  @1:[::] [pos_ner="MD"]* [pos_ark="R"]? ([lemma = "be"] [pos_ark="R"]? ([lemma="die|line|queue|wait" & word =".+ing" | lemma="desperate"] | "can'?t|cannot" "wait") "to" | [lemma="keen"] "on|to") @2:[::] [word!="[\.,\?\!]" & word !="http.+"]* @3:[::]
+@0:[::](/actor_np_all[]) @1:[::] [pos_ner="MD"]* [pos_ark="R"]? ([lemma = "be"] [pos_ark="R"]? ([lemma="die|line|queue|wait" & word =".+ing" | lemma="desperate"] | "can'?t|cannot" "wait") "to" | [lemma="keen"] "on|to") @2:[::] [pos_ark!="[UGE,\&]"]+ @3:[::]

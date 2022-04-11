@@ -16,4 +16,4 @@
 #   pattern: '24'
 # ---
 
-(@0[::] [pos_ark="[DA]"]*  [lemma=$person_any | pos_ark="[Z^]"]+ @1"'?s" |@0 [pos_ark="[#@]"|pos_ner="PRP$"]@1:[::]) @2:[::] [pos_ark="[#@^Z]"]+ @3:[lemma="entry|membership|participation"]
+(@0[::] (/actor_np_all[]) @1"'?s" |@0 [pos_ark="[#@]"|pos_ner="PRP$"]@1:[::]) @2:[::] [pos_ark="[#@^ZDA]"]* /actor_np_all[] @3:[lemma="entry|membership|participation"]

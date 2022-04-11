@@ -16,4 +16,4 @@
 #   pattern: '3'
 # ---
 
-@0[::] ([lemma=$person_any | pos_ark="[Z^]"]+ | [pos_ark="[O@]"] ) @1:"for|against" @2:[pos_ark="[DA]"]* [lemma=$nouns_values | lemma = $nouns_policies] @3[::]
+@0[::] (/actor_np_all[]) @1:"for|against" @2:[pos_ark="[DRVA]"]* [lemma=$nouns_values | lemma = $nouns_policies] @3[::]

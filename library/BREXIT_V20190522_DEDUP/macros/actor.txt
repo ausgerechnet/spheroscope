@@ -1,0 +1,10 @@
+MACRO actor_np_all(0)
+(
+[pos_ark="[DAZN^]"]* [lemma=$nouns_policies]* [lemma = $person_any | lemma = $nouns_experts | lemma=$nouns_entities | lemma=$nouns_political_entities | lemma=$nouns_corporate_entities | lemma =  $nouns_large_number  | lemma=$nouns_news_media | lemma ="majority|minority"|(pos_ark = "[@ZL#^]" | pos_ner="PRP")& lemma != "it.*|there.*|that.*"]+  [pos_ark="[ANZ^]"]* 
+)
+;
+MACRO actor_group(0)
+(
+[pos_ark="[DAZN^]"]* [(lemma=$person_any| lemma=$nouns_group| lemma=$nouns_political_entities | lemma=$nouns_corporate_entities | lemma=$nouns_experts  | lemma=$nouns_news_media) & pos_ark="[NZ^]"]+
+)
+;
