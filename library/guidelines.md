@@ -53,17 +53,16 @@
 
 ## examples ##
 - ... says **The Times**, endorsing **Brexit**
-- **50%** in favour of **Brexit**
 - **he** is against **it** (we read this as 'he wants for it to not be true')
 - **George** is for **Brexit**
 - Hoping for **a successful outcome** .
 - **I** am interested in **participating**
 - **We** are really looking forward to **this**
 - **they** endorse **Brexit**
-- a key Brexit supporter claims ... (pathological/ not query-able: entity defined via desire)
-- the pro brexit campaigners are using this strategy (pathological / not query-able)
+- the pro brexit campaigners are using this strategy (pathological)
 
 ## counter examples ##
+- a person supporting brexit / many people supporting brexit say ... (not specified who the entities are)
 - One-sided preference without explicit marking of desire: SF have issues with EU but *see it as better* for NI to remain [because they might not actually want to remain, despite seeing this as the rationally best decision]
 - the 'wanter' is implicit in a non-elliptical sentence (*democracy should be protected* pattern #4)
 - the desire can only be inferred from an action (he *voted* remain might be interpreted as him /remain/ to be made true, but we do not consider such actions a sufficiently clear expression of desire)
