@@ -45,37 +45,59 @@
 - #23 + causal relationship
 
 # 3 Desire #
-- ENTITY wants FORMULA
-- desire (*want*, *wish*) of a particular outcome or event,
-- affiliation (*support*, *back*, *say yes to*),
-- the ENTITY should be explicitly marked - an exception applies for ellipsis (i.e. when the subject is not realised in the surface form). Here, the ENTITY is the author of the message.
-- FORMULA cannot be just an entity (ENTITY backs CAMERON != ENTITY desires CAMERON)
+- **entity** wants **formula**
+- **formula** cannot be just an **entity**:
+  + "**entity** backs **cameron**" != "**entity** desires **cameron**"
+- the **entity** should be explicitly marked
+- an exception applies for ellipsis (i.e. when the subject is not realised in the surface form)
+  + here, the **entity** is the author of the message
+
+## cues ##
+- verbs of desire (*want*, *wish*) of a particular outcome or event
+- verbs of affiliation (*support*, *back*, *say yes to*)
 
 ## examples ##
 - ... says **The Times**, endorsing **Brexit**
-- **he** is against **it** (we read this as 'he wants for it to not be true')
 - **George** is for **Brexit**
-- Hoping for **a successful outcome** .
+- Hoping for **a successful outcome**
 - **I** am interested in **participating**
 - **We** are really looking forward to **this**
 - **they** endorse **Brexit**
-- the pro brexit campaigners are using this strategy (pathological)
 
 ## counter examples ##
-- a person supporting brexit / many people supporting brexit say ... (not specified who the entities are)
-- One-sided preference without explicit marking of desire: SF have issues with EU but *see it as better* for NI to remain [because they might not actually want to remain, despite seeing this as the rationally best decision]
-- the 'wanter' is implicit in a non-elliptical sentence (*democracy should be protected* pattern #4)
-- the desire can only be inferred from an action (he *voted* remain might be interpreted as him /remain/ to be made true, but we do not consider such actions a sufficiently clear expression of desire)
+- silent majority for brexit
+  + entity is undefined subset
+- the pro brexit campaigners are using this strategy
+  + desire defines membership
+- a person supporting brexit / many people supporting brexit say ... 
+  + not specified who the entities are
+- he is *against* it
+  + pattern #55
+- SF have issues with EU but *see it as better* for NI to remain
+  + one-sided preference without explicit marking of desire
+  + here: because they might not actually want to remain, despite seeing this as the rationally best decision
+- democracy should be protected
+  + pattern #4
+  + the 'wanter' is implicit in a non-elliptical sentence
+- he *voted* remain 
+  + might be interpreted as him wanting *remain* to be made true, but we do not consider such actions a sufficiently clear expression of desire
+  + the desire can only be inferred from an action
 - it would be nice if ..
 - ... the figures were REMAIN 45% ...
-- rhetorical questions and idiomatic expressions: you want to talk misleading?
+  + figures do not desire anything
+- you want to talk misleading?
+  + rhetorical questions and idiomatic expressions: 
 - he's got Brexit as his next agenda item
-- the desire can only be inferred from an expression of conscious decision or reasoning (Johnson's *reason* to remain, her *case* for leave),
+- Johnson's *reason* to remain, her *case* for leave
+  + the desire can only be inferred from an expression of conscious decision or reasoning
 - the technocrats fighting hard for Britain to remain
-- positive regard without desire: you seem to like that
-- the technocrats in the Eu fighting for Britain to remain (effort does not necessarily equal desire)
+- you seem to like that
+  + positive regard without desire
+- the technocrats in the EU fighting for Britain to remain
+  + effort does not necessarily equal desire
 - I believe in votes at 16 and no GRP for transgender people
-- I'm endorsing my point from yesterday (the point is being reinforced, not desired)
+- I'm endorsing my point from yesterday 
+  + the point is being reinforced, not desired
 
 # 4 Ought #
 - ... should / ought ...
@@ -472,7 +494,7 @@ p10: belief
 - your guess is as good as mine (idiom = 'I don't know')
 - Brexit -carefully managed by cool headed diplomats - cd be better but Remain can't see it (missing FORMULA2)
 
-## 43 Better for Concept ##
+# 43 Better for Concept #
 - FORMULA1 is better for CONCEPT than FORMULA2
 - concept = entity / system
 
@@ -524,7 +546,6 @@ p10: belief
 - **as a son of immigrants** **I** am for **Brexit**
 - **the Left T.U. in me** says **No to leave** but **the #Motorbikes side of me** says **Yes vote to leave**
 
-
 # 48 Warning for some #
 - ENTITY1 says that FORMULA is/will be/ would be bad for ENTITY2
 
@@ -538,7 +559,6 @@ p10: belief
 ##examples##
 - Hilary Benn has warned that Britain 's exit from the EU would make the country ' poorer ' and ' less influential'
 - Brexit could lead to downgrades for other EU countries -Fitch
-
 
 # 53 intention to do #
 - ENTITY intends to do ACTION
@@ -582,68 +602,68 @@ p10: belief
 ## Entities ##
 - 19, 20, 21
 
-# Inverse Lookup #
-![](https://mermaid.ink/svg/eyJjb2RlIjoiZ3JhcGggVERcbiAgICBGe0Zvcm11bGFlfSBcbiAgICBGIC0tPiBPbmVcbiAgICBGIC0tPiBUd29cbiAgICBPbmUgLS0-IE8oNDogT2JsaWdhdGlvbilcbiAgICBPbmUgLS0-IFAoMzY6IFBlcm1pc3Npb24pXG4gICAgT25lIC0tPiBEaWEoNTogUG9zc2liaWxpdHkpXG4gICAgT25lIC0tPiBCb3goMzU6IFVuaXZlcnNhbCBGYWN0cylcbiAgICBUd28gLS0-IEltcGwoMjM6IEltcGxpY2F0aW9uKVxuICAgIEltcGwgLS0-IENhdXMoMjogQ2F1c2F0aW9uKVxuICAgIEltcGwgLS0-IERlZigxMjogVXN1YWxseSBpbXBsaWVzKVxuICAgIE9uZSAtLT4gTmVnKDI3OiBOZWdhdGlvbilcbiAgICBDYXVzIC0tPiBOZWMoMjI6IE5lY2Vzc2FyeSBjb25kaXRpb24pXG5cbiAgICBUd28gLS0-IFNpbSgxNTogU2ltaWxhcml0eSlcbiAgICBFIC0tPiBTaW1cblxuICAgIEV7RW50aXRpZXN9XG5cbiAgICBGIC0tPiBMKDA6IExvY3V0aW9ucylcbiAgICBFIC0tPiBMXG4gICAgTCAtLT4gRCgzOiBEZXNpcmUgZXhwcmVzc2lvbilcbiAgICBMIC0tPiBiYWQoNjogQmFkbmVzcyBzdGF0ZW1lbnQpXG4gICAgYmFkIC0tPiBiYWRjb25zKDQxOiBCYWQgY29uc2VxdWVuY2VzIHN0YXRlbWVudClcbiAgICBDYXVzIC0tPiBiYWRjb25zXG4gICAgTCAtLT4gZ29vZCg4OiBHb29kbmVzcyBzdGF0ZW1lbnQpXG5cbiAgICBGIC0tPiBFRFtFcGlzdGVtaWMvRG94YXN0aWNdXG4gICAgRSAtLT4gRURcbiAgICBFRCAtLT4gQigxMDogQmVsaWVmKVxuICAgIEVEIC0tPiBLKDM0OiBLbm93bGVkZ2UpXG4gICAgTCAtLT4gUHJlZigxNjogUHJlZmVyZW5jZSBzdGF0ZW1lbnQpXG4gICAgTCAtLT4gUENhdXNlKDMzOiBQb3NzaWJsZSBjYXVzYXRpb24gc3RhdGVtZW50KVxuICAgIERpYSAtLT4gUENhdXNlXG4gICAgQ2F1cyAtLT4gUENhdXNlXG4gICAgRSAtLT4gR1tHcm91cHNdXG4gICAgRyAtLT4gSW4oMjQ6IFggaW4gZ3JvdXAgWSlcbiAgICBHIC0tPiBNZW1iZXJzXG4gICAgTWVtYmVycyAtLT4gQWxsKDI1OiBBbGwgbWVtYmVycyBoYXZlIHByb3BlcnR5KVxuICAgIEFsbCAtLT4gQWxsT2JsaWdhdGVkKDM3OiBBbGwgbWVtYmVycyBoYXZlIG9ibGlnYXRpb24gdG8uLi4pXG4gICAgT0QgLS0-IEFsbE9ibGlnYXRlZFxuICAgIEFsbCAtLT4gQWxsS25vdygyNjogQWxsIG1lbWJlcnMgaW5jbHVkaW5nIFgga25vdylcbiAgICBBbGwgLS0-IE1vc3QoMzI6IE1vc3QgbWVtYmVycyBoYXZlIHByb3BlcnR5KVxuICAgIEwgLS0-IEhvbmVzdHkoMjg6IFggaXMgaG9uZXN0IGFib3V0IFkpXG4gICAgTWVtYmVycyAtLT4gU29tZSgzOTogU29tZSBtZW1iZXJzIGhhdmUgcHJvcGVydHkpXG4gICAgTWVtYmVycyAtLT4gTm8oNDA6IE5vIG1lbWJlcnMgaGF2ZSBwcm9wZXJ0eSlcbiAgICBFIC0tPiBBdHRhY2tzXG4gICAgQXR0YWNrcyAtLT4gQWQoMjE6IEFkIEhvbWluZW0gY2F0Y2hhbGwpXG4gICAgQXR0YWNrcyAtLT4gTGkoMjA6IEVudGl0eSBsaWVzIGFib3V0IFgpXG4gICAgTyAtLT4gT0QoMTk6IFggaGFzIE9ibGlnYXRpb24pXG5cbiAgICBBe0FjdGlvbnN9XG5cbiAgICBFIC0tPiBBYmlsaXR5KDExOiBBYmlsaXR5KVxuICAgIEEgLS0-IEFiaWxpdHlcbiAgICBFIC0tPiBEaWQoMzA6IFggZGlkIFkpXG4gICAgQSAtLT4gRGlkXG5cbiAgICBPbmUgLS0-IFJlc3VsdCgyOTogRG9pbmcgWCB3b3VsZCBldmVudHVhbGx5IHJlc3VsdCBpbiBZKVxuICAgIEEgLS0-IFJlc3VsdFxuICAgIFJlc3VsdCAtLT4gU3RyZW5ndGgoMzE6IFBvd2VyIHRvIGVuZm9yY2UgWCkiLCJtZXJtYWlkIjp7InRoZW1lIjoiZGVmYXVsdCJ9LCJ1cGRhdGVFZGl0b3IiOmZhbHNlfQ)
-```mermaid
-graph TD
-    F{Formulae} 
-    F --> One
-    F --> Two
-    One --> O(4: Obligation)
-    One --> P(36: Permission)
-    One --> Dia(5: Possibility)
-    One --> Box(35: Universal Facts)
-    Two --> Impl(23: Implication)
-    Impl --> Caus(2: Causation)
-    Impl --> Def(12: Usually implies)
-    One --> Neg(27: Negation)
-    Caus --> Nec(22: Necessary condition)
+<!-- # Inverse Lookup # -->
+<!-- ![](https://mermaid.ink/svg/eyJjb2RlIjoiZ3JhcGggVERcbiAgICBGe0Zvcm11bGFlfSBcbiAgICBGIC0tPiBPbmVcbiAgICBGIC0tPiBUd29cbiAgICBPbmUgLS0-IE8oNDogT2JsaWdhdGlvbilcbiAgICBPbmUgLS0-IFAoMzY6IFBlcm1pc3Npb24pXG4gICAgT25lIC0tPiBEaWEoNTogUG9zc2liaWxpdHkpXG4gICAgT25lIC0tPiBCb3goMzU6IFVuaXZlcnNhbCBGYWN0cylcbiAgICBUd28gLS0-IEltcGwoMjM6IEltcGxpY2F0aW9uKVxuICAgIEltcGwgLS0-IENhdXMoMjogQ2F1c2F0aW9uKVxuICAgIEltcGwgLS0-IERlZigxMjogVXN1YWxseSBpbXBsaWVzKVxuICAgIE9uZSAtLT4gTmVnKDI3OiBOZWdhdGlvbilcbiAgICBDYXVzIC0tPiBOZWMoMjI6IE5lY2Vzc2FyeSBjb25kaXRpb24pXG5cbiAgICBUd28gLS0-IFNpbSgxNTogU2ltaWxhcml0eSlcbiAgICBFIC0tPiBTaW1cblxuICAgIEV7RW50aXRpZXN9XG5cbiAgICBGIC0tPiBMKDA6IExvY3V0aW9ucylcbiAgICBFIC0tPiBMXG4gICAgTCAtLT4gRCgzOiBEZXNpcmUgZXhwcmVzc2lvbilcbiAgICBMIC0tPiBiYWQoNjogQmFkbmVzcyBzdGF0ZW1lbnQpXG4gICAgYmFkIC0tPiBiYWRjb25zKDQxOiBCYWQgY29uc2VxdWVuY2VzIHN0YXRlbWVudClcbiAgICBDYXVzIC0tPiBiYWRjb25zXG4gICAgTCAtLT4gZ29vZCg4OiBHb29kbmVzcyBzdGF0ZW1lbnQpXG5cbiAgICBGIC0tPiBFRFtFcGlzdGVtaWMvRG94YXN0aWNdXG4gICAgRSAtLT4gRURcbiAgICBFRCAtLT4gQigxMDogQmVsaWVmKVxuICAgIEVEIC0tPiBLKDM0OiBLbm93bGVkZ2UpXG4gICAgTCAtLT4gUHJlZigxNjogUHJlZmVyZW5jZSBzdGF0ZW1lbnQpXG4gICAgTCAtLT4gUENhdXNlKDMzOiBQb3NzaWJsZSBjYXVzYXRpb24gc3RhdGVtZW50KVxuICAgIERpYSAtLT4gUENhdXNlXG4gICAgQ2F1cyAtLT4gUENhdXNlXG4gICAgRSAtLT4gR1tHcm91cHNdXG4gICAgRyAtLT4gSW4oMjQ6IFggaW4gZ3JvdXAgWSlcbiAgICBHIC0tPiBNZW1iZXJzXG4gICAgTWVtYmVycyAtLT4gQWxsKDI1OiBBbGwgbWVtYmVycyBoYXZlIHByb3BlcnR5KVxuICAgIEFsbCAtLT4gQWxsT2JsaWdhdGVkKDM3OiBBbGwgbWVtYmVycyBoYXZlIG9ibGlnYXRpb24gdG8uLi4pXG4gICAgT0QgLS0-IEFsbE9ibGlnYXRlZFxuICAgIEFsbCAtLT4gQWxsS25vdygyNjogQWxsIG1lbWJlcnMgaW5jbHVkaW5nIFgga25vdylcbiAgICBBbGwgLS0-IE1vc3QoMzI6IE1vc3QgbWVtYmVycyBoYXZlIHByb3BlcnR5KVxuICAgIEwgLS0-IEhvbmVzdHkoMjg6IFggaXMgaG9uZXN0IGFib3V0IFkpXG4gICAgTWVtYmVycyAtLT4gU29tZSgzOTogU29tZSBtZW1iZXJzIGhhdmUgcHJvcGVydHkpXG4gICAgTWVtYmVycyAtLT4gTm8oNDA6IE5vIG1lbWJlcnMgaGF2ZSBwcm9wZXJ0eSlcbiAgICBFIC0tPiBBdHRhY2tzXG4gICAgQXR0YWNrcyAtLT4gQWQoMjE6IEFkIEhvbWluZW0gY2F0Y2hhbGwpXG4gICAgQXR0YWNrcyAtLT4gTGkoMjA6IEVudGl0eSBsaWVzIGFib3V0IFgpXG4gICAgTyAtLT4gT0QoMTk6IFggaGFzIE9ibGlnYXRpb24pXG5cbiAgICBBe0FjdGlvbnN9XG5cbiAgICBFIC0tPiBBYmlsaXR5KDExOiBBYmlsaXR5KVxuICAgIEEgLS0-IEFiaWxpdHlcbiAgICBFIC0tPiBEaWQoMzA6IFggZGlkIFkpXG4gICAgQSAtLT4gRGlkXG5cbiAgICBPbmUgLS0-IFJlc3VsdCgyOTogRG9pbmcgWCB3b3VsZCBldmVudHVhbGx5IHJlc3VsdCBpbiBZKVxuICAgIEEgLS0-IFJlc3VsdFxuICAgIFJlc3VsdCAtLT4gU3RyZW5ndGgoMzE6IFBvd2VyIHRvIGVuZm9yY2UgWCkiLCJtZXJtYWlkIjp7InRoZW1lIjoiZGVmYXVsdCJ9LCJ1cGRhdGVFZGl0b3IiOmZhbHNlfQ) -->
+<!-- ```mermaid -->
+<!-- graph TD -->
+<!--     F{Formulae}  -->
+<!--     F -\-> One -->
+<!--     F -\-> Two -->
+<!--     One -\-> O(4: Obligation) -->
+<!--     One -\-> P(36: Permission) -->
+<!--     One -\-> Dia(5: Possibility) -->
+<!--     One -\-> Box(35: Universal Facts) -->
+<!--     Two -\-> Impl(23: Implication) -->
+<!--     Impl -\-> Caus(2: Causation) -->
+<!--     Impl -\-> Def(12: Usually implies) -->
+<!--     One -\-> Neg(27: Negation) -->
+<!--     Caus -\-> Nec(22: Necessary condition) -->
 
-    Two --> Sim(15: Similarity)
-    E --> Sim
+<!--     Two -\-> Sim(15: Similarity) -->
+<!--     E -\-> Sim -->
 
-    E{Entities}
+<!--     E{Entities} -->
 
-    F --> L(0: Locutions)
-    E --> L
-    L --> D(3: Desire expression)
-    L --> bad(6: Badness statement)
-    bad --> badcons(41: Bad consequences statement)
-    Caus --> badcons
-    L --> good(8: Goodness statement)
+<!--     F -\-> L(0: Locutions) -->
+<!--     E -\-> L -->
+<!--     L -\-> D(3: Desire expression) -->
+<!--     L -\-> bad(6: Badness statement) -->
+<!--     bad -\-> badcons(41: Bad consequences statement) -->
+<!--     Caus -\-> badcons -->
+<!--     L -\-> good(8: Goodness statement) -->
 
-    F --> ED[Epistemic/Doxastic]
-    E --> ED
-    ED --> B(10: Belief)
-    ED --> K(34: Knowledge)
-    L --> Pref(16: Preference statement)
-    L --> PCause(33: Possible causation statement)
-    Dia --> PCause
-    Caus --> PCause
-    E --> G[Groups]
-    G --> In(24: X in group Y)
-    G --> Members
-    Members --> All(25: All members have property)
-    All --> AllObligated(37: All members have obligation to...)
-    OD --> AllObligated
-    All --> AllKnow(26: All members including X know)
-    All --> Most(32: Most members have property)
-    L --> Honesty(28: X is honest about Y)
-    Members --> Some(39: Some members have property)
-    Members --> No(40: No members have property)
-    E --> Attacks
-    Attacks --> Ad(21: Ad Hominem catchall)
-    Attacks --> Li(20: Entity lies about X)
-    O --> OD(19: X has Obligation)
+<!--     F -\-> ED[Epistemic/Doxastic] -->
+<!--     E -\-> ED -->
+<!--     ED -\-> B(10: Belief) -->
+<!--     ED -\-> K(34: Knowledge) -->
+<!--     L -\-> Pref(16: Preference statement) -->
+<!--     L -\-> PCause(33: Possible causation statement) -->
+<!--     Dia -\-> PCause -->
+<!--     Caus -\-> PCause -->
+<!--     E -\-> G[Groups] -->
+<!--     G -\-> In(24: X in group Y) -->
+<!--     G -\-> Members -->
+<!--     Members -\-> All(25: All members have property) -->
+<!--     All -\-> AllObligated(37: All members have obligation to...) -->
+<!--     OD -\-> AllObligated -->
+<!--     All -\-> AllKnow(26: All members including X know) -->
+<!--     All -\-> Most(32: Most members have property) -->
+<!--     L -\-> Honesty(28: X is honest about Y) -->
+<!--     Members -\-> Some(39: Some members have property) -->
+<!--     Members -\-> No(40: No members have property) -->
+<!--     E -\-> Attacks -->
+<!--     Attacks -\-> Ad(21: Ad Hominem catchall) -->
+<!--     Attacks -\-> Li(20: Entity lies about X) -->
+<!--     O -\-> OD(19: X has Obligation) -->
 
-    A{Actions}
+<!--     A{Actions} -->
 
-    E --> Ability(11: Ability)
-    A --> Ability
-    E --> Did(30: X did Y)
-    A --> Did
+<!--     E -\-> Ability(11: Ability) -->
+<!--     A -\-> Ability -->
+<!--     E -\-> Did(30: X did Y) -->
+<!--     A -\-> Did -->
 
-    One --> Result(29: Doing X would eventually result in Y)
-    A --> Result
-    Result --> Strength(31: Power to enforce X)
-```
+<!--     One -\-> Result(29: Doing X would eventually result in Y) -->
+<!--     A -\-> Result -->
+<!--     Result -\-> Strength(31: Power to enforce X) -->
+<!-- ``` -->
