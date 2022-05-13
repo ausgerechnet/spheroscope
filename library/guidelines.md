@@ -582,6 +582,19 @@ p10: belief
 - things will go up in price 
 - We're holding an English referendum next to decide whether we'll allow Scotland to stay (exception to the speaker + future construction -> intention rule: here, 'we' is understood as the government, i.e. the speaker presumably has no agency in what is happening, so the statement does not reflect their intention)
 
+# 55 oppose #
+
+- ENTITY opposes the truth of CONCEPT
+- Opposition is understood as the counter-part to desire: ENTITY wants the negation of CONCEPT to be true (NB: this is different from negated desire)
+
+## examples ##
+- **Junker** says no to **reform**. Germany say no tarrifs. #Brexit
+- @bbclaurak to be fair if **the Almighty** came out against **#Brexit**, Leavers would say his ubiquity prevents him taking a national view. #Remain
+- **Roxy** against **Brexit** watching the news nervously #DogsAgainstBrexit https://t.co/BrSp35RlnT
+
+## counter-examples ##
+- She doesn't want to come along (negated pattern 3)
+
 # Categories #
 - entities vs entity groups
 - binders / operators / junctors
