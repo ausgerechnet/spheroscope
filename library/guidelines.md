@@ -547,14 +547,15 @@ p10: belief
 - **the Left T.U. in me** says **No to leave** but **the #Motorbikes side of me** says **Yes vote to leave**
 
 # 48 Warning for some #
-- ENTITY1 says that FORMULA is/will be/ would be bad for ENTITY2
+- ENTITY1 says that FORMULA is/will be/ would be bad for CONCEPT
 
 ## examples ##
 - Correspondents: **Brexit** will batter **the comedy industry**, says **Stephen Grant**
 - **Brexit** would hit **poor** hardest, says **David Cameron**
+- **She** points out that **Brexit** endangers **pensions**
 
 # 49 warning of bad consequences for some #
-- ENTITY1 says that FORMULA has/ will have/ would have BAD CONSEQUENCES for ENTITY2
+- ENTITY1 says that FORMULA has/ will have/ would have BAD CONSEQUENCES for CONCEPT
 
 ##examples##
 - Hilary Benn has warned that Britain 's exit from the EU would make the country ' poorer ' and ' less influential'
