@@ -329,21 +329,20 @@
 - Groups are defined widely, with prototypical cases including e.g. professions, parties/organisations or nationalities
 - Formal distinction at the blurry line between group and attribute: when in doubt, an adjective does not designate a group even if the corresponding noun does (she's a German: yes, she's German: no)
 - We also annotate ad-hoc groups (cf. first example)
-- Special case: remaining/staying in a group is generally understood as membership (continuing the status quo of being a member), while leaving is not 'negative' membership, but rather an action that changes membership status only by implication
 
 ## examples ##
-- The clintons are fat cats who are owned by the multinationals
-- Jo was a politician
+- **The clintons** are **fat cats** who are owned by the multinationals
+- **Jo** was **a politician**
 - three parties that want to be in the EU but not in the UK
-- star economist Thomas Pickety
-- he's a leaver
-- billionaire brexit supporter Max Smith
-- "Stuart Rose has switched sides to #Leave"
-- "Brits are too much cowards to vote" (24 + 25)
-- we're on the side of leave
+- **star economist** **Thomas Pickety**
+- **he's** **a leaver**
+- **billionaire brexit supporter** **Max Smith**
+- "**Stuart Rose** has switched sides to **#Leave"**
+- "**Brits** are too much **cowards** to vote" (24 + 25)
+- **we're** on the side of **leave**
 - **Scotland** should remain in **EU**
 - **we** are all **stupid people**
-- the EU slave nations Germany and France
+- **the EU slave nations** **Germany and France**
 
 ### counter examples ###
 - the president is British
@@ -353,6 +352,9 @@
 - we are all stupid (property rather than group definition)
 - Brexit will help other EU slave nations (group specification, but missing entity).
 - It is an unfortunate coincidence that this happened
+- They will stay in the EU (*stay* technically implies an existing membership, but in this case is read as an action rather than membership)
+- I left the band (leaving = action resulting in membership rather than membership per se)
+- She joined the group (joining = action rather than membership)
 
 # 25 Universal Quantification [!] #
 - ENTITY is / does something
