@@ -16,4 +16,4 @@
 #   pattern: '24'
 # ---
 
-(@0[::] (/actor_np_all[]) @1"'?s" |@0 [pos_ark="[#@]"|pos_ner="PRP$"]@1:[::]) [lemma="entry|membership|participation"] [pos_ark="P"] @2:[::] [pos_ark="[#@^ZDA]"]* /actor_np_all[] [pos_ark="[ANZP^]"]@3[::]
+(@0[::] (/actor_np_all[]) @1"'?s" |@0 [pos_ark="[#@]"|pos_ner="PRP$"]@1:[::]) [lemma="membership"] [pos_ark="P"] @2:[::] [pos_ark="[#@^ZDA]"]* /actor_np_all[] [pos_ark="[ANZP^]"]@3[::]
