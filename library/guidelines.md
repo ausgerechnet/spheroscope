@@ -329,20 +329,17 @@
 - Groups are defined widely, with prototypical cases including e.g. professions, parties/organisations or nationalities
 - Formal distinction at the blurry line between group and attribute: when in doubt, an adjective does not designate a group even if the corresponding noun does (she's a German: yes, she's German: no)
 - We also annotate ad-hoc groups (cf. first example)
+- Pattern 24 only covers statements about group memberships that go beyond purely characterising the entity. I.e. examples will often involve an entity and a verb phrase (e.g. is a member of) or a genitive construction (XY's membership in Z). Group statements that only specify the entity's background (e.g. via a modifying noun phrase) are annotated as pattern 57.
 
 ## examples ##
 - **The clintons** are **fat cats** who are owned by the multinationals
 - **Jo** was **a politician**
 - three parties that want to be in the EU but not in the UK
-- **star economist** **Thomas Pickety**
 - **he's** **a leaver**
-- **billionaire brexit supporter** **Max Smith**
 - "**Stuart Rose** has switched sides to **#Leave"**
 - "**Brits** are too much **cowards** to vote" (24 + 25)
 - **we're** on the side of **leave**
-- **Scotland** should remain in **EU**
 - **we** are all **stupid people**
-- **the EU slave nations** **Germany and France**
 
 ## counter examples ##
 - the president is British
@@ -355,6 +352,10 @@
 - They will stay in the EU (*stay* technically implies an existing membership, but in this case is read as an action rather than membership)
 - I left the band (leaving = action resulting in membership rather than membership per se)
 - She joined the group (joining = action rather than membership)
+- the EU slave nations Germany and France (57)
+- star economist Thomas Pickety (57)
+- The Times' Jane Smith (57)
+
 
 # 25 Universal Quantification [!] #
 - ENTITY is / does something
@@ -600,6 +601,56 @@ p10: belief
 
 ## counter-examples ##
 - She doesn't want to come along (negated pattern 3)
+- They voted against Brexit (voting = action)
+- SCOTUS blocked the policy (banning = action)
+
+# 57 concept refinement #
+
+- ENTITY 0 is part of ENTITY 1, but this is not the claim of the overall statement
+- This pattern will typically apply to cases where the group membership is expressed via a modifying noun phrase
+- In contrast to pattern 24 there will usually be no verb phrase expressing membership; instead membership is considered background information on ENTITY 0
+
+## examples ##
+
+- ** the EU slave nations ** ** Germany and France **
+- ** star economist ** Thomas Pickety **
+- ** The Times' ** ** Jane Smith ** 
+- ** Billionaire Brexit supporter ** ** Max Doe ** 
+
+## counter-examples ##
+- Germany and France are slave nations (24)
+- Thomas Pickety is one of the top economists (24)
+
+# 58 Desirer #
+
+- group of entities desiring FORMULA to be true
+- Typical realisations: nouns tied to desire and relative phrases
+- No need for a specific entity
+
+## examples ##
+
+- Trump is a ** Brexit ** supporter (24+58)
+- ** Stay ** fans are right
+- People who want ** Brexit ** keep saying that
+
+## counter-examples ##
+
+- Trump supports Brexit (3)
+- I want to stay (3)
+- Cameron supporter (we can't extract any meaningful information from this because we would need too much background knowledge)
+
+# 59 Believer #
+
+- group of entities believing FORMULA to be true
+- Typical realisations: nouns tied to desire and relative phrases
+- No need for a specific entity
+
+## examples ##
+
+- anyone who truly believes ** that this is possible **
+
+## counter-examples ##
+- I believe ** this is possible ** (10)
 
 # Categories #
 - entities vs entity groups
