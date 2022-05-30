@@ -344,7 +344,7 @@
 - **we** are all **stupid people**
 - **the EU slave nations** **Germany and France**
 
-### counter examples ###
+## counter examples ##
 - the president is British
 - he supports leave: pattern 3
 - "a billionaire brexit supporter"
@@ -477,6 +477,7 @@ p10: belief
 - ENTITY says that FORMULA would lead to bad FORMULA
 - indirect version of p38 where something is claimed to be bad by consequence
 - bad consequences include changes in size/amount etc. that are considered bad by general consensus
+
 ## examples ##
 - **Richard Haass**' claim that **Brexit** could 'trigger **NI violence**'
 - **Experts** warn that **brexit** could cause the **pound to fall**
@@ -486,6 +487,7 @@ p10: belief
 
 # 42 Better #
 - FORMULA1 is universally (=for all) better than FORMULA2
+
 ## examples ##
 - Brexit is still better than being in the EU
 - We are better than this
@@ -544,6 +546,7 @@ p10: belief
 
 # 46 Qualified Desire #
 - ENTITY is part of a GROUP who desires FORMULA
+
 ## examples ##
 - **as a son of immigrants** **I** am for **Brexit**
 - **the Left T.U. in me** says **No to leave** but **the #Motorbikes side of me** says **Yes vote to leave**
@@ -559,7 +562,7 @@ p10: belief
 # 49 warning of bad consequences for some #
 - ENTITY1 says that FORMULA has/ will have/ would have BAD CONSEQUENCES for CONCEPT
 
-##examples##
+## examples ##
 - Hilary Benn has warned that Britain 's exit from the EU would make the country ' poorer ' and ' less influential'
 - Brexit could lead to downgrades for other EU countries -Fitch
 
