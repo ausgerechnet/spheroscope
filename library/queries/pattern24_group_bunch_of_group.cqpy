@@ -16,4 +16,4 @@
 #   pattern: '24'
 # ---
 
-@0:[::] /actor_np_all[] @1:[::][pos_ner="RB|MD"|lemma="have"]* [lemma="be|'s"] [pos_ner="RB" & lemma !="there|not"]? "a" [pos_ark="[ARNZ^]"]* [lemma=$nouns_large_number | lemma=$nouns_group | lemma = $nouns_political_entities | lemma=$nouns_corporate_entities | lemma=$nouns_experts] "of" @2[::][pos_ark="[DANZ^]"]* (/actor_np_all[]) [pos_ark="[DVANZ^]"]* @3:[::]
+@0:[::] /actor_np_all[] @1:[::][pos_ner="RB|MD"|lemma="have"]* [lemma="be|'s" | lemma=$verbs_stay] [pos_ner="RB" & lemma !="there|not"]? "a" [pos_ark="[ARNZ^]"]* [lemma=$nouns_large_number | lemma=$nouns_group] "of" @2[::][pos_ark="[DANZ^]"]* (/actor_np_all[]) [pos_ark="[DVANZ^]"]* @3:[::]
