@@ -18,6 +18,10 @@ from .queries import (add_gold, create_subcorpus, evaluate,
 
 bp = Blueprint('patterns', __name__, url_prefix='/patterns')
 
+# pattern queries nicht automatisch ausführen
+# am Anfang überspringbar?
+# left join der slot matches mit match, matchend?
+
 
 def hierarchical_query(p1, slot, p2, s_cwb, cwb_id):
     """execute a hierarchical query: retrieve matches of all queries
@@ -255,12 +259,13 @@ def mock(p1):
     from pandas import read_csv
     path = "scripts/pattern%d-slot%d-pattern%d-annotate.tsv" % (p1, slot, p2)
     table = read_csv(path, sep="\t")
+    print(table.columns)
 
     # format
     table['word'] = table.apply(highlight_slots, axis=1)
 
     # select columns
-    firsts = ['word', 'query', 'query_slot', 'query_hierarchical', 'query_slot_hierarchical', 'tweet_id']
+    firsts = ['word', 'tweet_id', 'query', 'query_slot', 'query_hierarchical', 'query_slot_hierarchical']
     pos = [c for c in table.columns if c.startswith("exact")]
     pos += [c for c in table.columns if c.startswith("within")]
     pos += [c for c in table.columns if c.startswith("overlap")]
@@ -269,6 +274,7 @@ def mock(p1):
     # format
     table = table[firsts + pos]
     table.columns = ["-" * 100 + "word" + "-" * 100] + list(table.columns[1:])
+    table = table.sort_values(by=["query_hierarchical", "query_slot_hierarchical", "tweet_id"])
 
     # return
     return render_template(
@@ -318,6 +324,9 @@ def highlight_slots(row):
             style.append("background-color:salmon")
         elif "match_slot" in r:
             style.append("background-color:yellow")
+
+        if "1" in r:
+            style.append("text-decoration:underline")
 
         if "0" in r or "1" in r:
             style.append("font-weight:bold")
