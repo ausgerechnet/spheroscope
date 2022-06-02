@@ -229,7 +229,7 @@
 - there is a link between Brexit and mental illness
   + correlation
 
-# 16 Expressed Preference #
+# 16 Expressed Better #
 - ENTITY prefers FORMULA over FORMULA
 - like in #3, the ENTITY can be left out by ellipsis
 
@@ -339,6 +339,7 @@
 - groups are defined widely, with prototypical cases including e.g. professions, parties/organisations or nationalities
 - formal distinction at the blurry line between group and attribute: when in doubt, an adjective does not designate a group even if the corresponding noun does (she's a German: yes, she's German: no)
 - we also annotate ad hoc groups (cf. first example)
+- #24 only covers statements about group memberships that go beyond purely characterising the entity. I.e. examples will often involve an entity and a verb phrase (e.g. is a member of) or a genitive construction (XY's membership in Z). Group statements that only specify the entity's background (e.g. via a modifying noun phrase) are annotated as #57.
 
 ## examples ##
 - **The clintons** are **fat cats** who are owned by the multinationals
@@ -371,6 +372,12 @@
   + leaving = action resulting in membership rather than membership per se
 - She joined the group
   + joining = action rather than membership
+- the EU slave nations Germany and France
+  + #57
+- star economist Thomas Pickety
+  + #57
+- The Times' Jane Smith
+  + #57
 
 # 25 Universal Quantification [!] #
 - ENTITY is / does something
@@ -481,7 +488,7 @@
 - Hilary Benn has warned that Britain 's exit from the EU would make the country ' poorer ' and ' less influential'
   + 49: bad consequences for some
 - He predicted that Brexit would cause the pound to fall 
-  + 41: bad consequence — decrease in value vs. explicit damage
+  + 41: bad consequences — decrease in value vs. explicit damage
 - She has threatened to vote out 
   + threats are not considered general warnings
 
@@ -495,7 +502,7 @@
 ## specifications ##
 - #25 + #27
 
-# 41 Warning of Bad Consequence #
+# 41 Warning of Bad Consequences #
 - ENTITY says that FORMULA would lead to bad FORMULA
 - indirect version of #38 where something is claimed to be bad by consequence
 - bad consequences include changes in size/amount etc. that are considered bad by general consensus
@@ -637,53 +644,59 @@
 - They voted against Brexit (voting = action)
 - SCOTUS blocked the policy (banning = action)
 
-# 57 concept refinement #
+# 57 Concept Refinement #
 
-- ENTITY 0 is part of ENTITY 1, but this is not the claim of the overall statement
-- This pattern will typically apply to cases where the group membership is expressed via a modifying noun phrase
-- In contrast to pattern 24 there will usually be no verb phrase expressing membership; instead membership is considered background information on ENTITY 0
+- ENTITY0 is part of ENTITY1, but this is not the claim of the overall statement
+- this pattern will typically apply to cases where the group membership is expressed via a modifying noun phrase
+- in contrast to #24 there will usually be no verb phrase expressing membership; instead membership is considered background information on ENTITY0
 
 ## examples ##
 
-- ** the EU slave nations ** ** Germany and France **
-- ** star economist ** Thomas Pickety **
-- ** The Times' ** ** Jane Smith ** 
-- ** Billionaire Brexit supporter ** ** Max Doe ** 
+- **the EU slave nations** **Germany and France**
+- **star economist** **Thomas Pickety**
+- **The Times'** **Jane Smith** 
+- **Billionaire Brexit supporter** **Max Doe** 
 
 ## counterexamples ##
-- Germany and France are slave nations (24)
-- Thomas Pickety is one of the top economists (24)
+- Germany and France are slave nations
+  + 24
+- Thomas Pickety is one of the top economists
+  + 24
 
 # 58 Desirer #
 
 - group of entities desiring FORMULA to be true
-- Typical realisations: nouns tied to desire and relative phrases
-- No need for a specific entity
+- typical realisations: nouns tied to desire and relative phrases
+- no need for a specific entity
 
 ## examples ##
 
-- Trump is a ** Brexit ** supporter (24+58)
-- ** Stay ** fans are right
-- People who want ** Brexit ** keep saying that
+- Trump is a **Brexit** supporter (24+58)
+- **Stay** fans are right
+- People who want **Brexit** keep saying that
 
 ## counterexamples ##
 
-- Trump supports Brexit (3)
-- I want to stay (3)
-- Cameron supporter (we can't extract any meaningful information from this because we would need too much background knowledge)
+- Trump supports Brexit
+  + #3
+- I want to stay
+  + #3
+- Cameron supporter
+  + we can't extract any meaningful information from this because we would need too much background knowledge
 
 # 59 Believer #
 
 - group of entities believing FORMULA to be true
-- Typical realisations: nouns tied to desire and relative phrases
-- No need for a specific entity
+- typical realisations: nouns tied to desire and relative phrases
+- no need for a specific entity
 
 ## examples ##
 
-- anyone who truly believes ** that this is possible **
+- anyone who truly believes **that this is possible**
 
 ## counterexamples ##
-- I believe ** this is possible ** (10)
+- I believe this is possible
+  + #10
   
 
 # Categories #
