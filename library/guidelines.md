@@ -632,8 +632,59 @@
 - **Roxy** against **Brexit** watching the news nervously #DogsAgainstBrexit https://t.co/BrSp35RlnT
 
 ## counterexamples ##
-- She doesn't want to come along 
+- She doesn't want to come along
   + negated #3
+- They voted against Brexit (voting = action)
+- SCOTUS blocked the policy (banning = action)
+
+# 57 concept refinement #
+
+- ENTITY 0 is part of ENTITY 1, but this is not the claim of the overall statement
+- This pattern will typically apply to cases where the group membership is expressed via a modifying noun phrase
+- In contrast to pattern 24 there will usually be no verb phrase expressing membership; instead membership is considered background information on ENTITY 0
+
+## examples ##
+
+- ** the EU slave nations ** ** Germany and France **
+- ** star economist ** Thomas Pickety **
+- ** The Times' ** ** Jane Smith ** 
+- ** Billionaire Brexit supporter ** ** Max Doe ** 
+
+## counterexamples ##
+- Germany and France are slave nations (24)
+- Thomas Pickety is one of the top economists (24)
+
+# 58 Desirer #
+
+- group of entities desiring FORMULA to be true
+- Typical realisations: nouns tied to desire and relative phrases
+- No need for a specific entity
+
+## examples ##
+
+- Trump is a ** Brexit ** supporter (24+58)
+- ** Stay ** fans are right
+- People who want ** Brexit ** keep saying that
+
+## counterexamples ##
+
+- Trump supports Brexit (3)
+- I want to stay (3)
+- Cameron supporter (we can't extract any meaningful information from this because we would need too much background knowledge)
+
+# 59 Believer #
+
+- group of entities believing FORMULA to be true
+- Typical realisations: nouns tied to desire and relative phrases
+- No need for a specific entity
+
+## examples ##
+
+- anyone who truly believes ** that this is possible **
+
+## counterexamples ##
+- I believe ** this is possible ** (10)
+  
 
 # Categories #
 - entities vs entity groups
