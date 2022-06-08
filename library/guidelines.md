@@ -4,14 +4,14 @@
 - we currently *do* annotate patterns embedded within questions, negations, relative phrases etc. as positives
 
 # 0 Quotation #
-- ENTITY says FORMULA
-- according to ENTITY: FORMULA
+- **ENTITY** says **FORMULA**
+- according to **ENTITY**: **FORMULA**
 
 ## examples ##
-- I told you …
-- the #UN says that most of them are NOT ' refugees ' at all
-- Donald Trump is coming to the UK on June 25th according to this New York Times story
-- Man yelled 'Britain first!'
+- **I** told you **…**
+- **the #UN** says that **most of them are NOT ' refugees ' at all**
+- **Donald Trump is coming to the UK on June 25th** according to this **New York Times** story
+- **Man** yelled '**Britain first!**'
 
 ## counterexamples ##
 - most of them are not refugees
@@ -22,20 +22,20 @@
 - #10: I'm like "… blurb …"
 
 # 2 Causal Implication #
-- if FORMULA then FORMULA
-- FORMULA would cause FORMULA
-- FORMULA is the reason for FORMULA
+- if **FORMULA0**, then **FORMULA1**
+- **FORMULA0** would cause **FORMULA1**
+- **FORMULA0** is the reason for **FORMULA1**
 - counterfactual reasoning
 - frequently reasoning about consequences of past events or future results of things
 - speculations
 - premise sufficient
 - often in combination with #5
-- basically any implication where there is a reason (not necessarily given) why truth of the antecedent is causing and not just correlating with truth of the consequent
+- basically any implication where there is a reason (not necessarily given) why truth of the antecedent (**FORMULA1**) is causing and not just correlating with truth of the consequent (**FORMULA2**)
 
 ## examples ##
-- brexit and we'll have a great relationship with the US
-- Zach's relentless negative campaigning brought out the London vote
-- Brits will never control our country again if we vote IN
+- **brexit** and **we'll have a great relationship with the US**
+- **Zach's relentless negative campaigning** brought out the **London vote**
+- **Brits will never control our country again** if **we vote IN**
 
 ## counterexamples ##
 - if ever you needed confirmation for Brexit, these three provide it
@@ -49,7 +49,7 @@
 - **FORMULA** cannot be just an **ENTITY**:
   + "**ENTITY** backs **cameron**" != "**ENTITY** desires **cameron**"
 - the entity should be explicitly marked
-- an exception applies for ellipsis (i.e. when the subject is not realised in the surface form)
+- an exception applies for ellipses (i.e. when the subject is not realised in the surface form)
   + here, the entity is the author of the message
 
 ## cues ##
@@ -86,11 +86,10 @@
 - ... the figures were REMAIN 45% ...
   + figures do not desire anything
 - you want to talk misleading?
-  + rhetorical questions and idiomatic expressions: 
+  + rhetorical questions and idiomatic expressions
 - he's got Brexit as his next agenda item
 - Johnson's *reason* to remain, her *case* for leave
   + the desire can only be inferred from an expression of conscious decision or reasoning
-- the technocrats fighting hard for Britain to remain
 - you seem to like that
   + positive regard without desire
 - the technocrats in the EU fighting for Britain to remain
@@ -122,24 +121,24 @@
 - ... could / would ...
 
 ## examples ##
-- he could well be the leader of the country
-- #indyref2 could change that
-- any one of them potentially an EU voter for in
+- **he** could well **be the leader of the country**
+- **#indyref2** could **change that**
+- **any one of them** potentially **an EU voter for in**
 
 ## confusions ##
 - #11
 - #36
 
 # 6 Bad for Concept #
-- FORMULA is / would be bad for CONCEPT
-- concept can be an entity (e.g. person) or system (e.g. economy, environment)
+- **FORMULA** is / would be bad for **CONCEPT**
+- **CONCEPT** can be an entity (e.g. person) or system (e.g. economy, environment)
 
 ## examples ##
-- I'm not saying **it** would break **us** but **pain** would be at least medium term not short
+- I'm not saying **it** would break **us** but *pain* would be at least medium term not short
 - #RemainCosThePoorAreGonnaBeHitTheHardest
-- **pensionists** stand to **lose** from **Brexit**
-- **Brexit** may seem like the **West's** **biggest problem**
-- **Brexit** is **bad** for **us**
+- **pensionists** stand to *lose* from **Brexit**
+- **Brexit** may seem like the **West's** biggest *problem*
+- **Brexit** is *bad* for **us**
 
 ## counterexamples ##
 - Johnson is a bad person
@@ -152,15 +151,15 @@
   + being worried is unpleasant, but not necessarily damaging
 
 # 8 Good for Concept #
-- FORMULA is / would be good for CONCEPT
-- concept can be entity (e.g. person) or system (e.g. economy, environment)
+- **FORMULA** is / would be good for **CONCEPT**
+- **CONCEPT** can be entity (e.g. person) or system (e.g. economy, environment)
 
 ## examples ##
 - the **UK** will be *better of* **out of the EU**
 - **Brexit** might have a *positive effect* on **the EU**
 - **Brexit** will only *improve* things for **the minority**
 - **I** am ... *enjoying* **following your comments on brexit**
-- **vote #remain** to keep **Greece** safe!
+- **vote #remain** to keep **Greece** *safe*!
 
 ## counterexamples ##
 - Johnson is a good person
@@ -168,16 +167,17 @@
   + too implicit — investing / employing not inherently positive
 
 # 10 Belief #
-- ENTITY believes / thinks that FORMULA is true
-- ENTITY is sure that FORMULA is true
+- **ENTITY** believes / thinks that **FORMULA** is true
+- **ENTITY** is sure that **FORMULA** is true
 - Can be difficult to separate from knowledge (#34) based on cue words
 
 ## examples ##
-- I don't think people realise the severity of the consequences of voting to leave
-- I believe they will
-- i agree the sooner we leave the better
-- I believe in votes at 16 and no GRP for transgender people (= I believe this ought to be made true)
-- I think this could work
+- **I** don't think **people realise the severity of the consequences of voting to leave**
+- **I** believe **they will**
+- **i** agree **the sooner we leave the better**
+- **I** believe in **votes at 16 and no GRP for transgender people**
+  + (= I believe this ought to be made true)
+- **I** think **this could work**
 
 ## counterexamples ##
 - I agree with her about Brexit
@@ -190,77 +190,81 @@
 - #34: I know it's bad
 
 # 11 Option #
-- ENTITY can / is able to ACTION
+- **ENTITY** can / is able to **ACTION**
 
 ## examples ##
-- we could lend you Gisela Stuart if you like
-- if we get out we can decide
-- why would we no longer be able to sell them
+- **we** could **lend you Gisela Stuart** if you like
+- if we get out **we** can **decide**
+- why would **we** no longer be able to **sell them**
 
 ## counterexamples ##
 - the sheep can move to Islamabad and take their €€with them
   + hidden imperative
 - Remain can't see it
-  + the may be able to see it, but they don't want to
+  + they may be able to see it, but they don't want to
 
 ## confusions ##
 - #36
 
 # 12 Default Implication #
-- if FORMULA, then usually FORMULA
+- if **FORMULA0**, then usually **FORMULA1**
 
 ## examples ##
-- " Every establishment figure " wanting you to vote for something isn't usually a reason to jump to it
-- when people say this, they are usually right
+- **" Every establishment figure " wanting you to vote for something** isn't usually a reason to **jump to it**
+- when **people say this**, **they are usually right**
 
 ## confusions ##
 - #23: when people say this, they are right
 
 # 15 Similarity #
-- CONCEPT equals CONCEPT
+- **CONCEPT0** equals **CONCEPT1**
 
 ## examples ##
-- BREXIT=fREEDOM
-- Brexit equals anxiety attack
-- Boris Johnson, another Nigel Farage
-- #EUref feels similar to Scottish Referendum
+- **BREXIT**=**fREEDOM**
+- **Brexit** equals **anxiety attack**
+- **Boris Johnson**, another **Nigel Farage**
+- **#EUref** feels similar to **Scottish Referendum**
 
 ## counterexamples ##
 - there is a link between Brexit and mental illness
   + correlation
 
 # 16 Expressed Better #
-- ENTITY prefers FORMULA over FORMULA
-- like in #3, the ENTITY can be left out by ellipsis
+- **ENTITY** prefers **FORMULA0** over **FORMULA1**
+- like in #3, the **ENTITY** can be left out by ellipsis
 
 ## examples ##
-- a lot fo tories would gladly trade Scotland for Brexit
-- it 's all coulds and not woulds , il take my chance with coulds and brexit
-- we go for quality rather than quantity
+- **a lot fo tories** would gladly **trade Scotland** for **Brexit**
+- it 's all **coulds and not woulds** , il take my chance with **coulds and brexit**
+- we go for **quality** rather than **quantity**
 
 ## counterexamples ##
-- "pure" evaluative comparisons that do not indicate an ENTITY's necessary desire for either formula (*direct democracy is better than representative democracy*), #42
-- one of the options is implicit (*I prefer brexit*), which is then #3
+- direct democracy is better than representative democracy
+  + "pure" evaluative comparison that does not indicate an **ENTITY**'s necessary desire for either **FORMULA**
+  + #42
+- I prefer brexit
+  + one of the options is implicit
+  + #3
 - general preferability of a concept over another without ascribing the preference to any entity:
   + *It is better to leave than to remain*: user who posted the tweet prefers leaving over remaining
 - he was leave, but has *switched* to remain
   + preference can only be inferred
-  + "was leave" is treated as group membership
+  + "was leave" is treated as group membership (#24)
 - it should be real ale, not some gassy lager
-  + missing ENTITY; no explicit preference
+  + missing **ENTITY**; no explicit preference
 
 ## confusions ##
 - #3: see above
 - #43: Brexit would be better for the young folks than staying in the EU
 
 # 19 Entity's Obligation #
-- ENTITY should / have FORMULA
+- **ENTITY** should / has to **FORMULA**
 
 ## examples ##
-- DAVE YOU SHOULD ALSO " QUIT "
-- you should get a job there
-- the UK should stay in the EU
-- @nickhillman You have to read the article.
+- DAVE **YOU** SHOULD ALSO **" QUIT "**
+- **you** should **get a job there**
+- **the UK** should **stay in the EU**
+- @nickhillman **You** have to **read the article**.
 
 ## confusions ##
 - #3: John wants Trump to resign
@@ -268,26 +272,26 @@
 
 ## specifications ##
 - #3 + do-modality
-- #4 + entity who should make the formula true
+- #4 + **ENTITY** who should make the **FORMULA** true
 
 # 20 Lying #
-- ENTITY lies about FORMULA
-- ENTITY says FORMULA but believes FORMULA is not true
-- an ENTITY is claimed to be lying (by the author of the text or someone referred to in the text) about a topic or the truth of a FORMULA; the lie can be about:
+- **ENTITY** lies about **FORMULA**
+- **ENTITY** says **FORMULA** but believes **FORMULA** is not true
+- an **ENTITY** is claimed to be lying (by the author of the text or someone referred to in the text) about a topic or the truth of a **FORMULA**; the lie can be about:
   + a topic (*And believe* **this man** *who told lies* **about Iraq**)
   + a particular claim (*For anyone who still believes the enduring* **Brexit** *lie* **that the EU is undemocratic**)
   + a claim that is not elaborated upon in the given message, but clearly concerns a particular lie (*@JunckerEU says* **Boris** **making up stories**)
 
 ## examples ##
-- this lie that young people can't travel, it's another stay lie
-- David Cameron and George Osborne’s ‘ lies ’ over Brexit warnings
-- @BBCr4today running as its top story a Brexit lie
+- this lie that **young people can't travel**, it's another **stay** lie
+- **David Cameron and George Osborne’s** ‘ lies ’ over **Brexit warnings**
+- **@BBCr4today** running as its top story a **Brexit** lie
 
 ## counterexamples ##
-- the entity is accused of being generally dishonest, without specification of what they were lying about
-- the entity is accused of being unsincere in some other way, e.g. hypocritical, scaremongering...
-- the entity is accused of saying something that is untrue — it has to be clear from the context that they are deliberately saying something incorrect 
-  + *X is talking BS* is a negative example
+- the **ENTITY** is accused of being generally dishonest, without specification of what they were lying about
+- the **ENTITY** is accused of being unsincere in some other way, e.g. hypocritical, scaremongering...
+- X is talking BS
+  + the **ENTITY** is accused of saying something that is untrue — it has to be clear from the context that they are *deliberately* saying something incorrect
 
 ## confusions ##
 - #21: more bullshit from the in camp , next they'll be claiming that Brexit ' could ' cause Mars to crash in to Venus lol
@@ -296,82 +300,80 @@
 - #21 + special accusation
 
 # 21 Ad Hominem #
-- ENTITY is (morally) bad
+- **ENTITY** is (morally) bad
 
 ## examples ##
-- he 's been paid off by Brussels to keep us in
-- #UK/#EU #PowerElite manipulating/misleading #PublicOpinion on #EURef
-- Remain puppets
-- more bullshit from the in camp , next they'll be claiming that Brexit ' could ' cause Mars to crash in to Venus lol
+- **he** 's been paid off by Brussels to keep us in
+- **#UK/#EU #PowerElite** manipulating/misleading #PublicOpinion on #EURef
+- **Remain** puppets
+- more bullshit from **the in camp** , next they'll be claiming that Brexit ' could ' cause Mars to crash in to Venus lol
 
 ## counterexamples ##
 - cunt.
   + only disqualifying accusations are ad hominem
 
 # 22 Necessary Condition #
-- FORMULA is necessary for FORMULA
-- FORMULA cannot be done without FORMULA
+- **FORMULA0** is necessary for **FORMULA1**
+- **FORMULA1** cannot be done without **FORMULA0**
 
 ## examples ##
-- that can only be the case if Irish border is closed
-- EU membership the only possible way to promote free trade over the long term
-- we need brexit to stop unelected buffons to stop interfering with our laws
+- **that** can only be the case if **Irish border is closed**
+- **EU membership** the only possible way to **promote free trade over the long term**
+- we need **brexit** to **stop unelected buffons interfering with our laws**
 
 ## confusions ##
 - #35
 
 # 23 Implication #
-- if FORMULA, then FORMULA
+- if **FORMULA0**, then **FORMULA1**
 
 ## examples ##
-- if every you needed confirmation for brexit, these three provide it
-- if I was leaning towards BREXIT , their campaign being ran by Farage , Boris & The Sun will give me 2nd thoughts
+- if ever **you needed confirmation for brexit**, **these three provide it**
+- if **I was leaning towards BREXIT** , **their campaign being ran by Farage , Boris & The Sun will give me 2nd thoughts**
 
 ## counterexamples ##
-- if every you needed a list what happens if we brexit, it's simple: prices will rise
+- if you needed a list what happens if we brexit, it's simple: prices will rise
 
 ## confusions ##
 - #2: here no causal implication (in dubio #2)
 
 # 24 Membership #
-- ENTITY is part of ENTITY GROUP
-- for this pattern, entities have to have agency (e.g. people, organisations or states, but not abstract entities, objects or ideas)
+- **ENTITY** is part of **ENTITY GROUP**
+- for this pattern, the **ENTITY** has to have agency (e.g. people, organisations or states, but not abstract entities, objects or ideas)
 - groups are defined widely, with prototypical cases including e.g. professions, parties/organisations or nationalities
-- formal distinction at the blurry line between group and attribute: when in doubt, an adjective does not designate a group even if the corresponding noun does (she's a German: yes, she's German: no)
+- formal distinction at the blurry line between group and attribute: when in doubt, an adjective does not designate a group even if the corresponding noun does ("**she**'s **a German**": yes, "she's German": no)
 - we also annotate ad hoc groups (cf. first example)
-- #24 only covers statements about group memberships that go beyond purely characterising the entity. I.e. examples will often involve an entity and a verb phrase (e.g. is a member of) or a genitive construction (XY's membership in Z). Group statements that only specify the entity's background (e.g. via a modifying noun phrase) are annotated as #57.
+- #24 only covers statements about group memberships that go beyond purely characterising the entity. I.e. examples will often involve an entity and a verb phrase (e.g. "**A** is a member of **B**") or a genitive construction ("**XY**'s membership in **Z**"). Group statements that only specify the entity's background (e.g. via a modifying noun phrase) are annotated as #57.
 
 ## examples ##
 - **The clintons** are **fat cats** who are owned by the multinationals
 - **Jo** was **a politician**
 - three parties that want to be in the EU but not in the UK
-- **star economist** **Thomas Pickety**
 - **he's** **a leaver**
-- **billionaire brexit supporter** **Max Smith**
 - "**Stuart Rose** has switched sides to **#Leave"**
 - "**Brits** are too much **cowards** to vote" (24 + 25)
 - **we're** on the side of **leave**
 - **Scotland** should remain in **EU**
 - **we** are all **stupid people**
-- **the EU slave nations** **Germany and France**
 
 ## counterexamples ##
 - the president is British
 - he supports leave
   + #3
-- "a billionaire brexit supporter"
+- a billionaire brexit supporter
+  + **ENTITY** not specified
+- They will stay in the EU
+  + *stay* technically implies an existing membership, but in this case is read as an action rather than membership
 - The UK will leave the EU
+  + leaving = action resulting in end of membership rather than membership per se
+- She joined the group
+  + joining = action rather than membership
 - we are all stupid
   + property rather than group definition
 - Brexit will help other EU slave nations
   + group specification, but missing entity
 - It is an unfortunate coincidence that this happened
-- They will stay in the EU
-  + *stay* technically implies an existing membership, but in this case is read as an action rather than membership
-- I left the band
-  + leaving = action resulting in membership rather than membership per se
-- She joined the group
-  + joining = action rather than membership
+  + **ENTITY** "it" has no agency
 - the EU slave nations Germany and France
   + #57
 - star economist Thomas Pickety
@@ -380,21 +382,21 @@
   + #57
 
 # 25 Universal Quantification [!] #
-- ENTITY is / does something
+- **ENTITY** is / does something
 
 ## examples ##
-- The borg don't negotiate
-- UKIP are a one trick pony
-- we all love and support each other
+- **The borg** don't **negotiate**
+- **UKIP** are **a one trick pony**
+- **we all** **love and support each other**
 
 ## counterexamples ##
 - I don't like this at all
 
 # 26 Position to Know #
-- ENTITY is part of a GROUP who is qualified to know FORMULA
+- **ENTITY** is part of a **GROUP** that is qualified to know **FORMULA**
 
 ## examples ##
-- we European knows it and see our culture disappearing
+- **we** **European** knows **it** and see our culture disappearing
 
 ## counterexamples ##
 - as an immigrant , son of immigrants and having been subject to racsim I am firmly for Brexit
