@@ -2,7 +2,10 @@ case
 category
 example
 form
+instance
 kind
+sort
+species
 type
 variant
 variation

@@ -16,4 +16,4 @@
 #   pattern: '24'
 # ---
 
-@0[::]  (/actor_np_all[]) @1:[::][pos_ner="MD|RB"]* [lemma="be" | lemma=$verbs_stay] [pos_ner="MD|RB"]* [pos_ark="D"|lemma="among|within"]+ @2[::][pos_ark="[RA]" & word=".+st"]+ [pos_ark="[AR]"]* ("ever|.+ble"|"of" "all")?  [pos_ark="[DAZ^N]"]* /actor_np_all[] [pos_ark="[NZ^]"] @3:[::]
+@0[::]  (/actor_np_all[]) @1:[::][pos_ner="MD|RB"]* [lemma="be"] [pos_ner="MD|RB"]* [pos_ark="D"|lemma="among|within"]+ @2[::][pos_ark="[RA]" & word=".+st"]+ [pos_ark="[AR]"]* ("ever|.+ble"|"of" "all")?  [pos_ark="[DAZ^N]"]* /actor_np_all[] [pos_ark="[NZ^]"] @3:[::]

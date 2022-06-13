@@ -1,0 +1,19 @@
+# --- # CQPY query file
+# anchors:
+#   corrections:
+#     1: -1
+#     3: -1
+#   slots:
+#     '0':
+#     - 0
+#     - 1
+#     '1':
+#     - 2
+#     - 3
+# meta:
+#   comment: null
+#   name: pattern3_what_entity_wants_is
+#   pattern: '3'
+# ---
+
+[lemma="all|everything|thing|what"] [lemma="that"]?  @0:[::] (/actor_np_all[]) @1:[::][pos_ark="[RV]"]* [lemma=$verbs_prefer] [lemma="be"] @2:[::] [lemma="for|to" | pos_ark="[DA]"]*  [pos_ark="[NVZ#@^]" | lemma=$nouns_policies | lemma=$nouns_values] [pos_ark!="[UGE,#@\&]"]* @3[::]

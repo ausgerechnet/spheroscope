@@ -1,11 +1,13 @@
 all
 both
+each
 entire
 entirety
 every
 everybody
 everyone
 everything
+exlusively
 only
 same
 that
