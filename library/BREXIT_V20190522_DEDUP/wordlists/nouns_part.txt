@@ -1,0 +1,9 @@
+component
+element
+fraction
+fragment
+part
+piece
+portion
+sample
+subset

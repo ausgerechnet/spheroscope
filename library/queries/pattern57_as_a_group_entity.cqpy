@@ -12,8 +12,8 @@
 #     - 1
 # meta:
 #   comment: null
-#   name: pattern24_as_a_group_entity
-#   pattern: '24'
+#   name: pattern57_as_a_group_entity
+#   pattern: '9999'
 # ---
 
 [lemma="as" | word="[Bb]eing"] @0:[::] [pos_ark="D"] (/actor_group[]) @1[::] ","?  @2[::] (/actor_np_all[]) @3[pos_ark="[,ZOVR]"]
