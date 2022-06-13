@@ -8,15 +8,14 @@
 - according to ENTITY: FORMULA
 
 ## examples ##
-- I told you …
+- I told you that this is important
 - the #UN says that most of them are NOT ' refugees ' at all
 - Donald Trump is coming to the UK on June 25th according to this New York Times story
 - Man yelled 'Britain first!'
 
-## counterexamples ##
-- most of them are not refugees
-  + missing entity
+## counter examples ##
 - URLs: Cameron confirmed on Monday that [URL]
+- We talked about this in depth (indicates conversation and broad topic, but not what was said about it by whom)
 
 ## confusions ##
 - #10: I'm like "… blurb …"
