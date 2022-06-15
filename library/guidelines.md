@@ -8,15 +8,15 @@
 - according to **ENTITY**: **FORMULA**
 
 ## examples ##
-- **I** told you **…**
+- **I** told you **that this is important**
 - **the #UN** says that **most of them are NOT ' refugees ' at all**
 - **Donald Trump is coming to the UK on June 25th** according to this **New York Times** story
 - **Man** yelled '**Britain first!**'
 
 ## counterexamples ##
-- most of them are not refugees
-  + missing entity
 - URLs: Cameron confirmed on Monday that [URL]
+- We talked about this in depth
+  + indicates conversation and broad topic, but not what was said about it by whom
 
 ## confusions ##
 - #10: I'm like "… blurb …"
@@ -393,7 +393,7 @@
 - I don't like this at all
 
 # 26 Position to Know #
-- **ENTITY** is part of a **GROUP** that is qualified to know **FORMULA**
+- **ENTITY** is part of **ENTITY GROUP** that is qualified to know **FORMULA**
 
 ## examples ##
 - **we** **European** knows **it** and see our culture disappearing
@@ -404,18 +404,18 @@
 # 27 Negation [!] #
 
 ## examples ##
-- this is false / this is not true.
-- no.
-- most of them are NOT ' refugees ' at all
+- this is **false** / this is **not** true.
+- **no**.
+- most of them are **NOT** ' refugees ' at all
 
 # 30 Action Execution #
-- ENTITY has done ACTION
+- **ENTITY** has done **ACTION**
 
 ## examples ##
-- i've voted brexit
-- Ted Heath promised our sovereinty is safe
-- EU secured employment rights on a number of occasions
-- someone actually done that
+- **i**'ve **voted brexit**
+- **Ted Heath** **promised our sovereinty is safe**
+- **EU** **secured employment rights** on a number of occasions
+- **someone** actually **done that**
 
 ## counterexamples ##
 - I've been in Africa since 1980
@@ -424,32 +424,32 @@
 # 32 Weak Universal Quantification [!] #
 
 ## examples ##
-- almost all its Units were renamed after Continental European scientists
-- most of them are NOT ' refugees ' at all
+- **almost all its Units** were **renamed after Continental European scientists**
+- **most of them** are **NOT ' refugees ' at all**
 
 # 34 Knowledge #
-- ENTITY knows FORMULA is true
-- Knowledge is considered from the entity's point of view; i.e. regardless of whether FORMULA is *actually* true 
+- **ENTITY** knows **FORMULA** is true
+- Knowledge is considered from the entity's point of view; i.e. regardless of whether **FORMULA** is *actually* true 
 
 ## examples ##
-- I know that Nigel Farage didn't murder that MP
-- Even this Norwegian minister knows that this would not be good for UK
-- The pro-EU campaign knows that people don't trust Dodgy Dave
-- You know you're in when Warren Buffet starts selling cherry coke
-- I'm certain it will break up or change dramatically
+- **I** know that **Nigel Farage didn't murder that MP**
+- Even **this Norwegian minister** knows that **this would not be good for UK**
+- **The pro-EU campaign** knows that **people don't trust Dodgy Dave**
+- **You** know **you're in** when Warren Buffet starts selling cherry coke
+- **I**'m certain **it will break up or change dramatically**
 - **The president** understands that **this is true**
 
 ## counterexamples ##
 - You know, this was really a stupid idea
   + 'you know' as a discourse marker
 - Cameron should know about Brexit
-  + know about a topic != know the  truth of a particular statement
+  + knowing about a *topic* != knowing the *truth* of a particular statement
 
 ## confusions ##
 - #10: belief
 
 # 35 Necessary Truth #
-- FORMULA will always be the case
+- **FORMULA** will always be the case
 
 ## examples ##
 - Europe will always be there
@@ -467,30 +467,30 @@
 # 37 Quotation of Entity's Obligation #
 
 ## examples ##
-- Billionaire Brexit supporter says UK should emulate Singapore
-- Cypriot expat organization in #UK calls on its members to vote #Remain
+- **Billionaire Brexit supporter** says **UK** should **emulate Singapore**
+- **Cypriot expat organization** in #UK calls on **its members** to **vote #Remain**
 
 ## specifications ##
 - #19 + #0 + #25
 
 # 38 Warning #
-- ENTITY warns of FORMULA being generally bad (i.e. not just bad for any particular entity or group)
+- **ENTITY** warns of **FORMULA** being generally bad (i.e. not just bad for any particular entity or group)
 - the warning can be encoded in the speech act (e.g. warning), or in the quoted speech itself (e.g. saying that something would be terrible)
 - this pattern differs from warnings of bad consequences (#41/49 depending on whether consequences are bad for some or in general)
 - expressions not relating directly to damage/danger but to changes in size/amount are not considered here, but understood as (negative) consequences
 
 ## examples ##
-- Boris Johnson as PM would be ‘ horror scenario , ’ warns top Juncker aide
-- Cameron warns against Brexit in patriotic speech
-- Scientists including Stephen Hawking say a vote for Brexit in this month's EU referendum would be a disaster
+- **Boris Johnson as PM** would be ‘ horror scenario , ’ warns **top Juncker aide**
+- **Cameron** warns against **Brexit** in patriotic speech
+- **Scientists** including Stephen Hawking say **a vote for Brexit in this month's EU referendum** would be a disaster
 
 ## counterexamples ##
 - the IMF said that brexit will prolong austerity
   + neither the verb nor formula 1 have an unambiguously negative evaluation (e.g. austerity may be negative for many people, but not necessarily for everyone)
 - Hilary Benn has warned that Britain 's exit from the EU would make the country ' poorer ' and ' less influential'
-  + 49: bad consequences for some
+  + #49: bad consequences for some
 - He predicted that Brexit would cause the pound to fall 
-  + 41: bad consequences — decrease in value vs. explicit damage
+  + #41: bad consequences — decrease in value vs. explicit damage
 - She has threatened to vote out 
   + threats are not considered general warnings
 
@@ -505,7 +505,7 @@
 - #25 + #27
 
 # 41 Warning of Bad Consequences #
-- ENTITY says that FORMULA would lead to bad FORMULA
+- **ENTITY** says that **FORMULA0** will / would lead to bad **FORMULA1**
 - indirect version of #38 where something is claimed to be bad by consequence
 - bad consequences include changes in size/amount etc. that are considered bad by general consensus
 
@@ -518,11 +518,11 @@
   + is matched by the logical formula = something has bad consequences, but is not a warning of bad consequences because warnings don't make sense for things that have already happened 
 
 # 42 Better #
-- FORMULA1 is universally (=for all) better than FORMULA2
+- **FORMULA0** is universally (=for all) better than **FORMULA1**
 
 ## examples ##
-- Brexit is still better than being in the EU
-- We are better than this
+- **Brexit** is still better than **being in the EU**
+- **We** are better than **this**
 
 ## counterexamples ##
 - is there anything worse than a missed flight
@@ -535,13 +535,13 @@
   + missing FORMULA2
 
 # 43 Better for Concept #
-- FORMULA1 is better for CONCEPT than FORMULA2
+- **FORMULA0** is better for **CONCEPT** than **FORMULA1**
 - concept = entity / system
 
 ## examples ##
 - **Brexit** would be better for **the young folks** than **staying in the EU**
-- fishermen would profit more from relaxed restrictions than worker right protection in the EU
-- higher CO2 costs would be more effective for climate protection than general speed limits
+- **fishermen** would profit more from **relaxed restrictions** than **worker right protection in the EU**
+- **higher CO2 costs** would be more effective for **climate protection** than **general speed limits**
 
 ## counterexamples ##
 - I see IndyScot as a chance to improve for the majority
@@ -549,30 +549,31 @@
 - 40+ years ago this country was in a poor state, we're nowhere near as bad now.
   + not clear enough what exactly was/ is better
 -  Brexit might have a positive effect on the EU: discontents exit, resulting in a closer-knit and better-functioning EU-eurozone."
-  + FORMULA2 not expressed
+  + missing **FORMULA1**
 - I feel ashamed of our Gov. Worse to have others feel sorry for us
 
 # 44 Good #
-- FORMULA is universally good (i.e. the scope is not explicitly limited to specific entities)
+- **FORMULA** is universally good (i.e. the scope is not explicitly limited to specific entities)
 
 ## examples ##
-- nation states are good
-- so the ideal will be Indy in EU with rUK still a member
+- **nation states** are good
+- so the ideal will be **Indy in EU with rUK still a member**
 
 ## counterexamples ##
 - Democracy is also often taken for granted
 
 # 45 Bad #
-- FORMULA is universally bad (i.e. the scope is not explicitly limited to specific entities)
-- it is enough for the FORMULA to be bad in only some aspects, regardless of whether it has positive characteristics as well
+- **FORMULA** is universally bad (i.e. the scope is not explicitly limited to specific entities)
+- it is enough for the **FORMULA** to be bad in only some aspects, regardless of whether it has positive characteristics as well
 - expressions not relating directly to damage/danger but to changes in size/amount are not considered here, but understood as (negative) consequences
 
 ## examples ##
-- nation states are evil
-- Boris is the worst prime minister ever
-- the problem is that he never complied
-- the system is flawed (= the system is bad, at least in some ways)
-- Leave's arguments just don't add up.
+- **nation states** are evil
+- **Boris** is the worst prime minister ever
+- the problem is that **he never complied**
+- **the system** is flawed 
+  + (= the system is bad, at least in some ways)
+- **Leave's arguments** just don't add up.
 
 ## counterexamples ##
 - the #UN - a unit of the globalist conspiracy
@@ -587,14 +588,14 @@
 - so what exactly is wrong with an EU army
 
 # 46 Qualified Desire #
-- ENTITY is part of a GROUP who desires FORMULA
+- **ENTITY** is part of **ENTITY GROUP** that desires **FORMULA**
 
 ## examples ##
 - **as a son of immigrants** **I** am for **Brexit**
 - **the Left T.U. in me** says **No to leave** but **the #Motorbikes side of me** says **Yes vote to leave**
 
 # 48 Warning Some #
-- ENTITY says that FORMULA is/will be/ would be bad for CONCEPT
+- **ENTITY** says that **FORMULA** is / will be / would be bad for **CONCEPT**
 
 ## examples ##
 - Correspondents: **Brexit** will batter **the comedy industry**, says **Stephen Grant**
@@ -602,38 +603,48 @@
 - **She** points out that **Brexit** endangers **pensions**
 
 # 49 Warning of Bad Consequences for Some #
-- ENTITY says that FORMULA has/ will have/ would have BAD CONSEQUENCES for CONCEPT
+- **ENTITY** says that **FORMULA0**  will / would lead to **FORMULA1** which would be bad for **CONCEPT**
 
 ## examples ##
-- Hilary Benn has warned that Britain 's exit from the EU would make the country ' poorer ' and ' less influential'
-- Brexit could lead to downgrades for other EU countries -Fitch
+- **Hilary Benn** has warned that **Britain 's exit from the EU** would make the **country** **' poorer ' and ' less influential'**
+- **Brexit** could lead to **downgrades** for **other EU countries** -**Fitch**
 
 # 53 Intention to Do #
-- ENTITY intends to do ACTION
-- usually, statements expressing a future action without referencing intentions, plans etc. are interpreted as intention if subject = author (I will do X vs. She will do X)
+- **ENTITY** intends to do **ACTION**
+- usually, statements expressing a future action without referencing intentions, plans etc. are interpreted as intention iff subject = author:
+  + "**I** will do **ACTION**" = #53 (intention)
+  + "**She** will do **ACTION**" != #53 (prediction)
+  + exception: "**He** will do **ACTION0** (in order) to do **ACTION1** -> **ACTION0** = prediction, but **ACTION1** = intention
 
 ## examples ##
 - **1000 officials** travel to Strasbourg monthly to **vote** at a cost of €130m per annum
-- **French** to **brick up channel tunnel** in event of #BREXIT! (read as: are set / committed to brick up the tunnel)
+- **French** to **brick up channel tunnel** in event of #BREXIT!
+  + read as: are set / committed to brick up the tunnel
 - **Stuart Rose** has probably switched sides to #Leave but agreed to stay quite to **save his blushes**
-- **I'm** **voting #Remain** with reservations, but pensioners stand to lose from #Brexit
+- **I**'m **voting #Remain** with reservations, but pensioners stand to lose from #Brexit
 - Why does Brexit say "that's rubbish" and "**we'll** **negotiate to keep**" every time @LabourRemain point out something we'll lose
-- **Rich Audi drivers**, will **stay to avoid losing their 'richness'** (this is not just a future prediction because it contains a reason why they will stay)
-- $DIA You know **Warren Buffet** will drink his daily Cherry $KO and pull out his shopping bag to **buy buy buy** following the Brexit vote. $SPY (drink his daily Cherry $KO: prediction; pull out his shopping bag to buy: intention to do)
+- **Rich Audi drivers**, will **stay to avoid losing their 'richness'** 
+  + this is not just a future prediction because it contains a reason why they will stay
+- $DIA You know **Warren Buffet** will drink his daily Cherry $KO and pull out his shopping bag to **buy buy buy** following the Brexit vote. $SPY
+  + drink his daily Cherry $KO: prediction; pull out his shopping bag to buy: intention to do
 - "It's **this damn Brexit** tryin'a **lure us into an ambush**"
-- Why do you think **Trump** chose to **visit UK day after the referendum**? (chose to -> deliberate action)
+- Why do you think **Trump** chose to **visit UK day after the referendum**?
+  + chose to -> deliberate action
 
 ## counterexamples ##
-- Brexit vote set to fuel more referendums 
-  + prediction statement; no agency
 - things will go up in price EVERYTHING WILL COST MORE!
+  + "EVERYTHING" has no agency and can't intend to do anything
 - But Trump is no mug &amp; he will trade with the UK despite Cameron
+  + prediction
+- Brexit vote set to fuel more referendums 
+  + prediction statement + no agency
 - We're holding an English referendum next to decide whether we'll allow Scotland to stay 
   + exception to the speaker + future construction -> intention rule: here, 'we' is understood as the government, i.e. the speaker presumably has no agency in what is happening, so the statement does not reflect their intention
 
 # 55 Opposition #
-- ENTITY opposes the truth of CONCEPT
-- Opposition is understood as the counterpart to desire: ENTITY wants the negation of CONCEPT to be true (NB: this is different from negated desire)
+- **ENTITY** opposes the truth of **CONCEPT**
+- Opposition is understood as the counterpart to desire (#3): **ENTITY** wants the negation of **CONCEPT** to be true
+  + NB: this is different from negated desire (#3): "**They** don't want **a Brexit**" != "**They** are *(actively)* against **a Brexit**"
 
 ## examples ##
 - **Junker** says no to **reform**. Germany say no tarrifs. #Brexit
@@ -643,37 +654,40 @@
 ## counterexamples ##
 - She doesn't want to come along
   + negated #3
-- They voted against Brexit (voting = action)
-- SCOTUS blocked the policy (banning = action)
+- They voted against Brexit
+  + voting = action -> opposition too implicit
+- SCOTUS blocked the policy
+  + banning = action (see above)
 
 # 57 Concept Refinement #
 
-- ENTITY0 is part of ENTITY1, but this is not the claim of the overall statement
+- **ENTITY** is part of **ENTITY GROUP**, but this is not the claim of the overall statement
 - this pattern will typically apply to cases where the group membership is expressed via a modifying noun phrase
-- in contrast to #24 there will usually be no verb phrase expressing membership; instead membership is considered background information on ENTITY0
+- in contrast to #24 there will usually be no verb phrase expressing membership; instead membership is considered background information on **ENTITY**
 
 ## examples ##
 
-- **the EU slave nations** **Germany and France**
+- the **EU slave nations** **Germany and France**
 - **star economist** **Thomas Pickety**
 - **The Times'** **Jane Smith** 
 - **Billionaire Brexit supporter** **Max Doe** 
 
 ## counterexamples ##
 - Germany and France are slave nations
-  + 24
+  + #24
 - Thomas Pickety is one of the top economists
-  + 24
+  + #24
 
 # 58 Desirer #
 
-- group of entities desiring FORMULA to be true
+- group of entities desiring **FORMULA** to be true
 - typical realisations: nouns tied to desire and relative phrases
 - no need for a specific entity
 
 ## examples ##
 
-- Trump is a **Brexit** supporter (24+58)
+- Trump is a **Brexit** supporter
+  + #24 + #58
 - **Stay** fans are right
 - People who want **Brexit** keep saying that
 
@@ -688,8 +702,8 @@
 
 # 59 Believer #
 
-- group of entities believing FORMULA to be true
-- typical realisations: nouns tied to desire and relative phrases
+- group of entities believing **FORMULA** to be true
+- typical realisations: nouns tied to belief and relative phrases
 - no need for a specific entity
 
 ## examples ##
