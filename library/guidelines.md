@@ -17,6 +17,8 @@
 - URLs: Cameron confirmed on Monday that [URL]
 - We talked about this in depth
   + indicates conversation and broad topic, but not what was said about it by whom
+- a key Brexit supporter claims that ...
+  + the entity is not specific enough
 
 ## confusions ##
 - #10: I'm like "… blurb …"
@@ -357,6 +359,7 @@
 - **we** are all **stupid people**
 
 ## counterexamples ##
+- Turkey's largely Muslim population
 - the president is British
 - he supports leave
   + #3
@@ -660,39 +663,40 @@
   + banning = action (see above)
 
 # 57 Concept Refinement #
-
 - **ENTITY** is part of **ENTITY GROUP**, but this is not the claim of the overall statement
 - this pattern will typically apply to cases where the group membership is expressed via a modifying noun phrase
 - in contrast to #24 there will usually be no verb phrase expressing membership; instead membership is considered background information on **ENTITY**
 
 ## examples ##
-
 - the **EU slave nations** **Germany and France**
 - **star economist** **Thomas Pickety**
 - **The Times'** **Jane Smith** 
 - **Billionaire Brexit supporter** **Max Doe** 
+- **#JoeCox** **MP**
 
 ## counterexamples ##
 - Germany and France are slave nations
   + #24
 - Thomas Pickety is one of the top economists
   + #24
+- this ist a statement from Lord Ashton
+  + titles are no refinements
+- Andrew Neil is chair of @spectator
+  + entity has a specific role, their membership is not the foregrounded statement
 
 # 58 Desirer #
-
 - group of entities desiring **FORMULA** to be true
 - typical realisations: nouns tied to desire and relative phrases
 - no need for a specific entity
 
 ## examples ##
-
 - Trump is a **Brexit** supporter
   + #24 + #58
 - **Stay** fans are right
 - People who want **Brexit** keep saying that
+- I'm **Brexit**/**Brexin**/**remain**/**leave**
 
 ## counterexamples ##
-
 - Trump supports Brexit
   + #3
 - I want to stay
@@ -701,19 +705,17 @@
   + we can't extract any meaningful information from this because we would need too much background knowledge
 
 # 59 Believer #
-
 - group of entities believing **FORMULA** to be true
 - typical realisations: nouns tied to belief and relative phrases
 - no need for a specific entity
 
 ## examples ##
-
 - anyone who truly believes **that this is possible**
 
 ## counterexamples ##
 - I believe this is possible
   + #10
-  
+
 
 # Categories #
 - entities vs entity groups
