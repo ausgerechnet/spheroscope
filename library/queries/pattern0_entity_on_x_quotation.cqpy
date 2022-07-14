@@ -16,4 +16,4 @@
 #   pattern: '0'
 # ---
 
-@0:[::] [pos_ark="[DA]"]* [lemma = $person_any |pos_ark = "[@Z#^]"]{1,2} @1:[::]  ("about|on" [pos_ark = "[@OZ#N^]"])? ([word="[:\-]"]| [lemma = $verbs_communication & lemma !="claim|post|tell|require"]) /quotation_mark[] @2:[::] []* [pos_ark="V"]+ []* @3:[::] /quotation_mark[]
+@0:[::] /actor_np_all[] @1:[::]  ("about|on" [pos_ark = "[@OZ#N^]"])? ([word="[:\-]"]| [lemma = $verbs_communication & lemma !="claim|post|tell|require"]) /quotation_mark[] @2:[::] []* [pos_ark="V"]+ []* @3:[::] /quotation_mark[]

@@ -16,4 +16,4 @@
 #   pattern: '3'
 # ---
 
-@0:[::] (/actor_np_all[]) @1[::] [pos_ark="R"]* [lemma="'d|would"] [pos_ark="[AR]"]* "like" @2:[::] (/region[np])? "to"  [pos_ark="[DVNARTP]"]* [pos_ner="VB.?"]+ [pos_ark!="[UGE,#@\&]"]*@3[::]
+@0:[::] (/actor_np_all[]) @1[::] [pos_ark="R"]* [lemma="'d|would"|pos_ner="MD"] [pos_ark="[AR]"]* "like" @2:[::] [pos_ark="P"]? (/region[np])? "to"  [pos_ark="[DVNARTP]"]* [pos_ner="VB.?"]+ [pos_ark!="[UGE,#@\&]"]*@3[::]

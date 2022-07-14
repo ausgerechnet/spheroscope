@@ -16,4 +16,4 @@
 #   pattern: '24'
 # ---
 
-@0[::] (/actor_np_all[]) @1:[::][pos_ark="R"|pos_ner="MD"]* ([(lemma="be|become")&word="[a-z]+"] | [lemma="belong" &word="[a-z]+"] "to") @2[::] [lemma="a|the"|pos_ark="[RANZ^]"]+ /actor_group[] [pos_ark="[NZ^]"]? @3[::]
+@0[::] (/actor_np_all[]) @1:[::][pos_ark="R"|pos_ner="MD"]* ([lemma="be"&word="[a-z]+"] | [lemma="belong" &word="[a-z]+"] "to") @2[::] [pos_ark="D"] [pos_ark="A"]* [lemma=$actor_any] [pos_ark="[NZ^]"]? @3[::]
