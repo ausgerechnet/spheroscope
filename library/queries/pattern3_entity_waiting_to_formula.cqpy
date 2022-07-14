@@ -16,4 +16,4 @@
 #   pattern: '3'
 # ---
 
-[pos_ark!="P"] @0:[::](/actor_np_all[]) @1:[::] [pos_ner="MD"]* [pos_ark="R"]? ([lemma = "be"] [pos_ark="R"]? ([lemma="die|line|queue|wait" & word =".+ing" | lemma="desperate"] | "can'?t|cannot" "wait") "to" | [lemma="keen"] "for|on|to") @2:[::] [pos_ark!="[UGE,\&]"]+ @3:[::]
+[pos_ark!="P"] @0:[::](/actor_np_all[]) @1:[::] [pos_ner="MD"]* [pos_ark="R"]? ([lemma = "be"] [pos_ark="R"]? ([lemma="die|line|queue|wait" & word =".+ing"| lemma="desperate"]  "up"? | "can'?t|cannot" "wait") "to" | [lemma="keen"] "for|on|to") @2:[::] [pos_ark!="[UGE,\&]"]+ @3:[::]

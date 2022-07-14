@@ -16,4 +16,4 @@
 #   pattern: '3'
 # ---
 
-@0[::] [pos_ark="[D#AR]"]* [word=".+ing" | lemma=$nouns_policies | lemma = $nouns_values]+ [pos_ark!="[U,GE\&P]"]* @1:[::][lemma="be|have"|pos_ner="MD"|pos_ark="R"]* [lemma="be"] [pos_ark="R"]* [lemma = $verbs_prefer] "by" @2:[::] (/actor_np_all[]) @3[::]
+@0[::] [pos_ark="[D#AR]"]* [lemma=$nouns_policies | lemma = $nouns_values]+ [pos_ark!="[U,GE\&P]"]* @1:[::][lemma="be|have"|pos_ner="MD"|pos_ark="R"]* [lemma="be"] [pos_ark="R"]* [lemma = $verbs_prefer] "by" @2:[::] (/actor_np_all[]) @3[::]

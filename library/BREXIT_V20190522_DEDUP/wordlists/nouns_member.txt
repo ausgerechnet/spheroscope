@@ -1,9 +1,3 @@
-boss
-citizen
-director
-head
-leader
 member
 part
 participant
-president
