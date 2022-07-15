@@ -1,7 +1,7 @@
 ---
-title: "gold"
+title: "Gold Standard"
 author: "Philipp Heinrich"
-date: "4/11/2022"
+date: "12022-07-15"
 output: html_document
 ---
 
@@ -10,13 +10,18 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 ```
 
+## get current gold standard
 ```{r}
-gold <- read_tsv("../library/BREXIT_V20190522_DEDUP/gold/adjudicated.tsv",
-                 show_col_types = FALSE) %>% 
+gold <- read_tsv(
+  "../library/BREXIT_V20190522_DEDUP/gold/adjudicated.tsv",
+  show_col_types = FALSE
+  ) %>% 
   select(-c("...1"))
 
-random1000 <- read_tsv("../library/BREXIT_V20190522_DEDUP/gold/random-1000.tsv",
-              show_col_types = FALSE, col_types = "clll") %>%
+random1000 <- read_tsv(
+  "../library/BREXIT_V20190522_DEDUP/gold/random-1000.tsv",
+  col_types = "clll"
+  ) %>%
   mutate(tweet = paste0("t", tweet_id)) %>%
   select(-c("tweet_id"))
 
@@ -26,7 +31,7 @@ d <- left_join(random1000, gold) %>%
 d %>% select(pattern, annotation) %>% table()
 ```
 
-update gold
+## update published gold (#3, #20, #38)
 ```{r}
 random1000.new <- gold %>%
   filter(annotation, ! undecidable) %>% 
