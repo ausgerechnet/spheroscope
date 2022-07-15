@@ -1,7 +1,8 @@
+# Guidelines for the annotation of BREXIT tweets
 - in general, we only annotate *clear* positives that don't need additional inference steps
 - every slot has to be realised; any exceptions are given in the specifications for respective patterns
-- as a general exception, ENTITY slots that are not present because of syntactic ellipsis count as filled iff the entity can safely be assumed to be the author of the tweet
-- we currently *do* annotate patterns embedded within questions, negations, relative phrases etc. as positives
+  + as a general exception, ENTITY slots that are not present because of syntactic ellipsis count as filled iff the entity can safely be assumed to be the author of the tweet
+- we *do* annotate patterns embedded within questions, negations, relative phrases etc. as positives
 
 # 0 Quotation #
 - **ENTITY** says **FORMULA**
