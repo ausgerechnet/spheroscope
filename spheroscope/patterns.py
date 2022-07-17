@@ -254,10 +254,12 @@ def mock(p1):
     # request parameters
     slot = int(request.args.get('slot'))
     p2 = int(request.args.get('p2'))
+    cwb_id = session['corpus']['resources']['cwb_id']
 
     # read
     from pandas import read_csv
-    path = "scripts/pattern%d-slot%d-pattern%d-annotate.tsv" % (p1, slot, p2)
+    dir_out = os.path.join(current_app.instance_path, cwb_id, "query-results")
+    path = os.path.join(dir_out, "pattern%d-slot%d-pattern%d-annotate.tsv" % (p1, slot, p2))
     table = read_csv(path, sep="\t")
     print(table.columns)
 
