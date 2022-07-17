@@ -1,0 +1,53 @@
+---
+title: "Gold Standard"
+author: "Philipp Heinrich"
+date: "12022-07-15"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+## get current gold standard
+```{r}
+gold <- read_tsv(
+  "../library/BREXIT_V20190522_DEDUP/gold/adjudicated.tsv",
+  show_col_types = FALSE
+  ) %>% 
+  select(-c("...1"))
+
+random1000 <- read_tsv(
+  "../library/BREXIT_V20190522_DEDUP/gold/random-1000.tsv",
+  col_types = "clll"
+  ) %>%
+  mutate(tweet = paste0("t", tweet_id)) %>%
+  select(-c("tweet_id"))
+
+d <- left_join(random1000, gold) %>%
+  select(tweet, pattern, annotation, undecidable)
+
+d %>% select(pattern, annotation) %>% table()
+```
+
+## update published gold (#3, #20, #38)
+```{r}
+random1000.new <- gold %>%
+  filter(annotation, ! undecidable) %>% 
+  select(tweet, pattern) %>%
+  pivot_wider(id_cols = tweet, 
+              names_from = pattern, 
+              values_from = pattern, 
+              names_prefix = "pattern") %>%
+  select(tweet, pattern3, pattern20, pattern38) %>%
+  rename(pattern03 = pattern3)
+
+random1000.diff <- random1000 %>% 
+  left_join(random1000.new, suffix = c("", "_new"), by = "tweet") %>%
+  mutate(pattern03_new = ! is.na(pattern03_new),
+         pattern20_new = ! is.na(pattern20_new),
+         pattern38_new = ! is.na(pattern38_new))
+
+```
+
