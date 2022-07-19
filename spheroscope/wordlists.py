@@ -5,6 +5,7 @@ import os
 
 from flask import (Blueprint, current_app, g, redirect, render_template,
                    request, session, url_for)
+from pandas import DataFrame
 from pymagnitude import Magnitude
 
 from .auth import login_required
@@ -25,7 +26,7 @@ def get_frequencies(cwb_id, words, p_att):
     return freq
 
 
-def get_similar_ones(cwb_id, words, p_att, number):
+def get_similar_ones(cwb_id, words, p_att, number, min_freq=2):
 
     # similar ones
     current_app.logger.info(
@@ -34,16 +35,16 @@ def get_similar_ones(cwb_id, words, p_att, number):
     corpus_config = read_config(cwb_id)
     embeddings = Magnitude(corpus_config['resources']['embeddings'])
     similar = embeddings.most_similar(positive=words, topn=number)
-    similar_ones = [s[0] for s in similar]
+    similar = DataFrame(index=[s[0] for s in similar], data={'similarity': [s[1] for s in similar]})
 
     # marginals
-    freq_similar = get_frequencies(cwb_id, similar_ones, p_att=p_att)
+    freq_similar = get_frequencies(cwb_id, similar.index, p_att=p_att)
     freq_similar = freq_similar[['freq']]
     freq_similar.columns = ["frequency"]
+    freq_similar = freq_similar.loc[freq_similar.frequency >= min_freq]  # drop hapaxes
 
-    # attach similarity score
-    freq_similar['similarity'] = [s[1] for s in similar]
-    freq_similar = freq_similar.loc[freq_similar.frequency > 1]  # drop hapaxes
+    # merge
+    freq_similar = freq_similar.join(similar)
     freq_similar = freq_similar.sort_values(by="frequency", ascending=False)
 
     return freq_similar
