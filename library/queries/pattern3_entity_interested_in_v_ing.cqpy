@@ -1,0 +1,19 @@
+# --- # CQPY query file
+# anchors:
+#   corrections:
+#     1: -1
+#     3: -1
+#   slots:
+#     '0':
+#     - 0
+#     - 1
+#     '1':
+#     - 2
+#     - 3
+# meta:
+#   comment: null
+#   name: pattern3_entity_interested_in_v_ing
+#   pattern: '3'
+# ---
+
+@0:[::] (/actor_np_all[])  @1:[::][pos_ner="MD|RB"|lemma="have"]* [lemma="be"] [pos_ark="[AR]"]* ("up" "for" | "interested" "in" | [lemma="look"] "forward" "to") @2:[::][pos_ark="[DVNARTP]"]* [pos_ark="[V]" &word=".+ing" | lemma=$nouns_policies | lemma = $nouns_values]+ [pos_ark!="[UGE,\&#@P]"]* @3[::]

@@ -12,8 +12,8 @@
 #     - 3
 # meta:
 #   comment: null
-#   name: pattern24_entity_or_any_other_group
-#   pattern: '24'
+#   name: pattern57_entity_or_any_other_group
+#   pattern: '9999'
 # ---
 
 @0[::] (/actor_np_all[]) @1:[pos_ark="\&"] [lemma="any|one|some"|pos_ark="[D\$]"] ("of" [pos_ark="D"])? [lemma="other"] @2[::] [pos_ark="[DANZ^]"]* (/actor_np_all[]) [pos_ark="[DANZ^]"]* @3:[::]

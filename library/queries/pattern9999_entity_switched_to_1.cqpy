@@ -12,8 +12,8 @@
 #     - 3
 # meta:
 #   comment: null
-#   name: pattern24_entity_switched_to_1
-#   pattern: '24'
+#   name: pattern9999_entity_switched_to_1
+#   pattern: '9999'
 # ---
 
 @0:[::] (/actor_np_all[]) @1[::] [lemma ="be|have" | pos_ner="MD|RB"]*  [lemma = $verbs_change] [pos_ark="[PDAR]" &lemma!="in"]* [lemma=$nouns_group]* ("from" [pos_ark="[DAR#NZ^]"]* /actor_np_all[])? [pos_ark="P"  &lemma!="in"]? "to" @2[::][pos_ark="[DAR#NZ^]"]* /actor_np_all[] [pos_ark="[ZN^]"]* @3[::]

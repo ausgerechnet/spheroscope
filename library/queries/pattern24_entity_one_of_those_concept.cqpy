@@ -1,0 +1,19 @@
+# --- # CQPY query file
+# anchors:
+#   corrections:
+#     1: -1
+#     3: -1
+#   slots:
+#     '0':
+#     - 0
+#     - 1
+#     '1':
+#     - 2
+#     - 3
+# meta:
+#   comment: null
+#   name: pattern24_entity_one_of_those_concept
+#   pattern: '24'
+# ---
+
+@0[::] (/actor_np_all[]) @1:[::] [pos_ner="RB|MD"]* [lemma="be"]  [pos_ner="RB|MD"]* [lemma="among|any|one|some"|pos_ark="[D\$]"] "of"? [pos_ark="D|O"] @2[::] [pos_ark="[DANZ^]"]* (/actor_group[]) [pos_ark="[DANZ^]"]* @3:[::]

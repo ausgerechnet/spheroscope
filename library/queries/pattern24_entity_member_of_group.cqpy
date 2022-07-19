@@ -16,4 +16,4 @@
 #   pattern: '24'
 # ---
 
-@0[::] (/actor_np_all[]) @1:[::][pos_ner="RB|MD"|lemma="to"]* [lemma="be|become|form|remain|stay" | lemma=$verbs_stay] [pos_ner="RB|MD"]* [pos_ark="[DA]"]* [(lemma=$nouns_member |lemma=$nouns_examples) & pos_ark="N"] "of" @2[::] [pos_ark="[DANZ^]"]* (/actor_np_all[]) [pos_ark="[DANZ^]"]* @3:[::]
+@0[::] (/actor_np_all[]) @1:[::][pos_ner="RB|MD"|lemma="to"]* [lemma="be|form"] [pos_ner="RB|MD"]* [pos_ark="[DA]"]* [(lemma=$nouns_member|lemma=$nouns_part |lemma=$nouns_examples) & pos_ark="N"] "in|of" @2[::] (/actor_np_all[]) [pos_ark="[DANZ^]" | pos_ark="V" & word=".+ing"]* @3:[::]

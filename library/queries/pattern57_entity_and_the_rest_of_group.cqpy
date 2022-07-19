@@ -12,8 +12,8 @@
 #     - 3
 # meta:
 #   comment: null
-#   name: pattern24_entity_and_the_rest_of_group
-#   pattern: '24'
+#   name: pattern57_entity_and_the_rest_of_group
+#   pattern: '9999'
 # ---
 
 @0:[::](/actor_np_all[]) @1:[::]([pos_ark="\&"] |  "as" "well" "as") [pos_ark="D"]? ([lemma="rest|remainder|many"|lemma=$nouns_large_number|lemma=$wordlist_quantifiers] "of" | "other") @2:[::] (/actor_np_all[]) @3[::]
