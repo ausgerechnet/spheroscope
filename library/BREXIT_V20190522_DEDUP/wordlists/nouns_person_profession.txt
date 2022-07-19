@@ -28,6 +28,7 @@ bishop
 bodyguard
 bookkeeper
 bookseller
+booky
 boss
 botanist
 bricklayer

@@ -1,0 +1,19 @@
+# --- # CQPY query file
+# anchors:
+#   corrections:
+#     1: -1
+#     3: -1
+#   slots:
+#     '0':
+#     - 2
+#     - 3
+#     '1':
+#     - 0
+#     - 1
+# meta:
+#   comment: null
+#   name: pattern3_policy_is_what_entity_wants
+#   pattern: '3'
+# ---
+
+@0:[::] [pos_ark="[DA]"]* [pos_ark = "[AOVNZ#^]"]+ @1[::] [pos_ark="R" | lemma="have" | pos_ner="MD" & lemma!="should"]* [lemma="be|\.|\-"] [pos_ark="[R]"]+ ([lemma="what"] | [pos_ark="D"] [pos_ark="N"] "that"?) @2:[::] (/actor_np_all[])  @3[::] [pos_ark="R"]* [pos_ner="MD" | lemma="be|have"]? [pos_ark="R"]* [lemma=$verbs_prefer & pos_ark="V" & word!=".+ing"]

@@ -1,0 +1,10 @@
+IMPORT person_any.txt
+
+MACRO actor_any(0)
+define $actor_any = $person_any;
+define $actor_any += $nouns_experts;
+define $actor_any += $nouns_entities;
+define $actor_any += $nouns_political_entities;
+define $actor_any += $nouns_corporate_entities;
+define $actor_any += $nouns_news_media
+;
