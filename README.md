@@ -51,6 +51,30 @@ You can now start the development flask server via
 
 and navigate to [http://127.0.0.1:5000/](http://127.0.0.1:5000/) to access the interface.
 
+### Running in Production ###
+
+Requirements:
+
+    sudo apt install apache2-dev
+
+
+Clone the repository and cd into the folder. Virtual environment:
+
+    python3 -m venv venv
+    . venv/bin/activate
+    pip install .
+    pip install mod_wsgi
+
+Create & modify `cfg.py`. Initialise the database:
+
+    FLASK_APP=spheroscope
+    flask init-db
+    flask import-lib
+
+Run the WSGI server:
+
+    mod_wsgi-express start-server wsgi.py --processes 4
+
 ### Corpus Settings ###
 After starting the app, you will find [default corpus settings](library/corpus_defaults.yaml) in your instance folder. You can change the defaults to your liking, taking into consideration the most common p- and s-attributes of your system corpora.
 
