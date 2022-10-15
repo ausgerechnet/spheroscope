@@ -15,23 +15,92 @@ library(tidyverse)
 gold <- read_tsv(
   "../library/BREXIT_V20190522_DEDUP/gold/adjudicated.tsv",
   show_col_types = FALSE
-  ) %>% 
-  select(-c("...1"))
+) %>% select(-c("...1"))
+```
 
+## left-join to random-1000
+```{r}
 random1000 <- read_tsv(
   "../library/BREXIT_V20190522_DEDUP/gold/random-1000.tsv",
   col_types = "clll"
-  ) %>%
-  mutate(tweet = paste0("t", tweet_id)) %>%
+) %>% mutate(tweet = paste0("t", tweet_id)) %>%
   select(-c("tweet_id"))
 
 d <- left_join(random1000, gold) %>%
   select(tweet, pattern, annotation, undecidable)
-
-d %>% select(pattern, annotation) %>% table()
 ```
 
+
+## overview
+```{r}
+d %>% select(pattern, annotation) %>% table() %>% data.frame() %>% tibble() %>% filter(annotation == TRUE) %>% arrange(desc(Freq))
+```
+
+## associations
+```{r}
+d.wide <- d %>%
+  filter(annotation, ! undecidable) %>%
+  select(tweet, pattern) %>% 
+  pivot_wider(id_cols = tweet, 
+              names_from = pattern, 
+              values_from = pattern, 
+              names_prefix = "pattern") %>%
+  right_join(random1000 %>% select(tweet)) %>% 
+  replace(is.na(.), -1) 
+```
+
+```{r}
+pattern.contingency <- function(d, pattern_left, pattern_right) {
+  tab <- d %>% select(all_of(pattern_left), all_of(pattern_right)) %>% table()
+  row <- c(tab[2, 2], tab[1, 2], tab[2, 1], tab[1, 1])
+}
+
+patterns <- names(d.wide[2:length(d.wide)])
+d.cont <- data.frame()
+for (i in 1:length(patterns)){
+  for (j in i:length(patterns)){
+    if (i != j) {
+      p_right <- patterns[i]
+      p_left <- patterns[j]
+      row <- c(p_right, p_left, pattern.contingency(d.wide, p_left, p_right))
+      d.cont <- rbind(d.cont, row)
+    }
+  }
+}
+names(d.cont) <- c("left", "right", "O11", "O12", "O21", "O22")
+d.cont <- d.cont %>% tibble() %>% mutate(
+  across(O11, as.integer),
+  across(O12, as.integer),
+  across(O21, as.integer),
+  across(O22, as.integer),
+)
+d.cont <- d.cont %>% mutate(
+  R1 = O11 + O12,
+  R2 = O21 + O22,
+  C1 = O11 + O21,
+  C2 = O12 + O22,
+  N = O11 + O12 + O21 + O22,
+  E11 = R1 * C1 / N,
+  E12 = R1 * C2 / N,
+  E21 = R2 * C1 / N, 
+  E22 = R2 * C2 / N,
+  MI = log2(O11 / E11),
+  t.score = (O11 - E11) / sqrt(O11),
+  X2 = (O11-E11)^2/E11 + (O12-E12)^2/E12 + (O21-E21)^2/E21 + (O22-E22)^2/E22,
+  DP = O11 / R1 - O21 / R2,
+  llr = 2 * (log(O11/E11) * O11 + log(O12/E12) * O12 + log(O21/E21) * O21 + (O22/E22) * O22)
+)
+```
+
+```{r}
+d.cont %>% filter(O11 > 2) %>% arrange(desc(MI)) %>% select(left, right, O11, R1, C1, MI)
+```
+
+
+
+
 ## update published gold (#3, #20, #38)
+
 ```{r}
 random1000.new <- gold %>%
   filter(annotation, ! undecidable) %>% 
@@ -48,6 +117,5 @@ random1000.diff <- random1000 %>%
   mutate(pattern03_new = ! is.na(pattern03_new),
          pattern20_new = ! is.na(pattern20_new),
          pattern38_new = ! is.na(pattern38_new))
-
 ```
 
