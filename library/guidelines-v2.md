@@ -1,7 +1,13 @@
 # guidelines
 
+General notes:
+- ENTITIES have to be specific. While it is okay if *we* don't know who the entity is (e.g. in the case of pronouns: *she* said that XY  counts even if we don't know who she is), indeterminate phrases such as *a key brexit supporter* or *more than half of the population* do not count because these expressions do not reliably refer to a particular entity (*more than half* could be said without any particular members of the population being clear). Generally, an entity can be a person (Anna Smith/ she), a group (the Tories/ they), a legal entity (Germany/ Siemens) or anything that can conceivably be understood as an actor; as long as it is specific. 
+- ENTITIES can be elliptical if and only if it is clear that the speaker is referring to themselves, and we have syntactic ellipsis ("Hoping for a successful outcome!" -- read as "I am hoping for ...")
+
 # 0 Quotation
+ENTITY says FORMULA
 - somebody / a paper / a newspaper / ... said / says something
+- ENTITY is defined broader here than in most other patterns: can be a poster or a website etc.
 
 ## change log ##
 - URLs are ok
@@ -12,6 +18,8 @@
 
 ## linguistic cues ##
 - verbs of reporting (*says*, *told*)
+- quotation marks
+- other references to communication: (*according to*, ENTITY *:*)
 
 ## examples ##
 - **I** told you **that this is important**
@@ -23,7 +31,7 @@
 
 ## counterexamples ##
 - We talked about this in depth
-  + indicates conversation and broad topic, but not what was said about it by whom
+  + indicates conversation and broad topic, but not what was said about it by whom (talking *about* something does not specify the claims)
 - a key Brexit supporter claims that ...
   + the entity is not specific enough
 
@@ -31,6 +39,8 @@
 - I'm like "… blurb …" (#10)
 
 # 3 Desire #
+ENTITY desires FORMULA
+
 - somebody desires something
 - distinction of two types of desires: future vs. counter-factual
   + here: only desire of the future!
@@ -49,7 +59,7 @@
 - **ENTITY** wants **FORMULA**
 
 ## linguistic cues ##
-- verbs of desire (*want*, *wish*) of a particular outcome or event
+- verbs of desire (*want*, *wish*, *hope*)
 - verbs of affiliation (*support*, *back*, *say yes to*, *to be for*)
   + as long as they're not an expression of actual activism
 
@@ -63,9 +73,9 @@
 
 ## counterexamples ##
 - silent majority for brexit
-  + entity is undefined subset
+  + entity is not specific enough
 - the pro brexit campaigners are using this strategy
-  + desire defines membership
+  + desire defines entity (group) -> #58
 - a person supporting brexit / many people supporting brexit say ... 
   + not specified who the entities are
 - he is *against* it
@@ -96,29 +106,31 @@
   + the point is being reinforced, not desired
 
 # 24 Membership
+ENTITY is a member of GROUP
+
 - an entity belongs to some entity group
-- for this pattern, the entity  has to have agency (e.g. people, organisations or states, but not abstract entities, objects or ideas)
+- for this pattern, the entity has to have agency (e.g. people, organisations or states, but not abstract entities, objects or ideas)
   - groups are defined widely, with prototypical cases including e.g. professions, parties/organisations or nationalities
 - the entity group should be determined (e.g. "these three parties")
 - the entity group should also be relevant in the political discourse
   + "Brexit supporter" is reasonable group, "cowards" isn't
-- statements involving properties are not group membership
+- statements about somebody having properties are not group membership
   + formal distinction at the blurry line between group and attribute: when in doubt, an adjective does not designate a group even if the corresponding noun does ("**she**'s **a German**": yes, "she's German": no)
+- Changes in membership (join/leave) and statements of continued membership (remain/stay) are annotated as separate patterns 
 
 ## change log ##
 - only relevant groups
-- we do not also annotate ad hoc groups (cf. first example)
+- we do not annotate ad hoc groups (the Clintons are *fat cats owned by the multinationals*)
 
 ## schematic examples ##
 - **ENTITY** is part of **ENTITY GROUP**
 
-- #24 only covers statements about group memberships that go beyond purely characterising the entity. I.e. examples will often involve an entity and a verb phrase (e.g. "**A** is a member of **B**") or a genitive construction ("**XY**'s membership in **Z**"). Group statements that only specify the entity's background (e.g. via a modifying noun phrase) are annotated as #57.
+- #24 only covers statements about group memberships that go beyond purely characterising the entity. I.e. examples will often involve an entity and a verb phrase (e.g. "**A** is a member of **B**") or a genitive construction ("**XY**'s membership in **Z**"). Group statements that only specify the entity's background (e.g. via a modifying noun phrase - "PM Boris Johnson") are annotated as #57.
 
 ## examples ##
 - **Jo** was **a politician**
 - **he's** **a leaver**
 - **Stuart Rose** has switched sides to **#Leave**
-- **Brits** are too much **cowards** to vote (24 + 25)
 - **we're** on the side of **leave**
 
 ## counterexamples ##
@@ -132,7 +144,7 @@
 - a billionaire brexit supporter
   + **ENTITY** not specified
 - they will stay in the EU / Ireland remains in the UK
-  + *stay* or *remain* technically implies an existing membership, but in this case is read as an action rather than membership
+  + #62 continued membership
 - the UK will leave the EU
   + leaving = action resulting in end of membership rather than membership per se
 - She joined the group
@@ -140,7 +152,7 @@
 - we are all stupid
   + property rather than group definition
 - we are all stupid people
-  + not a relevant group
+  + "stupid people" are not a relevant group
 - Brexit will help other EU slave nations
   + group specification, but missing entity
 - It is an unfortunate coincidence that this happened
@@ -158,11 +170,63 @@
 - warning for some → prediction bad for
 
 # 55 Opposition
+- **ENTITY** is against **CONCEPT**
+- Opposition is understood as the counterpart to desire (#3): **ENTITY** wants the negation of **CONCEPT** to be true
 
-# 57 
-- entity + membership
-- no truth value
 
-# 58
-- focus on what is desired
-- no truth value
+## change log ## we also count negated desire here (formerly #3): "**They** don't want **a Brexit**" read as "They are against a Brexit"
+
+## examples ##
+- **Junker** says no to **reform**. Germany say no tarrifs. #Brexit
+- @bbclaurak to be fair if **the Almighty** came out against **#Brexit**, Leavers would say his ubiquity prevents him taking a national view. #Remain
+- **Roxy** against **Brexit** watching the news nervously #DogsAgainstBrexit https://t.co/BrSp35RlnT
+
+## counterexamples ##
+- They voted against Brexit
+  + voting = action -> opposition too implicit
+- SCOTUS blocked the policy
+  + blocking = action (see above)
+
+# 57 Concept Refinement #
+- **ENTITY** is part of **ENTITY GROUP**, but this is not the claim of the overall statement
+- typically cases where the group membership is expressed via a modifying noun phrase
+- in contrast to #24 there will usually be no verb phrase expressing membership; instead membership is considered background information about **ENTITY**
+
+## examples ##
+- the **EU slave nations** **Germany and France**
+- **star economist** **Thomas Pickety**
+- **The Times'** **Jane Smith** 
+- **Billionaire Brexit supporter** **Max Doe** 
+- **#JoeCox** **MP**
+
+## counterexamples ##
+- Germany and France are slave nations
+  + #24
+- Thomas Pickety is one of the top economists
+  + #24
+- this ist a statement from Lord Ashton
+  + titles do not define membership
+- Andrew Neil is chair of @spectator
+  + entity has a specific role, their membership of the company is only implied
+
+# 58 Desirer #
+- group of entities desiring **FORMULA** to be true
+- typical realisations: nouns tied to desire and relative phrases
+- no need for a (specific) entity
+
+## change log ##
+- As with pattern #3, FORMULA can now also be an entity: **Cameron** fans
+
+## examples ##
+- Trump is a **Brexit** supporter
+  + #24 + #58
+- **Stay** fans are right
+- People who want **Brexit** keep saying that
+- I'm **Brexit**/**Brexin**/**remain**/**leave**
+- **Brexit** supporters are stupid
+
+## counterexamples ##
+- Trump supports Brexit
+  + #3
+- I want to stay
+  + #3
