@@ -188,7 +188,7 @@
 - **ENTITY** is against **CONCEPT**
 
 ## remarks ##
-- opposition is understood as the opposition to desire (#3)
+- opposition is understood as the opposite to desire (#3)
   + **ENTITY** wants the negation of **CONCEPT**
 
 ## change log ##
@@ -259,7 +259,7 @@
 - I want to stay
   + #3
 
-# 63 Prediction of Consequence
+# 63 Prediction
 
 ## schema ##
 - **ENTITY** predicts **FORMULA**
