@@ -10,10 +10,6 @@
   + a group (the Tories/ they)
   + a legal entity (Germany/ Siemens)
   + anything that can conceivably be understood as an agent
-- entities have to be specific
-  + indeterminate phrases such as *a key brexit supporter* or *more than half of the population* do not count as entities
-  + these expressions do not reliably refer to a particular entity (*more than half* could be said without any particular members of the population being clear)
-  + it is okay if *we* don't know who the entity is (e.g. in the case of pronouns: *she* said that XY counts even if we don't know who she is)
 - entities can be elliptical only if it is clear that the speaker is referring to themselves, and we have syntactic ellipsis
   + "Hoping for a successful outcome!" -- read as "I am hoping for ..."
 
@@ -49,11 +45,11 @@
 - **Man** yelled '**Britain first!**'
 - **Cameron** confirmed on Monday that **URL**
 - **URL**: **FORMULA**
+- **a key Brexit supporter** claims that **this is what we should do**
 
 ## counterexamples ##
 - We talked about this in depth
   + indicates conversation and broad topic, but not what was said about it by whom (talking *about* something does not specify the claims)
-- a key Brexit supporter claims that ...
   + the entity is not specific enough
 - I'm like "… blurb …"
   + belief (→ #10)
@@ -88,14 +84,11 @@
 - **I** am interested in **participating**
 - **We** are really looking forward to **this**
 - **they** endorse **Brexit**
+- **silent majority** for **brexit**
 
 ## counterexamples ##
 - the pro brexit campaigners are using this strategy
   + desire defines entity (group) → #58
-- silent majority for brexit
-  + entity is not specific enough
-- a person supporting brexit / many people supporting brexit say ... 
-  + not specified who the entities are
 - SF have issues with EU but *see it as better* for NI to remain
   + one-sided preference without explicit marking of desire
   + here: because they might not actually want to remain, despite seeing this as the rationally best decision
@@ -118,7 +111,6 @@
   + positive regard without desire
 - the technocrats in the EU fighting for Britain to remain
   + effort does not necessarily equal desire
-- I believe in votes at 16 and no GRP for transgender people
 - I'm endorsing my point from yesterday 
   + the point is being reinforced, not desired
 
@@ -131,12 +123,12 @@
 - an entity belongs to some entity group
 - for this pattern, the entity has to have agency (e.g. people, organisations or states, but not abstract entities, objects or ideas)
   - groups are defined widely, with prototypical cases including e.g. professions, parties/organisations or nationalities
-- the entity group should be determined (e.g. "these three parties")
-- the entity group should also be relevant in the political discourse
+- the entity group should be relevant in the political discourse
   + "Brexit supporter" is reasonable group, "cowards" isn't
 - statements about somebody having properties are not group membership
   + formal distinction at the blurry line between group and attribute: when in doubt, an adjective does not designate a group even if the corresponding noun does ("**she**'s **a German**": yes, "she's German": no)
-- changes in membership (join/leave) and statements of continued membership (remain/stay) are annotated as separate patterns
+- **changes in membership** (join/leave) and statements of **continued membership** (remain/stay) are annotated as separate patterns. I.e. pattern 24 only refers to
+**being** a group member, not becoming or continuing / stopping to be one
 - this pattern only covers statements about group memberships that go beyond purely characterising the entity
   + i.e. examples will often involve an entity and a verb phrase (e.g. "**A** is a member of **B**") or a genitive construction ("**XY**'s membership in **Z**")
   + group statements that only specify the entity's background (e.g. via a modifying noun phrase - "PM Boris Johnson") are annotated as #57
@@ -159,8 +151,6 @@
 - the president is British
 - he supports leave
   + → #3
-- a billionaire brexit supporter
-  + **ENTITY** not specified
 - they will stay in the EU / Ireland remains in the UK
   + → #62 continued membership
 - the UK will leave the EU
