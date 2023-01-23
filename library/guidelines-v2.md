@@ -54,6 +54,35 @@
 - I'm like "… blurb …"
   + belief (→ #10)
 
+# 2 Counterfactual Implication #
+
+## schema ##
+
+- if **FORMULA0**, then **FORMULA1**
+- **FORMULA0** would cause **FORMULA1**
+- **FORMULA0** is the reason for **FORMULA1**
+- typically this involves reasoning about consequences of past events or future results of things
+- speculations
+- basically any (explicit or implied) causal relationship that is stated between two factors
+
+## linguistic cues ##
+- will cause/ will lead to ...
+- Do X and we will ...
+- if X then Y
+- X is why Y
+
+## examples ##
+- **brexit** and **we'll have a great relationship with the US**
+- **Zach's relentless negative campaigning** brought out the **London vote**
+- **Brits will never control our country again** if **we vote IN**
+- **leaving the EU** would mean **disaster**
+
+## counter-examples ##
+- if ever you needed confirmation for Brexit, these three provide it
+  + no causal relationship
+  
+
+
 # 3 Desire #
 
 ## schema ##
