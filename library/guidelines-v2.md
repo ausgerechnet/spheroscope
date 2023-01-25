@@ -56,20 +56,21 @@
 
 # 2 Counterfactual Implication #
 
+
 ## schema ##
 
-- if **FORMULA0**, then **FORMULA1**
+- if **FORMULA0**, then **FORMULA1** would happen
 - **FORMULA0** would cause **FORMULA1**
-- **FORMULA0** is the reason for **FORMULA1**
+- **FORMULA0** will be the reason for **FORMULA1**
 - typically this involves reasoning about consequences of past events or future results of things
 - speculations
-- basically any (explicit or implied) causal relationship that is stated between two factors
+- basically any (explicit or implied) causal relationship that is stated between two factors, but counterfactual, i.e. X is not currently the case (so we don't know for sure that Y would actually be true)
 
 ## linguistic cues ##
 - will cause/ will lead to ...
 - Do X and we will ...
-- if X then Y
-- X is why Y
+- if X, Y will happen
+- X would have lead to Y
 
 ## examples ##
 - **brexit** and **we'll have a great relationship with the US**
@@ -80,7 +81,8 @@
 ## counter-examples ##
 - if ever you needed confirmation for Brexit, these three provide it
   + no causal relationship
-  
+- X causes / caused Y
+  + not counterfactual
 
 
 # 3 Desire #
