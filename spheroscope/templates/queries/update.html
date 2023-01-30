@@ -10,7 +10,6 @@
 {% endblock %}
 
 {% block content %}
-
 <form>
   {{ h.query_form(name=query.name,pattern=query.pattern_id, patterns=patterns,content=query.cqp,slots=query.slots,corrections=query.corrections) }}
   <div class="field is-grouped">
