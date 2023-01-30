@@ -1,26 +1,21 @@
-# Pipfile
-# 1. pip install pipenv
-# 2. pipenv install --dev
-# 3. pipenv shell
-
 [[source]]
 url = "https://pypi.python.org/simple"
 verify_ssl = true
 name = "pypi"
 
 [dev-packages]
-pytest = ">=5.2.0"
-pytest-cov = "==2.6.1"
-setuptools = "==60.8.2"
-wheel = "*"
-twine = "*"
+pytest = "==7.2.0"
+pytest-cov = "==3.0.0"
+setuptools = "==65.5.1"
+wheel = ">=0.37.1"
 
 [packages]
-Flask = ">=2.0,<2.1"
-Flask-SQLAlchemy = ">=2.5,<2.6"
-pymagnitude = ">=0.1.140,<0.2"
-cwb-ccc = "==0.10.2"
-psycopg2-binary = "*"
+Flask = ">=2.2,<2.3"
+Flask-SQLAlchemy = ">=3.0,<3.1"
+pymagnitude-lite = ">=0.1.140,<0.2"
+psycopg2-binary = ">=2.9.5,<3.0"
+cwb-ccc = ">=0.11.3,<0.12"
+# cwb-ccc = {path = "./../cwb-ccc", editable=true}
 
 [requires]
 python_version = "3.9"
