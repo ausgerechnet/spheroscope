@@ -12,7 +12,52 @@ from .auth import login_required
 from .corpora import init_corpus, read_config
 from .database import Query, get_patterns
 
+
 bp = Blueprint('queries', __name__, url_prefix='/queries')
+
+
+def run_query(query, cwb_id):
+
+    # init corpus
+    corpus_config = read_config(cwb_id)
+    corpus = init_corpus(corpus_config)
+
+    current_app.logger.info("query: %s", query.name)
+    query = query.serialize()
+
+    # get dump
+    dump = corpus.query(
+        cqp_query=query['cqp'],
+        context=corpus_config['query']['context'],
+        context_break=corpus_config['query']['context_break'],
+        corrections=query['anchors']['corrections'],
+        match_strategy=corpus_config['query']['match_strategy'],
+        raise_error=True
+    )
+
+    # valid query, but no matches
+    if len(dump.df) == 0:
+        current_app.logger.warning("no results for query: {query['cqp']}")
+        return
+
+    # retreive concordance
+    matches = dump.concordance(
+        form='slots',
+        p_show=dict(corpus_config['display'])['p_show'],
+        s_show=dict(corpus_config['display'])['s_show'],
+        cut_off=None,
+        slots=query['anchors']['slots']
+    )
+
+    # add name
+    matches['query'] = query['meta']['name']
+
+    # translate anchor points in slot_START and slot_END for all slots
+    for slot in query['anchors']['slots']:
+        df = format_slot(dump, query, slot)
+        matches = matches.join(df)
+
+    return matches
 
 
 def run_queries(queries, cwb_id):
@@ -35,45 +80,19 @@ def run_queries(queries, cwb_id):
 
     """
 
-    # init corpus
-    corpus_config = read_config(cwb_id)
-    corpus = init_corpus(corpus_config)
-
     # run all queries
+    if len(queries) > 1:
+        current_app.logger.info(f'running {len(queries)} queries')
     matches_list = list()
     for query in queries:
 
-        current_app.logger.info("query: %s", query.name)
-        query = query.serialize()
+        try:
+            matches = run_query(query, cwb_id)
 
-        # get dump
-        dump = corpus.query(
-            cqp_query=query['cqp'],
-            context=corpus_config['query']['context'],
-            context_break=corpus_config['query']['context_break'],
-            corrections=query['anchors']['corrections'],
-            match_strategy=corpus_config['query']['match_strategy']
-        )
-        if len(dump.df) == 0:
+        # invalid query
+        except ValueError:
+            current_app.logger.error(f"invalid query: {query['cqp']}")
             continue
-
-        # retreive concordance
-        matches = dump.concordance(
-            form='slots',
-            p_show=dict(corpus_config['display'])['p_show'],
-            s_show=dict(corpus_config['display'])['s_show'],
-            cut_off=None,
-            slots=query['anchors']['slots']
-        )
-
-        # add name
-        matches['query'] = query['meta']['name']
-
-        # translate anchor points in slot_START and slot_END for all slots
-        for slot in query['anchors']['slots']:
-
-            df = format_slot(dump, query, slot)
-            matches = matches.join(df)
 
         # append to result list
         matches_list.append(matches.reset_index())
@@ -83,12 +102,14 @@ def run_queries(queries, cwb_id):
         current_app.logger.info("concatenating")
         result = concat(matches_list).set_index(['query', 'match', 'matchend'])
     else:
+        current_app.logger.error('none of the queries returned matches')
         result = None
 
     # make sure missing cpos are indicated as -1 and columns are integer
-    for c in result.columns:
-        if c.endswith("_START") or c.endswith("_END"):
-            result[c] = result[c].fillna(-1, downcast='infer')
+    if result is not None:
+        for c in result.columns:
+            if c.endswith("_START") or c.endswith("_END"):
+                result[c] = result[c].fillna(-1, downcast='infer')
 
     return result
 
@@ -392,15 +413,17 @@ def matches(id):
     # get corpus from settings
     cwb_id = session['corpus']['resources']['cwb_id']
 
-    # run the old query
+    # get query matches gracefully
     query = Query.query.filter_by(id=id).first()
-    old_matches = run_queries([query], cwb_id)
-
-    if old_matches is None:
-        return 'query does not have any matches'
+    try:
+        matches = run_query(query, cwb_id)
+    except ValueError:
+        return '<br/><br/><b>CQP SYNTAX ERROR!</b>'
+    if matches is None:
+        return f'<br/><br/><b>QUERY DOES NOT HAVE ANY MATCHES IN CORPUS "{cwb_id}"</b>'
 
     # select columns
-    display_columns = [x for x in old_matches.columns if x not in [
+    display_columns = [x for x in matches.columns if x not in [
         'context_id', 'context', 'contextend'
     ]]
 
@@ -408,7 +431,7 @@ def matches(id):
     if request.method == 'POST':
 
         # create new query for diffing
-        newquery = Query(
+        new_query = Query(
             cqp=request.form['query'],
             name=request.form['name'],
             pattern_id=request.form['pattern'],
@@ -421,15 +444,20 @@ def matches(id):
             user_id=g.user.id
         )
 
-        # get new matches and merge to old matches
-        new_matches = run_queries([newquery], cwb_id)
-        if new_matches is None:
-            return 'new query does not have any matches'
-        # index = ['query', 'match', 'matchend']
-        matches = new_matches.reset_index().merge(
-            old_matches.reset_index(), how='outer', indicator=True
-        ).set_index(['query', 'match', 'matchend'])
-        # NB: index will contain duplicates if match and matchend didn't change but anchors or slots did
+        if new_query.cqp != query.cqp or new_query.slots != query.slots or new_query.corrections != query.corrections:
+            # get new matches
+            try:
+                new_matches = run_query(new_query, cwb_id)
+            except ValueError:
+                return '<br/><br/><b>CQP SYNTAX ERROR</b>'
+            if new_matches is None:
+                return f'<br/><br/><b>query does not have any matches in corpus "{cwb_id}"</b>'
+
+            # merge new matches to old ones
+            matches = new_matches.reset_index().merge(
+                matches.reset_index(), how='outer', indicator=True
+            ).set_index(['query', 'match', 'matchend'])
+            # NB: index will contain duplicates if match and matchend didn't change but anchors or slots did
 
         # add gold, evaluate
         matches = add_gold(matches, cwb_id, query.pattern_id, s_cwb, s_gold)
@@ -450,7 +478,7 @@ def matches(id):
 
     # download button @ /queries/
     return Response(
-        old_matches[display_columns].to_csv(),
+        matches[display_columns].to_csv(),
         mimetype='text/csv',
         headers={"Content-disposition":
                  f"attachment; filename={id}-results.csv"}

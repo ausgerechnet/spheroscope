@@ -55,14 +55,10 @@
         {% block header %}
         {% endblock %}
         
-        {% for message in get_flashed_messages() %}
-        <div class="notification is-light">{{ message }}</div>
+        {% for category, message in get_flashed_messages(with_categories=true) %}
+        <div class="notification is-light">{{ category.upper() }}: {{ message }}</div>
         {% endfor %}
-        
-        <div id="loading" style="display:none;">
-          <progress class="progress is-medium is-primary" max="100">0%</progress>
-        </div>
-        
+
         {% block content %}
         {% endblock %}
 
