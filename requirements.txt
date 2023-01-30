@@ -1,5 +1,0 @@
-# This file is used by pip to install required python packages
-# Usage: pip install -r requirements.txt
-
-# We're using the Pipfile
-pipenv==2022.1.8

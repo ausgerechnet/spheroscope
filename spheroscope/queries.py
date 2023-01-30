@@ -196,7 +196,7 @@ def patch_query_results(result):
         "lemma_y": "whole_lemma_y",
         "_merge": "merge"
     })
-    newresult.columns = newresult.columns.str.split('_', 2, expand=True)
+    newresult.columns = newresult.columns.str.split('_', n=2, expand=True)
 
     return newresult
 
