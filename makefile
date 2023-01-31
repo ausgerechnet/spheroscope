@@ -16,16 +16,16 @@ run:
 	pipenv run flask --app spheroscope --debug run
 
 query:
-	pipenv run flask --app query
+	pipenv run flask --app spheroscope query
 
 subquery:
 	pipenv run flask --app spheroscope subquery 3 1 24
 
 patterns:
-	pipenv run flask --app update-patterns
+	pipenv run flask --app spheroscope --debug update-patterns
 
 gold:
-	pipenv run flask --app update-gold
+	pipenv run flask --app spheroscope --debug update-gold
 
 clean:
 	rm -rf *.egg-info build/ dist/

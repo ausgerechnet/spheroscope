@@ -8,7 +8,7 @@ import click
 import pandas as pd
 from flask import current_app
 from flask.cli import with_appcontext
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 from sqlalchemy.exc import OperationalError
 
 
@@ -17,6 +17,7 @@ def connect(port=5432):
     try:
         return current_app.remote
     except AttributeError:
+
         current_app.logger.info(
             "connecting to remote database (%s)" % current_app.config['REMOTE_NAME']
         )
@@ -44,7 +45,7 @@ def connect(port=5432):
 def get_tables(con):
 
     return list(pd.read_sql(
-        "SELECT relname FROM pg_class WHERE relkind='r' AND relname !~ '^(pg_|sql_)';",
+        text("SELECT relname FROM pg_class WHERE relkind='r' AND relname !~ '^(pg_|sql_)';"),
         con
     )['relname'])
 
@@ -52,14 +53,14 @@ def get_tables(con):
 def get_gold(con):
 
     return pd.read_sql(
-        "SELECT * FROM rant.classification_gold;", con
+        text("SELECT * FROM rant.classification_gold;"), con
     )
 
 
 def get_patterns(con):
 
     patterns = pd.read_sql(
-        "SELECT * FROM rant.patterns;", con, index_col='idx'
+        text("SELECT * FROM rant.patterns;"), con, index_col='idx'
     )
 
     # patterns_categories = pd.read_sql(
