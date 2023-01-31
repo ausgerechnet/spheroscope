@@ -4,7 +4,7 @@ install:
 	pipenv install --dev
 
 requirements:
-	pipenv lock --requirements
+	pipenv requirements > requirements.txt
 
 init:
 	pipenv run flask --app spheroscope init-db
