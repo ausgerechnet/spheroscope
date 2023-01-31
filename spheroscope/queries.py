@@ -6,7 +6,7 @@ import os
 
 from flask import (Blueprint, Response, current_app, g, jsonify, redirect,
                    render_template, request, session, url_for)
-from pandas import concat, read_csv
+from pandas import concat, read_csv, DataFrame
 
 from .auth import login_required
 from .corpora import init_corpus, read_config
@@ -194,9 +194,9 @@ def evaluate(matches, s, tp_column='TP'):
     tps['N'] = N
 
     try:
-        tps['prec'] = tps['TP'] / (tps['FP'] + tps['TP'])
+        tps['prec.'] = tps['TP'] / (tps['FP'] + tps['TP'])
     except ZeroDivisionError:
-        tps['prec'] = '?'
+        tps['prec.'] = '?'
 
     return tps
 
@@ -306,12 +306,8 @@ def create():
             cqp=request.form['query'],
             name=request.form['name'],
             pattern_id=request.form['pattern'],
-            slots=request.form['slots'].replace(
-                "None", "null"
-            ),
-            corrections=request.form['corrections'].replace(
-                "None", "null"
-            ),
+            slots=request.form['slots'].replace("None", "null"),
+            corrections=request.form['corrections'].replace("None", "null"),
             user_id=g.user.id
         )
         try:
@@ -350,12 +346,8 @@ def update(id):
             cqp=request.form['query'],
             name=request.form['name'],
             pattern_id=request.form['pattern'],
-            slots=request.form['slots'].replace(
-                "None", "null"
-            ),
-            corrections=request.form['corrections'].replace(
-                "None", "null"
-            )
+            slots=request.form['slots'].replace("None", "null"),
+            corrections=request.form['corrections'].replace("None", "null")
         )
         try:
             query.write()
@@ -395,7 +387,9 @@ def delete_cmd(id):
 def matches(id):
     """
     run a query
+
     if POSTing: create diff between old and new matches
+
     ---
     parameters:
       - name: id
@@ -420,66 +414,73 @@ def matches(id):
     except ValueError:
         return '<br/><br/><b>CQP SYNTAX ERROR!</b>'
     if matches is None:
-        return f'<br/><br/><b>QUERY DOES NOT HAVE ANY MATCHES IN CORPUS "{cwb_id}"</b>'
+        return f'<br/><br/><b>query does not have any matches in corpus "{cwb_id}".</b>'
 
-    # select columns
-    display_columns = [x for x in matches.columns if x not in [
-        'context_id', 'context', 'contextend'
-    ]]
+    # select display columns
+    display_columns = [x for x in matches.columns if x not in ['context_id', 'context', 'contextend']]
 
     # run button @ /queries/<id>/update
     if request.method == 'POST':
+
+        old_matches = matches
 
         # create new query for diffing
         new_query = Query(
             cqp=request.form['query'],
             name=request.form['name'],
             pattern_id=request.form['pattern'],
-            slots=request.form['slots'].replace(
-                "None", "null"
-            ),
-            corrections=request.form['corrections'].replace(
-                "None", "null"
-            ),
+            slots=request.form['slots'].replace("None", "null"),
+            corrections=request.form['corrections'].replace("None", "null"),
             user_id=g.user.id
         )
 
+        # run new query upon change
         if new_query.cqp != query.cqp or new_query.slots != query.slots or new_query.corrections != query.corrections:
-            # get new matches
+            # get new query matches gracefully
             try:
                 new_matches = run_query(new_query, cwb_id)
             except ValueError:
                 return '<br/><br/><b>CQP SYNTAX ERROR</b>'
             if new_matches is None:
-                return f'<br/><br/><b>query does not have any matches in corpus "{cwb_id}"</b>'
+                return f'<br/><br/><b>query does not have any matches in corpus "{cwb_id}".</b>'
 
             # merge new matches to old ones
             matches = new_matches.reset_index().merge(
-                matches.reset_index(), how='outer', indicator=True
-            ).set_index(['query', 'match', 'matchend'])
+                old_matches.reset_index(), how='outer', indicator=True
+            ).set_index(['match', 'matchend'])
             # NB: index will contain duplicates if match and matchend didn't change but anchors or slots did
 
-        # add gold, evaluate
-        matches = add_gold(matches, cwb_id, query.pattern_id, s_cwb, s_gold)
-        tps = evaluate(matches, s_cwb)
+        else:
+            new_matches = matches
+
+        # evaluate old and new matches
+        current_app.logger.info("evaluating")
+        old_matches = add_gold(old_matches, cwb_id, query.pattern_id, s_cwb, s_gold)
+        old_statistics = evaluate(old_matches, s_cwb)
+        new_matches = add_gold(new_matches, cwb_id, query.pattern_id, s_cwb, s_gold)
+        new_statistics = evaluate(new_matches, s_cwb)
+        statistics = concat([
+            DataFrame(old_statistics, index=['saved version']),
+            DataFrame(new_statistics, index=['this version'])
+        ])[['N', 'TP', 'FP', '?', 'prec.']]
 
         # render result
-        result = patch_query_results(matches)
-
-        # this is counter-productive for diffing, obviously ...
-        # cut off
-        # cut_off = min(int(request.args.get('cut_off', 1000)), len(result))
-        # result = result.sample(cut_off)
-
         current_app.logger.info("rendering result table")
+        concordance = patch_query_results(matches)
+
+        print(concordance.describe().T)
+
         return render_template('queries/result_table.html',
-                               result=result,
-                               tps=tps)
+                               concordance=concordance,
+                               statistics=statistics.to_html(
+                                   justify='left',
+                                   classes=['table', 'is-striped', 'is-hoverable', 'is-narrow', 'sortable']
+                               ))
 
     # download button @ /queries/
     return Response(
-        matches[display_columns].to_csv(),
+        matches[display_columns].to_csv(sep="\t"),
         mimetype='text/csv',
         headers={"Content-disposition":
-                 f"attachment; filename={id}-results.csv"}
+                 f"attachment; filename=query-{id}-concordance.tsv"}
     )
