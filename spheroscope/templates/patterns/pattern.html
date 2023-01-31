@@ -74,7 +74,7 @@
 {{ c.add_button(action=url_for('queries.create'), text='New Query') }}
 {% endcall %}
 
-{% call c.block("Matches")%}
+{% call c.block("Result")%}
 <iframe id='matches' src='{{ url_for("patterns.matches", id=pattern.id) }}' width='100%'></iframe>
 {% endcall %}
 

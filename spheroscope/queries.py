@@ -6,7 +6,7 @@ import os
 
 from flask import (Blueprint, Response, current_app, g, jsonify, redirect,
                    render_template, request, session, url_for)
-from pandas import concat, read_csv, DataFrame
+from pandas import concat, read_csv
 
 from .auth import login_required
 from .corpora import init_corpus, read_config
@@ -32,8 +32,13 @@ def run_query(query, cwb_id):
         context_break=corpus_config['query']['context_break'],
         corrections=query['anchors']['corrections'],
         match_strategy=corpus_config['query']['match_strategy'],
-        raise_error=True
+        propagate_error=True
     )
+
+    # invalid query
+    if isinstance(dump, str):
+        current_app.logger.error(dump)
+        return dump
 
     # valid query, but no matches
     if len(dump.df) == 0:
@@ -86,11 +91,10 @@ def run_queries(queries, cwb_id):
     matches_list = list()
     for query in queries:
 
-        try:
-            matches = run_query(query, cwb_id)
+        matches = run_query(query, cwb_id)
 
         # invalid query
-        except ValueError:
+        if isinstance(matches, str):
             current_app.logger.error(f"invalid query: {query['cqp']}")
             continue
 
@@ -165,6 +169,7 @@ def add_gold(result, cwb_id, pattern, s_cwb, s_gold):
         result['TP'] = None
     else:
         result = result.merge(gold[[s_cwb, "TP"]], on=s_cwb, how='left')
+
     result['TP'] = result['TP'].fillna('?')
 
     # reset index
@@ -172,33 +177,29 @@ def add_gold(result, cwb_id, pattern, s_cwb, s_gold):
         index_cols = ['query', 'slot-query', 'match', 'matchend']
     else:
         index_cols = ['query', 'match', 'matchend']
-    result = result.set_index(index_cols)
 
-    return result
+    return result.set_index(index_cols)
 
 
-def evaluate(matches, s, tp_column='TP'):
+def evaluate(matches, tp_column='TP'):
     """evaluate result of add_gold(run_queries()) on a textual basis
     ---
 
     """
 
-    matches = matches.drop_duplicates(subset=[s])
-    tps = matches[tp_column]
+    matches[tp_column] = matches[tp_column].replace(True, 'TP').replace(False, 'FP')
+    statistics = matches.groupby(['query', tp_column]).size().unstack(fill_value=0)
+    statistics.columns.name = None
+    if 'TP' not in statistics.columns:
+        statistics['TP'] = 0
+    if 'FP' not in statistics.columns:
+        statistics['FP'] = 0
+    if '?' not in statistics.columns:
+        statistics['?'] = 0
+    statistics['N'] = statistics.sum(axis=1)
+    statistics['prec.'] = statistics['TP'] / (statistics['FP'] + statistics['TP'])
 
-    # get TPs, FPs, precision
-    N = len(tps)
-    tps = tps.value_counts().to_dict()
-    tps['TP'] = tps.pop(True, 0)
-    tps['FP'] = tps.pop(False, 0)
-    tps['N'] = N
-
-    try:
-        tps['prec.'] = tps['TP'] / (tps['FP'] + tps['TP'])
-    except ZeroDivisionError:
-        tps['prec.'] = '?'
-
-    return tps
+    return statistics[['N', 'TP', 'FP', '?', 'prec.']]
 
 
 def patch_query_results(result):
@@ -409,10 +410,9 @@ def matches(id):
 
     # get query matches gracefully
     query = Query.query.filter_by(id=id).first()
-    try:
-        matches = run_query(query, cwb_id)
-    except ValueError:
-        return '<br/><br/><b>CQP SYNTAX ERROR!</b>'
+    matches = run_query(query, cwb_id)
+    if isinstance(matches, str):
+        return '<br/><br/><b>Encountered CQP Error:</b><br/><br/>' + matches
     if matches is None:
         return f'<br/><br/><b>query does not have any matches in corpus "{cwb_id}".</b>'
 
@@ -437,10 +437,9 @@ def matches(id):
         # run new query upon change
         if new_query.cqp != query.cqp or new_query.slots != query.slots or new_query.corrections != query.corrections:
             # get new query matches gracefully
-            try:
-                new_matches = run_query(new_query, cwb_id)
-            except ValueError:
-                return '<br/><br/><b>CQP SYNTAX ERROR</b>'
+            new_matches = run_query(new_query, cwb_id)
+            if isinstance(new_matches, str):
+                return '<br/><br/><b>Encountered CQP Error:</b><br/><br/>' + new_matches
             if new_matches is None:
                 return f'<br/><br/><b>query does not have any matches in corpus "{cwb_id}".</b>'
 
@@ -456,19 +455,18 @@ def matches(id):
         # evaluate old and new matches
         current_app.logger.info("evaluating")
         old_matches = add_gold(old_matches, cwb_id, query.pattern_id, s_cwb, s_gold)
-        old_statistics = evaluate(old_matches, s_cwb)
+        old_matches = old_matches.reset_index().drop_duplicates(subset=[s_cwb])[['TP']]
+        old_matches['query'] = 'saved version'
+
         new_matches = add_gold(new_matches, cwb_id, query.pattern_id, s_cwb, s_gold)
-        new_statistics = evaluate(new_matches, s_cwb)
-        statistics = concat([
-            DataFrame(old_statistics, index=['saved version']),
-            DataFrame(new_statistics, index=['this version'])
-        ])[['N', 'TP', 'FP', '?', 'prec.']]
+        new_matches = new_matches.reset_index().drop_duplicates(subset=[s_cwb])[['TP']]
+        new_matches['query'] = 'this version'
+
+        statistics = evaluate(concat([old_matches, new_matches]))
 
         # render result
         current_app.logger.info("rendering result table")
         concordance = patch_query_results(matches)
-
-        print(concordance.describe().T)
 
         return render_template('queries/result_table.html',
                                concordance=concordance,
