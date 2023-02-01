@@ -18,7 +18,7 @@
     <td><time>{{ query.modified.strftime('%Y-%m-%d %H:%M') }}</time></td>
     <td class="field has-addons">
       <p class="control">
-        {{ c.edit_button(action=url_for('queries.update', id=query.id)) }}
+        {{ c.edit_button(action=url_for('queries.update', id=query.id),text="Update") }}
       </p>
       <p class="control">
         {{ c.run_button(action=url_for('queries.matches', id=query.id),text="Download",download=true) }}
