@@ -1,39 +1,31 @@
 all: init run
 
 install:
-	pip3 install -r requirements.txt
 	pipenv install --dev
 
+requirements:
+	pipenv requirements > requirements.txt
+
 init:
-	export FLASK_APP=spheroscope && \
-	export FLASK_ENV=development && \
-	pipenv run flask init-db && \
-	pipenv run flask import-lib
+	pipenv run flask --app spheroscope init-db
+
+library:
+	pipenv run flask --app spheroscope import-lib
 
 run:
-	export FLASK_APP=spheroscope && \
-	export FLASK_ENV=development && \
-	pipenv run flask run
-
-subquery:
-	export FLASK_APP=spheroscope && \
-	export FLASK_ENV=development && \
-	pipenv run flask subquery 3 1 24
+	pipenv run flask --app spheroscope --debug run
 
 query:
-	export FLASK_APP=spheroscope && \
-	export FLASK_ENV=development && \
-	pipenv run flask query
+	pipenv run flask --app spheroscope query
+
+subquery:
+	pipenv run flask --app spheroscope subquery 3 1 24
 
 patterns:
-	export FLASK_APP=spheroscope && \
-	export FLASK_ENV=development && \
-	pipenv run flask update-patterns
+	pipenv run flask --app spheroscope --debug update-patterns
 
 gold:
-	export FLASK_APP=spheroscope && \
-	export FLASK_ENV=development && \
-	pipenv run flask update-gold
+	pipenv run flask --app spheroscope --debug update-gold
 
 clean:
 	rm -rf *.egg-info build/ dist/

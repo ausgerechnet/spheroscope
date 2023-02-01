@@ -8,7 +8,7 @@ import click
 from flask import (Blueprint, current_app, jsonify, render_template, request,
                    session)
 from flask.cli import with_appcontext
-from pandas import concat
+from pandas import concat, DataFrame
 
 from .auth import login_required
 from .corpora import init_corpus, read_config
@@ -177,21 +177,31 @@ def matches(id):
     queries = Query.query.filter_by(pattern_id=id).order_by(Query.name).all()
     matches = run_queries(queries, cwb_id)
 
-    # add gold
+    # add gold and evaluate
     matches = add_gold(matches, cwb_id, id, s_cwb, s_gold)
-    tps = evaluate(matches, s_cwb)
+    statistics = evaluate(matches.reset_index().drop_duplicates(subset=[s_cwb, 'query']))
 
-    # patch for frontend
-    result = patch_query_results(matches)
+    # add pattern statistics (necessary due to duplicates across queries)
+    pat = matches.reset_index().drop_duplicates(subset=[s_cwb])
+    pat['query'] = f'pattern {id}'
+    stat_pat = evaluate(pat)
+    statistics = concat([statistics, stat_pat])
 
-    # cut off
-    cut_off = min(int(request.args.get('cut_off', 1000)), len(result))
-    result = result.sample(cut_off)
+    # concordancing cut off: get all TPs and FPs, sample from the rest
+    known = matches.loc[matches['TP'] != "?"]
+    unknown = matches.loc[matches['TP'] == "?"]
+    cut_off = min(int(request.args.get('cut_off', 1000)), len(unknown))
+    unknown = unknown.sample(cut_off)
+    concordance = concat([known, unknown])
+    concordance = patch_query_results(concordance)
 
     current_app.logger.info("rendering result")
     return render_template('queries/standalone_result_table.html',
-                           result=result,
-                           tps=tps)
+                           concordance=concordance,
+                           statistics=statistics.to_html(
+                               justify='left',
+                               classes=['table', 'is-striped', 'is-hoverable', 'is-narrow', 'sortable']
+                           ))
 
 
 @bp.route('/<int(signed=True):p1>/matches/subquery', methods=('GET', 'POST'))
@@ -233,19 +243,28 @@ def subquery(p1):
 
     # add gold
     matches = add_gold(matches, cwb_id, slot, s_cwb, s_gold)
-    tps = evaluate(matches, s_cwb)
+    statistics = evaluate(matches, s_cwb)
+
+    # add pattern statistics (necessary due to duplicates across queries)
+    pat = matches.reset_index().drop_duplicates(subset=[s_cwb])
+    pat['query'] = f'pattern {id}'
+    stat_pat = evaluate(pat)
+    statistics = concat([statistics, stat_pat])
 
     # patch for frontend
     result = patch_query_results(matches)
 
     # cut off
     cut_off = min(int(request.args.get('cut_off', 1000)), len(result))
-    result = result.sample(cut_off)
+    concordance = result.sample(cut_off)
 
     current_app.logger.info("rendering result table")
     return render_template('queries/standalone_result_table.html',
-                           result=result,
-                           tps=tps)
+                           concordance=concordance,
+                           statistics=statistics.to_html(
+                               justify='left',
+                               classes=['table', 'is-striped', 'is-hoverable', 'is-narrow', 'sortable']
+                           ))
 
 
 @bp.route('/<int(signed=True):p1>/matches/mock', methods=('GET', 'POST'))
@@ -261,7 +280,6 @@ def mock(p1):
     dir_out = os.path.join(current_app.instance_path, cwb_id, "query-results")
     path = os.path.join(dir_out, "pattern%d-slot%d-pattern%d-annotate.tsv" % (p1, slot, p2))
     table = read_csv(path, sep="\t")
-    print(table.columns)
 
     # format
     table['word'] = table.apply(highlight_slots, axis=1)

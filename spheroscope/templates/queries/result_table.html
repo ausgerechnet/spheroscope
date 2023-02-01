@@ -1,12 +1,11 @@
-<h4>Summary</h4>
+<br/>
+<h4>Statistics</h4>
 <ul>
-  <li>Number of Matches: {{ tps['N'] }}
-  <li>True Positives: {{ tps['TP'] }}
-  <li>False Positives: {{ tps['FP'] }}
-  <li>Precision: {{ tps['prec'] }}
+  {{ statistics | safe }}
 </ul>
 
-<h4>Results</h4>
+<br/>
+<h4>Concordance Lines</h4>
 <script src="{{ url_for('static', filename='sorttable.js') }}" type="text/javascript"></script>
 <script>
      function diffInto(newval, oldval, target) {
@@ -50,13 +49,13 @@
     <thead>
       <tr>
         <th>Index</th>
-        {% for col in result.columns.unique(0) if not col == "merge" %}
+        {% for col in concordance.columns.unique(0) if not col == "merge" %}
         <th>{{ col }}</th>
         {% endfor %}
       </tr>
     </thead>
     <tbody>
-    {% for k, res in result.iterrows() %}
+    {% for k, res in concordance.iterrows() %}
     <tr>
       <th {% if 'merge' in res.columns and res['merge'][0] == 'right_only' %} class="is-danger is-light" {% elif 'merge' in res.columns and res['merge'][0] == 'left_only' %} class="is-success is-light" {% endif %}>{{ k }}</th>
       {{ res.columns }}

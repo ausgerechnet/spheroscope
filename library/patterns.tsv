@@ -1,6 +1,6 @@
 idx	name	template	explanation	retired	kind
 0	quotation	Q_{{?0 : entity}}({?1 : formula})	entity 0 claims that formula 1 is true	False	formula
-2	causal implication	({?0 : formula}) \cfac ({?1 : formula})	truth of formula 0 leads to truth of formula 1	False	formula
+2	counterfactual implication	({?0 : formula}) \cfac ({?1 : formula})	truth of formula 0 leads to truth of formula 1	False	formula
 3	desire	D_{{?0 : entity}} ({?1 : formula})	truth of formula 1 is desirable for entity 0	False	formula
 4	ought	O ({?0 : formula})	formula 0 should be made true	False	formula
 5	possibility	\diamond ({?0 : formula})	formula 0 could be true	False	formula
@@ -43,12 +43,13 @@ idx	name	template	explanation	retired	kind
 54	believe better	B_{{?0 : entity}} {?1 : formula} \leq {?2 : formula}	entity 0 thinks formula 2 is preferrable over formula 1 	False	formula
 55	opposition	D_{{?0 : entity}}(\neg ({?1 : formula}))	entity 0 opposes truth of formula 1	False	formula
 56	doubt	\neg (B_{{?0 : entity}}({?1 : formula}))	entity 0 doubts that formula 1 is true	False	formula
-57	concept refinement	{?0 : entity} \land {?1 : entity}	entity 0 is part of entity 1 but this is not the claim of the statement	False	entity
+57	entity with membership	{?0 : entity} \land {?1 : entity}	entity 0, which is part of entity 1	False	entity
 58	desirer	D({?0 : formula})	group of entities desiring formula 0 to be true	False	entity
 59	believer	B({?0 : formula})	group of entities believing formula 0 to be true	False	entity
 60	entry	\neg({?0 : entity} \implies {?1 : entity}); F ({?0} \implies {?1})	entity 0 is not part of entity 1 but will be in the future	False	formula
 61	entity equivalence	{?0 : entity} \iff {?1 : entity}	entity 0 and entity 1 are the same	False	formula
 62	continued membership	{?0 : entity} \implies {?1 : entity}; X ({?0} \implies {?1})	entity 0 is part of entity 1 and will stay part of it 	False	formula
+63	stay out of it	\neg({?0 : entity} \implies {?1 : entity}); X \neg({?0} \implies {?1})	entity 0 is not part 0f entity 1 and will saty out of entity 1 in the future 	False	formula
 -9999	preamble	\newcommand{\mcauses}{\Box\kern-.5em{\implies}} \newcommand{\dimplies}{\overset{d}{\implies}} \newcommand{\cfac}{\overset{c}{\implies}}	the preamble (for exporting)	True	formula
 1	explanation	({?0 : formula}) \mcauses ({?1 : formula})	0 is the reason why 1 is true; note that 0 and 1 could be formulas talking about the past stating that something was the reason why something was the case at some point in time	True	formula
 7	 	({?1 : formula}) \mcauses Q_{{?0 : entity}} bad	1 is bad for entity 0	True	formula
