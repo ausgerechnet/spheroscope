@@ -1,3 +1,5 @@
+.PHONY: library
+
 all: init run
 
 install:
