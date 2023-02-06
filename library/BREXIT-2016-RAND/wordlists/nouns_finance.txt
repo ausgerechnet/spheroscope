@@ -1,0 +1,10 @@
+bank
+bill
+cost
+economy
+fare
+inflation
+poverty
+price
+rate
+unemployment

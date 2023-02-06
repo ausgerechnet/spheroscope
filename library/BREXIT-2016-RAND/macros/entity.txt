@@ -1,0 +1,18 @@
+MACRO entity_np_all(0)
+(
+ [upos = "DET|ADJ " | xpos="PRP$" | word = "#.+"]* [upos = "NOUN|PROPN" | xpos="PRP"]+  ([upos=".CONJ" | word=","] [upos = "DET|ADJ " | word = "#.+"]* [upos = "NOUN|PROPN"]+ )*
+)
+;
+
+MACRO entity_np_actor(0)
+(
+ [upos = "DET|ADJ " | word = "#.+" | xpos="PRP$"]* [upos = "NOUN" & lemma = $actor_any | xpos="PRP" & lemma!="it" | upos ="PROPN"]+  ([upos=".CONJ" | word=","] [upos = "DET|ADJ " | word = "#.+"]* [upos = "NOUN|PROPN"]+ )*
+)
+;
+
+
+MACRO actor_specified(0)
+(
+[upos="ADJ|PROPN" | xpos"PRP$" | lemma=$modifiers_specified]+ [upos="DET|PRON]"]* [lemma=$actor_any & upos="NOUN|PROPN]"]+
+)
+;
