@@ -49,7 +49,7 @@ def read_config(cwb_id=None, init=False):
             corpus_config = default
             corpus_config['resources']['cwb_id'] = cwb_id
             corpus_config['resources']['lib_path'] = corpus_dir
-            corpus_config['resources']['embeddings'] = None
+            corpus_config['resources']['embeddings'] = current_app.config['EMBEDDINGS'].get(cwb_id, None)
             # save to appropriate place
             with open(cfg_path, "wt") as f:
                 yaml.dump(corpus_config, f)
