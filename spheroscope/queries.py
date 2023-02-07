@@ -467,6 +467,7 @@ def matches(id):
         # render result
         current_app.logger.info("rendering result table")
         concordance = patch_query_results(matches)
+        concordance = concordance.drop('query', axis=1)
 
         return render_template('queries/result_table.html',
                                concordance=concordance,
