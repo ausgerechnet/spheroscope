@@ -1,0 +1,5 @@
+MACRO be_ap(0)
+(
+[lemma = "be"] [pos_simple = "R"]* [pos_simple = "J"] /region[pp]?
+)
+;
