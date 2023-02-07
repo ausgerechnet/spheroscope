@@ -8,7 +8,7 @@ import click
 from flask import (Blueprint, current_app, jsonify, render_template, request,
                    session)
 from flask.cli import with_appcontext
-from pandas import concat, DataFrame
+from pandas import concat
 
 from .auth import login_required
 from .corpora import init_corpus, read_config
@@ -148,7 +148,14 @@ def pattern(id):
 
     pattern = Pattern.query.filter_by(id=id).first()
     patterns = Pattern.query.all()
-    pattern.queries = Query.query.filter_by(pattern_id=id).order_by(Query.name).all()
+
+    if 'corpus' in session:
+        cwb_id = session['corpus']['resources']['cwb_id']
+        pattern.queries = Query.query.filter_by(pattern_id=id, cwb_handle=cwb_id).order_by(Query.name).all()
+    else:
+        cwb_id = None
+        pattern.queries = Query.query.filter_by(pattern_id=id).order_by(Query.name).all()
+
     slotfinder = re.compile(r"\d+")
     pattern.slots = set(slotfinder.findall(pattern.template))
 
