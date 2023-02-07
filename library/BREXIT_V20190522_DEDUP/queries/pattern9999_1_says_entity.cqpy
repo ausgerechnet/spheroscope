@@ -16,4 +16,4 @@
 #   pattern: '9999'
 # ---
 
-@0:[::] [pos_ark="[DA]"]* [lemma = $nouns_person_any | pos_ark = "[@OZ#^]" & lemma != "it" | lemma = $nouns_policies | lemma = $nouns_agenda_p3 | lemma = $nouns_values] [pos_ark="V"]+ [word!="[\.,\?\!]"]+ @1:[::] "," [lemma = $verbs_communication & lemma !="claim|require"] [word="the"]? @2:[::][lemma = $nouns_person_any |pos_ark = "[@Z#^]" & lemma != "it" | pos_ner="PRP" & lemma != "it"]{,2} [word!="[\.,\?\!]"]* @3:[::]
+@0:[::] [pos_ark="[DA]"]* [lemma = $person_any | pos_ark = "[@OZ#^]" & lemma != "it" | lemma = $nouns_policies | lemma = $nouns_agenda_p3 | lemma = $nouns_values] [pos_ark="V"]+ [word!="[\.,\?\!]"]+ @1:[::] "," [lemma = $verbs_communication & lemma !="claim|require"] [word="the"]? @2:[::][lemma = $nouns_person_any |pos_ark = "[@Z#^]" & lemma != "it" | pos_ner="PRP" & lemma != "it"]{,2} [word!="[\.,\?\!]"]* @3:[::]
