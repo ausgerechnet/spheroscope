@@ -1,0 +1,6 @@
+MACRO negation_with_optional_verb(0)
+(
+  [pos_simple = "V"]? "not"%c 
+| [pos_simple = "V" & word = ".*n't"%c]
+)
+;

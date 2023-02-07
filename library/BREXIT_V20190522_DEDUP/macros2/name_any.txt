@@ -1,0 +1,18 @@
+MACRO name_by_pos(0)
+(
+[pos_ark = "Z|^|@" | pos_ner = "NNP|NNPS|USR"]+
+)
+;
+
+MACRO name_by_region(0)
+(
+/region[ner]
+)
+;
+MACRO name_any(0)
+(
+/name_by_pos[]
+|
+/name_by_region[]
+)
+;

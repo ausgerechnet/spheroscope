@@ -1,0 +1,12 @@
+MACRO person_any(0)
+define $person_any = $nouns_person_common;
+define $person_any += $nouns_person_negative;
+define $person_any += $nouns_person_profession;
+define $person_any += $nouns_person_authority;
+define $person_any +=$nouns_person_politics;
+define $person_any +=$nouns_person_origin;
+define $person_any+=$nouns_person_positive;
+define $person_any+=nouns_person_support;
+define $person_any+=nouns_person_general
+;
+
