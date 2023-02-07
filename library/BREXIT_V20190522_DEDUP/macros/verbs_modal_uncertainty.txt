@@ -1,5 +1,0 @@
-MACRO verbs_modal_uncertainty(0)
-(
-  [lemma = $verbs_uncertainty]  [lemma = $adv_possibly]?
-)
-;

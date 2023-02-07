@@ -1,8 +1,0 @@
-## A prepositional phrase
-
-MACRO pp(0)
-(
-[pos_simple = "I"]
-(/dp[] | [pos_simple = "Z"])
-)
-;
