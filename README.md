@@ -34,14 +34,18 @@ Configure the app via `cfg.py` in the app folder. You can find an [example confi
 You can then
 
     make init
-	
+
+to create the database and
+
+    make library
+
 to populate your local instance with all queries, macros, and wordlists from the [library](library/).
 
 If you have access to the remote database, you can also
 
     make patterns
     make gold
-    
+
 to get the latest versions of patterns and adjudicated annotation (the "gold standard").
 
 ### Running in Development Mode ###
