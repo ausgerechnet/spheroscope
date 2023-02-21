@@ -29,19 +29,24 @@ Configure the app via `cfg.py` in the app folder. You can find an [example confi
 - set `CACHE_PATH` to some directory where you have write access
 - set `DB_NAME` (`sqlite3` file relative to instance), `DB_USERNAME` and `DB_PASSWORD` for your local database
 - set `REMOTE_USERNAME` and `REMOTE_PASSWORD` if you have access to the [remote database](galois.informatik.uni-erlangen.de)
+- set `EMBEDDINGS` to a dictionary of `CWB_HANDLE:EMBEDDINGS_PATH`
 
 ### Loading Resources ###
 You can then
 
     make init
-	
+
+to create the database and
+
+    make library
+
 to populate your local instance with all queries, macros, and wordlists from the [library](library/).
 
 If you have access to the remote database, you can also
 
     make patterns
     make gold
-    
+
 to get the latest versions of patterns and adjudicated annotation (the "gold standard").
 
 ### Running in Development Mode ###
@@ -56,7 +61,6 @@ and navigate to [http://127.0.0.1:5000/](http://127.0.0.1:5000/) to access the i
 Requirements:
 
     sudo apt install apache2-dev
-
 
 Clone the repository and cd into the folder. Virtual environment:
 
