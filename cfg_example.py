@@ -15,3 +15,5 @@ class DevConfig:
 
     REGISTRY_PATH = "/usr/local/share/cwb/registry/"  # path to your CWB registry
     CACHE_PATH = "/tmp/spheroscope-cache"  # path for CQP dumps and cwb-ccc data
+
+    EMBEDDINGS = {}
