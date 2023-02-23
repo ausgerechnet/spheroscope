@@ -41,12 +41,12 @@ def get_defined_macros(cwb_id):
 @login_required
 def index():
 
-    macros = Macro.query.order_by(Macro.name).all()
-
     if 'corpus' in session:
         cwb_id = session['corpus']['resources']['cwb_id']
+        macros = Macro.query.filter_by(cwb_handle=cwb_id).order_by(Macro.name).all()
     else:
         cwb_id = None
+        macros = Macro.query.order_by(Macro.name).all()
 
     corpus = {
         'macros': get_defined_macros(cwb_id),
@@ -86,6 +86,7 @@ def create():
     if request.method == 'POST':
         macro = Macro(
             user_id=g.user.id,
+            cwb_handle=session['corpus']['resources']['cwb_id'],
             name=request.form['name'],
             macro=request.form['macro'],
             path=os.path.join(
@@ -125,6 +126,7 @@ def update(id):
         macro = Macro(
             id=id,
             user_id=g.user.id,
+            cwb_handle=session['corpus']['resources']['cwb_id'],
             name=request.form['name'],
             macro=request.form['macro'],
             path=macro.path

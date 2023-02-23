@@ -12,7 +12,6 @@ from .auth import login_required
 from .corpora import init_corpus, read_config
 from .database import Query, get_patterns
 
-
 bp = Blueprint('queries', __name__, url_prefix='/queries')
 
 
@@ -275,7 +274,10 @@ def index():
 
     """
     pattern = request.args.get('pattern')
-    queries = Query.query.order_by(Query.name)
+    cwb_id = session['corpus']['resources']['cwb_id']
+
+    # get query matches gracefully
+    queries = Query.query.filter_by(cwb_handle=cwb_id).order_by(Query.name)
     return render_template('queries/index.html',
                            queries=(queries.filter_by(pattern_id=pattern).all()
                                     if pattern else queries.all()))
@@ -303,10 +305,13 @@ def create():
 
     if request.method == 'POST':
 
+        cwb_id = session['corpus']['resources']['cwb_id']
+
         query = Query(
             cqp=request.form['query'],
             name=request.form['name'],
             pattern_id=request.form['pattern'],
+            cwb_handle=cwb_id,
             slots=request.form['slots'].replace("None", "null"),
             corrections=request.form['corrections'].replace("None", "null"),
             user_id=g.user.id
@@ -346,6 +351,7 @@ def update(id):
             user_id=g.user.id,
             cqp=request.form['query'],
             name=request.form['name'],
+            cwb_handle=session['corpus']['resources']['cwb_id'],
             pattern_id=request.form['pattern'],
             slots=request.form['slots'].replace("None", "null"),
             corrections=request.form['corrections'].replace("None", "null")
@@ -428,6 +434,7 @@ def matches(id):
         new_query = Query(
             cqp=request.form['query'],
             name=request.form['name'],
+            cwb_handle=cwb_id,
             pattern_id=request.form['pattern'],
             slots=request.form['slots'].replace("None", "null"),
             corrections=request.form['corrections'].replace("None", "null"),
@@ -445,7 +452,7 @@ def matches(id):
 
             # merge new matches to old ones
             matches = new_matches.reset_index().merge(
-                old_matches.reset_index(), how='outer', indicator=True
+                old_matches.reset_index(), how='outer', indicator=True, on=['match', 'matchend'], validate="1:1"
             ).set_index(['match', 'matchend'])
             # NB: index will contain duplicates if match and matchend didn't change but anchors or slots did
 
@@ -467,6 +474,7 @@ def matches(id):
         # render result
         current_app.logger.info("rendering result table")
         concordance = patch_query_results(matches)
+        concordance = concordance.drop('query', axis=1)
 
         return render_template('queries/result_table.html',
                                concordance=concordance,

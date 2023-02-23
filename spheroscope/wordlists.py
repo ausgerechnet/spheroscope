@@ -3,7 +3,7 @@
 
 import os
 
-from flask import (Blueprint, current_app, g, redirect, render_template,
+from flask import (Blueprint, current_app, flash, g, redirect, render_template,
                    request, session, url_for)
 from pandas import DataFrame
 from pymagnitude import Magnitude
@@ -29,10 +29,11 @@ def get_frequencies(cwb_id, words, p_att):
 def get_similar_ones(cwb_id, words, p_att, number, min_freq=2):
 
     # similar ones
-    current_app.logger.info(
-        'getting %d similar items for %d items' % (number, len(words))
-    )
+    current_app.logger.info('getting %d similar items for %d items' % (number, len(words)))
     corpus_config = read_config(cwb_id)
+    if corpus_config['resources']['embeddings'] is None:
+        current_app.logger.warning('no embeddings provided', 'warning')
+        flash('no embeddings provided!')
     embeddings = Magnitude(corpus_config['resources']['embeddings'])
     similar = embeddings.most_similar(positive=words, topn=number)
     similar = DataFrame(index=[s[0] for s in similar], data={'similarity': [s[1] for s in similar]})
@@ -66,12 +67,12 @@ def get_defined_wordlists(cwb_id):
 @login_required
 def index():
 
-    wordlists = WordList.query.order_by(WordList.name).all()
-
     if 'corpus' in session:
         cwb_id = session['corpus']['resources']['cwb_id']
+        wordlists = WordList.query.filter_by(cwb_handle=cwb_id).order_by(WordList.name).all()
     else:
         cwb_id = None
+        wordlists = WordList.query.order_by(WordList.name).all()
 
     corpus = {
         'wordlists': get_defined_wordlists(cwb_id),
@@ -111,6 +112,7 @@ def create():
         wordlist = WordList(
             user_id=g.user.id,
             name=request.form['name'],
+            cwb_handle=session['corpus']['resources']['cwb_id'],
             words="\n".join(sorted(list(set([
                 w.lstrip().rstrip() for w in request.form['words'].split("\n")
             ])))),
@@ -150,6 +152,7 @@ def update(id):
         wordlist = WordList(
             id=id,
             user_id=g.user.id,
+            cwb_handle=session['corpus']['resources']['cwb_id'],
             name=request.form['name'],
             words="\n".join(sorted(list(set([
                 w.lstrip().rstrip() for w in request.form['words'].split("\n")
