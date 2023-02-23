@@ -452,7 +452,7 @@ def matches(id):
 
             # merge new matches to old ones
             matches = new_matches.reset_index().merge(
-                old_matches.reset_index(), how='outer', indicator=True
+                old_matches.reset_index(), how='outer', indicator=True, on=['match', 'matchend'], validate="1:1"
             ).set_index(['match', 'matchend'])
             # NB: index will contain duplicates if match and matchend didn't change but anchors or slots did
 
