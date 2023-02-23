@@ -9,11 +9,11 @@
 #     - 1
 #     '1':
 #     - 2
-#     - matchend
+#     - 3
 # meta:
 #   comment: null
 #   name: pattern24_entity_one_of_those_concept
-#   pattern: '24'
+#   pattern: 24
 # ---
 
 @0[::] (/entity_np_actor[]) @1:[::] 

@@ -13,7 +13,7 @@
 # meta:
 #   comment: null
 #   name: pattern3_agenda_is_wanted_by_entity
-#   pattern: '3'
+#   pattern: 3
 # ---
 
 @0[::] [upos = "DET|ADJ"]* [upos = "NOUN" | word = "#.+" | xpos = "VBG" | lemma = $nouns_values | lemma = $nouns_policies]+ @1:[::]

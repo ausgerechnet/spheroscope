@@ -13,7 +13,7 @@
 # meta:
 #   comment: null
 #   name: pattern3_entity_wants_name_to_action
-#   pattern: '3'
+#   pattern: 3
 # ---
 
 @0:[::] (/entity_np_actor[]) @1[::] [xpos="RB|MD"]* [lemma=$verbs_prefer] [lemma="for"]? @2[::] (/entity_np_actor[]) [xpos="RB|MD" | lemma="to"]* [upos="VERB"] (/lexical_words[])* @3:[::]
