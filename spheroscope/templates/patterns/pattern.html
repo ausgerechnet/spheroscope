@@ -75,7 +75,7 @@
 {% endcall %}
 
 {% call c.block("Result")%}
-<iframe id='matches' src='{{ url_for("patterns.matches", id=pattern.id) }}' width='100%'></iframe>
+<iframe id='matches' src='{{ url_for("patterns.matches", id=pattern.id) }}' width='100%' onload='javascript:(function(o){o.style.height=o.contentWindow.document.body.scrollHeight+"px";}(this));' ></iframe>
 {% endcall %}
 
 {% endblock %}
