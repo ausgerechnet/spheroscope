@@ -42,15 +42,17 @@ class User(db.Model):
 class WordList(db.Model):
 
     __tablename__ = 'wordlist'
+    __table_args__ = (
+        db.UniqueConstraint('name', 'cwb_handle', name='unique_name_cwb_handle'),
+    )
 
     id = db.Column(db.Integer, primary_key=True)
     modified = db.Column(db.DateTime, nullable=False, default=datetime.now())
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
-    path = db.Column(db.Unicode, nullable=False)
-
-    name = db.Column(db.Unicode(255), nullable=False, unique=True)
+    name = db.Column(db.Unicode(255), nullable=False)
+    cwb_handle = db.Column(db.Unicode(255), nullable=False)
     p_att = db.Column(db.Unicode(50), nullable=False)
     words = db.Column(db.Unicode)
 
@@ -59,6 +61,10 @@ class WordList(db.Model):
     @property
     def length(self):
         return len(self.words.split("\n"))
+
+    @property
+    def path(self):
+        return os.path.join("instance", self.cwb_handle, "wordlists", self.name + ".txt")
 
     def __repr__(self):
         return 'wordlist "%s" with %d words on attribute "%s"' % (
@@ -71,79 +77,70 @@ class WordList(db.Model):
         if not os.path.isfile(path):
             current_app.logger.error('wordlist "%s" does not exist.' % path)
 
-        # determine name from path
-        name = path.split("/")[-1].split(".")[0]
-        # determine p-attribute from name
-        p_att = "pos_ark" if name.startswith("tag") else "lemma"
-        # get all words
-        words = set([
-            w.strip() for w in open(path, "rt").read().strip().split("\n")
-        ])
+        # get all words as set
+        words = set([w.strip() for w in open(path, "rt").read().strip().split("\n")])
 
         return WordList(
-            name=name,
-            path=path,
+            name=path.split("/")[-1].split(".")[0],
+            cwb_handle=path.split("/")[-3],
             words="\n".join(sorted(list(words))),
-            p_att=p_att
+            p_att="lemma"
         )
 
     def write(self, write_file=True):
         """ writes wordlist to database and appropriate path """
 
-        # write record to database
-        # current_app.logger.info(
-        #     'writing wordlist "%s" to database' % self.name
-        # )
+        # add to database
         db.session.add(self)
         db.session.commit()
 
         # write file
         if write_file:
-            # current_app.logger.info(
-            #     'writing wordlist "%s" to "%s"' % (self.name, self.path)
-            # )
             os.makedirs(os.path.dirname(self.path), exist_ok=True)
             with open(self.path, "wt") as f:
                 f.write(self.words)
 
-    def delete(self, delete_file=True):
-        """ deletes wordlist from database and path """
+    def delete(self, delete_file=True, backup=True):
+        """ deletes wordlist from database (and path) """
 
         # delete record from database
-        current_app.logger.info(
-            'deleting wordlist "%s" from database' % self.name
-        )
+        current_app.logger.info('deleting wordlist "%s" from database' % self.name)
         self.query.filter_by(id=self.id).delete()
         db.session.commit()
 
         # delete file
         if delete_file:
-            current_app.logger.info(
-                'deleting wordlist file "%s"' % self.path
-            )
+            current_app.logger.info('deleting wordlist file "%s"' % self.path)
             if os.path.isfile(self.path):
-                os.remove(self.path)
+                if backup:
+                    os.rename(self.path, self.path + ".bak")
+                else:
+                    os.remove(self.path)
             else:
-                current_app.logger.warning(
-                    "file does not exist, skipping delete request"
-                )
+                current_app.logger.warning(f'file "{self.path}" does not exist, skipping delete request')
 
 
 class Macro(db.Model):
 
     __tablename__ = 'macro'
+    __table_args__ = (
+        db.UniqueConstraint('name', 'cwb_handle', name='unique_name_cwb_handle'),
+    )
 
     id = db.Column(db.Integer, primary_key=True)
     modified = db.Column(db.DateTime, nullable=False, default=datetime.now())
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
-    path = db.Column(db.Unicode, nullable=False)
-
     name = db.Column(db.Unicode(255), nullable=False)
+    cwb_handle = db.Column(db.Unicode(255), nullable=False)
     macro = db.Column(db.Unicode)
 
     comment = db.Column(db.Unicode)
+
+    @property
+    def path(self):
+        return os.path.join("instance", self.cwb_handle, "macros", self.name + ".txt")
 
     def __repr__(self):
         return 'macro "%s"' % (self.name)
@@ -154,57 +151,53 @@ class Macro(db.Model):
         if not os.path.isfile(path):
             current_app.logger.error('macro file "%s" does not exist.' % path)
 
-        # determine name from path
-        name = path.split("/")[-1].split(".")[0]
-        macro = open(path, "rt").read()
+        macro = open(path, "rt").read().strip()
 
         return Macro(
-            name=name,
-            path=path,
+            name=path.split("/")[-1].split(".")[0],
+            cwb_handle=path.split("/")[-3],
             macro=macro
         )
 
     def write(self, write_file=True):
         """ writes macro to database and appropriate path """
 
+        # add to database
+        db.session.add(self)
+        db.session.commit()
+
         # write file
         if write_file:
             os.makedirs(os.path.dirname(self.path), exist_ok=True)
             with open(self.path, "wt") as f:
                 f.write(self.macro)
-        else:
-            pass            # TODO: check input
 
-        # add to database
-        db.session.add(self)
-        db.session.commit()
-
-    def delete(self, delete_file=True):
-        """ deletes macro from database and path """
+    def delete(self, delete_file=True, backup=True):
+        """ deletes macro from database (and path) """
 
         # delete record from database
-        current_app.logger.info(
-            'deleting macro "%s" from database' % self.name
-        )
+        current_app.logger.info('deleting macro "%s" from database' % self.name)
         self.query.filter_by(id=self.id).delete()
         db.session.commit()
 
         # delete file
         if delete_file:
-            current_app.logger.info(
-                'deleting macro file "%s"' % self.path
-            )
+            current_app.logger.info('deleting macro file "%s"' % self.path)
             if os.path.isfile(self.path):
-                os.remove(self.path)
+                if backup:
+                    os.rename(self.path, self.path + ".bak")
+                else:
+                    os.remove(self.path)
             else:
-                current_app.logger.warning(
-                    "file does not exist, skipping delete request"
-                )
+                current_app.logger.warning(f'file "{self.path}" does not exist, skipping delete request')
 
 
 class Query(db.Model):
 
     __tablename__ = 'query'
+    __table_args__ = (
+        db.UniqueConstraint('name', 'cwb_handle', name='unique_name_cwb_handle'),
+    )
 
     id = db.Column(db.Integer, primary_key=True)
     modified = db.Column(db.DateTime, nullable=False, default=datetime.now())
@@ -213,19 +206,22 @@ class Query(db.Model):
     pattern_id = db.Column(db.Integer, db.ForeignKey('pattern.id'))
 
     name = db.Column(db.Unicode(255), nullable=False)
+    cwb_handle = db.Column(db.Unicode(255), nullable=False)
     corrections = db.Column(db.Unicode)
     slots = db.Column(db.Unicode)
     cqp = db.Column(db.Unicode)
 
     comment = db.Column(db.Unicode)
 
+    @property
+    def path(self):
+        return os.path.join("instance", self.cwb_handle, "queries", self.name + ".cqpy")
+
     def __repr__(self):
         return 'query "%s"' % (self.name)
 
     def load(self, path):
         """ loads query from specified path """
-
-        # current_app.logger.info('loading query file "%s".' % path)
 
         # deal with missing and faulty files
         if not os.path.isfile(path):
@@ -241,21 +237,13 @@ class Query(db.Model):
             current_app.logger.error("could not load query in path %s" % path)
             return None
 
-        if query['meta'].get('name') is None:
-            query['meta']['name'] = path.split("/")[-1].split(".cqpy")[0]
-
         return Query(
-            name=query['meta']['name'],
-            pattern_id=query['meta']['pattern'],
+            name=query['meta'].get('name', path.split("/")[-1].split(".cqpy")[0]),
+            pattern_id=query['meta'].get('pattern', '9999'),
             cqp=query['cqp'],
+            cwb_handle=query['meta'].get('cwb_handle', path.split("/")[-3]),
             corrections=json.dumps(query['anchors']['corrections']),
             slots=json.dumps(query['anchors']['slots'])
-        )
-
-    @property
-    def path(self):
-        return os.path.join(
-            "instance", "queries", self.name + ".cqpy"
         )
 
     def serialize(self):
@@ -282,41 +270,33 @@ class Query(db.Model):
     def write(self, write_file=True):
         """ writes query to database and appropriate path """
 
-        # write file
-        if write_file:
-            os.makedirs(os.path.dirname(self.path), exist_ok=True)
-            cqpy_dump(self.serialize(), self.path)
-        else:
-            pass            # TODO: check input
-
         # add to database
         db.session.add(self)
         db.session.commit()
 
+        # write file
+        if write_file:
+            os.makedirs(os.path.dirname(self.path), exist_ok=True)
+            cqpy_dump(self.serialize(), self.path)
+
     def delete(self, delete_file=True, backup=True):
-        """ deletes query from database and path """
+        """ deletes query from database (and path) """
 
         # delete record from database
-        current_app.logger.info(
-            'deleting query "%s" from database' % self.name
-        )
+        current_app.logger.info('deleting query "%s" from database' % self.name)
         self.query.filter_by(id=self.id).delete()
         db.session.commit()
 
         # delete file
         if delete_file:
-            current_app.logger.info(
-                'deleting query file "%s"' % self.path
-            )
+            current_app.logger.info('deleting query file "%s"' % self.path)
             if os.path.isfile(self.path):
                 if backup:
                     os.rename(self.path, self.path + ".bak")
                 else:
                     os.remove(self.path)
             else:
-                current_app.logger.warning(
-                    "file does not exist, skipping delete request"
-                )
+                current_app.logger.warning(f'file "{self.path}" does not exist, skipping delete request')
 
     @property
     def pattern(self):
@@ -360,7 +340,7 @@ class Corpus(db.Model):
 
     name = db.Column(db.Unicode(50))
 
-    cwb_id = db.Column(db.Unicode)
+    cwb_handle = db.Column(db.Unicode)
     lib_path = db.Column(db.Unicode)
     embeddings = db.Column(db.Unicode)
 
@@ -394,20 +374,20 @@ def read_patterns(path):
             retired=p[1]['retired'],
             name=p[1]['name']
         )
-        # current_app.logger.info(
-        #     'writing pattern %d to database' % pattern.id
-        # )
         db.session.add(pattern)
         db.session.commit()
 
 
 def import_library():
 
+    # patterns
+    path = os.path.join("library", "patterns.tsv")
+    read_patterns(path)
+
     # wordlists
     paths = glob(os.path.join("library", "**", "wordlists", "*.txt"), recursive=True)
     for p in paths:
         wl = WordList().load(p)
-        wl.path = wl.path.replace("library", "instance")
         wl.user_id = 1          # admin
         wl.write()
 
@@ -415,21 +395,16 @@ def import_library():
     paths = glob(os.path.join("library", "**", "macros", "*.txt"), recursive=True)
     for p in paths:
         macro = Macro().load(p)
-        macro.path = macro.path.replace("library", "instance")
         macro.user_id = 1       # admin
         macro.write()
 
     # queries
-    paths = glob(os.path.join("library", "queries", "*.cqpy"))
+    paths = glob(os.path.join("library", "**", "queries", "*.cqpy"), recursive=True)
     for p in paths:
         query = Query().load(p)
         if query:
             query.user_id = 1   # admin
             query.write()
-
-    # patterns
-    path = os.path.join("library", "patterns.tsv")
-    read_patterns(path)
 
 
 #########################################

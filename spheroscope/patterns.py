@@ -8,7 +8,7 @@ import click
 from flask import (Blueprint, current_app, jsonify, render_template, request,
                    session)
 from flask.cli import with_appcontext
-from pandas import concat, DataFrame
+from pandas import concat
 
 from .auth import login_required
 from .corpora import init_corpus, read_config
@@ -40,9 +40,9 @@ def hierarchical_query(p1, slot, p2, s_cwb, cwb_id):
     slot = str(slot)
 
     # process request parameters
-    base_queries = Query.query.filter_by(pattern_id=p1).order_by(Query.name).all()
+    base_queries = Query.query.filter_by(pattern_id=p1, cwb_handle=cwb_id).order_by(Query.name).all()
     slot_pattern = p2
-    slot_queries = Query.query.filter_by(pattern_id=slot_pattern).all()
+    slot_queries = Query.query.filter_by(pattern_id=slot_pattern, cwb_handle=cwb_id).all()
 
     # run all queries belonging to base pattern
     matches = run_queries(base_queries, cwb_id)
@@ -148,7 +148,14 @@ def pattern(id):
 
     pattern = Pattern.query.filter_by(id=id).first()
     patterns = Pattern.query.all()
-    pattern.queries = Query.query.filter_by(pattern_id=id).order_by(Query.name).all()
+
+    if 'corpus' in session:
+        cwb_id = session['corpus']['resources']['cwb_id']
+        pattern.queries = Query.query.filter_by(pattern_id=id, cwb_handle=cwb_id).order_by(Query.name).all()
+    else:
+        cwb_id = None
+        pattern.queries = Query.query.filter_by(pattern_id=id).order_by(Query.name).all()
+
     slotfinder = re.compile(r"\d+")
     pattern.slots = set(slotfinder.findall(pattern.template))
 
@@ -174,7 +181,7 @@ def matches(id):
 
     # get matches
     cwb_id = session['corpus']['resources']['cwb_id']
-    queries = Query.query.filter_by(pattern_id=id).order_by(Query.name).all()
+    queries = Query.query.filter_by(pattern_id=id, cwb_handle=cwb_id).order_by(Query.name).all()
     matches = run_queries(queries, cwb_id)
 
     # add gold and evaluate
@@ -387,7 +394,7 @@ def query_command(pattern, dir_out, cwb_id):
     patterns = Pattern.query.all() if pattern is None else Pattern.query.filter_by(id=pattern)
 
     for pattern in patterns:
-        queries = Query.query.filter_by(pattern_id=pattern.id).all()
+        queries = Query.query.filter_by(pattern_id=pattern.id, cwb_handle=cwb_id).all()
         current_app.logger.info("pattern %d: %d queries" % (pattern.id, len(queries)))
         path_out = os.path.join(dir_out, "pattern%d.tsv.gz" % pattern.id)
         if len(queries) > 0:
