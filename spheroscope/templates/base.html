@@ -93,7 +93,7 @@
         });
       }
       
-   
+      document.title = $('.breadcrumb ul li').map((i,x) => x.innerText.trim()).get().join('/');
     </script>
   </body>
 
