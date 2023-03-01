@@ -151,28 +151,29 @@
 - **ENTITY** is part of **ENTITY GROUP**
 
 ## remarks ##
-- an entity belongs to some entity group
+- an entity belongs to, joins, leaves, or stays in, some entity group
 - for this pattern, the entity has to have agency (e.g. people, organisations or states, but not abstract entities, objects or ideas)
   - groups are defined widely, with prototypical cases including e.g. professions, parties/organisations or nationalities
-- the entity group should be relevant in the political discourse
-  + "Brexit supporter" is reasonable group, "cowards" isn't
+- the entity group should be relevant in the political discourse at least to some extent
+  + "Brexit supporter" is a reasonable group, "cowards" isn't
 - statements about somebody having properties are not group membership
   + formal distinction at the blurry line between group and attribute: when in doubt, an adjective does not designate a group even if the corresponding noun does ("**she**'s **a German**": yes, "she's German": no)
-- **changes in membership** (join/leave) and statements of **continued membership** (remain/stay) are annotated as separate patterns. I.e. pattern 24 only refers to
-**being** a group member, not becoming or continuing / stopping to be one
 - this pattern only covers statements about group memberships that go beyond purely characterising the entity
   + i.e. examples will often involve an entity and a verb phrase (e.g. "**A** is a member of **B**") or a genitive construction ("**XY**'s membership in **Z**")
-  + group statements that only specify the entity's background (e.g. via a modifying noun phrase - "PM Boris Johnson") are annotated as #57
+  + group statements that only specify the entity's background (e.g. via a modifying noun phrase - "PM Boris Johnson" or relative phrases: "the person who became PM") are annotated as #57
 
 ## change log ##
 - only groups relevant to the discourse around Brexit
 - we do not annotate ad hoc groups (the Clintons are *fat cats owned by the multinationals*)
+- Joining/leaving/ staying are counted as 24
 
 ## examples ##
 - **Jo** was **a politician**
 - **he's** **a leaver**
 - **Stuart Rose** has switched sides to **#Leave**
 - **we're** on the side of **leave**
+- **We** should leave **the EU**
+- **Scotland** wants to join **Europe**
 
 ## counterexamples ##
 - **we** are all **stupid people**
@@ -182,12 +183,6 @@
 - the president is British
 - he supports leave
   + → #3
-- they will stay in the EU / Ireland remains in the UK
-  + → #62 continued membership
-- the UK will leave the EU
-  + leaving = action resulting in end of membership rather than membership per se
-- She joined the group
-  + joining = action rather than membership
 - we are all stupid
   + property rather than group definition
 - we are all stupid people
