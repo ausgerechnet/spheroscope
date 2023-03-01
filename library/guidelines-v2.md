@@ -98,6 +98,7 @@
   + to not want = to want not (there are probably exceptions, e.g. when answering)
   + opposition is a special form of desire
   + we thus annotate opposition as desire *and* opposition
+- Some expressions can be desire or something else, depending on context. E.g. support can be meant either in the sense of *being in support* of something -> desire or in the sense of actively supporting someone, for example by financing them -> something else.
 
 ## change log ##
 - entities are ok to be desired (e.g. "**ENTITY** backs **cameron**")
@@ -116,6 +117,7 @@
 - **We** are really looking forward to **this**
 - **they** endorse **Brexit**
 - **silent majority** for **brexit**
+- **Many companies** say yes to **the EU**
 
 ## counterexamples ##
 - the pro brexit campaigners are using this strategy
@@ -123,19 +125,15 @@
 - SF have issues with EU but *see it as better* for NI to remain
   + one-sided preference without explicit marking of desire
   + here: because they might not actually want to remain, despite seeing this as the rationally best decision
-- democracy should be protected
-  + the 'wanter' is implicit in a non-elliptical sentence (→ #4)
 - he *voted* remain 
   + might be interpreted as him *wanting* remain to be made true, but we do not consider such actions a sufficiently clear expression of desire
   + the desire can only be inferred from an action
 - it would be nice if ..
-  + not clear enough for desire
-- ... the figures were REMAIN 45% ...
-  + figures do not desire anything
+  + not clear enough for desire, and no entity
 - you want to talk misleading?
   + rhetorical questions and idiomatic expressions
 - he's got Brexit as his next agenda item
-  + this implies what he's going to do and doesn't say anything about whether he desires it
+  + having plans doesn't necessarily mean that the person desires the outcome
 - Johnson's *reason* to remain, her *case* for leave
   + the desire can only be inferred from an expression of conscious decision or reasoning
 - you seem to like that
@@ -144,6 +142,8 @@
   + effort does not necessarily equal desire
 - I'm endorsing my point from yesterday 
   + the point is being reinforced, not desired
+- We should say yes to Brexit
+  + Like "support", "say yes" can be equated to desire in some contexts, but here, it is more about the action of voting
 
 # 24 Membership #
 
@@ -268,6 +268,7 @@
 - People who want **Brexit** keep saying that
 - I'm **Brexit**/**Brexin**/**remain**/**leave**
 - **Brexit** supporters are stupid
+- People supporting Brexit are mainly sixty-somethings longing **back to an era of monarchy**
 
 ## counterexamples ##
 - Trump supports Brexit
