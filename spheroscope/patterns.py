@@ -54,7 +54,7 @@ def hierarchical_query(p1, slot, p2, s_cwb, cwb_id):
     corpus_config = read_config(cwb_id)
     corpus = init_corpus(corpus_config)
     name = "Pattern%dSlot%s" % (p1, slot)
-    corpus.activate_subcorpus(name, df_dump)
+    corpus = corpus.activate_subcorpus(name, df_dump)
 
     # run all queries belonging to slot pattern on activated NQR
     concs = list()
