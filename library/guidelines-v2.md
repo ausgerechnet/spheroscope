@@ -98,6 +98,7 @@
   + to not want = to want not (there are probably exceptions, e.g. when answering)
   + opposition is a special form of desire
   + we thus annotate opposition as desire *and* opposition
+- Some expressions can be desire or something else, depending on context. E.g. support can be meant either in the sense of *being in support* of something -> desire or in the sense of actively supporting someone, for example by financing them -> something else.
 
 ## change log ##
 - entities are ok to be desired (e.g. "**ENTITY** backs **cameron**")
@@ -116,6 +117,7 @@
 - **We** are really looking forward to **this**
 - **they** endorse **Brexit**
 - **silent majority** for **brexit**
+- **Many companies** say yes to **the EU**
 
 ## counterexamples ##
 - the pro brexit campaigners are using this strategy
@@ -123,19 +125,15 @@
 - SF have issues with EU but *see it as better* for NI to remain
   + one-sided preference without explicit marking of desire
   + here: because they might not actually want to remain, despite seeing this as the rationally best decision
-- democracy should be protected
-  + the 'wanter' is implicit in a non-elliptical sentence (→ #4)
 - he *voted* remain 
   + might be interpreted as him *wanting* remain to be made true, but we do not consider such actions a sufficiently clear expression of desire
   + the desire can only be inferred from an action
 - it would be nice if ..
-  + not clear enough for desire
-- ... the figures were REMAIN 45% ...
-  + figures do not desire anything
+  + not clear enough for desire, and no entity
 - you want to talk misleading?
   + rhetorical questions and idiomatic expressions
 - he's got Brexit as his next agenda item
-  + this implies what he's going to do and doesn't say anything about whether he desires it
+  + having plans doesn't necessarily mean that the person desires the outcome
 - Johnson's *reason* to remain, her *case* for leave
   + the desire can only be inferred from an expression of conscious decision or reasoning
 - you seem to like that
@@ -144,6 +142,8 @@
   + effort does not necessarily equal desire
 - I'm endorsing my point from yesterday 
   + the point is being reinforced, not desired
+- We should say yes to Brexit
+  + Like "support", "say yes" can be equated to desire in some contexts, but here, it is more about the action of voting
 
 # 24 Membership #
 
@@ -151,28 +151,29 @@
 - **ENTITY** is part of **ENTITY GROUP**
 
 ## remarks ##
-- an entity belongs to some entity group
+- an entity belongs to, joins, leaves, or stays in, some entity group
 - for this pattern, the entity has to have agency (e.g. people, organisations or states, but not abstract entities, objects or ideas)
   - groups are defined widely, with prototypical cases including e.g. professions, parties/organisations or nationalities
-- the entity group should be relevant in the political discourse
-  + "Brexit supporter" is reasonable group, "cowards" isn't
+- the entity group should be relevant in the political discourse at least to some extent
+  + "Brexit supporter" is a reasonable group, "cowards" isn't
 - statements about somebody having properties are not group membership
   + formal distinction at the blurry line between group and attribute: when in doubt, an adjective does not designate a group even if the corresponding noun does ("**she**'s **a German**": yes, "she's German": no)
-- **changes in membership** (join/leave) and statements of **continued membership** (remain/stay) are annotated as separate patterns. I.e. pattern 24 only refers to
-**being** a group member, not becoming or continuing / stopping to be one
 - this pattern only covers statements about group memberships that go beyond purely characterising the entity
   + i.e. examples will often involve an entity and a verb phrase (e.g. "**A** is a member of **B**") or a genitive construction ("**XY**'s membership in **Z**")
-  + group statements that only specify the entity's background (e.g. via a modifying noun phrase - "PM Boris Johnson") are annotated as #57
+  + group statements that only specify the entity's background (e.g. via a modifying noun phrase - "PM Boris Johnson" or relative phrases: "the person who became PM") are annotated as #57
 
 ## change log ##
 - only groups relevant to the discourse around Brexit
 - we do not annotate ad hoc groups (the Clintons are *fat cats owned by the multinationals*)
+- Joining/leaving/ staying are counted as 24
 
 ## examples ##
 - **Jo** was **a politician**
 - **he's** **a leaver**
 - **Stuart Rose** has switched sides to **#Leave**
 - **we're** on the side of **leave**
+- **We** should leave **the EU**
+- **Scotland** wants to join **Europe**
 
 ## counterexamples ##
 - **we** are all **stupid people**
@@ -182,12 +183,6 @@
 - the president is British
 - he supports leave
   + → #3
-- they will stay in the EU / Ireland remains in the UK
-  + → #62 continued membership
-- the UK will leave the EU
-  + leaving = action resulting in end of membership rather than membership per se
-- She joined the group
-  + joining = action rather than membership
 - we are all stupid
   + property rather than group definition
 - we are all stupid people
@@ -273,6 +268,7 @@
 - People who want **Brexit** keep saying that
 - I'm **Brexit**/**Brexin**/**remain**/**leave**
 - **Brexit** supporters are stupid
+- People supporting Brexit are mainly sixty-somethings longing **back to an era of monarchy**
 
 ## counterexamples ##
 - Trump supports Brexit
