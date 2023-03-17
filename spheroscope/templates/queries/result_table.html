@@ -57,7 +57,7 @@
     <tbody>
     {% for k, res in concordance.iterrows() %}
     <tr>
-      <th {% if 'merge' in res.columns and res['merge'][0] == 'right_only' %} class="is-danger is-light" {% elif 'merge' in res.columns and res['merge'][0] == 'left_only' %} class="is-success is-light" {% endif %}>{{ k }}</th>
+      <th {% if 'merge' in res and res['merge'][0] == 'right_only' %} class="is-danger is-light" {% elif 'merge' in res and res['merge'][0] == 'left_only' %} class="is-success is-light" {% endif %}>{{ k }}</th>
       {{ res.columns }}
       {% for c, v in res.groupby(level=0, sort=False) if not c == "merge" %}
       
