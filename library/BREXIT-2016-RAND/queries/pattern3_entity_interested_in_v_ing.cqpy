@@ -13,7 +13,7 @@
 # meta:
 #   comment: null
 #   name: pattern3_entity_interested_in_v_ing
-#   pattern: '3'
+#   pattern: 3
 # ---
 
-@0:[::] /entity_np_all[]  @1:[::][xpos="MD" | lemma="have|be" | upos="AD."]* ("up" "for" | "interested" "in" | [lemma="look"] "forward" "to") @2:[::] (/entity_np_all[] | [upos="VERB"])* [xpos = "VBG" | lemma=$nouns_policies | lemma = $nouns_values]+ ( /lexical_words[])* @3[::]
+@0:[::] /entity_np_all[]  @1:[::][xpos="MD" | lemma="have|be" | upos="AD."]+ ("up" "for" | "interested" "in" | [lemma="look"] "forward" "to") @2:[::] (/entity_np_all[] | [xpos = "VBG" | lemma=$nouns_policies | lemma = $nouns_values]) ( /lexical_words[])* @3[::]

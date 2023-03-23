@@ -13,7 +13,7 @@
 # meta:
 #   comment: null
 #   name: pattern3_entity_hope_concept_v_np
-#   pattern: '3'
+#   pattern: 9999
 # ---
 
 @0:[::] /entity_np_all[]  @1[::]
