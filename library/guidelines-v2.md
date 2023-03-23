@@ -158,6 +158,7 @@
   + "Brexit supporter" is a reasonable group, "cowards" isn't
 - statements about somebody having properties are not group membership
   + formal distinction at the blurry line between group and attribute: when in doubt, an adjective does not designate a group even if the corresponding noun does ("**she**'s **a German**": yes, "she's German": no)
+- **changes in membership** (join/leave) and statements of **continued membership** (remain/stay) will later be annotated as separate patterns, but should be annotated as 24 for now, since they are specialisations. That is, we include not only statements about someone *being* a member, but also becoming or continuing / stopping to be one
 - this pattern only covers statements about group memberships that go beyond purely characterising the entity
   + i.e. examples will often involve an entity and a verb phrase (e.g. "**A** is a member of **B**") or a genitive construction ("**XY**'s membership in **Z**")
   + group statements that only specify the entity's background (e.g. via a modifying noun phrase - "PM Boris Johnson" or relative phrases: "the person who became PM") are annotated as #57
@@ -172,12 +173,17 @@
 - **he's** **a leaver**
 - **Stuart Rose** has switched sides to **#Leave**
 - **we're** on the side of **leave**
-- **We** should leave **the EU**
-- **Scotland** wants to join **Europe**
+- **Scotland** should remain in **EU**
+- they will stay in the EU / Ireland remains in the UK
+  (will later be added to more specific pattern + → #62 continued membership)
+- the UK will leave the EU
+(  + leaving = action resulting in end of membership -- will be added to more specific pattern later)
+- She joined the group
+(  + joining = action leading to membership -- will be added to more specific pattern later) 
+
 
 ## counterexamples ##
 - **we** are all **stupid people**
-- **Scotland** should remain in **EU**
 - she switched sides
 - Turkey's largely Muslim population
 - the president is British

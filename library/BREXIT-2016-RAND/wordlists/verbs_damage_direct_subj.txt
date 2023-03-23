@@ -1,0 +1,10 @@
+break
+collapse
+crash
+die
+disappear
+end
+explode
+fail
+implode
+suffer

@@ -16,4 +16,6 @@
 #   pattern: '3'
 # ---
 
-@0:[::] (/actor_np_all[])  @1[::] [pos_ark="R"]* [pos_ner="MD" | lemma="be|have"]? [pos_ark="R"]* [lemma="hope|wish"] [pos_ark="A|R"]* @2:[::] [pos_ark="[DA]"]* [pos_ark="[NZ#@^]"]+ [pos_ark="V"] [pos_ark!="[UGE,\&#]"]+ @3[::]
+@0:[::] /entity_np_all[]  @1[::]
+[upos="ADV"]* [xpos="MD" | lemma="be|have"]? [upos="ADV"]* [lemma="hope|wish"] [upos="ADJ||ADV"]* 
+@2:[::] [upos = "DET|ADJ " | word = "#.+"]* [upos = "NOUN|PROPN"]+ [upos="VERB"] [upos!="SYM|PUNCT|X|.CONJ"]+ @3[::]
