@@ -1,0 +1,19 @@
+# --- # CQPY query file
+# anchors:
+#   corrections:
+#     1: -1
+#     3: -1
+#   slots:
+#     '0':
+#     - match
+#     - 1
+#     '1':
+#     - 2
+#     - 3
+# meta:
+#   comment: null
+#   name: pattern3_entity_wants_to_v
+#   pattern: 3
+# ---
+
+@0:[::] (/entity_np_actor[]) @1[::] [xpos="RB|MD"]* [lemma=$verbs_prefer]  @2[::] ([lemma="for|of|to|that"])* @2:[::] ( /entity_np_all[]  | [upos="VERB|AUX" | lemma=$nouns_policies | lemma=$nouns_values])  (/lexical_words[])*  @3:[::] @3:[::]

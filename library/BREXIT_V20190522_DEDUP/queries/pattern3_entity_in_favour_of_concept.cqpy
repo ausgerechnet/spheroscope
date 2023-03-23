@@ -16,4 +16,4 @@
 #   pattern: '3'
 # ---
 
-@0:[::] (/actor_np_all[]) @1:[::] [pos_ner="MD|RB" | lemma="be|have"]* [pos_ark="[AR]"]* [lemma="in"] [pos_ark="A"]? [lemma="favou?r|hope|support" | lemma=$nouns_desire] [lemma="for|of|pro|that|to"] @2:[::] [pos_ark="[DVNARTP]"]*  [pos_ner="VBG" | lemma=$nouns_policies | lemma=$nouns_values] [pos_ark!="[GUE#@,]"]*  @3:[::]
+@0:[::] /entity_np_all[] @1:[::] [xpos="MD" | lemma="be|have" | upos="ADJ|ADV"]* [lemma="in"] [upos="ADJ"]* [lemma="favou?r|hope|support" | lemma=$nouns_desire] [lemma="for|of|pro|that|to"] @2:[::] [upos="DET|VERB|NOUN|ADJ|ADV|PRON]"]*  [xpos="VBG" | lemma=$nouns_policies | lemma=$nouns_values] (/lexical_words[])*  @3:[::]

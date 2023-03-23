@@ -5,15 +5,16 @@
 #     3: -1
 #   slots:
 #     '0':
-#     - 0
+#     - match
 #     - 1
 #     '1':
 #     - 2
-#     - 3
+#     - matchend
 # meta:
 #   comment: null
 #   name: pattern24_entity_one_of_those_concept
 #   pattern: '24'
 # ---
 
-@0[::] (/actor_np_all[]) @1:[::] [pos_ner="RB|MD"]* [lemma="be"]  [pos_ner="RB|MD"]* [lemma="among|any|one|some"|pos_ark="[D\$]"] "of"? [pos_ark="D|O"] @2[::] [pos_ark="[DANZ^]"]* (/actor_group[]) [pos_ark="[DANZ^]"]* @3:[::]
+@0[::] (/entity_np_actor[]) @1:[::] 
+[xpos="RB|MD"]* [lemma="be"]  [xpos="RB|MD"]* [lemma="among|any|one|some"|upos="DET"] "of"? [upos="DET|PRON"] @2[::] (/lexical_words[])* (/entity_np_actor[]) (/lexical_words[])* @3:[::]

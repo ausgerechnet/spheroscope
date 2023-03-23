@@ -1,0 +1,19 @@
+# --- # CQPY query file
+# anchors:
+#   corrections:
+#     1: -1
+#     3: -1
+#   slots:
+#     '0':
+#     - match
+#     - 1
+#     '1':
+#     - 2
+#     - matchend
+# meta:
+#   comment: null
+#   name: pattern3_entity_much_prefers_concept
+#   pattern: 9999
+# ---
+
+@0:[::] (/entity_np_actor[]) @1[::][lemma="be|have"]* [upos="ADV"]+ [upos="ADJ"]*  [lemma=$verbs_prefer & xpos="VB[DNPZ]?"]+ [lemma="for|that|to"]* @2[]:: (/entity_np_all[] | [xpos="V.+" | lemma=$nouns_policies | lemma = $nouns_values])  (/lexical_words[])* @3[::]
