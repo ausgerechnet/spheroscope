@@ -1,0 +1,22 @@
+# --- # CQPY query file
+# anchors:
+#   corrections:
+#     1: -1
+#     3: -1
+#   slots:
+#     '0':
+#     - 0
+#     - 1
+#     '1':
+#     - 2
+#     - 3
+# meta:
+#   comment: null
+#   name: pattern3_entity_have_desire_for_formula
+#   pattern: 3
+# ---
+
+@0:[::]  /entity_np_all[]  @1[::]
+([xpos="RB|MD" | lemma="experience|have|feel|share|show|with"] | [xpos="RB|MD" | lemma="be"] [lemma="drive|full|hit|motivate|overcome|overwhelm(ed)?|strike|unite"] "with|by|of")+
+[upos="DET|ADJ|ADV"]* [lemma=$nouns_desire & upos="NOUN" ] [lemma="for|pro|that|to|towards" | upos="DET"]? 
+@2:[::] (/lexical_words[])+ @3:[::]

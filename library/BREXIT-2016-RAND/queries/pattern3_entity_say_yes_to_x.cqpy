@@ -1,0 +1,19 @@
+# --- # CQPY query file
+# anchors:
+#   corrections:
+#     1: -1
+#     3: -1
+#   slots:
+#     '0':
+#     - 0
+#     - 1
+#     '1':
+#     - 2
+#     - 3
+# meta:
+#   comment: null
+#   name: pattern3_entity_say_yes_to_x
+#   pattern: '9999'
+# ---
+
+@0:[::] (/actor_np_all[]) @1[::] [pos_ner="MD|RB"|lemma="be|have"]* [lemma="say" | pos_ner="PRP$" | word = "'?s"] [pos_ark="[DA]"]* [lemma="yes|hooray|yay"] "for|pro|to" @2[::]  [pos_ark!="[U,GE\&]"]*  [pos_ark="[VA]" | lemma=$nouns_policies | lemma = $nouns_values]+ [pos_ark!="[U,GE#\&P]"]*  @3[::]
