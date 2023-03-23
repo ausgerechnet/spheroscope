@@ -13,10 +13,10 @@
 # meta:
 #   comment: null
 #   name: pattern3_entity_have_desire_for_formula
-#   pattern: '3'
+#   pattern: 3
 # ---
 
 @0:[::]  /entity_np_all[]  @1[::]
 ([xpos="RB|MD" | lemma="experience|have|feel|share|show|with"] | [xpos="RB|MD" | lemma="be"] [lemma="drive|full|hit|motivate|overcome|overwhelm(ed)?|strike|unite"] "with|by|of")+
 [upos="DET|ADJ|ADV"]* [lemma=$nouns_desire & upos="NOUN" ] [lemma="for|pro|that|to|towards" | upos="DET"]? 
-@2:[::] [upos="AD.|PRON|VERB|NOUN|PROPN"]+ [upos!="X|SYM|PUNCT" & word !="[#@].+"]+ @3:[::]
+@2:[::] (/lexical_words[])+ @3:[::]

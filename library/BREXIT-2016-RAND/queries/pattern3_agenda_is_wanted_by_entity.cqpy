@@ -16,7 +16,7 @@
 #   pattern: 3
 # ---
 
-@0[::] [upos = "DET|ADJ"]* [upos = "NOUN" | word = "#.+" | xpos = "VBG" | lemma = $nouns_values | lemma = $nouns_policies]+ @1:[::]
+@0[::] (/entity_np_all[])+ @1:[::]
 [lemma="be|have" | xpos="MD" | upos = "ADV"] * 
 [lemma="be"] [upos="ADV"]*
 [lemma=$verbs_prefer] [lemma="by"] 
