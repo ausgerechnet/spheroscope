@@ -84,21 +84,24 @@ def hierarchical_query(p1, slot, p2, s_cwb, cwb_id):
     if len(concs) > 0:
         conc_slot = concat(concs)
         conc_slot = conc_slot.reset_index()
-        conc_slot[['slot-start', 'slot-end']] = DataFrame(conc_slot['index'].tolist())
-        d = conc_slot[
-            ['slot-query', 'slot-start', 'slot-end'] +
-            ["_".join([s, p]) for p in corpus_config['display']['p_show'] for s in query['anchors']['slots']] +
-            dict(corpus_config['display'])['s_show']
-        ]
-        renames = dict([
-            ("_".join([s, p]), ".".join([str(slot), "_".join([s, p])]))
-            for p in corpus_config['display']['p_show']
-            for s in query['anchors']['slots']
-        ])
-        d = d.rename(columns=renames).set_index(
-            dict(corpus_config['display'])['s_show'][0]
-        )
-        result = matches.join(d, how='inner')
+        try:
+            conc_slot[['slot-start', 'slot-end']] = DataFrame(conc_slot['index'].tolist())
+            d = conc_slot[
+                ['slot-query', 'slot-start', 'slot-end'] +
+                ["_".join([s, p]) for p in corpus_config['display']['p_show'] for s in query['anchors']['slots']] +
+                dict(corpus_config['display'])['s_show']
+            ]
+            renames = dict([
+                ("_".join([s, p]), ".".join([str(slot), "_".join([s, p])]))
+                for p in corpus_config['display']['p_show']
+                for s in query['anchors']['slots']
+            ])
+            d = d.rename(columns=renames).set_index(
+                dict(corpus_config['display'])['s_show'][0]
+            )
+            result = matches.join(d, how='inner')
+        except KeyError:
+            pass
     else:
         result = None
 
