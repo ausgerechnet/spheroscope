@@ -40,7 +40,7 @@ def hierarchical_query(p1, slot, p2, s_cwb, cwb_id):
     slot = str(slot)
 
     # process request parameters
-    base_queries = Query.query.filter_by(pattern_id=p1, cwb_handle=cwb_id).order_by(Query.name).all()[:3]
+    base_queries = Query.query.filter_by(pattern_id=p1, cwb_handle=cwb_id).order_by(Query.name).all()
     slot_pattern = p2
     slot_queries = Query.query.filter_by(pattern_id=slot_pattern, cwb_handle=cwb_id).all()
 
