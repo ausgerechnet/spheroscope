@@ -1,0 +1,8 @@
+agree
+assume
+believe
+know
+presume
+think
+trust
+understand

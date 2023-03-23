@@ -1,0 +1,21 @@
+# --- # CQPY query file
+# anchors:
+#   corrections:
+#     1: -1
+#     3: -1
+#   slots:
+#     '0':
+#     - 0
+#     - 1
+#     '1':
+#     - 2
+#     - 3
+# meta:
+#   comment: null
+#   name: pattern3_entity_hope_concept_v_np
+#   pattern: 9999
+# ---
+
+@0:[::] /entity_np_all[]  @1[::]
+[upos="ADV"]* [xpos="MD" | lemma="be|have"]? [upos="ADV"]* [lemma="hope|wish"] [upos="ADJ||ADV"]* 
+@2:[::] [upos = "DET|ADJ " | word = "#.+"]* [upos = "NOUN|PROPN"]+ [upos="VERB"] [upos!="SYM|PUNCT|X|.CONJ"]+ @3[::]

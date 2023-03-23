@@ -1,0 +1,20 @@
+# --- # CQPY query file
+# anchors:
+#   corrections:
+#     1: -1
+#     3: -1
+#   slots:
+#     '0':
+#     - match
+#     - 1
+#     '1':
+#     - 2
+#     - 3
+# meta:
+#   comment: null
+#   name: pattern24_entity_one_of_those_concept
+#   pattern: 24
+# ---
+
+@0[::] (/entity_np_actor[]) @1:[::] 
+[xpos="RB|MD"]* [lemma="be"]  [xpos="RB|MD"]* [lemma="among|any|one|some"|upos="DET"] "of"? [upos="DET|PRON"] @2[::] (/lexical_words[])* (/entity_np_actor[]) (/lexical_words[])* @3:[::]

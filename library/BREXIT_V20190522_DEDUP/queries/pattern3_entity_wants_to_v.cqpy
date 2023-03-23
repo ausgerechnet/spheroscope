@@ -16,4 +16,4 @@
 #   pattern: '3'
 # ---
 
-@0:[::] (/actor_np_all[]) @1[::] [pos_ark="R"]* [pos_ner="MD"]? [pos_ark="R"]* [lemma=$verbs_prefer & pos_ark="V"] [pos_ark="A|R"]* @2:[::] [pos_ark="[DVNARTP]"]* [pos_ner="VB.?"]+ [pos_ark!="[UGE,#@\&]"]*@3[::]
+@0:[::] (/entity_np_actor[]) @1[::] [xpos="RB|MD"]* [lemma=$verbs_prefer] @2[::] [lemma="to"] [xpos="VB.?"] (/lexical_words[])* @3:[::]

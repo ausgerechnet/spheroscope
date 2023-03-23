@@ -16,4 +16,7 @@
 #   pattern: '3'
 # ---
 
-@0:[::]  (/actor_np_all[]) @1[::] ([pos_ner="RB|MD" | lemma="experience|have|feel|share|show|with" | lemma=$verbs_communication] | [pos_ner="RB|MD" | lemma="be"] [lemma="drive|full|hit|motivate|overcome|overwhelm(ed)?|strike|unite"] "with|by|of")+ [pos_ark="[DARO]"]* [lemma=$nouns_desire & pos_ark!="V" ] [lemma="for|pro|that|to|towards" | pos_ark="D"]? @2:[::] [pos_ark="[ATORVNZ^]"]+ [pos_ark!="[UEG,#@]"]+ @3:[::]
+@0:[::]  /entity_np_all[]  @1[::]
+([xpos="RB|MD" | lemma="experience|have|feel|share|show|with"] | [xpos="RB|MD" | lemma="be"] [lemma="drive|full|hit|motivate|overcome|overwhelm(ed)?|strike|unite"] "with|by|of")+
+[upos="DET|ADJ|ADV"]* [lemma=$nouns_desire & upos="NOUN" ] [lemma="for|pro|that|to|towards" | upos="DET"]? 
+@2:[::] [upos="AD.|PRON|VERB|NOUN|PROPN"]+ [upos!="X|SYM|PUNCT" & word !="[#@].+"]+ @3:[::]
