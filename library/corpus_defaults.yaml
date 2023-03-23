@@ -15,4 +15,4 @@ query:
   match_strategy: longest
   s_query: tweet
 resources:
-  cwb_id: BREXIT_V20190522_DEDUP
+  cwb_id: BREXIT-2016-RAND
