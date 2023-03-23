@@ -8,7 +8,7 @@ import click
 from flask import (Blueprint, current_app, jsonify, render_template, request,
                    session)
 from flask.cli import with_appcontext
-from pandas import concat
+from pandas import concat, DataFrame
 
 from .auth import login_required
 from .corpora import init_corpus, read_config
@@ -58,6 +58,7 @@ def hierarchical_query(p1, slot, p2, s_cwb, cwb_id):
 
     # run all queries belonging to slot pattern on activated NQR
     concs = list()
+    current_app.logger.info(f"running {len(slot_queries)} queries of slot pattern on activated NQR")
     for query in slot_queries:
 
         current_app.logger.info(query.name)
@@ -83,8 +84,9 @@ def hierarchical_query(p1, slot, p2, s_cwb, cwb_id):
     if len(concs) > 0:
         conc_slot = concat(concs)
         conc_slot = conc_slot.reset_index()
+        conc_slot[['slot-start', 'slot-end']] = DataFrame(conc_slot['index'].tolist())
         d = conc_slot[
-            ['slot-query'] +
+            ['slot-query', 'slot-start', 'slot-end'] +
             ["_".join([s, p]) for p in corpus_config['display']['p_show'] for s in query['anchors']['slots']] +
             dict(corpus_config['display'])['s_show']
         ]
