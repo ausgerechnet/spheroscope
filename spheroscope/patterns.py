@@ -101,7 +101,7 @@ def hierarchical_query(p1, slot, p2, s_cwb, cwb_id):
             )
             result = matches.join(d, how='inner')
         except KeyError:
-            pass
+            result = None
     else:
         result = None
 
