@@ -381,7 +381,7 @@ def highlight_slots(row):
 @click.command('query')
 @click.argument('pattern', required=False)
 @click.argument('dir_out', required=False)
-@click.argument('cwb_id', default="BREXIT_V20190522_DEDUP")
+@click.argument('cwb_id', default="BREXIT-2016-RAND")
 @with_appcontext
 def query_command(pattern, dir_out, cwb_id):
     """
@@ -413,7 +413,7 @@ def query_command(pattern, dir_out, cwb_id):
 @click.argument('slot_pattern')
 @click.argument('dir_out', required=False)
 @click.argument('s_cwb', default='tweet_id')
-@click.argument('cwb_id', default="BREXIT_V20190522_DEDUP")
+@click.argument('cwb_id', default="BREXIT-2016-RAND")
 @with_appcontext
 def subquery_command(base_pattern, slot, slot_pattern, dir_out, s_cwb, cwb_id):
     """
