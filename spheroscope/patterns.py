@@ -8,7 +8,7 @@ import click
 from flask import (Blueprint, current_app, jsonify, render_template, request,
                    session)
 from flask.cli import with_appcontext
-from pandas import concat, DataFrame
+from pandas import concat
 
 from .auth import login_required
 from .corpora import init_corpus, read_config
@@ -21,6 +21,8 @@ bp = Blueprint('patterns', __name__, url_prefix='/patterns')
 # pattern queries nicht automatisch ausführen
 # am Anfang überspringbar?
 # left join der slot matches mit match, matchend?
+
+# Zuordnung: bei inner join auf tweet_id: innerhalb slot
 
 
 def hierarchical_query(p1, slot, p2, s_cwb, cwb_id):
@@ -78,14 +80,15 @@ def hierarchical_query(p1, slot, p2, s_cwb, cwb_id):
             cut_off=None,
             slots=query['anchors']['slots']
         )
-        conc['slot-query'] = query['meta']['name']
-        concs.append(conc)
+        if len(conc) > 0:
+            conc['slot-query'] = query['meta']['name']
+            concs.append(conc)
 
     # post-process
     if len(concs) > 0:
         conc_slot = concat(concs)
         conc_slot = conc_slot.reset_index()
-        conc_slot[['slot-start', 'slot-end']] = DataFrame(conc_slot['index'].tolist())
+        conc_slot = conc_slot.rename(columns={'match': 'slot-start', 'matchend': 'slot-end'})
         d = conc_slot[
             ['slot-query', 'slot-start', 'slot-end'] +
             ["_".join([s, p]) for p in corpus_config['display']['p_show'] for s in query['anchors']['slots']] +

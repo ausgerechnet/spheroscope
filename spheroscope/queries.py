@@ -98,7 +98,8 @@ def run_queries(queries, cwb_id):
             continue
 
         # append to result list
-        matches_list.append(matches.reset_index())
+        if len(matches) > 0:
+            matches_list.append(matches.reset_index())
 
     # create output dataframe
     if len(matches_list) > 0:
@@ -106,13 +107,12 @@ def run_queries(queries, cwb_id):
         result = concat(matches_list).set_index(['query', 'match', 'matchend'])
     else:
         current_app.logger.error('none of the queries returned matches')
-        result = None
+        return
 
     # make sure missing cpos are indicated as -1 and columns are integer
-    if result is not None:
-        for c in result.columns:
-            if c.endswith("_START") or c.endswith("_END"):
-                result[c] = result[c].fillna(-1, downcast='infer')
+    for c in result.columns:
+        if c.endswith("_START") or c.endswith("_END"):
+            result[c] = result[c].fillna(-1, downcast='infer')
 
     return result
 
