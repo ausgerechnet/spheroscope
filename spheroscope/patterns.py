@@ -263,7 +263,7 @@ def subquery(p1):
 
     # add pattern statistics (necessary due to duplicates across queries)
     pat = matches.reset_index().drop_duplicates(subset=[s_cwb])
-    pat['query'] = f'pattern {id}'
+    pat['query'] = f'pattern {p2} on slot {slot} of pattern {p1}'
     stat_pat = evaluate(pat)
     statistics = concat([statistics, stat_pat])
 
