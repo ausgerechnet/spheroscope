@@ -3,7 +3,9 @@
 
 import json
 import os
+from multiprocessing import Pool
 
+import _gdbm
 from flask import (Blueprint, Response, current_app, g, jsonify, redirect,
                    render_template, request, session, url_for)
 from pandas import concat, read_csv
@@ -22,17 +24,21 @@ def run_query(query, cwb_id):
     corpus = init_corpus(corpus_config)
 
     current_app.logger.info("query: %s", query.name)
-    query = query.serialize()
+    query_ser = query.serialize()
 
     # get dump
-    dump = corpus.query(
-        cqp_query=query['cqp'],
-        context=corpus_config['query']['context'],
-        context_break=corpus_config['query']['context_break'],
-        corrections=query['anchors']['corrections'],
-        match_strategy=corpus_config['query']['match_strategy'],
-        propagate_error=True
-    )
+    try:
+        dump = corpus.query(
+            cqp_query=query_ser['cqp'],
+            context=corpus_config['query']['context'],
+            context_break=corpus_config['query']['context_break'],
+            corrections=query_ser['anchors']['corrections'],
+            match_strategy=corpus_config['query']['match_strategy'],
+            propagate_error=True
+        )
+    except _gdbm.error:
+        current_app.logger.warning(f"cache conflict, re-running query {query.name}")
+        return run_query(query, cwb_id)
 
     # invalid query
     if isinstance(dump, str):
@@ -41,7 +47,7 @@ def run_query(query, cwb_id):
 
     # valid query, but no matches
     if len(dump.df) == 0:
-        current_app.logger.warning("no results for query: {query['cqp']}")
+        current_app.logger.warning("no results for query: {query_ser['cqp']}")
         return
 
     # retreive concordance
@@ -50,15 +56,15 @@ def run_query(query, cwb_id):
         p_show=dict(corpus_config['display'])['p_show'],
         s_show=dict(corpus_config['display'])['s_show'],
         cut_off=None,
-        slots=query['anchors']['slots']
+        slots=query_ser['anchors']['slots']
     )
 
     # add name
-    matches['query'] = query['meta']['name']
+    matches['query'] = query_ser['meta']['name']
 
     # translate anchor points in slot_START and slot_END for all slots
-    for slot in query['anchors']['slots']:
-        df = format_slot(dump, query, slot)
+    for slot in query_ser['anchors']['slots']:
+        df = format_slot(dump, query_ser, slot)
         matches = matches.join(df)
 
     return matches
@@ -85,26 +91,20 @@ def run_queries(queries, cwb_id):
     """
 
     # run all queries
+    nr_cpus = current_app.config['NR_CPUS']
     if len(queries) > 1:
-        current_app.logger.info(f'running {len(queries)} queries')
-    matches_list = list()
-    for query in queries:
+        current_app.logger.info(f'running {len(queries)} queries using {nr_cpus} CPUs')
 
-        matches = run_query(query, cwb_id)
+    with Pool(nr_cpus) as pool:
+        matches = pool.starmap(run_query, [(query, cwb_id) for query in queries])
 
-        # invalid query
-        if isinstance(matches, str):
-            current_app.logger.error(f"invalid query: {query['cqp']}")
-            continue
-
-        # append to result list
-        if len(matches) > 0:
-            matches_list.append(matches.reset_index())
+    matches_list = [m for m in matches if not isinstance(m, str) and len(m) > 0]
 
     # create output dataframe
     if len(matches_list) > 0:
         current_app.logger.info("concatenating")
-        result = concat(matches_list).set_index(['query', 'match', 'matchend'])
+        result = concat(matches_list).reset_index()
+        result = result.set_index(['query', 'match', 'matchend'])
     else:
         current_app.logger.error('none of the queries returned matches')
         return
