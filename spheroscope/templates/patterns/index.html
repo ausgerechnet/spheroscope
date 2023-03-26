@@ -19,7 +19,7 @@
   <tr>
     <th {% if pattern.retired %}class="is-warning" {% endif %}><a href="{{ url_for('patterns.pattern', id=pattern.id) }}">{{ pattern.id }}</a></th>
     <th>{{ pattern.name }}</th>
-    <td><a href="{{ url_for('queries.index', pattern=pattern.id) }}">{{ pattern.nr_queries }}</a></td>
+    <td><a href="{{ url_for('queries.index', pattern=pattern.id) }}">{{ pattern.queries|length }}</a></td>
     <td data-tooltip="{{ pattern.explanation }}" class="has-tooltip-multiline">\( {{ pattern.template }} \)</td>
     <td><time>{{ pattern.modified.strftime('%Y-%m-%d %H:%M') }}</time></td>
   </tr>

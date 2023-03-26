@@ -121,6 +121,9 @@ def index():
 
     """
     patterns = Pattern.query.filter(Pattern.id >= 0).order_by(Pattern.id).all()
+    for p in patterns:
+        cwb_id = session['corpus']['resources']['cwb_id']
+        p.queries = Query.query.filter_by(pattern_id=p.id, cwb_handle=cwb_id).all()
 
     return render_template('patterns/index.html',
                            patterns=patterns)
