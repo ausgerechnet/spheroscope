@@ -320,14 +320,6 @@ class Pattern(db.Model):
 
     comment = db.Column(db.Unicode)
 
-    @property
-    def nr_queries(self):
-        queries = Query.query.filter_by(pattern_id=self.id).all()
-        return len(queries)
-
-    def __repr__(self):
-        return 'pattern %d with %d queries' % (self.id, self.nr_queries)
-
 
 class Corpus(db.Model):
 
