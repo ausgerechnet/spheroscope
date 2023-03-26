@@ -1,8 +1,7 @@
-from spheroscope.wordlists import read_from_path, read_from_db
-from spheroscope.wordlists import write, delete
-from spheroscope.wordlists import lib2db
-
 import pytest
+
+from spheroscope.wordlists import (delete, lib2db, read_from_db,
+                                   read_from_path, write)
 
 
 def test_read_from_path():

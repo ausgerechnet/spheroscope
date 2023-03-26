@@ -1,6 +1,5 @@
-from spheroscope.macros import read_from_path, read_from_db
-from spheroscope.macros import write, delete
-from spheroscope.macros import lib2db
+from spheroscope.macros import (delete, lib2db, read_from_db, read_from_path,
+                                write)
 
 
 def test_read():

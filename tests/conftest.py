@@ -4,7 +4,7 @@ import tempfile
 import pytest
 
 from spheroscope import create_app
-from spheroscope.database import init_db, import_library
+from spheroscope.database import import_library, init_db
 
 
 @pytest.fixture
