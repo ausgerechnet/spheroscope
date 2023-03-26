@@ -1,6 +1,5 @@
 import pytest
-from flask import g
-from flask import session
+from flask import g, session
 
 
 def test_register(client, app):
