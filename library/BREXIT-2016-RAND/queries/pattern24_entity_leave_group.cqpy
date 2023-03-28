@@ -12,10 +12,10 @@
 #     - 3
 # meta:
 #   comment: null
-#   name: pattern24_entity_become_a_person_group
+#   name: pattern24_entity_leave_group
 #   pattern: 24
 # ---
 
 @0[::] (/entity_np_actor[]) @1:[::]
-[xpos="MD"]* ([lemma="become"]) 
-@2[::] (/entity_np_actor[]) @3[::]
+[upos="ADV" | xpos="MD"]* ([lemma="exit|leave"]) "from"? 
+@2[::] (/entity_np_actor[]) (/entity_np_all[])* @3[::]
