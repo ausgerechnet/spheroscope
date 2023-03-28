@@ -13,8 +13,8 @@
 # meta:
 #   comment: null
 #   name: pattern24_entity_s_group_membership
-#   pattern: '24'
+#   pattern: 24
 # ---
 
 @0[::] (/entity_np_actor[] @1"(&#x27;)?s"? |@0 [word="[#@].+"| xpos="PRP$|NNP"]@1:[::]) 
-@2:[::] [upos="PROPN|DET|ADJ|NOUN" | word ="[#@].+"]* (/entity_np_all[])+ @3:[lemma="membership"]
+@2:[::] [upos="PROPN|DET|ADJ"]* (/entity_np_actor[])+ @3:[lemma="membership"]

@@ -18,4 +18,4 @@
 
 @0[::] (/entity_np_actor[]) @1:[::]
 [upos="ADV" | xpos="MD"]* ([lemma=$verbs_join]) 
-@2[::] [upos="DET"] (/entity_np_actor[])+ (/lexical_words[])* @3[::]
+@2[::] (/entity_np_actor[]) (/entity_np_all[])* @3[::]

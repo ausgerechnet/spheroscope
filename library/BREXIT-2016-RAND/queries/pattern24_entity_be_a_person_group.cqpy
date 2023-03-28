@@ -13,9 +13,9 @@
 # meta:
 #   comment: null
 #   name: pattern24_entity_be_a_person_group
-#   pattern: '24'
+#   pattern: 24
 # ---
 
 @0[::] (/entity_np_actor[]) @1:[::]
-[upos="ADV" | xpos="MD"]* ([lemma="be"&word="[a-z]+"] | [lemma="belong" &word="[a-z]+"] "to") 
-@2[::] [upos="DET"] (/entity_np_actor[])+ (/lexical_words[])* @3[::]
+[xpos="MD"]* ([lemma="be"&word="[a-z]+"] | [lemma="belong" &word="[a-z]+"] "to") 
+@2[::] [upos="DET"] (/entity_np_actor[]) @3[::]
