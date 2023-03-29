@@ -19,9 +19,9 @@ from .queries import (add_gold, create_subcorpus, evaluate,
 bp = Blueprint('patterns', __name__, url_prefix='/patterns')
 
 # pattern queries nicht automatisch ausführen
-# am Anfang überspringbar?
-# left join der slot matches mit match, matchend?
+# bzw. am Anfang überspringbar?
 
+# left join der slot matches mit match, matchend?
 # Zuordnung: bei inner join auf tweet_id: innerhalb slot
 
 
