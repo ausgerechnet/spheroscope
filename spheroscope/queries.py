@@ -156,17 +156,20 @@ def add_gold(result, cwb_id, pattern, s_cwb, s_gold):
     result = result.reset_index()
 
     try:
-        # get and pre-process gold
+        # get gold if possible
         gold = read_csv(
             os.path.join("library", cwb_id, "gold", "adjudicated.tsv"),
             sep="\t", index_col=0
         )
-        gold = gold.loc[gold['pattern'] == pattern].rename(
-            {s_gold: s_cwb, 'annotation': 'TP'}, axis=1
-        )
     except FileNotFoundError:
         result['TP'] = None
     else:
+        gold = gold.loc[gold['pattern'] == pattern].rename(
+            {s_gold: s_cwb, 'annotation': 'TP'}, axis=1
+        )
+        # remove leading "t" in gold for BREXIT-2016-RAND
+        if not result[s_cwb].iloc[0].startswith("t"):
+            gold[s_cwb] = gold[s_cwb].apply(lambda x: x[1:])
         result = result.merge(gold[[s_cwb, "TP"]], on=s_cwb, how='left')
 
     result['TP'] = result['TP'].fillna('?')
