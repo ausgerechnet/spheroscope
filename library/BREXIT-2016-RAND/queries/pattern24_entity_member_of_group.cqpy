@@ -13,8 +13,8 @@
 # meta:
 #   comment: null
 #   name: pattern24_entity_member_of_group
-#   pattern: '24'
+#   pattern: 24
 # ---
 
 @0[::] (/entity_np_actor[]) @1:[::]
-[xpos="RB|MD"|lemma="to"]* [lemma="be|form"] [xpos="RB|MD"]* [upos="DET|ADJ"]* [(lemma=$nouns_member|lemma=$nouns_part) & upos="NOUN"] "in|of" @2[::]  [upos="DET|ADJ"]* (/entity_np_actor[])  @3:[::]
+[xpos="RB|MD"|lemma="to"]* [lemma="be|form"] [xpos="RB|MD"]* [upos="DET|ADJ"]* [(lemma=$nouns_member|lemma=$nouns_part) & upos="NOUN"] "in|of" @2[::] [upos="DET"]? (/entity_np_actor[]) (/entity_np_all[])* @3:[::]

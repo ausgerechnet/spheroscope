@@ -17,4 +17,4 @@
 # ---
 
 @0[::] (/entity_np_actor[]) @1:[::] 
-[xpos="RB|MD"]* [lemma="be"]  [xpos="RB|MD"]* [lemma="among|any|one|some"|upos="DET"] "of"? [upos="DET|PRON"] @2[::] (/lexical_words[])* (/entity_np_actor[]) (/lexical_words[])* @3:[::]
+[xpos="RB|MD"]* [lemma="be"]  [xpos="RB|MD"]* [lemma="among|any|one|some"|upos="DET"] "of"? [upos="DET|PRON"]+ @2[::] [upos="ADJ"]*  (/entity_np_actor[]) (/entity_np_all[])* @3:[::]
