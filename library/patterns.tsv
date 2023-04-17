@@ -50,6 +50,7 @@ idx	name	template	explanation	retired	kind
 61	entity equivalence	{?0 : entity} \iff {?1 : entity}	entity 0 and entity 1 are the same	False	formula
 62	continued membership	{?0 : entity} \implies {?1 : entity}; X ({?0} \implies {?1})	entity 0 is part of entity 1 and will stay part of it 	False	formula
 63	stay out of it	\neg({?0 : entity} \implies {?1 : entity}); X \neg({?0} \implies {?1})	entity 0 is not part 0f entity 1 and will saty out of entity 1 in the future 	False	formula
+64	prediction	Q_{{?0 : entity}} {?1 : formula}	entity 0 predicts that formula 1 will become true	False	formula
 -9999	preamble	\newcommand{\mcauses}{\Box\kern-.5em{\implies}} \newcommand{\dimplies}{\overset{d}{\implies}} \newcommand{\cfac}{\overset{c}{\implies}}	the preamble (for exporting)	True	formula
 1	explanation	({?0 : formula}) \mcauses ({?1 : formula})	0 is the reason why 1 is true; note that 0 and 1 could be formulas talking about the past stating that something was the reason why something was the case at some point in time	True	formula
 7	 	({?1 : formula}) \mcauses Q_{{?0 : entity}} bad	1 is bad for entity 0	True	formula
