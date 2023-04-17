@@ -282,13 +282,14 @@
 - I want to stay
   + #3
 
-# 63 Prediction
+# 64 Prediction
 
 ## schema ##
 - **ENTITY** predicts **FORMULA**
 
 ## remarks ##
 - this pattern is a certain form of quotation
+- predictions can be of good, bad or neutral outcomes, but we currently only distinguish negative outcomes into finer patterns
 - further categorisation of formula (explicitly good or explicitly bad consequences):
   + **FORMULA1** is bad (→ #38)
   + **FORMULA1** will lead to **FORMULA2**, which is bad (→ #41)
