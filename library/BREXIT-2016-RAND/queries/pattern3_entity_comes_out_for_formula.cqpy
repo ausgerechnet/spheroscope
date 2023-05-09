@@ -13,10 +13,10 @@
 # meta:
 #   comment: null
 #   name: pattern3_entity_comes_out_for_formula
-#   pattern: '3'
+#   pattern: 3
 # ---
 
 @0:[::]  /entity_np_all[] @1[::]
 
-[lemma="be|have|will" | xpos="MD"|upos="ADV"]* [lemma="come"] [lemma="out"] "as"? ([lemma="for|pro"] | [lemma="in"] [upos="ADJ"]* [lemma="favou?r|support"] [lemma="for|of"]) 
-@2:[::] [upos!="SYM|PUNCT|X"]+ @3:[::]
+[lemma="be" | upos="ADV"]* [lemma="come"] [lemma="out"] "as"? ([lemma="for|pro"] | [lemma="in"] [upos="ADJ"]* [lemma="favou?r|support"] [lemma="for|of"]) 
+@2:[::]  (/lexical_words[])+ @3:[::]
