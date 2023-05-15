@@ -1,0 +1,9 @@
+few
+half
+many
+most
+much
+part
+some
+third
+%

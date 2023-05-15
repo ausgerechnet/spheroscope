@@ -13,7 +13,7 @@
 # meta:
 #   comment: null
 #   name: pattern3_what_entity_wants_is
-#   pattern: '3'
+#   pattern: 3
 # ---
 
-[lemma="all|everything|thing|what"] [lemma="that"]?  @0:[::] (/entity_np_actor[]) @1:[::][upos="ADV|VERB]"]* [lemma=$verbs_prefer] [lemma="be"] @2:[::] [lemma="for|to" | upos="DET|A]"]* /entity_np_all[] (/lexical_words[])* @3[::]
+[lemma="all|everything|thing|that|what"]+  @0:[::] (/entity_np_actor[]) @1:[::][upos="ADV|VERB"]* [lemma=$verbs_prefer] [lemma="be"] @2:[::] [lemma="for|to" | upos="DET|A.+"]* ( /entity_np_all[] | [upos="VERB"]) (/lexical_words[])* @3[::]

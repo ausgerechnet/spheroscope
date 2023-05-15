@@ -16,5 +16,5 @@
 #   pattern: 24
 # ---
 
-@0[::] (/entity_np_actor[] @1"(&#x27;)?s"? |@0 [word="[#@].+"| xpos="PRP$|NNP"]@1:[::]) 
+@0[::] (/entity_np_actor[] @1[xpos="POS"] |@0 [word="[#@].+"| xpos="PRP$|NNP"]@1:[::]) 
 @2:[::] [upos="PROPN|DET|ADJ"]* (/entity_np_actor[])+ @3:[lemma="membership"]

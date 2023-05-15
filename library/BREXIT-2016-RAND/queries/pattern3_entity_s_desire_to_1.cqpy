@@ -16,5 +16,5 @@
 #   pattern: 3
 # ---
 
-(@0:[::] (/entity_np_actor[]) "'?s"? | @0:[word =".+'s"]| @0:[xpos="PRP$"] ) @1:[::] [xpos="RB"|lemma="have"]* @2[::] [upos="DET|ADJ|ADV"]* [lemma=$nouns_desire&upos="NOUN"] [lemma="be"]? [lemma="for|of|pro|to|towards" | upos="PART"] 
+(@0:[::] (/entity_np_actor[]) [xpos="POS"] |  @0:[xpos="PRP$"] ) @1:[::]  [upos="DET|ADJ|ADV"]* [lemma=$nouns_desire&upos="NOUN"] [lemma="be"]? [lemma="for|of|pro|that|to|towards" | upos="PART"] 
 @2:[::](/lexical_words[])+ @3:[::]

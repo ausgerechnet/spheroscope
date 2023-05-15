@@ -6,7 +6,7 @@ MACRO entity_np_all(0)
 
 MACRO entity_np_actor(0)
 (
- [upos = "DET|ADJ " | word = "#.+" | xpos="PRP$"]* [upos = "NOUN" & lemma = $actor_any | xpos="PRP" & lemma!="it" | upos ="PROPN"]+  ([upos=".CONJ" | word=","] [upos = "DET|ADJ " | word = "#.+"]* [upos = "NOUN|PROPN"]+ )*
+ [upos = "DET|ADJ " | word = "#.+" | xpos="PRP$" | lemma=$modifiers_specified | lemma=$modifiers_unspecified]* [upos = "NOUN" & lemma = $actor_any |lemma=$nouns_quantified | xpos="PRP" & lemma!="it" | upos ="PROPN"]+  ([upos=".CONJ" | word=","] [upos = "DET|ADJ " | word = "#.+"]* [upos = "NOUN|PROPN"]+ )*
 )
 ;
 

@@ -16,7 +16,7 @@
 #   pattern: 3
 # ---
 
-@0[::] (/entity_np_actor[])+ @1:[::]
+@0[::] (/entity_np_all[] |[ word=".+ing" & upos="VERB"])+ @1:[::]
 [lemma="be" | upos="ADV"]+
-[lemma=$verbs_prefer] [lemma="by"] 
+[lemma=$verbs_prefer] [lemma="by|through"] 
 @2[::] /entity_np_all[] @3[::]

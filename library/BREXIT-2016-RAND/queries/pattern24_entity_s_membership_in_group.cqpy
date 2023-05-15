@@ -13,9 +13,9 @@
 # meta:
 #   comment: null
 #   name: pattern24_entity_s_membership_in_group
-#   pattern: '24'
+#   pattern: 24
 # ---
 
-@0[::] (/entity_np_actor[] @1"(&#x27;)?s"? |@0 [word="[#@].+"| xpos="PRP$|NNP"]@1:[::]) 
+@0[::] (/entity_np_actor[] @1[xpos="POS"]|@0 [word="[#@].+"| xpos="PRP$|NNP"]@1:[::]) 
 [lemma="membership"] [lemma="in|with"]
 @2:[::] (/lexical_words[])* (/entity_np_actor[] | [word ="[#@].+"])+ @3:[::]

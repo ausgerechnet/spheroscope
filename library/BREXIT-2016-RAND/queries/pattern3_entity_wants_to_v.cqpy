@@ -16,4 +16,4 @@
 #   pattern: 3
 # ---
 
-@0:[::] (/entity_np_actor[]) @1[::] [xpos="RB|MD"]* [lemma=$verbs_prefer]  @2[::] ([lemma="for|of|to|that"])* @2:[::] ( /entity_np_all[]  | [upos="VERB|AUX" | lemma=$nouns_policies | lemma=$nouns_values])  (/lexical_words[])*  @3:[::] @3:[::]
+@0:[::] (/entity_np_actor[]) @1[::] [upos="ADV" | xpos="RB" | lemma="do"]* [lemma=$verbs_prefer]  @2[::] ([lemma="for|of|to|that"])* ( /entity_np_all[]  | [upos="VERB|AUX" | lemma=$nouns_policies  |  lemma=$nouns_values])  (/lexical_words[])* @3:[::]

@@ -1,0 +1,19 @@
+# --- # CQPY query file
+# anchors:
+#   corrections:
+#     1: -1
+#     3: -1
+#   slots:
+#     '0':
+#     - 0
+#     - 1
+#     '1':
+#     - 2
+#     - 3
+# meta:
+#   comment: null
+#   name: pattern3_entity_has_desire_for_concept
+#   pattern: 3
+# ---
+
+@0:[::] (/entity_np_actor[]) @1:[::] [upos="ADV"]* [lemma="have"]  [upos="DET|ADJ|ADV" & lemma!="no"]* [word=$nouns_desire] [lemma="for|of|pro|that|to|towards" | upos="PART"] @2:[::](/lexical_words[])+ @3:[::]

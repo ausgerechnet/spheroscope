@@ -1,7 +1,6 @@
 # --- # CQPY query file
 # anchors:
-#   corrections:
-#     3: -1
+#   corrections: {}
 #   slots:
 #     '1':
 #     - 2
@@ -9,7 +8,7 @@
 # meta:
 #   comment: null
 #   name: pattern3_ellipsis_hoping_concept
-#   pattern: '3'
+#   pattern: 3
 # ---
 
-([word="Hoping|Hope|Wishing|Wish" &upos="VERB"] | [lemma="[\.\?\!;,-]+"] [word="hoping|hope|wishing|wish" & upos="VERB"]) [lemma="for|that|to"]? @2:[::] [upos!="SYM|.CONJ|PUNCT"]+ @3:[::]
+([word="Hoping|Hope|Wishing|Wish" &upos="VERB"] | [lemma="[\.\?\!;,-]+"] [word="hoping|hope|wishing|wish" & upos="VERB"]) @2:[::] [lemma="for|that|to"]? @3[upos!="SYM|.CONJ|PUNCT"]+
