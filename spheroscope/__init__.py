@@ -37,6 +37,7 @@ def create_app(test_config=None):
         ),
         SQLALCHEMY_TRACK_MODIFICATIONS=False
     )
+    db.init_app(app)
 
     # ensure corpus defaults exist
     corpus_cfg_path = os.path.join(app.instance_path, 'corpus_defaults.yaml')
@@ -49,17 +50,13 @@ def create_app(test_config=None):
     def hello():
         return 'Hello back there!'
 
-    # initialize database and register CLI commands
+    # initialise database and register CLI commands
     from . import database
-    db.init_app(app)
-    app.cli.add_command(database.init_db_command)
-    app.cli.add_command(database.import_lib_command)
+    app.register_blueprint(database.bp)
 
     # remote database commands
-    from . import remote_db
-    app.cli.add_command(remote_db.update_patterns)
-    app.cli.add_command(remote_db.update_gold)
-    app.cli.add_command(remote_db.update_query_results)
+    from . import remote
+    app.register_blueprint(remote.bp)
 
     # authentication
     from . import auth
