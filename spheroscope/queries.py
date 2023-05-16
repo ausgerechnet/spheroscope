@@ -42,6 +42,7 @@ def run_query(query, cwb_id):
 
     # invalid query
     if isinstance(dump, str):
+        current_app.logger.error(query_ser['meta']['name'])
         current_app.logger.error(dump)
         return dump
 

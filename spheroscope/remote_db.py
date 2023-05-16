@@ -16,6 +16,7 @@ def connect(port=5432):
 
     try:
         return current_app.remote
+
     except AttributeError:
 
         current_app.logger.info(
@@ -74,24 +75,44 @@ def get_patterns(con):
     return patterns
 
 
-def set_query_results(con):
+def set_query_results(con, df):
 
-    # - Die Queries betrachtet die DB als Annotatoren: query matches sin einträge in der classification Tabelle.
-    # - Was die "echten" Annotationen unterscheidet ist, dass das  'manual' Feld bei denen true ist.
-    # - Insofern musst du nur ein Insert machen mit
-    # tweet = tweet_id
-    # pattern = pattern_id
-    # annotator = query_name
-    # manual = False
-    # annotation = True
+    # delete old annotations of these queries
+    annotators = tuple(set(df['annotator']))
+    old = pd.read_sql(
+        text(f"SELECT * FROM rant.classification WHERE annotator IN {annotators};"), con
+    )
+    con.execute(
+        text(f"DELETE FROM rant.classification WHERE annotator IN {annotators};")
+    )
+    current_app.logger.info(f'deleted {len(old)} annotations')
 
-    # Je nachdem was wir wollen sollte man vorher alle Annotationen
-    # der zugehörigen Query löschen dass nur noch die aktuellen drin
-    # sind. Dannach muss dann noch die Materialized View
-    # virtual_tweet_sets refreshed werden und die zieht dann
-    # automatisch die Samples und so.
+    # insert new annotations
+    ret = df.to_sql(
+        "classification",
+        con=con,
+        if_exists='append',
+        index=False,
+        schema='rant'
+    )
+    current_app.logger.info(f'created {ret} annotations')
 
-    pass
+
+@click.command('update-results')
+@click.argument('cwb_id', default="BREXIT-2016-RAND")
+@with_appcontext
+def update_query_results(cwb_id):
+
+    from pandas import read_csv
+    from glob import glob
+    con = connect()
+    if con is not None:
+        paths = glob(os.path.join(current_app.instance_path, cwb_id, "query-results/*.tsv.gz"))
+        for p in paths:
+            df = read_csv(p, sep="\t")
+            df = df[['tweet_id', 'pattern', 'query']]
+            df.columns = ['tweet', 'pattern', 'annotator']
+            set_query_results(con, df)
 
 
 @click.command('update-patterns')

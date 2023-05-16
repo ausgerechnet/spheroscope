@@ -20,6 +20,9 @@ run:
 query:
 	pipenv run flask --app spheroscope query
 
+results:
+	pipenv run flask --app spheroscope --debug update-results
+
 subquery:
 	pipenv run flask --app spheroscope subquery 3 1 24
 
