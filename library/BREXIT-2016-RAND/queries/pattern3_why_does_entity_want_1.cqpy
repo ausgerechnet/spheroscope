@@ -1,0 +1,19 @@
+# --- # CQPY query file
+# anchors:
+#   corrections:
+#     1: -1
+#     3: -1
+#   slots:
+#     '0':
+#     - 0
+#     - 1
+#     '1':
+#     - 2
+#     - 3
+# meta:
+#   comment: null
+#   name: pattern3_why_does_entity_want_1
+#   pattern: 3
+# ---
+
+[lemma="why"] [lemma="do"] @0:[::] (/entity_np_actor[]) @1[::] [upos="ADJ|ADV"]* [lemma=$verbs_prefer] @2[::]  (/lexical_words[])+ @3:[::]
