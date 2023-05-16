@@ -83,6 +83,8 @@ def get_patterns(con):
 
 def set_query_results(con, df):
 
+    # TODO safe-guard against deleting real annotators' annotations
+
     # delete old annotations of these queries
     annotators = tuple(set(df['annotator']))
     old = read_sql(
@@ -91,9 +93,11 @@ def set_query_results(con, df):
     con.execute(
         text(f"DELETE FROM rant.classification WHERE annotator IN {annotators};")
     )
+    con.commit()
     current_app.logger.info(f'deleted {len(old)} annotations')
 
     # insert new annotations
+    current_app.logger.info(f'... creating {len(df)} annotations')
     ret = df.to_sql(
         "classification",
         con=con,
@@ -101,7 +105,7 @@ def set_query_results(con, df):
         index=False,
         schema='rant'
     )
-    current_app.logger.info(f'created {ret} annotations')
+    current_app.logger.info(f'... remote returns {ret}')
 
 
 #########################################
@@ -115,7 +119,10 @@ def push_results(cwb_id):
     if con is not None:
 
         paths = glob(os.path.join(current_app.instance_path, cwb_id, "query-results/*.tsv.gz"))
+        paths = [p for p in paths if '-slot' not in p]
+        paths = [p for p in paths if 'pattern9999' not in p]
         for p in paths:
+            current_app.logger.info(p)
             df = read_csv(p, sep="\t")
             df = df[['tweet_id', 'pattern', 'query']]
             df = df.drop_duplicates()
