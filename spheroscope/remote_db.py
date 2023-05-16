@@ -103,8 +103,9 @@ def set_query_results(con, df):
 @with_appcontext
 def update_query_results(cwb_id):
 
-    from pandas import read_csv
     from glob import glob
+
+    from pandas import read_csv
     con = connect()
     if con is not None:
         paths = glob(os.path.join(current_app.instance_path, cwb_id, "query-results/*.tsv.gz"))
