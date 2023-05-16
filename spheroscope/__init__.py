@@ -59,6 +59,7 @@ def create_app(test_config=None):
     from . import remote_db
     app.cli.add_command(remote_db.update_patterns)
     app.cli.add_command(remote_db.update_gold)
+    app.cli.add_command(remote_db.update_query_results)
 
     # authentication
     from . import auth
