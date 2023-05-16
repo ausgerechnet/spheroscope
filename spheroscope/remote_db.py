@@ -54,7 +54,7 @@ def get_tables(con):
 def get_gold(con):
 
     return pd.read_sql(
-        text("SELECT * FROM rant.classification_gold;"), con
+        text('SELECT * FROM rant."classification_gold+";'), con
     )
 
 
