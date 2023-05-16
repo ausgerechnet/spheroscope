@@ -111,6 +111,7 @@ def update_query_results(cwb_id):
         for p in paths:
             df = read_csv(p, sep="\t")
             df = df[['tweet_id', 'pattern', 'query']]
+            df = df.drop_duplicates()
             df.columns = ['tweet', 'pattern', 'annotator']
             set_query_results(con, df)
 
