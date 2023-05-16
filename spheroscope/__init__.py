@@ -45,48 +45,36 @@ def create_app(test_config=None):
     if not os.path.isfile(corpus_cfg_path):
         shutil.copy(corpus_cfg_default, corpus_cfg_path)
 
-    # say hello
     @app.route('/hello')
     def hello():
         return 'Hello back there!'
 
-    # initialise database and register CLI commands
     from . import database
     app.register_blueprint(database.bp)
 
-    # remote database commands
     from . import remote
     app.register_blueprint(remote.bp)
 
-    # authentication
     from . import auth
     app.register_blueprint(auth.bp)
 
-    # index
     from . import index
     app.register_blueprint(index.bp)
     app.add_url_rule('/', endpoint='index')
 
-    # corpora
     from . import corpora
     app.register_blueprint(corpora.bp)
 
-    # wordlists
     from . import wordlists
     app.register_blueprint(wordlists.bp)
 
-    # macros
     from . import macros
     app.register_blueprint(macros.bp)
 
-    # queries and register CLI commands
     from . import queries
     app.register_blueprint(queries.bp)
 
-    # patterns
     from . import patterns
     app.register_blueprint(patterns.bp)
-    app.cli.add_command(patterns.query_command)
-    app.cli.add_command(patterns.subquery_command)
 
     return app

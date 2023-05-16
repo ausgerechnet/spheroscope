@@ -7,7 +7,6 @@ import re
 import click
 from flask import (Blueprint, current_app, jsonify, render_template, request,
                    session)
-from flask.cli import with_appcontext
 from pandas import concat
 
 from .auth import login_required
@@ -379,17 +378,16 @@ def highlight_slots(row):
     return "".join(formatted)
 
 
-#######
-# CLI #
-#######
-@click.command('query')
-@click.argument('pattern', required=False)
-@click.argument('dir_out', required=False)
-@click.argument('cwb_id', default="BREXIT-2016-RAND")
-@with_appcontext
+#########################################
+# CLI ###################################
+#########################################
+@bp.cli.command('query')
+@click.option('--pattern')
+@click.option('--dir_out')
+@click.option('--cwb_id', default="BREXIT-2016-RAND")
 def query_command(pattern, dir_out, cwb_id):
     """
-    CLI command for running all queries belonging to one pattern
+    CLI command for running all queries belonging to one pattern (or all patterns)
     ---
 
     """
@@ -412,14 +410,13 @@ def query_command(pattern, dir_out, cwb_id):
             matches.to_csv(path_out, sep="\t", compression="gzip")
 
 
-@click.command('subquery')
+@bp.cli.command('subquery')
 @click.argument('base_pattern')
 @click.argument('slot')
 @click.argument('slot_pattern')
-@click.argument('dir_out', required=False)
-@click.argument('s_cwb', default='tweet_id')
-@click.argument('cwb_id', default="BREXIT-2016-RAND")
-@with_appcontext
+@click.option('--dir_out')
+@click.option('--s_cwb', default='tweet_id')
+@click.option('--cwb_id', default="BREXIT-2016-RAND")
 def subquery_command(base_pattern, slot, slot_pattern, dir_out, s_cwb, cwb_id):
     """
     CLI command for running hierarchical queries
