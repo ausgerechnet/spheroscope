@@ -16,4 +16,4 @@
 #   pattern: 3
 # ---
 
-@0:[::] (/entity_np_actor[]) @1:[::] [xpos="MD|RB"]* ([lemma = "be"] [upos="ADV"]? ([lemma="die|line|queue|wait" & word =".+ing"| lemma="desperate"]  "up"? | "can'?t|cannot" "wait") "to" | [lemma="keen"] "for|on|to") @2:[::] (/entity_np_all[] | [upos="VERB" | word="#.+"]) (/lexical_words[])* @3:[::]
+@0:[::] (/entity_np_actor[]) @1:[::] [xpos="MD|RB"]* ([lemma = "be"] [upos="ADV"]? ([lemma="die|line|queue|wait" & word =".+ing"| lemma="desperate"]  "up"? | "can'?t|cannot" "wait") "to" | [lemma="excited|keen"] "for|on|to") @2:[::] (/entity_np_all[] | [upos="VERB" | word="#.+"]) (/lexical_words[])* @3:[::]
