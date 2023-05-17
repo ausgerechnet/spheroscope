@@ -14,7 +14,6 @@ from werkzeug.security import generate_password_hash
 
 from . import db
 
-
 bp = Blueprint('database', __name__, url_prefix='/database')
 
 

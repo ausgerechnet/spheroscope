@@ -11,7 +11,6 @@ from pandas import read_csv, read_sql
 from sqlalchemy import create_engine, text
 from sqlalchemy.exc import OperationalError
 
-
 bp = Blueprint('remote', __name__, url_prefix='/remote')
 
 
