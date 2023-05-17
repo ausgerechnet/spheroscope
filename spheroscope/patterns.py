@@ -7,7 +7,7 @@ import re
 import click
 from flask import (Blueprint, current_app, jsonify, render_template, request,
                    session)
-from pandas import concat
+from pandas import concat, DataFrame
 
 from .auth import login_required
 from .corpora import init_corpus, read_config
@@ -400,8 +400,9 @@ def query_command(pattern, dir_out, cwb_id):
         path_out = os.path.join(dir_out, "pattern%d.tsv.gz" % pattern.id)
         if len(queries) > 0:
             matches = run_queries(queries, cwb_id)
-            matches['pattern'] = pattern.id
-            matches.to_csv(path_out, sep="\t", compression="gzip")
+            if isinstance(matches, DataFrame):
+                matches['pattern'] = pattern.id
+                matches.to_csv(path_out, sep="\t", compression="gzip")
 
 
 @bp.cli.command('subquery')
