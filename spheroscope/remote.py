@@ -2,14 +2,17 @@
 # -*- coding: utf-8 -*-
 
 import os
+from glob import glob
 from urllib.parse import quote_plus
 
 import click
-import pandas as pd
-from flask import current_app
-from flask.cli import with_appcontext
+from flask import Blueprint, current_app
+from pandas import read_csv, read_sql
 from sqlalchemy import create_engine, text
 from sqlalchemy.exc import OperationalError
+
+
+bp = Blueprint('remote', __name__, url_prefix='/remote')
 
 
 def connect(port=5432):
@@ -45,22 +48,25 @@ def connect(port=5432):
 
 def get_tables(con):
 
-    return list(pd.read_sql(
-        text("SELECT relname FROM pg_class WHERE relkind='r' AND relname !~ '^(pg_|sql_)';"),
-        con
-    )['relname'])
+    df = read_sql(
+        text("SELECT relname FROM pg_class WHERE relkind='r' AND relname !~ '^(pg_|sql_)';"), con
+    )
+
+    return list(df['relname'])
 
 
 def get_gold(con):
 
-    return pd.read_sql(
-        text("SELECT * FROM rant.classification_gold;"), con
+    df = read_sql(
+        text('SELECT * FROM rant."classification_gold+";'), con
     )
+
+    return df
 
 
 def get_patterns(con):
 
-    patterns = pd.read_sql(
+    patterns = read_sql(
         text("SELECT * FROM rant.patterns;"), con, index_col='idx'
     )
 
@@ -77,17 +83,21 @@ def get_patterns(con):
 
 def set_query_results(con, df):
 
+    # TODO safe-guard against deleting real annotators' annotations
+
     # delete old annotations of these queries
     annotators = tuple(set(df['annotator']))
-    old = pd.read_sql(
+    old = read_sql(
         text(f"SELECT * FROM rant.classification WHERE annotator IN {annotators};"), con
     )
     con.execute(
         text(f"DELETE FROM rant.classification WHERE annotator IN {annotators};")
     )
+    con.commit()
     current_app.logger.info(f'deleted {len(old)} annotations')
 
     # insert new annotations
+    current_app.logger.info(f'... creating {len(df)} annotations')
     ret = df.to_sql(
         "classification",
         con=con,
@@ -95,47 +105,56 @@ def set_query_results(con, df):
         index=False,
         schema='rant'
     )
-    current_app.logger.info(f'created {ret} annotations')
+    current_app.logger.info(f'... remote returns {ret}')
 
 
-@click.command('update-results')
-@click.argument('cwb_id', default="BREXIT-2016-RAND")
-@with_appcontext
-def update_query_results(cwb_id):
+#########################################
+# CLI ###################################
+#########################################
+@bp.cli.command('queries')
+@click.option('--cwb_id', default="BREXIT-2016-RAND")
+def push_results(cwb_id):
 
-    from pandas import read_csv
-    from glob import glob
     con = connect()
     if con is not None:
+
         paths = glob(os.path.join(current_app.instance_path, cwb_id, "query-results/*.tsv.gz"))
+        paths = [p for p in paths if '-slot' not in p]
+        paths = [p for p in paths if 'pattern9999' not in p]
         for p in paths:
+            current_app.logger.info(p)
             df = read_csv(p, sep="\t")
             df = df[['tweet_id', 'pattern', 'query']]
+            df = df.drop_duplicates()
             df.columns = ['tweet', 'pattern', 'annotator']
             set_query_results(con, df)
 
+    click.echo('pushed query results')
 
-@click.command('update-patterns')
-@with_appcontext
-def update_patterns():
+
+@bp.cli.command('patterns')
+def fetch_patterns():
+
     con = connect()
     if con is not None:
+
         patterns = get_patterns(con).sort_values(by=["retired", "idx"])
-        patterns.to_csv(
-            os.path.join("library", "patterns.tsv"), sep="\t"
-        )
+        patterns.to_csv(os.path.join("library", "patterns.tsv"), sep="\t")
+
+    click.echo('fetched patterns')
 
 
-@click.command('update-gold')
-@click.argument('cwb_id', default="BREXIT_V20190522_DEDUP")
-@with_appcontext
-def update_gold(cwb_id):
+@bp.cli.command('gold')
+@click.option('--cwb_id', default="BREXIT-2016-RAND")
+def fetch_gold(cwb_id):
+
     con = connect()
     if con is not None:
+
         gold = get_gold(con)
         gold['tweet'] = gold['tweet'].apply(lambda x: 't' + str(x))
         # last_adjudication = gold['adjudication'].max()
         # .replace(" ", "_").replace(":", "-")
-        gold.to_csv(
-            os.path.join("library", cwb_id, "gold", "adjudicated.tsv"), sep="\t"
-        )
+        gold.to_csv(os.path.join("library", cwb_id, "gold", "adjudicated.tsv"), sep="\t")
+
+    click.echo('fetched gold')

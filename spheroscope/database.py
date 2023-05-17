@@ -8,12 +8,14 @@ from glob import glob
 
 import click
 from ccc.cqpy import cqpy_dump, cqpy_load
-from flask import current_app
-from flask.cli import with_appcontext
+from flask import Blueprint, current_app
 from pandas import read_csv
 from werkzeug.security import generate_password_hash
 
 from . import db
+
+
+bp = Blueprint('database', __name__, url_prefix='/database')
 
 
 def get_patterns():
@@ -402,17 +404,15 @@ def import_library():
 #########################################
 # CLI ###################################
 #########################################
-@click.command('init-db')
-@with_appcontext
+@bp.cli.command('init')
 def init_db_command():
     """Clear the existing data and create new tables."""
     init_db()
-    click.echo('initialized database')
+    click.echo('initialised database')
 
 
-@click.command('import-lib')
-@with_appcontext
+@bp.cli.command('library')
 def import_lib_command():
-    """Import library from master."""
+    """Import library."""
     import_library()
-    click.echo('imported lib')
+    click.echo('imported library')
