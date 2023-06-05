@@ -63,6 +63,11 @@ def get_gold(con):
     return df
 
 
+def get_random1000(con):
+
+    pass
+
+
 def get_patterns(con):
 
     patterns = read_sql(
@@ -78,6 +83,11 @@ def get_patterns(con):
     # )
 
     return patterns
+
+
+def set_annotation(con, annotator, idx, positive=True):
+
+    pass
 
 
 def set_query_results(con, df):

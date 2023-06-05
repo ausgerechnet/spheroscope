@@ -82,13 +82,14 @@
 - /<int(signed=True):id> (GET, POST) → pattern(id)
 - /<int:id>/subquery (GET, POST) → run_subquery(id)
 
-### remote_db.py
+### remote.py
 
+#### methods
 - connect(port)
 - get_tables(con)
 - get_gold(con)
 - get_patterns(con)
+- set_query_results(con)
 
-- CLI: update-patterns → update_patterns()
-- CLI: update-gold → update_gold(cwb_id)
-
+#### CLI
+- push_results
