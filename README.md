@@ -16,9 +16,7 @@ The recommended way is to use [pipenv](https://pipenv.pypa.io/en/latest/):
     python -m pip install pipenv
     pipenv install --dev
 
-which creates a virtual environment and installs all required packages. The [Pipfile](Pipfile) is set to require Python3.9, you can change this e.g. via
-
-    pipenv install --dev --python 3.8
+which creates a virtual environment and installs all required packages specified in the [Pipfile](Pipfile).
 
 Alternatively, you can use [setup.py](setup.py) or the [complete requirements file](requirements-complete.txt).
 

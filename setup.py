@@ -24,11 +24,11 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/ausgerechnet/spheroscope",
     install_requires=[
-        "Flask>=2.0,<2.1",
-        "Flask-SQLAlchemy>=2.5,<2.6",
+        "Flask>=2.2,<2.3",
+        "Flask-SQLAlchemy>=3.0,<3.1",
         "pymagnitude>=0.1.140,<0.2",
-        "cwb-ccc==0.10.2",
-        "psycopg2-binary>=2.9,<3"
+        "cwb-ccc>=0.11.7,<0.12",
+        "psycopg2-binary>=2.9.5,<3.0"
     ],
     classifiers=[
         "Development Status :: 3 - Alpha",
