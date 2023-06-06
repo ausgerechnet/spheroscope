@@ -63,9 +63,13 @@ def get_gold(con):
     return df
 
 
-def get_random1000(con):
+def get_tweetsets(con):
 
-    pass
+    df = read_sql(
+        text('SELECT * FROM rant.virtual_tweet_sets;'), con
+    ).explode('tweets')
+
+    return df
 
 
 def get_patterns(con):
@@ -167,3 +171,16 @@ def fetch_gold(cwb_id):
         gold.to_csv(os.path.join("library", cwb_id, "gold", "adjudicated.tsv"), sep="\t")
 
     click.echo('fetched gold')
+
+
+@bp.cli.command('tweetsets')
+@click.option('--cwb_id', default="BREXIT-2016-RAND")
+def fetch_tweetsets(cwb_id):
+
+    con = connect()
+    if con is not None:
+
+        tweet_sets = get_tweetsets(con)
+        tweet_sets.to_csv(os.path.join("library", cwb_id, "gold", "tweetsets.tsv"), sep="\t", index=False)
+
+    click.echo('fetched tweet sets')

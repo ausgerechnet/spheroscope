@@ -43,3 +43,6 @@ patterns:
 
 gold:
 	pipenv run flask --app spheroscope --debug remote gold
+
+tweetsets:
+	pipenv run flask --app spheroscope --debug remote tweetsets
