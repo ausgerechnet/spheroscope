@@ -7,7 +7,7 @@ import re
 import click
 from flask import (Blueprint, current_app, jsonify, render_template, request,
                    session)
-from pandas import concat, DataFrame
+from pandas import concat, DataFrame, read_csv
 
 from .auth import login_required
 from .corpora import init_corpus, read_config
@@ -432,3 +432,75 @@ def subquery_command(base_pattern, slot, slot_pattern, dir_out, s_cwb, cwb_id):
     # get matches
     matches = hierarchical_query(base_pattern, slot, slot_pattern, s_cwb, cwb_id)
     matches.to_csv(path_out, sep="\t", compression="gzip")
+
+
+@bp.route('/<int(signed=True):id>/random1000', methods=('GET',))
+@login_required
+def random1000(id):
+    """
+    evaluation of pattern on random1000
+    ---
+
+    """
+
+    cwb_id = session['corpus']['resources']['cwb_id']
+
+    mode = request.args.get('mode', 'all')
+
+    path_matches = os.path.join(current_app.instance_path, cwb_id, "query-results", f"pattern{id}.tsv.gz")
+    path_tweetsets = os.path.join("library", cwb_id, "gold", "tweetsets.tsv")
+    path_gold = os.path.join("library", cwb_id, "gold", "adjudicated.tsv")
+
+    try:
+        matches = read_csv(path_matches, sep='\t', dtype=str)[['query', 'tweet_id']]
+    except FileNotFoundError:
+        os.makedirs(os.path.join(current_app.instance_path, cwb_id, "query-results"), exist_ok=True)
+        queries = Query.query.filter_by(pattern_id=id, cwb_handle=cwb_id).all()
+        current_app.logger.info("pattern %d: %d queries" % (id, len(queries)))
+        matches = run_queries(queries, cwb_id)
+        matches['pattern'] = id
+        matches.to_csv(path_matches, sep="\t", compression="gzip")
+        matches = matches.reset_index()[['query', 'tweet_id']]
+
+    tweetsets = read_csv(path_tweetsets, sep="\t", dtype=str)
+    random1000 = tweetsets.loc[tweetsets['set_name'] == 'random1000'].rename({'tweets': 'tweet_id'}, axis=1).drop('set_name', axis=1)
+
+    gold = read_csv(path_gold, sep="\t", index_col=0, dtype=str)
+    gold = gold.loc[gold['pattern'] == str(id)].rename({'tweet': 'tweet_id'}, axis=1).drop('pattern', axis=1)
+    gold = gold.drop_duplicates(subset=['tweet_id'])
+
+    # remove leading "t" in gold for BREXIT-2016-RAND
+    if not matches['tweet_id'].iloc[0].startswith("t"):
+        gold['tweet_id'] = gold['tweet_id'].apply(lambda x: x[1:])
+
+    df = random1000.merge(gold, how='left', on='tweet_id').merge(matches, how='left', on='tweet_id')
+
+    # get all tweets
+    corpus_config = read_config(cwb_id)
+    corpus = init_corpus(corpus_config)
+    d = corpus.query(s_query='tweet_id', s_values=set(df['tweet_id']))
+    conc = d.concordance(s_show=['tweet_id'], cut_off=None)
+    df = df.merge(conc, how='left').sort_values(by='tweet_id')
+
+    if mode == 'all':
+        subset = ''
+    elif mode == 'fn':
+        subset = 'False Negatives'
+        df = df.loc[df['annotation'] == "True"].drop('annotation', axis=1).loc[df['query'].isna()].reset_index(drop=True).drop('query', axis=1)
+    elif mode == 'fp':
+        subset = 'False Positives'
+        df = df.loc[df['annotation'] == "False"].drop('annotation', axis=1).loc[~ df['query'].isna()].reset_index(drop=True)
+    elif mode == 'tp':
+        subset = 'True Positives'
+        df = df.loc[df['annotation'] == "True"].drop('annotation', axis=1).loc[~ df['query'].isna()].reset_index(drop=True)
+    elif mode == 'tn':
+        subset = 'True Negatives'
+        df = df.loc[df['annotation'] == "False"].drop('annotation', axis=1).loc[df['query'].isna()].reset_index(drop=True).drop('query', axis=1)
+
+    return render_template('patterns/random1000.html',
+                           pattern=3,
+                           subset=subset,
+                           table=df.to_html(
+                               justify='left',
+                               classes=['table', 'is-striped', 'is-hoverable', 'is-narrow', 'sortable']
+                           ))

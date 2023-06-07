@@ -1,0 +1,10 @@
+{% extends 'patterns/base.html' %}
+
+{% block title %}
+{{ super() }}
+<li><a>3: {{ subset }} on random1000</a></li>
+{% endblock %}
+
+{% block content %}
+{{ table | safe }}
+{% endblock %}
