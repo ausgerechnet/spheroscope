@@ -17,5 +17,5 @@
 # ---
 
 @0[::] (/entity_np_actor[]) @1:[::]
-[xpos="MD"]* ([lemma="be"&word="[a-z]+"] | [lemma="belong" &word="[a-z]+"] "to") 
-@2[::] [upos="DET"] (/entity_np_actor[]) @3[::]
+[xpos="MD" | upos="ADV|AUX"]* ([lemma="be"&word="[a-z]+"] | [lemma="belong" &word="[a-z]+"] "to") 
+@2[::] [upos="DET"] (/entity_np_no_person_name[]) @3[::]

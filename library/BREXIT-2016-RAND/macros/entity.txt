@@ -10,6 +10,11 @@ MACRO entity_np_actor(0)
 )
 ;
 
+MACRO entity_np_no_person_name(0)
+(
+( [upos = "DET|ADJ " | word = "#.+" | xpos="PRP$" | lemma=$modifiers_specified | lemma=$modifiers_unspecified]* [upos = "NOUN" & lemma = $actor_any |lemma=$nouns_quantified | xpos="PRP" & lemma!="it"]+  ([upos=".CONJ" | word=","] [upos = "DET|ADJ " | word = "#.+"]* [upos = "NOUN"]+ )* ) | [upos = "DET|ADJ " | word = "#.+" | xpos="PRP$" | lemma=$modifiers_specified | lemma=$modifiers_unspecified]* <ner_type!="PER">[]+</ner_type>
+)
+;
 
 MACRO actor_specified(0)
 (

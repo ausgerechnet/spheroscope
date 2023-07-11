@@ -1,0 +1,20 @@
+# --- # CQPY query file
+# anchors:
+#   corrections:
+#     1: -1
+#     3: -1
+#   slots:
+#     '0':
+#     - 0
+#     - 1
+#     '1':
+#     - 2
+#     - 3
+# meta:
+#   comment: null
+#   name: pattern9999_entity_wants_to_member
+#   pattern: 9999
+# ---
+
+@0:[::] (/entity_np_actor[]) @1[::] [xpos="RB|MD"]* [lemma=$verbs_prefer] [xpos="RB|MD"|lemma="to"]* [lemma="be|form|become|remain|stay"] [xpos="RB|MD"]* [upos="DET|ADJ"]* [(lemma=$nouns_member|lemma=$nouns_part) & upos="NOUN"] "in|of"
+@2[::] (/entity_np_no_person_name[]) @3[::]

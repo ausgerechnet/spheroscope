@@ -11,4 +11,4 @@
 #   pattern: 3
 # ---
 
-([word="Hoping|Hope|Wishing|Wish" &upos="VERB"] | [lemma="[\.\?\!;,-]+"] [word="hoping|hope|wishing|wish" & upos="VERB"]) @2:[::] [lemma="for|that|to"]? @3[upos!="SYM|.CONJ|PUNCT"]+
+([lbound(s) & word="hoping|hope|wishing|wish"%c &upos="VERB"] | [lemma="[\.\?\!;,-]+"] [word="hoping|hope|wishing|wish"%c & upos="VERB"]) @2:[::] [lemma="for|that|to"]? @3[upos!="SYM|.CONJ|PUNCT"]+

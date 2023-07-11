@@ -17,4 +17,4 @@
 # ---
 
 @0[::] (/entity_np_actor[]) @1:[::]
-[xpos="RB|MD"|lemma="be|have|to"]* [lemma="become"] [xpos="RB|MD"]* [upos="DET|ADJ"]* [(lemma=$nouns_member|lemma=$nouns_part) & upos="NOUN"] "in|of" @2[::] (/entity_np_actor[]) @3[::]
+[xpos="RB|MD"|upos="AUX"]* [lemma="become"] [xpos="RB|MD"]* [upos="DET|ADJ"]* [(lemma=$nouns_member|lemma=$nouns_part) & upos="NOUN"] "in|of" @2[::] [upos="DET"] (/entity_np_actor[]) @3[::]
