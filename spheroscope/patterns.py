@@ -434,11 +434,11 @@ def subquery_command(base_pattern, slot, slot_pattern, dir_out, s_cwb, cwb_id):
     matches.to_csv(path_out, sep="\t", compression="gzip")
 
 
-@bp.route('/<int(signed=True):id>/random1000', methods=('GET',))
+@bp.route('/<int(signed=True):id>/<tweetset>', methods=('GET',))
 @login_required
-def random1000(id):
+def random1000(id, tweetset):
     """
-    evaluation of pattern on random1000
+    evaluation of pattern on <tweetset>
     ---
 
     """
@@ -451,6 +451,12 @@ def random1000(id):
     path_tweetsets = os.path.join("library", cwb_id, "gold", "tweetsets.tsv")
     path_gold = os.path.join("library", cwb_id, "gold", "adjudicated.tsv")
 
+    tweetsets = read_csv(path_tweetsets, sep="\t", dtype=str)
+    tweetset = tweetsets.loc[tweetsets['set_name'] == tweetset].rename({'tweets': 'tweet_id'}, axis=1).drop('set_name', axis=1)
+    if len(tweetset) == 0:
+        current_app.logger.error('tweetset does not exist')
+        return 'tweetset does not exist'
+
     try:
         matches = read_csv(path_matches, sep='\t', dtype=str)[['query', 'tweet_id']]
     except FileNotFoundError:
@@ -462,9 +468,6 @@ def random1000(id):
         matches.to_csv(path_matches, sep="\t", compression="gzip")
         matches = matches.reset_index()[['query', 'tweet_id']]
 
-    tweetsets = read_csv(path_tweetsets, sep="\t", dtype=str)
-    random1000 = tweetsets.loc[tweetsets['set_name'] == 'random1000'].rename({'tweets': 'tweet_id'}, axis=1).drop('set_name', axis=1)
-
     gold = read_csv(path_gold, sep="\t", index_col=0, dtype=str)
     gold = gold.loc[gold['pattern'] == str(id)].rename({'tweet': 'tweet_id'}, axis=1).drop('pattern', axis=1)
     gold = gold.drop_duplicates(subset=['tweet_id'])
@@ -473,7 +476,7 @@ def random1000(id):
     if not matches['tweet_id'].iloc[0].startswith("t"):
         gold['tweet_id'] = gold['tweet_id'].apply(lambda x: x[1:])
 
-    df = random1000.merge(gold, how='left', on='tweet_id').merge(matches, how='left', on='tweet_id')
+    df = tweetset.merge(gold, how='left', on='tweet_id').merge(matches, how='left', on='tweet_id')
 
     # get all tweets
     corpus_config = read_config(cwb_id)
@@ -497,7 +500,7 @@ def random1000(id):
         subset = 'True Negatives'
         df = df.loc[df['annotation'] == "False"].drop('annotation', axis=1).loc[df['query'].isna()].reset_index(drop=True).drop('query', axis=1)
 
-    return render_template('patterns/random1000.html',
+    return render_template('patterns/tweetset.html',
                            pattern=3,
                            subset=subset,
                            table=df.to_html(
