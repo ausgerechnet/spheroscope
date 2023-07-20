@@ -46,11 +46,9 @@ idx	name	template	explanation	retired	kind
 57	entity with membership	{?0 : entity} \land {?1 : entity}	entity 0, which is part of entity 1	False	entity
 58	desirer	D({?0 : formula})	group of entities desiring formula 0 to be true	False	entity
 59	believer	B({?0 : formula})	group of entities believing formula 0 to be true	False	entity
-60	entry	\neg({?0 : entity} \implies {?1 : entity}); F ({?0} \implies {?1})	entity 0 is not part of entity 1 but will be in the future	False	formula
 61	entity equivalence	{?0 : entity} \iff {?1 : entity}	entity 0 and entity 1 are the same	False	formula
-62	continued membership	{?0 : entity} \implies {?1 : entity}; X ({?0} \implies {?1})	entity 0 is part of entity 1 and will stay part of it 	False	formula
-63	stay out of it	\neg({?0 : entity} \implies {?1 : entity}); X \neg({?0} \implies {?1})	entity 0 is not part 0f entity 1 and will saty out of entity 1 in the future 	False	formula
 64	prediction	Q_{{?0 : entity}} {?1 : formula}	entity 0 predicts that formula 1 will become true	False	formula
+65	FOMO	D_{{?0 : entitiy}}({?1 : entity} \implies {?2 : entity})	entitiy 0 wants entity 1 to be part of entity 2	False	formula
 -9999	preamble	\newcommand{\mcauses}{\Box\kern-.5em{\implies}} \newcommand{\dimplies}{\overset{d}{\implies}} \newcommand{\cfac}{\overset{c}{\implies}}	the preamble (for exporting)	True	formula
 1	explanation	({?0 : formula}) \mcauses ({?1 : formula})	0 is the reason why 1 is true; note that 0 and 1 could be formulas talking about the past stating that something was the reason why something was the case at some point in time	True	formula
 7	 	({?1 : formula}) \mcauses Q_{{?0 : entity}} bad	1 is bad for entity 0	True	formula
@@ -65,4 +63,7 @@ idx	name	template	explanation	retired	kind
 33	possible causation claim	Q_{{?0 : entity}} \diamond (({?1 : formula}) \mcauses ({?2 : formula}))	entity 0 claims that 1 might cause 2 to be true	True	formula
 47	unary preference	D_{{?0 : entity}} ({?1 : formula})	entity 0 prefers formula 1 being true over it being false	True	formula
 52	intention	I_{{?0 : entity}} {?1 : formula}	entity 0 is committed to make formula 1 true	True	formula
+60	entry	\neg({?0 : entity} \implies {?1 : entity}); F ({?0} \implies {?1})	entity 0 is not part of entity 1 but will be in the future	True	formula
+62	continued membership	{?0 : entity} \implies {?1 : entity}; X ({?0} \implies {?1})	entity 0 is part of entity 1 and will stay part of it 	True	formula
+63	stay out of it	\neg({?0 : entity} \implies {?1 : entity}); X \neg({?0} \implies {?1})	entity 0 is not part 0f entity 1 and will saty out of entity 1 in the future 	True	formula
 9999	unknown	\top	uncategorized queries	True	formula
