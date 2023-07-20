@@ -54,19 +54,21 @@ def get_tables(con):
     return list(df['relname'])
 
 
-def get_gold(con):
+def get_gold(con, pattern=None):
 
+    restriction = f" WHERE pattern='{pattern}';" if pattern is not None else ";"
     df = read_sql(
-        text('SELECT * FROM rant."classification_gold+";'), con
+        text('SELECT * FROM rant."classification_gold+"' + restriction), con
     )
 
     return df
 
 
-def get_tweetsets(con):
+def get_tweetsets(con, tweetset=None):
 
+    restriction = f" WHERE set_name='{tweetset}';" if tweetset is not None else ";"
     df = read_sql(
-        text('SELECT * FROM rant.virtual_tweet_sets;'), con
+        text('SELECT * FROM rant.virtual_tweet_sets' + restriction), con
     ).explode('tweets')
 
     return df

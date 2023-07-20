@@ -14,6 +14,7 @@ from .corpora import init_corpus, read_config
 from .database import Pattern, Query, get_patterns
 from .queries import (add_gold, create_subcorpus, evaluate,
                       patch_query_results, run_queries)
+from .remote import connect, get_tweetsets, get_gold
 
 bp = Blueprint('patterns', __name__, url_prefix='/patterns')
 
@@ -436,7 +437,7 @@ def subquery_command(base_pattern, slot, slot_pattern, dir_out, s_cwb, cwb_id):
 
 @bp.route('/<int(signed=True):id>/<tweetset>', methods=('GET',))
 @login_required
-def random1000(id, tweetset):
+def eval_tweetset(id, tweetset):
     """
     evaluation of pattern on <tweetset>
     ---
@@ -444,19 +445,23 @@ def random1000(id, tweetset):
     """
 
     cwb_id = session['corpus']['resources']['cwb_id']
-
     mode = request.args.get('mode', 'all')
 
-    path_matches = os.path.join(current_app.instance_path, cwb_id, "query-results", f"pattern{id}.tsv.gz")
-    path_tweetsets = os.path.join("library", cwb_id, "gold", "tweetsets.tsv")
-    path_gold = os.path.join("library", cwb_id, "gold", "adjudicated.tsv")
-
-    tweetsets = read_csv(path_tweetsets, sep="\t", dtype=str)
-    tweetset = tweetsets.loc[tweetsets['set_name'] == tweetset].rename({'tweets': 'tweet_id'}, axis=1).drop('set_name', axis=1)
+    # get gold and tweetset from remote db
+    con = connect()
+    gold = get_gold(con, id)
+    gold = gold.rename({'tweet': 'tweet_id'}, axis=1).drop('pattern', axis=1)
+    gold = gold.drop_duplicates(subset=['tweet_id'])
+    gold['tweet_id'] = gold['tweet_id'].astype(str)
+    tweetset = get_tweetsets(con, tweetset)
+    tweetset = tweetset.rename({'tweets': 'tweet_id'}, axis=1).drop('set_name', axis=1)
+    tweetset['tweet_id'] = tweetset['tweet_id'].astype(str)
     if len(tweetset) == 0:
         current_app.logger.error('tweetset does not exist')
         return 'tweetset does not exist'
 
+    # get matches from instance folder or create
+    path_matches = os.path.join(current_app.instance_path, cwb_id, "query-results", f"pattern{id}.tsv.gz")
     try:
         matches = read_csv(path_matches, sep='\t', dtype=str)[['query', 'tweet_id']]
     except FileNotFoundError:
@@ -468,37 +473,35 @@ def random1000(id, tweetset):
         matches.to_csv(path_matches, sep="\t", compression="gzip")
         matches = matches.reset_index()[['query', 'tweet_id']]
 
-    gold = read_csv(path_gold, sep="\t", index_col=0, dtype=str)
-    gold = gold.loc[gold['pattern'] == str(id)].rename({'tweet': 'tweet_id'}, axis=1).drop('pattern', axis=1)
-    gold = gold.drop_duplicates(subset=['tweet_id'])
-
-    # remove leading "t" in gold for BREXIT-2016-RAND
-    if not matches['tweet_id'].iloc[0].startswith("t"):
-        gold['tweet_id'] = gold['tweet_id'].apply(lambda x: x[1:])
-
+    # merge
     df = tweetset.merge(gold, how='left', on='tweet_id').merge(matches, how='left', on='tweet_id')
 
-    # get all tweets
+    # get all tweet texts
     corpus_config = read_config(cwb_id)
     corpus = init_corpus(corpus_config)
     d = corpus.query(s_query='tweet_id', s_values=set(df['tweet_id']))
     conc = d.concordance(s_show=['tweet_id'], cut_off=None)
     df = df.merge(conc, how='left').sort_values(by='tweet_id')
-
     if mode == 'all':
         subset = ''
     elif mode == 'fn':
         subset = 'False Negatives'
-        df = df.loc[df['annotation'] == "True"].drop('annotation', axis=1).loc[df['query'].isna()].reset_index(drop=True).drop('query', axis=1)
+        df = df.dropna(subset='annotation')
+        df = df.loc[df['annotation']].drop('annotation', axis=1).loc[df['query'].isna()].reset_index(drop=True).drop('query', axis=1)
     elif mode == 'fp':
         subset = 'False Positives'
-        df = df.loc[df['annotation'] == "False"].drop('annotation', axis=1).loc[~ df['query'].isna()].reset_index(drop=True)
+        df = df.dropna(subset='annotation')
+        df = df.loc[df['annotation'] == False].drop('annotation', axis=1).loc[~ df['query'].isna()].reset_index(drop=True)
     elif mode == 'tp':
         subset = 'True Positives'
-        df = df.loc[df['annotation'] == "True"].drop('annotation', axis=1).loc[~ df['query'].isna()].reset_index(drop=True)
+        df = df.dropna(subset='annotation')
+        df = df.loc[df['annotation']].drop('annotation', axis=1).loc[~ df['query'].isna()].reset_index(drop=True)
     elif mode == 'tn':
         subset = 'True Negatives'
-        df = df.loc[df['annotation'] == "False"].drop('annotation', axis=1).loc[df['query'].isna()].reset_index(drop=True).drop('query', axis=1)
+        df = df.dropna(subset='annotation')
+        df = df.loc[df['annotation'] == False].drop('annotation', axis=1).loc[df['query'].isna()].reset_index(drop=True).drop('query', axis=1)
+    else:
+        return 'unrecognised mode'
 
     return render_template('patterns/tweetset.html',
                            pattern=3,
