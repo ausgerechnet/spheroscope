@@ -18,5 +18,5 @@
 
 @0:[::]  /entity_np_actor[]  @1[::]
 [upos="ADV"]* ([lemma="experience|have|feel|share|show|with"] | [lemma="be|have"] [lemma="drive|full|hit|motivate|overcome|overwhelm(ed)?|strike|unite"] "with|by|of")+
-[upos="DET|ADJ|ADV"]* [lemma=$nouns_desire & upos="NOUN" ] [lemma="for|pro|that|to|towards"] 
+[upos="DET|ADJ|ADV"]* [lemma=$nouns_desire & upos="NOUN"&lemma!="hope" ] [lemma="for|pro|that|to|towards"] 
 @2:[::] (/entity_np_all[] | [upos="VERB"]) (/lexical_words[])+ @3:[::]
