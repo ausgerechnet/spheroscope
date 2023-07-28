@@ -1,18 +1,18 @@
 MACRO entity_np_all(0)
 (
- [upos = "DET|ADJ " | xpos="PRP$" | word = "#.+"]* [upos = "NOUN|PROPN" | xpos="PRP"]+  ([upos=".CONJ" | word=","] [upos = "DET|ADJ " | word = "#.+"]* [upos = "NOUN|PROPN"]+ )*
+ [upos = "DET|ADJ " | xpos="PRP$" | word = "#.+"]* [upos = "NOUN|PROPN" | xpos="PRP"]+  ([upos=".CONJ" | word="[-\(,]"]+ [upos = "DET|ADJ" | word = "#.+"]* [upos = "NOUN|PROPN"]+ [word="[-\(,]"]?)*
 )
 ;
 
 MACRO entity_np_actor(0)
 (
- [upos = "DET|ADJ " | word = "#.+" | xpos="PRP$" | lemma=$modifiers_specified | lemma=$modifiers_unspecified]* [upos = "NOUN" & lemma = $actor_any |lemma=$nouns_quantified | xpos="PRP" & lemma!="it" | upos ="PROPN"]+  ([upos=".CONJ" | word=","] [upos = "DET|ADJ " | word = "#.+"]* [upos = "NOUN|PROPN"]+ )*
+ [upos = "DET|ADJ" | word = "#.+" | xpos="PRP$" | lemma=$modifiers_specified | lemma=$modifiers_unspecified]* [upos = "NOUN" & lemma = $actor_any |lemma=$nouns_quantified | xpos="PRP" & lemma!="it" | upos ="PROPN"]+  ([upos=".CONJ" | word="[-\(,]"]+ [upos = "DET|ADJ " | word = "#.+"]* [upos = "NOUN|PROPN"]+ [word="[-\(,]"]?)*
 )
 ;
 
 MACRO entity_np_no_person_name(0)
 (
-( [upos = "DET|ADJ " | word = "#.+" | xpos="PRP$" | lemma=$modifiers_specified | lemma=$modifiers_unspecified]* [upos = "NOUN" & lemma = $actor_any |lemma=$nouns_quantified | xpos="PRP" & lemma!="it"]+  ([upos=".CONJ" | word=","] [upos = "DET|ADJ " | word = "#.+"]* [upos = "NOUN"]+ )* ) | [upos = "DET|ADJ " | word = "#.+" | xpos="PRP$" | lemma=$modifiers_specified | lemma=$modifiers_unspecified]* <ner_type!="PER">[]+</ner_type>
+( [upos = "DET|ADJ " | word = "#.+" | xpos="PRP$" | lemma=$modifiers_specified | lemma=$modifiers_unspecified]* [upos = "NOUN" & lemma = $actor_any |lemma=$nouns_quantified | xpos="PRP" & lemma!="it"]+  ([upos=".CONJ" | word="[-\(,]"]+ [upos = "DET|ADJ " | word = "#.+"]* [upos = "NOUN"]+ )* [word="[-\(,]"]?) | [upos = "DET|ADJ " | word = "#.+" | xpos="PRP$" | lemma=$modifiers_specified | lemma=$modifiers_unspecified]* <ner_type!="PER">[]+</ner_type>
 )
 ;
 
