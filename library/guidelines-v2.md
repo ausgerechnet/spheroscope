@@ -204,24 +204,26 @@
 - The Times' Jane Smith
   + → #57
 
-# 26 Position to Know #
+# 26 Group Knowledge #
 
-## shema ##
-- **ENTITY2** is part of **ENTITY0** whos members are in a position to know **FORMULA1**
-- **ENTITY2** is part of **ENTITY0** whos members generally know **FORMULA1**
+## schema ##
+- **ENTITY2** is part of **ENTITY0** whose members are in a position to know **FORMULA1**
+- **ENTITY2** is part of **ENTITY0** whose members generally know **FORMULA1**
 - because **ENTITY2** is part of **ENTITY0** it knows **FORMULA1**
 
+## change log ##
+- used to be called "position to know", but it is actually a combination of "position to know" and pattern #24 (membership)
 
 # 43 Better for Concept #
 
 ## schema ##
 - **FORMULA1** would be at least as good as **FORMULA0** for **CONCEPT2**
-- **FORMULA1** would be bettern than **FORMULA0** for **CONCEPT2**
+- **FORMULA1** would be better than **FORMULA0** for **CONCEPT2**
 
 # 46 Qualified Desire #
 
 ## shema ##
-- **ENTITY2** is part of **ENTITY0** whos members generally want **FORMULA1**
+- **ENTITY2** is part of **ENTITY0** whose members generally want **FORMULA1**
 - because **ENTITY2** is part of **ENTITY0** it wants **FORMULA1**
 
 # 55 Opposition #
@@ -336,7 +338,7 @@
 - **Richard Haass** claims that **Brexit could 'trigger NI violence'**
 - **Experts** warn that **brexit could cause the pound to fall**
 
-# 65 FOMO (Fear of Missing Out)
+# 65 Belongingness #
 
 ## schema ##
 - **ENTITY0** wants **ENTITY1** to be part of **ENTITY2**
