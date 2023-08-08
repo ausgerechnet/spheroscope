@@ -214,17 +214,26 @@
 ## change log ##
 - used to be called "position to know", but it is actually a combination of "position to know" and pattern #24 (membership)
 
+## examples ##
+- **We** **european** knows **it** and see our culture disappearing.
+
 # 43 Better for Concept #
 
 ## schema ##
 - **FORMULA1** would be at least as good as **FORMULA0** for **CONCEPT2**
 - **FORMULA1** would be better than **FORMULA0** for **CONCEPT2**
 
+## examples ##
+- ... **#brexit** will be better for **the economy** than **to remain in stagnant EU**.
+
 # 46 Qualified Desire #
 
 ## shema ##
 - **ENTITY2** is part of **ENTITY0** whose members generally want **FORMULA1**
 - because **ENTITY2** is part of **ENTITY0** it wants **FORMULA1**
+
+## examples ##
+- ... as an **immigrant, son of immigrants and having been subject to racsim** **I* am firmly for **Brexit**
 
 # 55 Opposition #
 
@@ -309,6 +318,10 @@
 ## schema ##
 - **ENTITY0** and **ENTITY1** are the same
 - **ENTITY0** and **ENTITY1** are equivalent
+
+## examples ##
+- **Justing Trudeau** - **the Angela Merkel of Canada**
+- ... **the UK** is **the Quebec of the EU**
 
 # 64 Prediction
 
