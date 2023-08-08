@@ -204,6 +204,37 @@
 - The Times' Jane Smith
   + → #57
 
+# 26 Group Knowledge #
+
+## schema ##
+- **ENTITY2** is part of **ENTITY0** whose members are in a position to know **FORMULA1**
+- **ENTITY2** is part of **ENTITY0** whose members generally know **FORMULA1**
+- because **ENTITY2** is part of **ENTITY0** it knows **FORMULA1**
+
+## change log ##
+- used to be called "position to know", but it is actually a combination of "position to know" and pattern #24 (membership)
+
+## examples ##
+- **We** **european** knows **it** and see our culture disappearing.
+
+# 43 Better for Concept #
+
+## schema ##
+- **FORMULA1** would be at least as good as **FORMULA0** for **CONCEPT2**
+- **FORMULA1** would be better than **FORMULA0** for **CONCEPT2**
+
+## examples ##
+- ... **#brexit** will be better for **the economy** than **to remain in stagnant EU**.
+
+# 46 Qualified Desire #
+
+## shema ##
+- **ENTITY2** is part of **ENTITY0** whose members generally want **FORMULA1**
+- because **ENTITY2** is part of **ENTITY0** it wants **FORMULA1**
+
+## examples ##
+- ... as an **immigrant, son of immigrants and having been subject to racsim** **I* am firmly for **Brexit**
+
 # 55 Opposition #
 
 ## schema ##
@@ -282,6 +313,16 @@
 - I want to stay
   + #3
 
+# 61 Entity Equivalence #
+
+## schema ##
+- **ENTITY0** and **ENTITY1** are the same
+- **ENTITY0** and **ENTITY1** are equivalent
+
+## examples ##
+- **Justing Trudeau** - **the Angela Merkel of Canada**
+- ... **the UK** is **the Quebec of the EU**
+
 # 64 Prediction
 
 ## schema ##
@@ -309,3 +350,9 @@
 - **Brexit could lead to downgrades for other EU countries** - **Fitch**
 - **Richard Haass** claims that **Brexit could 'trigger NI violence'**
 - **Experts** warn that **brexit could cause the pound to fall**
+
+# 65 Belongingness #
+
+## schema ##
+- **ENTITY0** wants **ENTITY1** to be part of **ENTITY2**
+- **ENTITY0** wants to be part of **ENTITY2** (special case where entitiy 0 = entity 1) 
