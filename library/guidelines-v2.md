@@ -204,6 +204,26 @@
 - The Times' Jane Smith
   + → #57
 
+# 26 Position to Know #
+
+## shema ##
+- **ENTITY2** is part of **ENTITY0** whos members are in a position to know **FORMULA1**
+- **ENTITY2** is part of **ENTITY0** whos members generally know **FORMULA1**
+- because **ENTITY2** is part of **ENTITY0** it knows **FORMULA1**
+
+
+# 43 Better for Concept #
+
+## schema ##
+- **FORMULA1** would be at least as good as **FORMULA0** for **CONCEPT2**
+- **FORMULA1** would be bettern than **FORMULA0** for **CONCEPT2**
+
+# 46 Qualified Desire #
+
+## shema ##
+- **ENTITY2** is part of **ENTITY0** whos members generally want **FORMULA1**
+- because **ENTITY2** is part of **ENTITY0** it wants **FORMULA1**
+
 # 55 Opposition #
 
 ## schema ##
@@ -282,6 +302,12 @@
 - I want to stay
   + #3
 
+# 61 Entity Equivalence #
+
+## schema ##
+- **ENTITY0** and **ENTITY1** are the same
+- **ENTITY0** and **ENTITY1** are equivalent
+
 # 64 Prediction
 
 ## schema ##
@@ -309,3 +335,9 @@
 - **Brexit could lead to downgrades for other EU countries** - **Fitch**
 - **Richard Haass** claims that **Brexit could 'trigger NI violence'**
 - **Experts** warn that **brexit could cause the pound to fall**
+
+# 65 FOMO (Fear of Missing Out)
+
+## schema ##
+- **ENTITY0** wants **ENTITY1** to be part of **ENTITY2**
+- **ENTITY0** wants to be part of **ENTITY2** (special case where entitiy 0 = entity 1) 
