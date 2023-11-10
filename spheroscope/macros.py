@@ -88,11 +88,7 @@ def create():
             user_id=g.user.id,
             cwb_handle=session['corpus']['resources']['cwb_id'],
             name=request.form['name'],
-            macro=request.form['macro'],
-            path=os.path.join(
-                current_app.instance_path, cwb_id, 'macros',
-                request.form['name'] + ".txt"
-            )
+            macro=request.form['macro']
         )
 
         macro.delete()

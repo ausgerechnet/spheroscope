@@ -116,10 +116,6 @@ def create():
             words="\n".join(sorted(list(set([
                 w.lstrip().rstrip() for w in request.form['words'].split("\n")
             ])))),
-            path=os.path.join(
-                current_app.instance_path, cwb_id, 'wordlists',
-                request.form['name'] + ".txt"
-            ),
             p_att=request.form['p_att']
         )
         wordlist.write()
