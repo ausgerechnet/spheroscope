@@ -6,7 +6,7 @@ import os
 import yaml
 from ccc.cwb import Corpora, Corpus
 from flask import (Blueprint, current_app, flash, redirect, render_template,
-                   request, session)
+                   request, session, url_for)
 
 from .auth import login_required
 
@@ -97,7 +97,7 @@ def choose():
         current_app.logger.info('activating corpus "%s"' % cwb_id)
         session['corpus'] = read_config(cwb_id)
         flash(f"activated corpus {request.form['corpus']}")
-        return redirect("/corpora/" + request.form['corpus'])
+        return redirect(url_for("corpora.corpus_config", cwb_id=request.form['corpus']))
 
     corpora = Corpora(
         registry_path=current_app.config['REGISTRY_PATH']
@@ -144,7 +144,7 @@ def corpus_config(cwb_id):
             yaml.dump(corpus_config, f)
 
         flash(f"updated settings for corpus {session['corpus']['resources']['cwb_id']}")
-        return redirect("/")
+        return redirect(url_for("index"))
 
     # get available corpora
     corpora = Corpora(registry_path=current_app.config['REGISTRY_PATH']).show()
