@@ -65,7 +65,7 @@ class WordList(db.Model):
 
     @property
     def path(self):
-        return os.path.join("instance", self.cwb_handle, "wordlists", self.name + ".txt")
+        return os.path.join(current_app.instance_path, self.cwb_handle, "wordlists", self.name + ".txt")
 
     def __repr__(self):
         return 'wordlist "%s" with %d words on attribute "%s"' % (
@@ -141,7 +141,7 @@ class Macro(db.Model):
 
     @property
     def path(self):
-        return os.path.join("instance", self.cwb_handle, "macros", self.name + ".txt")
+        return os.path.join(current_app.instance_path, self.cwb_handle, "macros", self.name + ".txt")
 
     def __repr__(self):
         return 'macro "%s"' % (self.name)
@@ -216,7 +216,7 @@ class Query(db.Model):
 
     @property
     def path(self):
-        return os.path.join("instance", self.cwb_handle, "queries", self.name + ".cqpy")
+        return os.path.join(current_app.instance_path, self.cwb_handle, "queries", self.name + ".cqpy")
 
     def __repr__(self):
         return 'query "%s"' % (self.name)
