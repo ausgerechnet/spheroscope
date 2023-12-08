@@ -145,6 +145,7 @@ def update(id):
 
     if request.method == 'POST':
 
+        wordlist.delete()
         wordlist = WordList(
             id=id,
             user_id=g.user.id,
@@ -153,11 +154,8 @@ def update(id):
             words="\n".join(sorted(list(set([
                 w.lstrip().rstrip() for w in request.form['words'].split("\n")
             ])))),
-            path=wordlist.path,
             p_att=request.form['p_att']
         )
-
-        wordlist.delete()
         wordlist.write()
         return redirect(url_for('wordlists.index'))
 

@@ -90,8 +90,6 @@ def create():
             name=request.form['name'],
             macro=request.form['macro']
         )
-
-        macro.delete()
         macro.write()
         return redirect(url_for('macros.index'))
 
@@ -119,13 +117,13 @@ def update(id):
     }
 
     if request.method == 'POST':
+        macro.delete()
         macro = Macro(
             id=id,
             user_id=g.user.id,
             cwb_handle=session['corpus']['resources']['cwb_id'],
             name=request.form['name'],
-            macro=request.form['macro'],
-            path=macro.path
+            macro=request.form['macro']
         )
 
         macro.delete()
