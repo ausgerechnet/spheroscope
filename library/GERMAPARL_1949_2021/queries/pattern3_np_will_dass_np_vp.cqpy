@@ -1,0 +1,19 @@
+# --- # CQPY query file
+# anchors:
+#   corrections:
+#     1: -1
+#     3: -1
+#   slots:
+#     '0':
+#     - 0
+#     - 1
+#     '1':
+#     - 2
+#     - 3
+# meta:
+#   comment: null
+#   name: pattern3_np_will_dass_np_vp
+#   pattern: 3
+# ---
+
+@0[::] (/np_entity[]) @1:[lemma=$verbs_wollen] "," "da(ss|ß)" [pos="ADV|PRF"]* @2[::] (/np_generic[])+ [pos="V.+"]+ @3[::] 

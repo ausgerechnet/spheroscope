@@ -1,0 +1,20 @@
+display:
+  p_show:
+  - word
+  - lemma
+  p_slots: lemma
+  p_text: word
+  s_show:
+  - speaker_node
+meta:
+  s_cwb: speaker_node
+  s_gold: /
+query:
+  context: null
+  context_break: s
+  match_strategy: longest
+  s_query: s
+resources:
+  cwb_id: GERMAPARL_1949_2021
+  embeddings: /home/nathan/embeddings/deWikiWord2Vec.magnitude
+  lib_path: /home/nathan/spheroscope/instance/GERMAPARL_1949_2021
