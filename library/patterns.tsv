@@ -18,7 +18,7 @@ idx	name	template	explanation	retired	kind
 23	implication	({?0 : formula}) \implies ({?1 : formula})	if formula 0 then formula 1 	False	formula
 24	membership	{?0 : entity} \implies {?1 : entity}	entity 0 is part of entity 1	False	formula
 25	universal	({?0 : entity})\implies \downarrow x.\,({?1 : formula \text{ mentioning } x})	all entities in entity 0 have property 1	False	formula
-26	position to know	K_{{?0 : entity}} ({?1 : formula}); K_{{?2 : entity}}(?1)); (?2) \implies (?0)	entity 2 is part of entity 0 whose members know formula 1	False	formula
+26	group knowledge	K_{{?0 : entity}} ({?1 : formula}); K_{{?2 : entity}}(?1)); (?2) \implies (?0)	entity 2 is part of entity 0 whose members know formula 1	False	formula
 27	negation	\neg {?0 : formula}	formula 0 is false	False	formula
 30	action execution	E_{?0 : entity}({?1 : action})	entity 0 executed action 1	False	formula
 32	weak universal	({?0 : entity})\dimplies \downarrow x.,({?1 : formula\text{ mentioning }x})	most entities in entity 0 have property 1	False	formula
@@ -48,7 +48,7 @@ idx	name	template	explanation	retired	kind
 59	believer	B({?0 : formula})	group of entities believing formula 0 to be true	False	entity
 61	entity equivalence	{?0 : entity} \iff {?1 : entity}	entity 0 and entity 1 are the same	False	formula
 64	prediction	Q_{{?0 : entity}} {?1 : formula}	entity 0 predicts that formula 1 will become true	False	formula
-65	FOMO	D_{{?0 : entitiy}}({?1 : entity} \implies {?2 : entity})	entitiy 0 wants entity 1 to be part of entity 2	False	formula
+65	belongingness	D_{{?0 : entitiy}}({?1 : entity} \implies {?2 : entity})	entitiy 0 wants entity 1 to be part of entity 2	False	formula
 -9999	preamble	\newcommand{\mcauses}{\Box\kern-.5em{\implies}} \newcommand{\dimplies}{\overset{d}{\implies}} \newcommand{\cfac}{\overset{c}{\implies}}	the preamble (for exporting)	True	formula
 1	explanation	({?0 : formula}) \mcauses ({?1 : formula})	0 is the reason why 1 is true; note that 0 and 1 could be formulas talking about the past stating that something was the reason why something was the case at some point in time	True	formula
 7	 	({?1 : formula}) \mcauses Q_{{?0 : entity}} bad	1 is bad for entity 0	True	formula

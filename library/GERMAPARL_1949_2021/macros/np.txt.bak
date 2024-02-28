@@ -1,7 +1,0 @@
-MACRO np_generic(0)
-(
-([pos="ART|ADJ.+|P[DI]AT|PPOSAT"]*
-[pos="N.+|PPER|PPOSS" & word!=","]+) ("und|,|\-"([pos="ART|ADJ.+|P[DI]AT|PPOSAT"]*
-[pos="N.+|PPER|PPOSS" & word!=","]+))*
-)
-;

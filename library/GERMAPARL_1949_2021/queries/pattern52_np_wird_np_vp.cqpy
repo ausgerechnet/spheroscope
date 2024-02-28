@@ -1,0 +1,19 @@
+# --- # CQPY query file
+# anchors:
+#   corrections:
+#     1: -1
+#     3: -1
+#   slots:
+#     '0':
+#     - 0
+#     - 1
+#     '1':
+#     - 2
+#     - 3
+# meta:
+#   comment: null
+#   name: pattern52_np_wird_np_vp
+#   pattern: 52
+# ---
+
+@0[::] ([lemma="wir|ich" | lemma=$nouns_entity]) @1:[lemma="werden" & word!="wü.+"] @2[::] (/np_generic[])+ [pos="VVINF"] @3[::] 

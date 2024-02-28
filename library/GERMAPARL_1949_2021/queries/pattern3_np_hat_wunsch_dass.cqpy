@@ -1,0 +1,19 @@
+# --- # CQPY query file
+# anchors:
+#   corrections:
+#     1: -1
+#     3: -1
+#   slots:
+#     '0':
+#     - 0
+#     - 1
+#     '1':
+#     - 2
+#     - 3
+# meta:
+#   comment: null
+#   name: pattern3_np_hat_wunsch_dass
+#   pattern: 3
+# ---
+
+@0[::] ([lemma="wir|ich" | lemma=$nouns_entity]) @1:[lemma="haben"] [pos="ART|AD.+|APPR.*"]* [lemma=$nouns_wunsch] "," ("da(ss|ß)" [pos="ADV"]* @2[::] (/np_generic[])+ [pos="V.+"]+| (/np_generic[])* @2[::] (/np_generic[])? ([pos="VV.+ZU"] | "zu" [pos="VVINF"])) @3[::] 
