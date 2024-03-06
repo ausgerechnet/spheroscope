@@ -1,3 +1,7 @@
+.flake8
+
+library/BREXIT_V20190522_DEDUP/gold/tweetsets.tsv
+
 venv/
 
 *.magnitude
