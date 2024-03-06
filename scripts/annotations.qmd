@@ -1,0 +1,55 @@
+---
+title: "annotations"
+format: html
+editor: visual
+---
+
+```{r}
+library(DBI)
+library(RPostgreSQL)
+
+db <- "postgres"
+db_host <- "galois.informatik.uni-erlangen.de"
+db_port <- "5432"  # or any other port specified by the DBA
+db_user <- "philipp"
+db_password <- "PhilippSecretDB"
+con <- dbConnect(RPostgres::Postgres(), dbname = db, host = db_host, port = db_port, user = db_user, password = db_password)  
+```
+
+```{r}
+# dbListTables(con)
+# dbGetQuery(con, "SELECT relname FROM pg_class WHERE relkind='r' AND relname !~ '^(pg_|sql_)';")
+annotations <- dbGetQuery(con, "SELECT * FROM rant.classification_gold;") %>% 
+  mutate(tweet = as.character(tweet)) %>% tibble()
+```
+
+```{r}
+annotations %>%
+  mutate(day = lubridate::floor_date(adjudicated_at, "day")) %>% 
+  group_by(day, pattern, adjudicated_by) %>% 
+  summarise(n = n()) %>% 
+  arrange(desc(day))
+```
+
+```{r}
+annotations %>%
+  group_by(pattern, annotation) %>% 
+  summarise(n = n()) %>% 
+  pivot_wider(names_from = annotation, values_from = n)
+```
+
+
+```{r}
+annotation.ids <- annotations %>% pull(tweet) %>% unique() %>% str_flatten(collapse = ",")
+tweets <- dbGetQuery(con, str_interp("SELECT idx, text FROM rant.tweets WHERE idx IN (${annotation.ids});")) %>% 
+  mutate(idx = as.character(idx)) %>% tibble()
+tweets <- annotations %>% left_join(tweets %>% rename(tweet = idx)) %>% 
+  select(pattern, annotation, text, toplevel, adjudicated_by, adjudicated_at, undecidable, comment, tweet)
+```
+
+
+
+```{r}
+tweets %>% filter(pattern == 65, annotation) %>% arrange(desc(adjudicated_at)) %>% View()
+```
+
