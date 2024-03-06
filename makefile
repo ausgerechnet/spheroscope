@@ -27,7 +27,7 @@ run:
 
 
 query:
-	pipenv run flask --app spheroscope --debug patterns query
+	pipenv run flask --app spheroscope --debug patterns query --pattern 24
 
 subquery:
 	pipenv run flask --app spheroscope --debug patterns subquery 3 1 24
@@ -46,3 +46,10 @@ gold:
 
 tweetsets:
 	pipenv run flask --app spheroscope --debug remote tweetsets
+
+
+docker-build:
+	docker build --rm -t spheroscope -f Dockerfile .
+
+docker-run:
+	docker run -t --network host --name spheroscope --rm spheroscope
