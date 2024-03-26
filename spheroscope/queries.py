@@ -159,10 +159,11 @@ def add_gold(result, cwb_id, pattern, s_cwb, s_gold):
     try:
         # get gold if possible
         gold = read_csv(
-            os.path.join("library", cwb_id, "gold", "adjudicated.tsv"),
+            os.path.join(current_app.instance_path + "/../" + "library/", cwb_id, "gold", "adjudicated.tsv"),
             sep="\t", index_col=0
         )
     except FileNotFoundError:
+        current_app.logger.info("no gold data found")
         result['TP'] = None
     else:
         gold = gold.loc[gold['pattern'] == pattern].rename(
