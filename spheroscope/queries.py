@@ -461,24 +461,24 @@ def matches(id):
             # NB: index will contain duplicates if match and matchend didn't change but anchors or slots did
 
         else:
-            new_matches = matches
+            new_matches = old_matches
 
         # evaluate old and new matches
         current_app.logger.info("evaluating")
         old_matches = add_gold(old_matches, cwb_id, query.pattern_id, s_cwb, s_gold)
-        old_matches = old_matches.reset_index().drop_duplicates(subset=[s_cwb])[['TP']]
-        old_matches['query'] = 'saved version'
+        old_matches_stats = old_matches.reset_index().drop_duplicates(subset=[s_cwb])[['TP']]
+        old_matches_stats['query'] = 'saved version'
 
         new_matches = add_gold(new_matches, cwb_id, query.pattern_id, s_cwb, s_gold)
-        new_matches = new_matches.reset_index().drop_duplicates(subset=[s_cwb])[['TP']]
-        new_matches['query'] = 'this version'
+        new_matches_stats = new_matches.reset_index().drop_duplicates(subset=[s_cwb])[['TP']]
+        new_matches_stats['query'] = 'this version'
 
-        statistics = evaluate(concat([old_matches, new_matches]))
+        statistics = evaluate(concat([old_matches_stats, new_matches_stats]))
 
         # render result
         current_app.logger.info("rendering result table")
-        concordance = patch_query_results(matches)
-        concordance = concordance.drop('query', axis=1)
+        concordance = patch_query_results(new_matches)
+        # concordance = concordance.drop('query', axis=1)
 
         return render_template('queries/result_table.html',
                                concordance=concordance,
