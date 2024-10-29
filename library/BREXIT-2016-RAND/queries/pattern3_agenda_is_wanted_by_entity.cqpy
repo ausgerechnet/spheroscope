@@ -5,11 +5,11 @@
 #     3: -1
 #   slots:
 #     '0':
-#     - 0
-#     - 1
-#     '1':
 #     - 2
 #     - 3
+#     '1':
+#     - 0
+#     - 1
 # meta:
 #   comment: null
 #   name: pattern3_agenda_is_wanted_by_entity

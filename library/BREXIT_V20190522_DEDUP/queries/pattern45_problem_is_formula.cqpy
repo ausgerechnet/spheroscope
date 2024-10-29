@@ -9,7 +9,7 @@
 # meta:
 #   comment: null
 #   name: pattern45_problem_is_formula
-#   pattern: '45'
+#   pattern: 45
 # ---
 
 [lemma=$nouns_problem] [lemma="be"] "that" @1:[::] [word!="[\.,\?\!]" & word !="http.+"]+ @2:[::]

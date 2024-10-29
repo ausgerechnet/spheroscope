@@ -13,7 +13,7 @@
 # meta:
 #   comment: null
 #   name: pattern0_according_to_entity_1
-#   pattern: '0'
+#   pattern: 0
 # ---
 
 ([lemma="accord"] "to" | [lemma= "as"] [lemma="be|have"]* [lemma = $verbs_communication] "by") @0[::] /actor_np_all[] @1:"," <np>@2:[::][word != "(http.+|www.+|t\.co).+"]*</np> [pos_ark="V"] [word !="[\.,\?\!]" & word !="@.+ | (http.+|www.+|t\.co)"]+ @3:[::]

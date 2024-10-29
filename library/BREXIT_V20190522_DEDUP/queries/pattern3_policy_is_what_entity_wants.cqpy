@@ -13,7 +13,7 @@
 # meta:
 #   comment: null
 #   name: pattern3_policy_is_what_entity_wants
-#   pattern: '3'
+#   pattern: 3
 # ---
 
 @0:[::] (/entity_np_all[])+  @1[::] 

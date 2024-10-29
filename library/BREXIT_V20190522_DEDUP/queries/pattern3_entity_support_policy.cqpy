@@ -13,7 +13,7 @@
 # meta:
 #   comment: null
 #   name: pattern3_entity_support_policy
-#   pattern: '3'
+#   pattern: 3
 # ---
 
 @0:[::] (/entity_np_actor[]) @1[::] [xpos="MD" | upos="ADV"  | lemma="be|have"]? [lemma=$verbs_prefer & xpos="VB[DNPZ]?"] [upos="AD."]* @2:[::] [upos="DET|ADJ"]* [lemma=$nouns_policies | lemma = $nouns_values]+ (/lexical_words[])* @3[::]

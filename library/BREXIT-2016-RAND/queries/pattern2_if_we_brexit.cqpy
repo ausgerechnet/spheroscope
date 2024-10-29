@@ -1,0 +1,18 @@
+# --- # CQPY query file
+# anchors:
+#   corrections:
+#     3: -1
+#   slots:
+#     '0':
+#     - 0
+#     - 1
+#     '1':
+#     - 2
+#     - 3
+# meta:
+#   comment: null
+#   name: pattern2_if_we_brexit
+#   pattern: 2
+# ---
+
+"if"%c @0:[::] (/entity_np_all[]) @1:".?brexit"%c ","? @2[::] (/entity_np_all[]) [upos="VERB" | lemma="can|might|may|will"]+ @3[::](/rest_until_end[]) 

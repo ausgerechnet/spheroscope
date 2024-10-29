@@ -13,7 +13,7 @@
 # meta:
 #   comment: null
 #   name: pattern0_entity_says_that_1
-#   pattern: '0'
+#   pattern: 0
 # ---
 
 @0:[::]/actor_np_all[] @1:[::][pos_ner="MD|RB"]* [lemma = $verbs_communication] "that" (/quotation_mark[])? @2:[::] [pos_ark!="[TRP]"]+ []+ [pos_ark="V"]+ [lemma!="[,UE]"]* @3[::](/quotation_mark[])?

@@ -13,7 +13,7 @@
 # meta:
 #   comment: null
 #   name: pattern3_entity_waiting_to_formula
-#   pattern: '3'
+#   pattern: 3
 # ---
 
 @0:[::] (/entity_np_actor[]) @1:[::] [xpos="MD|RB"]* ([lemma = "be"] [upos="ADV"]? ([lemma="die|line|queue|wait" & word =".+ing"| lemma="desperate"]  "up"? | "can'?t|cannot" "wait") "to" | [lemma="keen"] "for|on|to") @2:[::] (/lexical_words[])+ @3:[::]

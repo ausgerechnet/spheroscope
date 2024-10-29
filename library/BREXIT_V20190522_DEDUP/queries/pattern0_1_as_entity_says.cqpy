@@ -13,7 +13,7 @@
 # meta:
 #   comment: null
 #   name: pattern0_1_as_entity_says
-#   pattern: '0'
+#   pattern: 0
 # ---
 
 /quotation_mark[] @0:[::][]* [pos_ark="V" | pos_ner="V.+"] []* @1:[::] /quotation_mark[] [word="," | lemma="as|like"]+ @2[::] (/actor_np_all[])+ [pos_ark="[VR]"]* @3:[lemma = $verbs_communication & lemma !="call|claim|require"]

@@ -13,7 +13,7 @@
 # meta:
 #   comment: null
 #   name: pattern9999_entity_is_the_entity_of_concept
-#   pattern: '9999'
+#   pattern: 9999
 # ---
 
 @0[::]  ([pos_ark="[DA]"]*  [lemma=$person_any | pos_ark="[Z^]"]+ | [pos_ark="[#@]" | pos_ner="PRP" & lemma!="it"]) @1:[::] [pos_ark="R"]? [lemma="be|'s|,|\-|:"] [pos_ark="R" | lemma="like"]* [lemma="the"] [pos_ark="A"]* [pos_ark="[Z^@#]"]+ "of" @2[::] [word!="[\.,\?\!]"]+ @3:[::]

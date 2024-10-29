@@ -5,9 +5,9 @@ majority
 minority
 nobody
 noone
+people
 percent
 percentage
-people
 proportion
 rest
 section

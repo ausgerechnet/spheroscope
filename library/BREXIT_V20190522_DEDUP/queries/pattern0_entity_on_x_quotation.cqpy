@@ -13,7 +13,7 @@
 # meta:
 #   comment: null
 #   name: pattern0_entity_on_x_quotation
-#   pattern: '0'
+#   pattern: 0
 # ---
 
 @0:[::] /actor_np_all[] @1:[::]  ("about|on" [pos_ark = "[@OZ#N^]"])? ([word="[:\-]"]| [lemma = $verbs_communication & lemma !="claim|post|tell|require"]) /quotation_mark[] @2:[::] []* [pos_ark="V"]+ []* @3:[::] /quotation_mark[]

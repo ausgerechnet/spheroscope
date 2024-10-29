@@ -13,7 +13,7 @@
 # meta:
 #   comment: null
 #   name: pattern3_entity_much_prefers_concept
-#   pattern: '3'
+#   pattern: 3
 # ---
 
 @0:[::] (/entity_np_actor[]) @1[::][lemma="be|have"]* [upos="ADV"]+ [upos="ADJ"]*  [lemma=$verbs_prefer & xpos="VB[DNPZ]?"]+ [lemma="for|that|to"]* @2[::] (/lexical_words[])* [upos="VERB|ADJ" | lemma=$nouns_policies | lemma = $nouns_values]+ (/lexical_words[])* @3[::]

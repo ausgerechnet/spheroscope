@@ -1,0 +1,15 @@
+# --- # CQPY query file
+# anchors:
+#   corrections:
+#     3: -1
+#   slots:
+#     '1':
+#     - 2
+#     - 3
+# meta:
+#   comment: null
+#   name: pattern6_sublevel_attack
+#   pattern: 6
+# ---
+
+[lemma=$verbs_attack | lemma= $verbs_destruction] @2[::] (/entity_np_all[] ) @3[::]

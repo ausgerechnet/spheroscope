@@ -17,7 +17,7 @@
 # meta:
 #   comment: null
 #   name: pattern37_quotation_group_should_2_says_entity
-#   pattern: '37'
+#   pattern: 37
 # ---
 
 @2[::] [pos_ark="[DA]"]* [lemma = $person_any | lemma=$nouns_entities | pos_ark = "[@OZ#^]" & lemma != "it" & word = ".+s|we"]+ @3[::] ([lemma = "should|must"] | [lemma ="have|need"] "to")  @4[::][pos_ark="V"] []*  @5:[::]  ([word="[:\-,]"]| [lemma = $verbs_communication & lemma !="claim|post|tell|require"])+ [pos_ark="[DA]"]* @0[::] [lemma = $person_any |pos_ark = "[@Z#^]"]+ @1[::]

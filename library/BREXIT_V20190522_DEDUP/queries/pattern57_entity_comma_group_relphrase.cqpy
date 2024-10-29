@@ -13,7 +13,7 @@
 # meta:
 #   comment: null
 #   name: pattern57_entity_comma_group_relphrase
-#   pattern: '9999'
+#   pattern: 9999
 # ---
 
 @0[::] (/actor_np_all[]) @1:[::][pos_ark="R"|pos_ner="MD"]* [word=","] "as"? @2[::][pos_ark="D"] [pos_ark="[RANZ^]"]+ /actor_group[] [pos_ark="[NZA^]"]* @3[::][lemma="that|who.*"|pos_ark="[PT]"] (/region[np] | /region[vp])

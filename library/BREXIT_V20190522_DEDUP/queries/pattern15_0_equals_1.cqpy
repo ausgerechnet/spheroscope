@@ -13,7 +13,7 @@
 # meta:
 #   comment: null
 #   name: pattern15_0_equals_1
-#   pattern: '15'
+#   pattern: 15
 # ---
 
 @0:[::][pos_ark="[DA]"]* [lemma = $nouns_values | lemma = $nouns_agenda_p3 | lemma = $nouns_policies] @1[word="=" | lemma ="be|equal"] @2:[::] [pos_ark="[DA]"]* [lemma = $nouns_policies|lemma = $nouns_agenda_p3 | lemma = $nouns_values] @3[::]

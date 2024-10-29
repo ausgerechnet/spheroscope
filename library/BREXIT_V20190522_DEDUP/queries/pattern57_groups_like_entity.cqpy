@@ -13,7 +13,7 @@
 # meta:
 #   comment: null
 #   name: pattern57_groups_like_entity
-#   pattern: '9999'
+#   pattern: 9999
 # ---
 
 @0:[::](/actor_group[]) (@1:[lemma="including" | lemma = "like" & pos_ark="P"] | @1:"such" "as") @2[::] [pos_ark="[DNZA^]"]*  /actor_np_all[] [pos_ark="[NZA^]"]*  @3[::]

@@ -13,7 +13,7 @@
 # meta:
 #   comment: null
 #   name: pattern3_entity_wants_their_concept_back
-#   pattern: '3'
+#   pattern: 3
 # ---
 
 @0:[::] (/entity_np_actor[]) @1[::] [xpos="MD" | upos="ADV"  | lemma="be|have"]? [lemma=$verbs_prefer & upos="VERB"] [upos="AD."]* [xpos="PRP$" | upos="DET"] @2:[::] (/lexical_words[])+ "back" (/lexical_words[])* @3[::]

@@ -1,0 +1,19 @@
+# --- # CQPY query file
+# anchors:
+#   corrections:
+#     1: -1
+#     3: -1
+#   slots:
+#     '0':
+#     - 0
+#     - 1
+#     '1':
+#     - 2
+#     - 3
+# meta:
+#   comment: null
+#   name: pattern2_brexit_will_concept
+#   pattern: 2
+# ---
+
+@0:[::] [lemma="brexit"] @1:[::] [xpos="RB"]* [upos="AUX"]  [xpos="RB"]* @2:[xpos="VB" &lemma!="be"] /entity_np_all[] (/lexical_words[])+ @3[::]

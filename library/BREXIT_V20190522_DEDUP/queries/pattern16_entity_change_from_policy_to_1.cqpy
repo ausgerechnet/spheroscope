@@ -1,8 +1,8 @@
 # --- # CQPY query file
 # anchors:
 #   corrections:
-#     '1': -1
-#     '4': -1
+#     1: -1
+#     4: -1
 #   slots:
 #     '0':
 #     - 3

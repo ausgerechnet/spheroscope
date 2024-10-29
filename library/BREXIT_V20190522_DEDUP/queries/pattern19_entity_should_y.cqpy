@@ -13,7 +13,7 @@
 # meta:
 #   comment: null
 #   name: pattern19_entity_should_y
-#   pattern: '19'
+#   pattern: 19
 # ---
 
 @0:[::] [pos_ark="[DA]"]*[lemma = $person_any | pos_ark = "[OZ^]" & lemma != "it"]+ @1:[::]  ([lemma = "should|must"] | [lemma ="have|need"] "to") @2:[pos_ark="[V#]"]  [pos_ark!="[,UE]"]* @3[::]

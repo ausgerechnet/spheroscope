@@ -13,7 +13,7 @@
 # meta:
 #   comment: null
 #   name: pattern3_would_like_to_v
-#   pattern: '3'
+#   pattern: 3
 # ---
 
 @0:[::] (/entity_np_actor[]) @1[::] [xpos="RB|MD"]* [lemma="'d|would"|xpos="MD"] [upos="ADJ|ADV"]* "like" @2[::] (/entity_np_all[])? [lemma="to"] [xpos="VB.?"] (/lexical_words[])* @3:[::]

@@ -13,7 +13,7 @@
 # meta:
 #   comment: null
 #   name: pattern6_policy_would_damage_entity
-#   pattern: '6'
+#   pattern: 6
 # ---
 
 @0:[::] [pos_ark="[DA]"]* [pos_ark = "[N^@OVZ#]"]+  @1: [pos_ner="MD"] [pos_ark="R"]* [lemma=$verbs_destruction] @2:[::] [pos_ark!="[,EU#]" & word !="http.+"]+ @3:[::]

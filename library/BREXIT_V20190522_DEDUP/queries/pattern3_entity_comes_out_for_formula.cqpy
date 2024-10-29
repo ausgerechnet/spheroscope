@@ -13,7 +13,7 @@
 # meta:
 #   comment: null
 #   name: pattern3_entity_comes_out_for_formula
-#   pattern: '3'
+#   pattern: 3
 # ---
 
 @0:[::]  /entity_np_all[] @1[::]

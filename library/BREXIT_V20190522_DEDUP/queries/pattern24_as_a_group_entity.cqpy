@@ -13,7 +13,7 @@
 # meta:
 #   comment: null
 #   name: pattern24_as_a_group_entity
-#   pattern: '24'
+#   pattern: 24
 # ---
 
 [lemma="as" | word="[Bb]eing"] @0:[::] [upos="DET"] [upos="ADJ"]* /entity_np_actor[] @1[::] ","? @2[::] (/entity_np_actor[])+ @3[::] [xpos="MD|RB"]* [upos="VERB"]

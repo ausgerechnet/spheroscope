@@ -13,7 +13,7 @@
 # meta:
 #   comment: null
 #   name: pattern46_entity_supporter_of_concept
-#   pattern: '46'
+#   pattern: 46
 # ---
 
 @0[::] (/region[np] | [pos_ark="[ZN^#L@]"]+ | [pos_ner="PRP"]) @1:[lemma="be|,"]  [pos_ark="[DAR]"]* [lemma="backer|fan|supporter"] [lemma="of"] @2:[::] [word!="[\.,\?\!]" & word !="http.+"]* @3:[::]

@@ -1,0 +1,19 @@
+# --- # CQPY query file
+# anchors:
+#   corrections:
+#     1: -1
+#     3: -1
+#   slots:
+#     '0':
+#     - 0
+#     - 1
+#     '1':
+#     - 2
+#     - 3
+# meta:
+#   comment: null
+#   name: pattern2_brexit_cause_x_to_y
+#   pattern: 2
+# ---
+
+@0:[::] [lemma=".?brexit"] @1:[::] [upos="AUX"]?  [xpos="RB"]* [lemma=$verbs_cause] @2:[::] /entity_np_all[] "to" (/lexical_words[])+ @3[::]

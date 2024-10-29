@@ -13,7 +13,7 @@
 # meta:
 #   comment: null
 #   name: pattern9999_entities_like_group
-#   pattern: '9999'
+#   pattern: 9999
 # ---
 
 @0[::]([pos_ark="[AD^NZ]"]* [pos_ark="[NZ^]" & word=".+s"]+  | [lemma="more|many|less|fewer"] [pos_ark="[NZ^]"]+)(@1[lemma="like" & pos_ark="P"] | @1"such" "as" | @1[lemma="include|involve|comprise"]) @2[::] ([pos_ark="[DA]"]*  [lemma=$person_any | pos_ark="[Z^]"]+ | [pos_ark="[#@]" | pos_ner="PRP"])+  @3[::]

@@ -13,7 +13,7 @@
 # meta:
 #   comment: null
 #   name: pattern3_name_for_policy
-#   pattern: '3'
+#   pattern: 3
 # ---
 
 @0[::][upos="DET|ADJ"]* ([upos="PROPN" & word="[A-Z][a-z\-]+"]{2,} | [word="[A-Z]"][word="[A-Z\.]"]+ | [word="[@#][A-Z].+"]) @1:"for" @2:[upos="DET|ADV|ADJ"]* [lemma=$nouns_values | lemma = $nouns_policies] @3[::]

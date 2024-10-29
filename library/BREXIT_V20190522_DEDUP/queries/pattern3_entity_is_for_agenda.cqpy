@@ -13,7 +13,7 @@
 # meta:
 #   comment: null
 #   name: pattern3_entity_is_for_agenda
-#   pattern: '3'
+#   pattern: 3
 # ---
 
 @0:[::] (/entity_np_actor[])  @1:[::][xpos="MD|RB"|lemma="have"]* [lemma = "be"] [lemma=$adv_high_degree]* "against|for|pro|anti" @2:[::] (/entity_np_all[] | [upos="VERB|AD."])* [xpos="VBG" | lemma=$nouns_policies | lemma = $nouns_values]+ (/lexical_words[])* @3[::]

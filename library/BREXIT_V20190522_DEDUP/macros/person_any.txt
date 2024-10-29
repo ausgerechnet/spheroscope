@@ -9,4 +9,3 @@ define $person_any+=$nouns_person_positive;
 define $person_any+=nouns_person_support;
 define $person_any+=nouns_person_general
 ;
-

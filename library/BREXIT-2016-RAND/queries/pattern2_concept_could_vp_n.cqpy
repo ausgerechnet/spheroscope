@@ -13,7 +13,7 @@
 # meta:
 #   comment: null
 #   name: pattern2_concept_could_vp_n
-#   pattern: 2
+#   pattern: 9999
 # ---
 
 @0:[::] /entity_np_all[] @1:[::] [xpos="RB"]* [word="could|might"]  [xpos="RB"]* @2:[xpos="VB" &lemma!="be"] /entity_np_all[] (/lexical_words[])+ @3[::]

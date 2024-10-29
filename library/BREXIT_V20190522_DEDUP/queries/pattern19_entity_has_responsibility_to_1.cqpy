@@ -13,7 +13,7 @@
 # meta:
 #   comment: null
 #   name: pattern19_entity_has_responsibility_to_1
-#   pattern: '19'
+#   pattern: 19
 # ---
 
 @0:[::] [pos_ark="[DA]"]* [pos_ark = "[@APONZ#^]" & lemma != "it"]+ @1:[lemma="'?s|have"] [pos_simple="D" & lemma !="no"]? [pos_simple="A"]* [lemma=$nouns_responsibility] "of|to" @2[::] [pos_simple="V"] [word !="[\.\?\!]"]+ @3[::]

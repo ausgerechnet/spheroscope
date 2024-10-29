@@ -13,7 +13,7 @@
 # meta:
 #   comment: null
 #   name: pattern24_entity_is_group
-#   pattern: '24'
+#   pattern: 24
 # ---
 
 ((@0[::] [pos_ark="L" & word=".+'(s|m|re)"] @1[::]) | (@0[::] (/actor_np_all[]) @1:[::] [pos_ner="MD|RB"]* [lemma="be"])) [lemma="in|on|with"]? @2:[::] [lemma="team"]? [(lemma=$nouns_policies | lemma= $nouns_values) & word !=".+ing"] [pos_ark="[NZ^]"]? @3[::]

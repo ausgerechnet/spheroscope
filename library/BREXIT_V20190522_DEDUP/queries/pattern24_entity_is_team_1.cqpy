@@ -13,7 +13,7 @@
 # meta:
 #   comment: null
 #   name: pattern24_entity_is_team_1
-#   pattern: '24'
+#   pattern: 24
 # ---
 
 @0[::] (/entity_np_all[]) @1:[::] [xpos="MD|RB"]* [lemma="be"] [lemma="in|on|with"]? @2:[::] [lemma="camp|team"](/entity_np_all[])+ @3[::]

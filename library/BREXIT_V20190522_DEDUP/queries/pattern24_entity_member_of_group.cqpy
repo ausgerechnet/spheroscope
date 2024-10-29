@@ -13,7 +13,7 @@
 # meta:
 #   comment: null
 #   name: pattern24_entity_member_of_group
-#   pattern: '24'
+#   pattern: 24
 # ---
 
 @0[::] (/entity_np_actor[]) @1:[::]

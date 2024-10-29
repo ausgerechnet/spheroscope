@@ -13,7 +13,7 @@
 # meta:
 #   comment: null
 #   name: pattern3_entity_in_favour_of_concept
-#   pattern: '3'
+#   pattern: 3
 # ---
 
 @0:[::] /entity_np_all[] @1:[::] [xpos="MD" | lemma="be|have" | upos="ADJ|ADV"]* [lemma="in"] [upos="ADJ"]* [lemma="favou?r|hope|support" | lemma=$nouns_desire] [lemma="for|of|pro|that|to"] @2:[::] [upos="DET|VERB|NOUN|ADJ|ADV|PRON]"]*  [xpos="VBG" | lemma=$nouns_policies | lemma=$nouns_values] (/lexical_words[])*  @3:[::]

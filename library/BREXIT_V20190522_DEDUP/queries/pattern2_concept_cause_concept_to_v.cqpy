@@ -13,7 +13,7 @@
 # meta:
 #   comment: null
 #   name: pattern2_concept_cause_concept_to_v
-#   pattern: '2'
+#   pattern: 2
 # ---
 
 @0[::][pos_ark="[DA]"]* [pos_ark="[NZA^]"]+ @1[::] [pos_ner="[MD|RB]" | lemma="have|be"]* [lemma=$verbs_cause & lemma !="make" & pos_ark="V"] @2[::] [pos_ark="[DA]"]* [pos_ark="[NZ^]"]+ "to"? [pos_ark="R"]* [pos_ark="V"] [pos_ark!="[GUE#@,]"]*  @3:[::]
